@@ -19,4 +19,5 @@ nav:
 #            – Posts: v1/types/posts.md
 #
 
-theme: readthedocs
+#theme: readthedocs
+theme: windmill

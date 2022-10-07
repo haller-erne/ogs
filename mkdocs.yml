@@ -5,11 +5,12 @@ nav:
     – Scripting:
         – Getting Started: v3/getting-started.md
         – LUA interfaces:
-            – Web browser: v3/lua/webbrowser.md
-    - LUA helper libraries:
-        - ADS communication (TwinCat, Nexeed, Beckhoff): libs/lua-ads.md
-        - OpcUA communication: libs/lua-ads.md
-        - Modbus/TCP/UDP communication: libs/lua-ads.md
+            – Web browsers: v3/lua/webbrowser.md
+            – Webserver (and REST API): v3/lua/webserver.md
+    – LUA helper libraries:
+        – ADS communication (TwinCat, Nexeed, Beckhoff): libs/lua-ads.md
+        – OpcUA communication: libs/lua-opcua.md
+        – Modbus/TCP/UDP communication: libs/lua-modbus.md
 
 # sample
 #    – Version 1.x:

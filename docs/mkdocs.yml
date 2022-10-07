@@ -11,7 +11,7 @@ nav:
         - OpcUA communication: libs/lua-ads.md
         - Modbus/TCP/UDP communication: libs/lua-ads.md
 
-
+# sample
 #    – Version 1.x:
 #        – Types:
 #            – Comments: v1/types/comments.md

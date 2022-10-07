@@ -1,7 +1,8 @@
 site_name: OGS Documentation
 site_url: https://haller-erne.github.io/ogs/
 nav:
-    – Home: index.md
+    – Home: 
+        - index.md
     – Scripting:
         – Getting Started: v3/getting-started.md
         – LUA interfaces:

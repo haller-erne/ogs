@@ -1,17 +1,16 @@
 site_name: OGS Documentation
 site_url: https://haller-erne.github.io/ogs/
 nav:
-    – Home: 
-        - index.md
-    – Scripting:
-        – Getting Started: v3/getting-started.md
-        – LUA interfaces:
-            – Web browsers: v3/lua/webbrowser.md
-            – Webserver (and REST API): v3/lua/webserver.md
-    – LUA helper libraries:
-        – ADS communication (TwinCat, Nexeed, Beckhoff): libs/lua-ads.md
-        – OpcUA communication: libs/lua-opcua.md
-        – Modbus/TCP/UDP communication: libs/lua-modbus.md
+    - Home: index.md
+    - Scripting:
+        - Getting Started: v3/getting-started.md
+        - LUA interfaces:
+            - Web browsers: v3/lua/webbrowser.md
+            - Webserver (and REST API): v3/lua/webserver.md
+    - LUA helper libraries:
+        - ADS communication (TwinCat, Nexeed, Beckhoff): libs/lua-ads.md
+        - OpcUA communication: libs/lua-opcua.md
+        - Modbus/TCP/UDP communication: libs/lua-modbus.md
 
 # sample
 #    – Version 1.x:

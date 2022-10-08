@@ -175,10 +175,12 @@ Browser.RegMsgHandler('StartView', callbackfn)
 <li>instance [string]: Web browser instance name (one of 'StartView', 'ProcessView', 'SidePanel', 'InstructionView') </li>
 <li>jstext [string]: JavaScript string to execute in the browser. Note that this must be valid JavaScript code. </li>
 </ul>
-<p><strong>NOTES</strong>: 
-- When passing strings through the function, make sure to propery escape them!
-- Best practice is to write a JavaScript function in the web page and only call it through this function.
-- You can serialize LUA objects to a JSON string and pass this through the function. The JavaScript side can then easily deserialize it.</p>
+<p><strong>NOTES</strong>: </p>
+<ul>
+<li>When passing strings through the function, make sure to propery escape them!</li>
+<li>Best practice is to write a JavaScript function in the web page and only call it through this function.</li>
+<li>You can serialize LUA objects to a JSON string and pass this through the function. The JavaScript side can then easily deserialize it.</li>
+</ul>
 <h4 id="sample-code_3">Sample code</h4>
 <pre><code class="language-LUA">-- Build a JavaScript command, call the function &quot;my_function&quot; with
 -- some JSON text

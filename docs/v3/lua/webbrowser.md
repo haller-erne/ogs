@@ -122,6 +122,7 @@ Browser.ExecJS_nonblocking(instance, jstext)
 - jstext [string]: JavaScript string to execute in the browser. Note that this must be valid JavaScript code. 
 
 **NOTES**: 
+
 - When passing strings through the function, make sure to propery escape them!
 - Best practice is to write a JavaScript function in the web page and only call it through this function.
 - You can serialize LUA objects to a JSON string and pass this through the function. The JavaScript side can then easily deserialize it.

@@ -50,6 +50,8 @@ fn, err = Webserver.RegUrl(prefix, callbackfn)
 
     The callback function should return a response table with the required parameters to build the http response (optional body).
 
+    [Datails tbd.]
+
 #### Return values
 
 If the function was executed successfully, the callbackfn is returned as the first return value. Else nil is returned and the second return value has an error message string (wrong parameters or unknown instance).

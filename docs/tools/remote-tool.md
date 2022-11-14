@@ -11,92 +11,57 @@ For each tool managed through the `ToolGateway`, OGS only uses the a generic `Re
 
 The `RemoteTool` driver is implemented in `RemoteTool.dll`. To use any `RemoteTool` tool, the driver must be loaded in the `[TOOL_DLL]` section of the projects `station.ini` configuration file (see also [Tool configuration](/docs/tools/README.md)).
 
+To enable the driverin station.ini, set it as follows:
+
+    [TOOL_DLL]
+    RemoteTool.dll=1
+
+The overall parameters for the `RemoteTool` driver are configured in the ´[RemoteTool]` section. This is basically used to configure the `ToolGateway` connection parameters, here is a sample setup:
+
+    [RemoteTool]
+    ToolGateway_Addr=mytoolgateway.mycompany.com
+    ToolGateway_Port=
+
+For more information about the driver parameters, see [Driver Parameters](#driver-parameter-reference) below.
+
 ## Tool registration and configuration
 
 All `RemoteTool`-tools are registered in the `[CHANNELS]` section of the projects `station.ini` file.
 
-The `[CHANNELS]` section only defines a channel number to channel name mapping - the channel/tool specific settings are then configured in a seperate section with the channel name.  
+The `[CHANNELS]` section only defines a channel number to channel name mapping - the channel/tool specific settings are then configured in a seperate section defined by the channel name. Inside the section, a reference to the `RemoteTool` driver then links driver and channel accordingly.
  
- 
- 
-Each parameter is prefixed with the channel number and followed by parameter name as follows:
+The overall layout is therefore as follows (sample is for channel 2):
 
-    CHANNEL_<two-digit channel>_<param name>=<param value>
+    [CHANNELS]
+    # Map the channel/tool 2 to the 'RemoteTool_Nexo1'-section
+    2=RemoteTool_Nexo1
 
-Where
-- `<two-digit channel>` is the channel number in the range 01...99 (the channel number maps 1:1 to the tool number from the workflow configuration) 
-- `<param name>` is the parameter name (see [Channel parameter reference](#channel-parameter-reference))
-- `<param value>` is the actual parameter value for the given parameter
+    [RemoteTool_Nexo1]
+    # link to the RemoteTool driver
+    DRIVER=RemoteTool
+    # more channel/tool specific parameters for this tool/driver
 
-In addition to the channel-specific parameters, there are also shared parameters. These act as default parameters for the channel-specific settings and can be overridden by the channel specific values.
-
-For more details on the shared parameters, see [Shared parameter reference](#shared-parameter-reference)) below .
+Please see [Channel/tool parameter reference](#channeltool-parameter-reference) below for more information about the available parameters.
 
 
-A sample `OpenProtocol` tool configuration (channel 01) would therefore look similar to the following:
+## Channel/tool parameter reference
 
-    [OPENPROTO]
-    # Shared/default parameters
-    PORT=4545
-    # Channel/Tool 1 parameters
-    CHANNEL_01=10.10.2.163
-    CHANNEL_01_TYPE=NEXO
-    CHANNEL_01_CHECK_TIME_ENABLED=1
-    CHANNEL_01_NEXONAR_CHANNEL=6
-    CHANNEL_01_CURVE_REQUEST=1
+Currently, there are no channel/tool-specific parameters needed (other than specifying the `DRIVER=RemoteTool`) to use this driver. All concrete tool communication settings are to be configured on the `ToolGateway` server side. 
 
 
+## Driver parameter reference
 
-## Shared parameter reference
+The driver parameters are defined in the `[RemoteTool]` section in the projects `station.ini`.
 
-#### PORT
+The following parameters are available:
 
-(optional, defaults to 4545)
+#### ToolGateway_Addr
 
-#### EXTERNAL_IO_OFFSET
+IP address or hostname of the tool gateway.
 
-#### CHECK_TIME_INTERVAL and TIME_TOLERANCE
+#### ToolGateway_Port
 
-#### EXTERNAL_IO_OFFSET
+(optional)
 
-
-
-## Channel parameter reference
-
-For specific information about a tools settings or the tools configuration needed (on the tool side), please see the tool-specific information.
-
-In general, the following parameters are available for a `OpenProtocol`-tool:
-
-#### Connection information
-
-#### PORT
-
-(optional, defaults to the shared parameter value)
-
-#### TYPE
-
-(mandatory)
-
-#### CCW_ACK
-
-#### PARAMS
-
-#### ALIVEXMTT
-
-#### SHOWALIVE
-
-#### RSPTIMEOUT
-
-#### BARCODE_MID0051_REV
-
-#### CHECK_EXT_COND
-
-#### APPL_START
-
-#### CURVE_REQUEST
-
-#### CHECK_TIME_ENABLED
-
-#### IGNORE_ID
-
+Port number to use for connecting to the tool gateway. If not given, the driver tries to use the RPC endpoint mapper using the service UUID to resolve the connection endpoint (might require additional firewall settings).
 

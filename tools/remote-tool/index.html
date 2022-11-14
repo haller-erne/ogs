@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link rel="canonical" href="https://haller-erne.github.io/ogs/tools/remote-tool/">
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Remote Tool - OGS Documentation</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "RemoteTool", url: "#_top", children: [
+              {title: "Installation", url: "#installation" },
+              {title: "Tool registration and configuration", url: "#tool-registration-and-configuration" },
+              {title: "Shared parameter reference", url: "#shared-parameter-reference" },
+              {title: "Channel parameter reference", url: "#channel-parameter-reference" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../openprotocol/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../openprotocol/" class="btn btn-xs btn-link">
+        Overview
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../" class="btn btn-xs btn-link">
+        Overview
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="remotetool">RemoteTool</h1>
+<p>OGS supports connecting tools over a <code>ToolGateway</code>. This enables advanced  tool management scenarios, e.g. "roaming" tools between multiple stations.</p>
+<p>Using the <code>RemoteTool</code> driver requires a <code>ToolGateway</code> running on a server - the server then actually controls the tool, whereas the OGS stations only communication with the <code>ToolGateway</code>. This allows delegating tool management to the central <code>ToolGateway</code>. </p>
+<p>For each tool managed through the <code>ToolGateway</code>, OGS only uses the a generic <code>RemoteTool</code> in its local configuration, the <code>ToolGateway</code> then has the tool-specific configuration (like e.g. <a href="/docs/tools/openprotocol/README.md">OpenProtocol tools</a>).</p>
+<h2 id="installation">Installation</h2>
+<p>The <code>RemoteTool</code> driver is implemented in <code>RemoteTool.dll</code>. To use any <code>RemoteTool</code> tool, the driver must be loaded in the <code>[TOOL_DLL]</code> section of the projects <code>station.ini</code> configuration file (see also <a href="/docs/tools/README.md">Tool configuration</a>).</p>
+<h2 id="tool-registration-and-configuration">Tool registration and configuration</h2>
+<p>All <code>RemoteTool</code>-tools are registered in the <code>[CHANNELS]</code> section of the projects <code>station.ini</code> file.</p>
+<p>The <code>[CHANNELS]</code> section only defines a channel number to channel name mapping - the channel/tool specific settings are then configured in a seperate section with the channel name.  </p>
+<p>Each parameter is prefixed with the channel number and followed by parameter name as follows:</p>
+<pre><code>CHANNEL_&lt;two-digit channel&gt;_&lt;param name&gt;=&lt;param value&gt;
+</code></pre>
+<p>Where
+- <code>&lt;two-digit channel&gt;</code> is the channel number in the range 01...99 (the channel number maps 1:1 to the tool number from the workflow configuration) 
+- <code>&lt;param name&gt;</code> is the parameter name (see <a href="#channel-parameter-reference">Channel parameter reference</a>)
+- <code>&lt;param value&gt;</code> is the actual parameter value for the given parameter</p>
+<p>In addition to the channel-specific parameters, there are also shared parameters. These act as default parameters for the channel-specific settings and can be overridden by the channel specific values.</p>
+<p>For more details on the shared parameters, see <a href="#shared-parameter-reference">Shared parameter reference</a>) below .</p>
+<p>A sample <code>OpenProtocol</code> tool configuration (channel 01) would therefore look similar to the following:</p>
+<pre><code>[OPENPROTO]
+# Shared/default parameters
+PORT=4545
+# Channel/Tool 1 parameters
+CHANNEL_01=10.10.2.163
+CHANNEL_01_TYPE=NEXO
+CHANNEL_01_CHECK_TIME_ENABLED=1
+CHANNEL_01_NEXONAR_CHANNEL=6
+CHANNEL_01_CURVE_REQUEST=1
+</code></pre>
+<h2 id="shared-parameter-reference">Shared parameter reference</h2>
+<h4 id="port">PORT</h4>
+<p>(optional, defaults to 4545)</p>
+<h4 id="external_io_offset">EXTERNAL_IO_OFFSET</h4>
+<h4 id="check_time_interval-and-time_tolerance">CHECK_TIME_INTERVAL and TIME_TOLERANCE</h4>
+<h4 id="external_io_offset_1">EXTERNAL_IO_OFFSET</h4>
+<h2 id="channel-parameter-reference">Channel parameter reference</h2>
+<p>For specific information about a tools settings or the tools configuration needed (on the tool side), please see the tool-specific information.</p>
+<p>In general, the following parameters are available for a <code>OpenProtocol</code>-tool:</p>
+<h4 id="connection-information">Connection information</h4>
+<h4 id="port_1">PORT</h4>
+<p>(optional, defaults to the shared parameter value)</p>
+<h4 id="type">TYPE</h4>
+<p>(mandatory)</p>
+<h4 id="ccw_ack">CCW_ACK</h4>
+<h4 id="params">PARAMS</h4>
+<h4 id="alivexmtt">ALIVEXMTT</h4>
+<h4 id="showalive">SHOWALIVE</h4>
+<h4 id="rsptimeout">RSPTIMEOUT</h4>
+<h4 id="barcode_mid0051_rev">BARCODE_MID0051_REV</h4>
+<h4 id="check_ext_cond">CHECK_EXT_COND</h4>
+<h4 id="appl_start">APPL_START</h4>
+<h4 id="curve_request">CURVE_REQUEST</h4>
+<h4 id="check_time_enabled">CHECK_TIME_ENABLED</h4>
+<h4 id="ignore_id">IGNORE_ID</h4>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../openprotocol/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../openprotocol/" class="btn btn-xs btn-link">
+        Overview
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../" class="btn btn-xs btn-link">
+        Overview
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

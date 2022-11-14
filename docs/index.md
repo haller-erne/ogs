@@ -3,7 +3,7 @@
 ## Scope
 
 This documentation provides low-level infomation about the OGS software. 
-The main purpose is to document the API interfaces (mostly LUA scripting) and show how everything fits together. 
+The main purpose is to document the API interfaces (mostly LUA scripting), the available (tool)drivers and show how everything fits together. 
 This allows advanced users and implementors to unlock the full potential 
 of OGS by modifying and extending the software.
 
@@ -11,5 +11,9 @@ of OGS by modifying and extending the software.
 
 ## Overview
 
-The documentation consist of the following...
+The documentation currently has the following information:
+
+- Tool driver and tool configuration information (see [Tool configuration](/docs/tools/README.md))
+- LUA scripting (see [LUA scripting](/docs/v3/getting-started.md))
+- LUA helper libraries (see [LUA libraries](/docs/libs/README.md))
 

@@ -11,7 +11,7 @@ For each tool managed through the `ToolGateway`, OGS only uses a generic `Remote
 
 The `RemoteTool` driver is implemented in `RemoteTool.dll`. To use any `RemoteTool` tool, the driver must be loaded in the `[TOOL_DLL]` section of the projects `station.ini` configuration file (see also [Tool configuration](/docs/tools/README.md)).
 
-To enable the driverin station.ini, set it as follows:
+To enable the driver in station.ini, set it as follows:
 
     [TOOL_DLL]
     RemoteTool.dll=1

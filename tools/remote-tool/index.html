@@ -90,7 +90,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p>For each tool managed through the <code>ToolGateway</code>, OGS only uses a generic <code>RemoteTool</code> type channel in its local configuration, the <code>ToolGateway</code> then has the actual tool-specific configuration (like e.g. <a href="/docs/tools/openprotocol/README.md">OpenProtocol tools</a>).</p>
 <h2 id="installation">Installation</h2>
 <p>The <code>RemoteTool</code> driver is implemented in <code>RemoteTool.dll</code>. To use any <code>RemoteTool</code> tool, the driver must be loaded in the <code>[TOOL_DLL]</code> section of the projects <code>station.ini</code> configuration file (see also <a href="/docs/tools/README.md">Tool configuration</a>).</p>
-<p>To enable the driverin station.ini, set it as follows:</p>
+<p>To enable the driver in station.ini, set it as follows:</p>
 <pre><code>[TOOL_DLL]
 RemoteTool.dll=1
 </code></pre>

@@ -2,6 +2,14 @@ site_name: OGS Documentation
 site_url: https://haller-erne.github.io/ogs/
 nav:
     - Home: index.md
+    - Tool configuration:
+        - Overview: tools/README.md
+        - Remote Tool: tools/remote-tool.md
+        - Open Protocol Tools: 
+            - Overview: tools/openprotocol/README.md
+            - Nexo: tools/openprotocol/nexo.md
+            - CS351/KE350: tools/openprotocol/sys350.md
+            - GWK Operator+: tools/openprotocol/gwk.md
     - Scripting:
         - Getting Started: v3/getting-started.md
         - LUA interfaces:

@@ -35,8 +35,8 @@
           {title: "RemoteTool", url: "#_top", children: [
               {title: "Installation", url: "#installation" },
               {title: "Tool registration and configuration", url: "#tool-registration-and-configuration" },
-              {title: "Shared parameter reference", url: "#shared-parameter-reference" },
-              {title: "Channel parameter reference", url: "#channel-parameter-reference" },
+              {title: "Channel/tool parameter reference", url: "#channeltool-parameter-reference" },
+              {title: "Driver parameter reference", url: "#driver-parameter-reference" },
           ]},
         ];
 
@@ -90,54 +90,40 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p>For each tool managed through the <code>ToolGateway</code>, OGS only uses the a generic <code>RemoteTool</code> in its local configuration, the <code>ToolGateway</code> then has the tool-specific configuration (like e.g. <a href="/docs/tools/openprotocol/README.md">OpenProtocol tools</a>).</p>
 <h2 id="installation">Installation</h2>
 <p>The <code>RemoteTool</code> driver is implemented in <code>RemoteTool.dll</code>. To use any <code>RemoteTool</code> tool, the driver must be loaded in the <code>[TOOL_DLL]</code> section of the projects <code>station.ini</code> configuration file (see also <a href="/docs/tools/README.md">Tool configuration</a>).</p>
+<p>To enable the driverin station.ini, set it as follows:</p>
+<pre><code>[TOOL_DLL]
+RemoteTool.dll=1
+</code></pre>
+<p>The overall parameters for the <code>RemoteTool</code> driver are configured in the ´[RemoteTool]<code>section. This is basically used to configure the</code>ToolGateway` connection parameters, here is a sample setup:</p>
+<pre><code>[RemoteTool]
+ToolGateway_Addr=mytoolgateway.mycompany.com
+ToolGateway_Port=
+</code></pre>
+<p>For more information about the driver parameters, see <a href="#driver-parameter-reference">Driver Parameters</a> below.</p>
 <h2 id="tool-registration-and-configuration">Tool registration and configuration</h2>
 <p>All <code>RemoteTool</code>-tools are registered in the <code>[CHANNELS]</code> section of the projects <code>station.ini</code> file.</p>
-<p>The <code>[CHANNELS]</code> section only defines a channel number to channel name mapping - the channel/tool specific settings are then configured in a seperate section with the channel name.  </p>
-<p>Each parameter is prefixed with the channel number and followed by parameter name as follows:</p>
-<pre><code>CHANNEL_&lt;two-digit channel&gt;_&lt;param name&gt;=&lt;param value&gt;
+<p>The <code>[CHANNELS]</code> section only defines a channel number to channel name mapping - the channel/tool specific settings are then configured in a seperate section defined by the channel name. Inside the section, a reference to the <code>RemoteTool</code> driver then links driver and channel accordingly.</p>
+<p>The overall layout is therefore as follows (sample is for channel 2):</p>
+<pre><code>[CHANNELS]
+# Map the channel/tool 2 to the 'RemoteTool_Nexo1'-section
+2=RemoteTool_Nexo1
+
+[RemoteTool_Nexo1]
+# link to the RemoteTool driver
+DRIVER=RemoteTool
+# more channel/tool specific parameters for this tool/driver
 </code></pre>
-<p>Where
-- <code>&lt;two-digit channel&gt;</code> is the channel number in the range 01...99 (the channel number maps 1:1 to the tool number from the workflow configuration) 
-- <code>&lt;param name&gt;</code> is the parameter name (see <a href="#channel-parameter-reference">Channel parameter reference</a>)
-- <code>&lt;param value&gt;</code> is the actual parameter value for the given parameter</p>
-<p>In addition to the channel-specific parameters, there are also shared parameters. These act as default parameters for the channel-specific settings and can be overridden by the channel specific values.</p>
-<p>For more details on the shared parameters, see <a href="#shared-parameter-reference">Shared parameter reference</a>) below .</p>
-<p>A sample <code>OpenProtocol</code> tool configuration (channel 01) would therefore look similar to the following:</p>
-<pre><code>[OPENPROTO]
-# Shared/default parameters
-PORT=4545
-# Channel/Tool 1 parameters
-CHANNEL_01=10.10.2.163
-CHANNEL_01_TYPE=NEXO
-CHANNEL_01_CHECK_TIME_ENABLED=1
-CHANNEL_01_NEXONAR_CHANNEL=6
-CHANNEL_01_CURVE_REQUEST=1
-</code></pre>
-<h2 id="shared-parameter-reference">Shared parameter reference</h2>
-<h4 id="port">PORT</h4>
-<p>(optional, defaults to 4545)</p>
-<h4 id="external_io_offset">EXTERNAL_IO_OFFSET</h4>
-<h4 id="check_time_interval-and-time_tolerance">CHECK_TIME_INTERVAL and TIME_TOLERANCE</h4>
-<h4 id="external_io_offset_1">EXTERNAL_IO_OFFSET</h4>
-<h2 id="channel-parameter-reference">Channel parameter reference</h2>
-<p>For specific information about a tools settings or the tools configuration needed (on the tool side), please see the tool-specific information.</p>
-<p>In general, the following parameters are available for a <code>OpenProtocol</code>-tool:</p>
-<h4 id="connection-information">Connection information</h4>
-<h4 id="port_1">PORT</h4>
-<p>(optional, defaults to the shared parameter value)</p>
-<h4 id="type">TYPE</h4>
-<p>(mandatory)</p>
-<h4 id="ccw_ack">CCW_ACK</h4>
-<h4 id="params">PARAMS</h4>
-<h4 id="alivexmtt">ALIVEXMTT</h4>
-<h4 id="showalive">SHOWALIVE</h4>
-<h4 id="rsptimeout">RSPTIMEOUT</h4>
-<h4 id="barcode_mid0051_rev">BARCODE_MID0051_REV</h4>
-<h4 id="check_ext_cond">CHECK_EXT_COND</h4>
-<h4 id="appl_start">APPL_START</h4>
-<h4 id="curve_request">CURVE_REQUEST</h4>
-<h4 id="check_time_enabled">CHECK_TIME_ENABLED</h4>
-<h4 id="ignore_id">IGNORE_ID</h4>
+<p>Please see <a href="#channeltool-parameter-reference">Channel/tool parameter reference</a> below for more information about the available parameters.</p>
+<h2 id="channeltool-parameter-reference">Channel/tool parameter reference</h2>
+<p>Currently, there are no channel/tool-specific parameters needed (other than specifying the <code>DRIVER=RemoteTool</code>) to use this driver. All concrete tool communication settings are to be configured on the <code>ToolGateway</code> server side. </p>
+<h2 id="driver-parameter-reference">Driver parameter reference</h2>
+<p>The driver parameters are defined in the <code>[RemoteTool]</code> section in the projects <code>station.ini</code>.</p>
+<p>The following parameters are available:</p>
+<h4 id="toolgateway_addr">ToolGateway_Addr</h4>
+<p>IP address or hostname of the tool gateway.</p>
+<h4 id="toolgateway_port">ToolGateway_Port</h4>
+<p>(optional)</p>
+<p>Port number to use for connecting to the tool gateway. If not given, the driver tries to use the RPC endpoint mapper using the service UUID to resolve the connection endpoint (might require additional firewall settings).</p>
 
   <br>
     

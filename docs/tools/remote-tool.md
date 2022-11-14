@@ -4,7 +4,7 @@ OGS supports connecting tools over a `ToolGateway`. This enables advanced  tool 
 
 Using the `RemoteTool` driver requires a `ToolGateway` running on a server - the server then actually controls the tool, whereas the OGS stations only communication with the `ToolGateway`. This allows delegating tool management to the central `ToolGateway`. 
 
-For each tool managed through the `ToolGateway`, OGS only uses the a generic `RemoteTool` in its local configuration, the `ToolGateway` then has the tool-specific configuration (like e.g. [OpenProtocol tools](/docs/tools/openprotocol/README.md)).
+For each tool managed through the `ToolGateway`, OGS only uses a generic `RemoteTool` type channel in its local configuration, the `ToolGateway` then has the actual tool-specific configuration (like e.g. [OpenProtocol tools](/docs/tools/openprotocol/README.md)).
 
  
 ## Installation

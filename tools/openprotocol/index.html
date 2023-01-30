@@ -962,7 +962,7 @@
 
 
 
-<h1 id="openprotocol-tools">OpenProtocol tools</h1>
+<h1 id="openprotocol-tools"><a class="toclink" href="#openprotocol-tools">OpenProtocol tools</a></h1>
 <p>OGS supports connecting tools with <code>OpenProtocol</code> interface. As tools differ in functionality and also different tool vendors implement the <code>OpenProtocol</code> specification in slightly different ways, OGS has special protocol handlers for the following tools:</p>
 <ul>
 <li>Rexroth Nexo and Nexo 2 wireless tools (for more information, see <a href="/docs/tools/openprotocol/nexo.md">Nexo OpenProtocol</a>)</li>
@@ -972,9 +972,9 @@
 <li>Gehmeyr Exact Wifi tools (for more information, see <a href="/docs/tools/openprotocol/gehmeyr.md">Gehmeyr OpenProtocol</a>)</li>
 </ul>
 <p>The overall configuration for these tools is similar and the actual driver has the same set of configuration parameters - described on this page.</p>
-<h2 id="installation">Installation</h2>
+<h2 id="installation"><a class="toclink" href="#installation">Installation</a></h2>
 <p>The <code>OpenProtocol</code> driver is implemented in <code>OpConn.dll</code>. To use any <code>OpenProtocol</code> tool, the driver must be loaded in the <code>[TOOL_DLL]</code> section of the projects <code>station.ini</code> configuration file (see also <a href="/docs/tools/README.md">Tool configuration</a>).</p>
-<h2 id="tool-registration-and-configuration">Tool registration and configuration</h2>
+<h2 id="tool-registration-and-configuration"><a class="toclink" href="#tool-registration-and-configuration">Tool registration and configuration</a></h2>
 <p>All <code>OpenProtocol</code>-tools are registered in the <code>[OPENPROTO]</code> section of the projects <code>station.ini</code> file.</p>
 <p>The <code>[OPENPROTO]</code> section mixes the tool parameters and the channel mapping (due to historic reasons) by combining the channel number and the parameter name/value in the <code>station.ini</code> entry. </p>
 <p>Each parameter is prefixed with the channel number and followed by parameter name as follows:</p>
@@ -997,31 +997,31 @@ CHANNEL_01_CHECK_TIME_ENABLED=1
 CHANNEL_01_NEXONAR_CHANNEL=6
 CHANNEL_01_CURVE_REQUEST=1
 </code></pre>
-<h2 id="shared-parameter-reference">Shared parameter reference</h2>
-<h4 id="port">PORT</h4>
+<h2 id="shared-parameter-reference"><a class="toclink" href="#shared-parameter-reference">Shared parameter reference</a></h2>
+<h4 id="port"><a class="toclink" href="#port">PORT</a></h4>
 <p>(optional, defaults to 4545)</p>
-<h4 id="external_io_offset">EXTERNAL_IO_OFFSET</h4>
-<h4 id="check_time_interval-and-time_tolerance">CHECK_TIME_INTERVAL and TIME_TOLERANCE</h4>
-<h4 id="external_io_offset_1">EXTERNAL_IO_OFFSET</h4>
-<h2 id="channel-parameter-reference">Channel parameter reference</h2>
+<h4 id="external_io_offset"><a class="toclink" href="#external_io_offset">EXTERNAL_IO_OFFSET</a></h4>
+<h4 id="check_time_interval-and-time_tolerance"><a class="toclink" href="#check_time_interval-and-time_tolerance">CHECK_TIME_INTERVAL and TIME_TOLERANCE</a></h4>
+<h4 id="external_io_offset_1"><a class="toclink" href="#external_io_offset_1">EXTERNAL_IO_OFFSET</a></h4>
+<h2 id="channel-parameter-reference"><a class="toclink" href="#channel-parameter-reference">Channel parameter reference</a></h2>
 <p>For specific information about a tools settings or the tools configuration needed (on the tool side), please see the tool-specific information.</p>
 <p>In general, the following parameters are available for a <code>OpenProtocol</code>-tool:</p>
-<h4 id="connection-information">Connection information</h4>
-<h4 id="port_1">PORT</h4>
+<h4 id="connection-information"><a class="toclink" href="#connection-information">Connection information</a></h4>
+<h4 id="port_1"><a class="toclink" href="#port_1">PORT</a></h4>
 <p>(optional, defaults to the shared parameter value)</p>
-<h4 id="type">TYPE</h4>
+<h4 id="type"><a class="toclink" href="#type">TYPE</a></h4>
 <p>(mandatory)</p>
-<h4 id="ccw_ack">CCW_ACK</h4>
-<h4 id="params">PARAMS</h4>
-<h4 id="alivexmtt">ALIVEXMTT</h4>
-<h4 id="showalive">SHOWALIVE</h4>
-<h4 id="rsptimeout">RSPTIMEOUT</h4>
-<h4 id="barcode_mid0051_rev">BARCODE_MID0051_REV</h4>
-<h4 id="check_ext_cond">CHECK_EXT_COND</h4>
-<h4 id="appl_start">APPL_START</h4>
-<h4 id="curve_request">CURVE_REQUEST</h4>
-<h4 id="check_time_enabled">CHECK_TIME_ENABLED</h4>
-<h4 id="ignore_id">IGNORE_ID</h4>
+<h4 id="ccw_ack"><a class="toclink" href="#ccw_ack">CCW_ACK</a></h4>
+<h4 id="params"><a class="toclink" href="#params">PARAMS</a></h4>
+<h4 id="alivexmtt"><a class="toclink" href="#alivexmtt">ALIVEXMTT</a></h4>
+<h4 id="showalive"><a class="toclink" href="#showalive">SHOWALIVE</a></h4>
+<h4 id="rsptimeout"><a class="toclink" href="#rsptimeout">RSPTIMEOUT</a></h4>
+<h4 id="barcode_mid0051_rev"><a class="toclink" href="#barcode_mid0051_rev">BARCODE_MID0051_REV</a></h4>
+<h4 id="check_ext_cond"><a class="toclink" href="#check_ext_cond">CHECK_EXT_COND</a></h4>
+<h4 id="appl_start"><a class="toclink" href="#appl_start">APPL_START</a></h4>
+<h4 id="curve_request"><a class="toclink" href="#curve_request">CURVE_REQUEST</a></h4>
+<h4 id="check_time_enabled"><a class="toclink" href="#check_time_enabled">CHECK_TIME_ENABLED</a></h4>
+<h4 id="ignore_id"><a class="toclink" href="#ignore_id">IGNORE_ID</a></h4>
 
 
 

@@ -886,8 +886,8 @@
 
 
 
-<h1 id="browser">Browser</h1>
-<h2 id="overview">Overview</h2>
+<h1 id="browser"><a class="toclink" href="#browser">Browser</a></h1>
+<h2 id="overview"><a class="toclink" href="#overview">Overview</a></h2>
 <p>The OGS runtime uses up to 4 web browser (Microsoft WebView2) instances. The instances are:
 - <code>StartView</code>: Browser on the start screen
 - <code>ProcessView</code>: Browser on the process screen (only visible, if the <code>url</code>-parameter in the job/task is set)
@@ -897,10 +897,10 @@
 <p>To implement this functionality, OGS provides the following:
 - For the JavaScript side: a bridge implementation accessibal through the <code>hostObjects</code> interface of the Chromium browser (<code>window.chrome.webview.hostObjects.sync.OGS</code>)
 - For the LUA side: a global <code>Browser</code> table with functions to manipulate the browser instances</p>
-<h2 id="javascript-hostobjects-bridge">JavaScript hostObjects bridge</h2>
+<h2 id="javascript-hostobjects-bridge"><a class="toclink" href="#javascript-hostobjects-bridge">JavaScript hostObjects bridge</a></h2>
 <p>OGS registers a <a href="https://learn.microsoft.com/en-us/dotnet/api/microsoft.web.webview2.core.corewebview2.addhostobjecttoscript">hostObject</a> in the WebView2 browser for the JavaScript side. The registered object is named <code>OGS</code> and implements a single string property <code>ObjectMessage</code>.</p>
 <p>To send a string to OGS from JavaScript, simply assign a value to the <code>window.chrome.webview.hostObjects.sync.OGS.ObjectMessage</code> property.</p>
-<h4 id="sample-code">Sample code</h4>
+<h4 id="sample-code"><a class="toclink" href="#sample-code">Sample code</a></h4>
 <pre><code class="language-javascript">// send a command string to OGS 
 function sendOgsCommand(cmd)
 {
@@ -916,7 +916,7 @@ function sendOgsCommand(cmd)
     }
 }
 </code></pre>
-<h2 id="global-browser-table">Global Browser table</h2>
+<h2 id="global-browser-table"><a class="toclink" href="#global-browser-table">Global Browser table</a></h2>
 <p>OGS exposes the browser instances through the global <code>Browser</code> object. The <code>Browser</code> object implements the following functions:</p>
 <ul>
 <li><a href="#navigate">Navigate</a>: Load a new URL in the web browser</li>
@@ -932,25 +932,25 @@ The following functions are also available, but are not fully implemented at the
 - [GetState](#getstate): 
 -->
 
-<h3 id="navigate">Navigate</h3>
+<h3 id="navigate"><a class="toclink" href="#navigate">Navigate</a></h3>
 <p>The <code>Browser.Navigate</code> function starts loading a new URL into the given browser instance.</p>
 <pre><code class="language-LUA">Browser.Navigate(instance, url)
 </code></pre>
-<h4 id="parameters">Parameters</h4>
+<h4 id="parameters"><a class="toclink" href="#parameters">Parameters</a></h4>
 <ul>
 <li>instance [string]: Web browser instance name (one of 'StartView', 'ProcessView', 'SidePanel', 'InstructionView') </li>
 <li>url [string]: Url to navigate the browser instance to (in the standard URL format, e.g. file://filename or https://server/page)</li>
 </ul>
-<h4 id="sample-code_1">Sample code</h4>
+<h4 id="sample-code_1"><a class="toclink" href="#sample-code_1">Sample code</a></h4>
 <pre><code class="language-LUA">-- Navigate the StartView browser to https://www.my-url.com/mypage
 Browser.Navigate('StartView', 'https://www.my-url.com/mypage')
 </code></pre>
-<h3 id="regmsghandler">RegMsgHandler</h3>
+<h3 id="regmsghandler"><a class="toclink" href="#regmsghandler">RegMsgHandler</a></h3>
 <p>The <code>Browser.RegMsgHandler</code> function registers or unregisters a LUA function to be called whenever the JavaScript running in the browser writes a message to the hostObject bridge <code>OGS.ObjectMessage</code> property.</p>
 <pre><code class="language-LUA">-- Register the callback function
 fn, err = Browser.RegMsgHandler(instance, callbackfn)
 </code></pre>
-<h4 id="parameters_1">Parameters</h4>
+<h4 id="parameters_1"><a class="toclink" href="#parameters_1">Parameters</a></h4>
 <ul>
 <li>instance [string]: Web browser instance name (one of 'StartView', 'ProcessView', 'SidePanel', 'InstructionView') </li>
 <li>callbackfn [function]: LUA function to be called when the JavaScript code writes a string to the <code>OGS.ObjectMessage</code> hostObject. If callbackfn is <code>nil</code>, then the current registration is removed. The callback function has the following signature:<pre><code>callbackfn(instance, objectMessage)
@@ -958,9 +958,9 @@ fn, err = Browser.RegMsgHandler(instance, callbackfn)
 </li>
 </ul>
 <p>Where instance [string] is the web browsers instance name (e.g. 'StartView') and objectMessage [string] the text which was written to the <code>OGS.ObjectMessage</code> property of the hostObject bridge from the JavaScript side.</p>
-<h4 id="return-values">Return values</h4>
+<h4 id="return-values"><a class="toclink" href="#return-values">Return values</a></h4>
 <p>If the function was executed successfully, the callbackfn is returned as the first return value. Else nil is returned and the second return value has an error message string (wrong parameters or unknown instance).</p>
-<h4 id="sample-code_2">Sample code</h4>
+<h4 id="sample-code_2"><a class="toclink" href="#sample-code_2">Sample code</a></h4>
 <pre><code class="language-LUA">local function callbackfn(instance, objectMessage)
     -- do whatever you want to do here if the javascript 
     -- code writes the OGS.ObjectMessage property
@@ -969,11 +969,11 @@ end
 -- Register a LUA function to be called from the JavaScript side
 Browser.RegMsgHandler('StartView', callbackfn)
 </code></pre>
-<h3 id="execjs_nonblocking">ExecJS_nonblocking</h3>
+<h3 id="execjs_nonblocking"><a class="toclink" href="#execjs_nonblocking">ExecJS_nonblocking</a></h3>
 <p>The <code>Browser.ExecJS_nonblocking</code> executes JavaScript code in the web browser instance.</p>
 <pre><code class="language-LUA">Browser.ExecJS_nonblocking(instance, jstext)
 </code></pre>
-<h4 id="parameters_2">Parameters</h4>
+<h4 id="parameters_2"><a class="toclink" href="#parameters_2">Parameters</a></h4>
 <ul>
 <li>instance [string]: Web browser instance name (one of 'StartView', 'ProcessView', 'SidePanel', 'InstructionView') </li>
 <li>jstext [string]: JavaScript string to execute in the browser. Note that this must be valid JavaScript code. </li>
@@ -984,7 +984,7 @@ Browser.RegMsgHandler('StartView', callbackfn)
 <li>Best practice is to write a JavaScript function in the web page and only call it through this function.</li>
 <li>You can serialize LUA objects to a JSON string and pass this through the function. The JavaScript side can then easily deserialize it.</li>
 </ul>
-<h4 id="sample-code_3">Sample code</h4>
+<h4 id="sample-code_3"><a class="toclink" href="#sample-code_3">Sample code</a></h4>
 <pre><code class="language-LUA">-- Build a JavaScript command, call the function &quot;my_function&quot; with
 -- some JSON text
 local param = '{ &quot;cmd&quot;: &quot;showmessage&quot; }'

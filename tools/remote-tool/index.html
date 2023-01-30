@@ -724,11 +724,11 @@
 
 
 
-<h1 id="remotetool">RemoteTool</h1>
+<h1 id="remotetool"><a class="toclink" href="#remotetool">RemoteTool</a></h1>
 <p>OGS supports connecting tools over a <code>ToolGateway</code>. This enables advanced  tool management scenarios, e.g. "roaming" tools between multiple stations.</p>
 <p>Using the <code>RemoteTool</code> driver requires a <code>ToolGateway</code> running on a server - the server then actually controls the tool, whereas the OGS stations only communication with the <code>ToolGateway</code>. This allows delegating tool management to the central <code>ToolGateway</code>. </p>
 <p>For each tool managed through the <code>ToolGateway</code>, OGS only uses a generic <code>RemoteTool</code> type channel in its local configuration, the <code>ToolGateway</code> then has the actual tool-specific configuration (like e.g. <a href="/docs/tools/openprotocol/README.md">OpenProtocol tools</a>).</p>
-<h2 id="installation">Installation</h2>
+<h2 id="installation"><a class="toclink" href="#installation">Installation</a></h2>
 <p>The <code>RemoteTool</code> driver is implemented in <code>RemoteTool.dll</code>. To use any <code>RemoteTool</code> tool, the driver must be loaded in the <code>[TOOL_DLL]</code> section of the projects <code>station.ini</code> configuration file (see also <a href="/docs/tools/README.md">Tool configuration</a>).</p>
 <p>To enable the driver in station.ini, set it as follows:</p>
 <pre><code>[TOOL_DLL]
@@ -740,7 +740,7 @@ ToolGateway_Addr=mytoolgateway.mycompany.com
 ToolGateway_Port=
 </code></pre>
 <p>For more information about the driver parameters, see <a href="#driver-parameter-reference">Driver Parameters</a> below.</p>
-<h2 id="tool-registration-and-configuration">Tool registration and configuration</h2>
+<h2 id="tool-registration-and-configuration"><a class="toclink" href="#tool-registration-and-configuration">Tool registration and configuration</a></h2>
 <p>All <code>RemoteTool</code>-tools are registered in the <code>[CHANNELS]</code> section of the projects <code>station.ini</code> file.</p>
 <p>The <code>[CHANNELS]</code> section only defines a channel number to channel name mapping - the channel/tool specific settings are then configured in a seperate section defined by the channel name. Inside the section, a reference to the <code>RemoteTool</code> driver then links driver and channel accordingly.</p>
 <p>The overall layout is therefore as follows (sample is for channel 2):</p>
@@ -754,14 +754,14 @@ DRIVER=RemoteTool
 # more channel/tool specific parameters for this tool/driver
 </code></pre>
 <p>Please see <a href="#channeltool-parameter-reference">Channel/tool parameter reference</a> below for more information about the available parameters.</p>
-<h2 id="channeltool-parameter-reference">Channel/tool parameter reference</h2>
+<h2 id="channeltool-parameter-reference"><a class="toclink" href="#channeltool-parameter-reference">Channel/tool parameter reference</a></h2>
 <p>Currently, there are no channel/tool-specific parameters needed (other than specifying the <code>DRIVER=RemoteTool</code>) to use this driver. All concrete tool communication settings are to be configured on the <code>ToolGateway</code> server side. </p>
-<h2 id="driver-parameter-reference">Driver parameter reference</h2>
+<h2 id="driver-parameter-reference"><a class="toclink" href="#driver-parameter-reference">Driver parameter reference</a></h2>
 <p>The driver parameters are defined in the <code>[RemoteTool]</code> section in the projects <code>station.ini</code>.</p>
 <p>The following parameters are available:</p>
-<h4 id="toolgateway_addr">ToolGateway_Addr</h4>
+<h4 id="toolgateway_addr"><a class="toclink" href="#toolgateway_addr">ToolGateway_Addr</a></h4>
 <p>IP address or hostname of the tool gateway.</p>
-<h4 id="toolgateway_port">ToolGateway_Port</h4>
+<h4 id="toolgateway_port"><a class="toclink" href="#toolgateway_port">ToolGateway_Port</a></h4>
 <p>(optional)</p>
 <p>Port number to use for connecting to the tool gateway. If not given, the driver tries to use the RPC endpoint mapper using the service UUID to resolve the connection endpoint (might require additional firewall settings).</p>
 

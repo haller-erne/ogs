@@ -601,14 +601,14 @@ title: LuaHID
 tags:
     - API</p>
 <hr />
-<h1 id="luahid">LuaHID</h1>
+<h1 id="luahid"><a class="toclink" href="#luahid">LuaHID</a></h1>
 <p>LuaHID provides an interface to access USB devices over the <code>HID</code> (<em>human input device</em>) protocol. It implements a thin LUA wrapper interface over the  cross platform hidapi library (hidapi.dll, see 
 <a href="https://github.com/signal11/hidapi">signal11/hidapi (github.com)</a>, licensed under <a href="https://github.com/signal11/hidapi/blob/master/LICENSE-bsd.txt">BSD License</a>). The code is derived from <a href="https://github.com/ynezz/luahidapi">ynezz/luahidapi (github.com)</a> (<a href="https://github.com/ynezz/luahidapi/blob/master/COPYING">MIT License</a>) and adopted to OGS.</p>
 <p>Note, that although USB mice and keyboards are technically HID devices, the Windows API does not allow to access these through the HID API (for security reasons). All other (custom) USB HID devices should work.</p>
-<h1 id="module">Module</h1>
+<h1 id="module"><a class="toclink" href="#module">Module</a></h1>
 <p>The LuaHID module provides global functions to access the systems HID API. Before calling any other function of the module, the <code>init()</code> function must be called. </p>
 <p>To actually connect to a physical device, an instance of the <code>HidDevice</code> object must be created (see #class_hiddevice below) by calling the <code>open()</code> function. This requires specifying the <em>VID</em> (vendor ID) and <em>PID</em> (device id) and (optionally) the <em>SN</em> (serial number). If the parameters are not known beforehand, they may be listed through calling the module level <code>enumerate()</code> function. This returns a table of all currently connected devices. Specific device actions (like reading/writing) can then be executed on the object returned from the <code>open()</code> call.</p>
-<h2 id="properties">Properties</h2>
+<h2 id="properties"><a class="toclink" href="#properties">Properties</a></h2>
 <table>
 <thead>
 <tr>
@@ -633,8 +633,8 @@ tags:
 </tr>
 </tbody>
 </table>
-<h2 id="enumerations">Enumerations</h2>
-<h2 id="functions">Functions</h2>
+<h2 id="enumerations"><a class="toclink" href="#enumerations">Enumerations</a></h2>
+<h2 id="functions"><a class="toclink" href="#functions">Functions</a></h2>
 <table>
 <thead>
 <tr>
@@ -725,9 +725,9 @@ tags:
 </tr>
 </tbody>
 </table>
-<h1 id="class-hiddeviceinfo">Class HidDeviceInfo</h1>
+<h1 id="class-hiddeviceinfo"><a class="toclink" href="#class-hiddeviceinfo">Class HidDeviceInfo</a></h1>
 <p>The HidDeviceInfo table provides information about a USB HID device connected to the system. The HidDeviceInfo is retrieved by calling the <code>enumerate()</code> function and iterating the result by calling the <code>next()</code> member. </p>
-<h2 id="properties_1">Properties</h2>
+<h2 id="properties_1"><a class="toclink" href="#properties_1">Properties</a></h2>
 <table>
 <thead>
 <tr>
@@ -800,10 +800,10 @@ tags:
 </tr>
 </tbody>
 </table>
-<h1 id="class-hidenum">Class HidEnum</h1>
+<h1 id="class-hidenum"><a class="toclink" href="#class-hidenum">Class HidEnum</a></h1>
 <p>The HidEnum class is actually an iterator and represents the list returned from calling the <code>enumerate</code> module function. Each element of the list represents a connected USB HID device and has the properties shown in the following section. 
 To iterate the list, call the <code>next()</code> instance function - each call to next returns a <code>HidDeviceInfo</code> table and internally advances to the next item.</p>
-<h2 id="functions_1">Functions</h2>
+<h2 id="functions_1"><a class="toclink" href="#functions_1">Functions</a></h2>
 <table>
 <thead>
 <tr>
@@ -828,9 +828,9 @@ To iterate the list, call the <code>next()</code> instance function - each call 
 </tr>
 </tbody>
 </table>
-<h1 id="class-hiddevice">Class HidDevice</h1>
-<h2 id="properties_2">Properties</h2>
-<h2 id="functions_2">Functions</h2>
+<h1 id="class-hiddevice"><a class="toclink" href="#class-hiddevice">Class HidDevice</a></h1>
+<h2 id="properties_2"><a class="toclink" href="#properties_2">Properties</a></h2>
+<h2 id="functions_2"><a class="toclink" href="#functions_2">Functions</a></h2>
 <pre><code>{"write", hidapi_write},
 {"read", hidapi_read},
 {"set", hidapi_set},

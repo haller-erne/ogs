@@ -19,6 +19,7 @@ nav:
         - ADS communication (TwinCat, Nexeed, Beckhoff): libs/lua-ads.md
         - OpcUA communication: libs/lua-opcua.md
         - Modbus/TCP/UDP communication: libs/lua-modbus.md
+        - USB HID Devices (Buttons, Arduino, etc.): libs/lua-hid.md
 
 # sample
 #    – Version 1.x:

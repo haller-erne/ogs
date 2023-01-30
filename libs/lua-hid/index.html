@@ -32,6 +32,23 @@
       var is_top_frame = false;
         
         var pageToc = [
+          {title: "LuaHID", url: "#_top", children: [
+          ]},
+          {title: "Module", url: "#module", children: [
+              {title: "Properties", url: "#properties" },
+              {title: "Enumerations", url: "#enumerations" },
+              {title: "Functions", url: "#functions" },
+          ]},
+          {title: "Class HidDeviceInfo", url: "#class-hiddeviceinfo", children: [
+              {title: "Properties", url: "#properties_1" },
+          ]},
+          {title: "Class HidEnum", url: "#class-hidenum", children: [
+              {title: "Functions", url: "#functions_1" },
+          ]},
+          {title: "Class HidDevice", url: "#class-hiddevice", children: [
+              {title: "Properties", url: "#properties_2" },
+              {title: "Functions", url: "#functions_2" },
+          ]},
         ];
 
     </script>
@@ -68,7 +85,254 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    
+    <p>--
+id: luahid
+name: LuaHID
+title: LuaHID
+tags:
+    - API</p>
+<hr />
+<h1 id="luahid">LuaHID</h1>
+<p>LuaHID provides an interface to access USB devices over the <code>HID</code> (<em>human input device</em>) protocol. It implements a thin LUA wrapper interface over the  cross platform hidapi library (hidapi.dll, see 
+<a href="https://github.com/signal11/hidapi">signal11/hidapi (github.com)</a>, licensed under <a href="https://github.com/signal11/hidapi/blob/master/LICENSE-bsd.txt">BSD License</a>). The code is derived from <a href="https://github.com/ynezz/luahidapi">ynezz/luahidapi (github.com)</a> (<a href="https://github.com/ynezz/luahidapi/blob/master/COPYING">MIT License</a>) and adopted to OGS.</p>
+<p>Note, that although USB mice and keyboards are technically HID devices, the Windows API does not allow to access these through the HID API (for security reasons). All other (custom) USB HID devices should work.</p>
+<h1 id="module">Module</h1>
+<p>The LuaHID module provides global functions to access the systems HID API. Before calling any other function of the module, the <code>init()</code> function must be called. </p>
+<p>To actually connect to a physical device, an instance of the <code>HidDevice</code> object must be created (see #class_hiddevice below) by calling the <code>open()</code> function. This requires specifying the <em>VID</em> (vendor ID) and <em>PID</em> (device id) and (optionally) the <em>SN</em> (serial number). If the parameters are not known beforehand, they may be listed through calling the module level <code>enumerate()</code> function. This returns a table of all currently connected devices. Specific device actions (like reading/writing) can then be executed on the object returned from the <code>open()</code> call.</p>
+<h2 id="properties">Properties</h2>
+<table>
+<thead>
+<tr>
+<th>Property Name</th>
+<th>Return Type</th>
+<th>Description</th>
+<th>Tags</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>_VERSION</code></td>
+<td><code>string</code></td>
+<td>Current version of the LuaHID module. See also the <code>version_mod()</code> function to get more details about the DLL module version.</td>
+<td>Read-Only</td>
+</tr>
+<tr>
+<td><code>_TIMESTAMP</code></td>
+<td><code>string</code></td>
+<td>Timestamp of the last build of the LuaHID module.</td>
+<td>Read-Only</td>
+</tr>
+</tbody>
+</table>
+<h2 id="enumerations">Enumerations</h2>
+<h2 id="functions">Functions</h2>
+<table>
+<thead>
+<tr>
+<th>Function Name</th>
+<th>Return Type</th>
+<th>Description</th>
+<th>Tags</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>init()</code></td>
+<td><code>boolean</code></td>
+<td>Initializes the LuaHID library. Returns true on success, nil on failure.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>exit()</code></td>
+<td><code>boolean</code></td>
+<td>Cleans up and terminates the LuaHID library. Returns true on success, nil on failure.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>enumerate(integer vid, integer pid)</code><br/><code>enumerate()</code></td>
+<td><code>hidenum</code></td>
+<td>Returns a HID device enumeration object for HID devices that matches given vid, pid pair. Enumerates all HID devices if no arguments provided or (0,0) used.<br/><strong>IMPORTANT</strong>: Mouse and keyboard devices are not visible on Windows<br/>Returns nil if failed.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>write()</code></td>
+<td><code>boolean</code></td>
+<td>. Returns true on success, nil on failure.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>read()</code></td>
+<td><code>boolean</code></td>
+<td>. Returns true on success, nil on failure.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>set()</code></td>
+<td><code>boolean</code></td>
+<td>. Returns true on success, nil on failure.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>getstring()</code></td>
+<td><code>boolean</code></td>
+<td>. Returns true on success, nil on failure.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>setfeature()</code></td>
+<td><code>boolean</code></td>
+<td>. Returns true on success, nil on failure.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>getfeature()</code></td>
+<td><code>boolean</code></td>
+<td>. Returns true on success, nil on failure.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>error()</code></td>
+<td><code>boolean</code></td>
+<td>. Returns true on success, nil on failure.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>close()</code></td>
+<td><code>boolean</code></td>
+<td>. Returns true on success, nil on failure.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>msleep()</code></td>
+<td><code>boolean</code></td>
+<td>. Returns true on success, nil on failure.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>version_mod()</code></td>
+<td><code>boolean</code></td>
+<td>. Returns true on success, nil on failure.</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<h1 id="class-hiddeviceinfo">Class HidDeviceInfo</h1>
+<p>The HidDeviceInfo table provides information about a USB HID device connected to the system. The HidDeviceInfo is retrieved by calling the <code>enumerate()</code> function and iterating the result by calling the <code>next()</code> member. </p>
+<h2 id="properties_1">Properties</h2>
+<table>
+<thead>
+<tr>
+<th>Property Name</th>
+<th>Return Type</th>
+<th>Description</th>
+<th>Tags</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>path</code></td>
+<td><code>string</code></td>
+<td>System specific device path.</td>
+<td>Read-Only</td>
+</tr>
+<tr>
+<td><code>vid</code></td>
+<td><code>integer</code></td>
+<td>Vendor ID of the device.</td>
+<td>Read-Only</td>
+</tr>
+<tr>
+<td><code>pid</code></td>
+<td><code>integer</code></td>
+<td>Product ID of the device.</td>
+<td>Read-Only</td>
+</tr>
+<tr>
+<td><code>serial_number</code></td>
+<td><code>string</code></td>
+<td>Device serial number.</td>
+<td>Read-Only</td>
+</tr>
+<tr>
+<td><code>release</code></td>
+<td><code>integer</code></td>
+<td>Release number (version) of the device.</td>
+<td>Read-Only</td>
+</tr>
+<tr>
+<td><code>manufacturer_string</code></td>
+<td><code>string</code></td>
+<td>Manufacturer name.</td>
+<td>Read-Only</td>
+</tr>
+<tr>
+<td><code>product_ _string</code></td>
+<td><code>string</code></td>
+<td>Product name.</td>
+<td>Read-Only</td>
+</tr>
+<tr>
+<td><code>usage_page</code></td>
+<td><code>integer</code></td>
+<td>HID usage page of the device.</td>
+<td>Read-Only</td>
+</tr>
+<tr>
+<td><code>usage</code></td>
+<td><code>integer</code></td>
+<td>HID usage of the device.</td>
+<td>Read-Only</td>
+</tr>
+<tr>
+<td><code>interface</code></td>
+<td><code>integer</code></td>
+<td>Interface number of the device.</td>
+<td>Read-Only</td>
+</tr>
+</tbody>
+</table>
+<h1 id="class-hidenum">Class HidEnum</h1>
+<p>The HidEnum class is actually an iterator and represents the list returned from calling the <code>enumerate</code> module function. Each element of the list represents a connected USB HID device and has the properties shown in the following section. 
+To iterate the list, call the <code>next()</code> instance function - each call to next returns a <code>HidDeviceInfo</code> table and internally advances to the next item.</p>
+<h2 id="functions_1">Functions</h2>
+<table>
+<thead>
+<tr>
+<th>Function Name</th>
+<th>Return Type</th>
+<th>Description</th>
+<th>Tags</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>next()</code></td>
+<td><code>HidDevice</code></td>
+<td>Returns the current device info data and steps on to the next element in the list.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>close()</code></td>
+<td><code>None</code></td>
+<td>Closes the iterator and frees any resources. There is normally no need to call this, as the object is garbage collected automatically.</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<h1 id="class-hiddevice">Class HidDevice</h1>
+<h2 id="properties_2">Properties</h2>
+<h2 id="functions_2">Functions</h2>
+<pre><code>{"write", hidapi_write},
+{"read", hidapi_read},
+{"set", hidapi_set},
+{"getstring", hidapi_getstring},
+{"setfeature", hidapi_setfeature},
+{"getfeature", hidapi_getfeature},
+{"error", hidapi_error},
+{"close", hidapi_close},
+{"__gc",  hidapi_hiddevice_meta_gc},
+</code></pre>
+<p>). are CoreObjects that can be added to Players and guide the Player's animation in sync with the Ability's state machine. Spawn an Ability with <code>World.SpawnAsset()</code> or add an Ability as a child of an Equipment/Weapon to have it be assigned to the Player automatically when that item is equipped.</p>
 
   <br>
     

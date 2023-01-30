@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link rel="canonical" href="https://haller-erne.github.io/ogs/libs/_template_/">
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Ability - OGS Documentation</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Ability", url: "#_top", children: [
+              {title: "Properties", url: "#properties" },
+              {title: "Functions", url: "#functions" },
+              {title: "Events", url: "#events" },
+              {title: "Examples", url: "#examples" },
+              {title: "Tutorials", url: "#tutorials" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="ability">Ability</h1>
+<p>Abilities are CoreObjects that can be added to Players and guide the Player's animation in sync with the Ability's state machine. Spawn an Ability with <code>World.SpawnAsset()</code> or add an Ability as a child of an Equipment/Weapon to have it be assigned to the Player automatically when that item is equipped.</p>
+<p>Abilities can be activated by association with an Action Binding. Their internal state machine flows through the phases: Ready, Cast, Execute, Recovery, and Cooldown. An Ability begins in the Ready state and transitions to Cast when its Binding (for example Left mouse click) is activated by the owning player. It then automatically flows from Cast to Execute, then Recovery and finally Cooldown. At each of these state transitions it fires a corresponding event.</p>
+<p>Only one ability can be active at a time. By default, activating an ability will interrupt the currently active ability. The <code>canBePrevented</code> and <code>preventsOtherAbilities</code> properties can be used to customize interruption rules for competing abilities.</p>
+<p>If an ability is interrupted during the Cast phase, it will immediately reset to the Ready state. If an ability is interrupted during the Execute or Recovery phase, the ability will immediately transition to the Cooldown phase.</p>
+<h2 id="properties">Properties</h2>
+<table>
+<thead>
+<tr>
+<th>Property Name</th>
+<th>Return Type</th>
+<th>Description</th>
+<th>Tags</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>isEnabled</code></td>
+<td><code>boolean</code></td>
+<td>Turns an Ability on/off. It stays on the Player but is interrupted if <code>isEnabled</code> is set to <code>false</code> during an active Ability. True by default.</td>
+<td>Read-Write</td>
+</tr>
+<tr>
+<td><code>canActivateWhileDead</code></td>
+<td><code>boolean</code></td>
+<td>Indicates if the Ability can be used while the owning Player is dead. False by default.</td>
+<td>Read-Only</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>The name of the Ability.</td>
+<td>Read-Only</td>
+</tr>
+<tr>
+<td><code>actionBinding</code></td>
+<td><code>string</code></td>
+<td><em>This property is deprecated. Please use <code>actionName</code> instead, but note that <code>actionBinding</code> and <code>actionName</code> use different values.</em>  Which action binding will cause the Ability to activate. Possible values of the bindings are listed on the <a href="../api/key_bindings.md">Ability binding</a> page.</td>
+<td>Read-Only, <abbr title='This API is deprecated and might be removed in a future version.'><strong>Deprecated</strong></abbr></td>
+</tr>
+<tr>
+<td><code>actionName</code></td>
+<td><code>string</code></td>
+<td>Which binding set action name will cause the Ability to activate. See <a href="../references/binding_sets.md">Binding Sets</a> reference.</td>
+<td>Read-Only</td>
+</tr>
+<tr>
+<td><code>owner</code></td>
+<td><a href="player.md"><code>Player</code></a></td>
+<td>Assigning an owner applies the Ability to that Player.</td>
+<td>Read-Write</td>
+</tr>
+<tr>
+<td><code>castPhaseSettings</code></td>
+<td><a href="abilityphasesettings.md"><code>AbilityPhaseSettings</code></a></td>
+<td>Config data for the Cast phase (see below).</td>
+<td>Read-Only</td>
+</tr>
+<tr>
+<td><code>executePhaseSettings</code></td>
+<td><a href="abilityphasesettings.md"><code>AbilityPhaseSettings</code></a></td>
+<td>Config data for the Execute phase.</td>
+<td>Read-Only</td>
+</tr>
+<tr>
+<td><code>recoveryPhaseSettings</code></td>
+<td><a href="abilityphasesettings.md"><code>AbilityPhaseSettings</code></a></td>
+<td>Config data for the Recovery phase.</td>
+<td>Read-Only</td>
+</tr>
+<tr>
+<td><code>cooldownPhaseSettings</code></td>
+<td><a href="abilityphasesettings.md"><code>AbilityPhaseSettings</code></a></td>
+<td>Config data for the Cooldown phase.</td>
+<td>Read-Only</td>
+</tr>
+<tr>
+<td><code>animation</code></td>
+<td><code>string</code></td>
+<td>Name of the animation the Player will play when the Ability is activated. Possible values: See <a href="../api/animations.md">Ability Animation</a> for strings and other info.</td>
+<td>Read-Only</td>
+</tr>
+<tr>
+<td><code>canBePrevented</code></td>
+<td><code>boolean</code></td>
+<td>Used in conjunction with the phase property <code>preventsOtherAbilities</code> so multiple abilities on the same Player can block each other during specific phases. True by default.</td>
+<td>Read-Only</td>
+</tr>
+</tbody>
+</table>
+<h2 id="functions">Functions</h2>
+<table>
+<thead>
+<tr>
+<th>Function Name</th>
+<th>Return Type</th>
+<th>Description</th>
+<th>Tags</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Activate()</code></td>
+<td><code>None</code></td>
+<td>Activates an Ability as if the button had been pressed.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>Interrupt()</code></td>
+<td><code>None</code></td>
+<td>Changes an Ability from Cast phase to Ready phase. If the Ability is in either Execute or Recovery phases it instead goes to Cooldown phase.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>AdvancePhase()</code></td>
+<td><code>None</code></td>
+<td>Advances a currently active Ability from its current phase to the next phase. For example, an ability in the Cast phase will begin the Execute phase, an ability on cooldown will become ready, etc.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>GetCurrentPhase()</code></td>
+<td><a href="enums.md#abilityphase"><code>AbilityPhase</code></a></td>
+<td>The current AbilityPhase for this Ability. These are returned as one of: AbilityPhase.READY, AbilityPhase.CAST, AbilityPhase.EXECUTE, AbilityPhase.RECOVERY and AbilityPhase.COOLDOWN.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>GetCurrentPhaseSettings()</code></td>
+<td><a href="abilityphasesettings.md"><code>AbilityPhaseSettings</code></a></td>
+<td>Returns the settings for the current phase of this Ability. Returns <code>nil</code> if the current phase is <code>AbilityPhase.READY</code>.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>GetPhaseTimeRemaining()</code></td>
+<td><code>number</code></td>
+<td>Seconds left in the current phase.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>GetTargetData()</code></td>
+<td><a href="abilitytarget.md"><code>AbilityTarget</code></a></td>
+<td>Returns information about what the Player has targeted this phase.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>SetTargetData(AbilityTarget)</code></td>
+<td><code>None</code></td>
+<td>Updates information about what the Player has targeted this phase. This can affect the execution of the Ability.</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<h2 id="events">Events</h2>
+<table>
+<thead>
+<tr>
+<th>Event Name</th>
+<th>Return Type</th>
+<th>Description</th>
+<th>Tags</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>readyEvent</code></td>
+<td><a href="event.md"><code>Event</code></a>&lt;<a href="ability.md"><code>Ability</code></a>&gt;</td>
+<td>Fired when the Ability becomes ready. In this phase it is possible to activate it again.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>castEvent</code></td>
+<td><a href="event.md"><code>Event</code></a>&lt;<a href="ability.md"><code>Ability</code></a>&gt;</td>
+<td>Fired when the Ability enters the Cast phase.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>executeEvent</code></td>
+<td><a href="event.md"><code>Event</code></a>&lt;<a href="ability.md"><code>Ability</code></a>&gt;</td>
+<td>Fired when the Ability enters Execute phase.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>recoveryEvent</code></td>
+<td><a href="event.md"><code>Event</code></a>&lt;<a href="ability.md"><code>Ability</code></a>&gt;</td>
+<td>Fired when the Ability enters Recovery.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>cooldownEvent</code></td>
+<td><a href="event.md"><code>Event</code></a>&lt;<a href="ability.md"><code>Ability</code></a>&gt;</td>
+<td>Fired when the Ability enters Cooldown.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>interruptedEvent</code></td>
+<td><a href="event.md"><code>Event</code></a>&lt;<a href="ability.md"><code>Ability</code></a>&gt;</td>
+<td>Fired when the Ability is interrupted.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>tickEvent</code></td>
+<td><a href="event.md"><code>Event</code></a>&lt;<a href="ability.md"><code>Ability</code></a> ability, <code>number</code> deltaTime&gt;</td>
+<td>Fired every tick while the Ability is active (isEnabled = true and phase is not ready).</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<h2 id="examples">Examples</h2>
+<p>Example using:</p>
+<h3 id="castevent"><code>castEvent</code></h3>
+<p>The Cast phase begins as soon as an ability is activated. By checking if the player casting the ability <code>isGrounded</code> we can create an effect that propels you upwards, but it doesn't work if you are already jumping or flying. We detect this is the <code>castEvent</code>, which is early enough for an <code>Interrupt()</code> to reset the ability.</p>
+<pre><code class="language-lua">--Server script
+local ability = script.parent
+
+function OnCast(ability)
+    if ability.owner.isGrounded then
+        ability.owner:SetVelocity(Vector3.UP * 2000)
+    else
+        ability:Interrupt()
+    end
+end
+
+ability.castEvent:Connect(OnCast)
+</code></pre>
+<p>See also: <a href="coreobject.md">CoreObject.parent</a> | <a href="ability.md">Ability.owner</a> | <a href="player.md">Player.isGrounded</a> | <a href="vector3.md">Vector3.UP</a> | <a href="event.md">Event.Connect</a></p>
+<hr />
+<p>Example using:</p>
+<h3 id="cooldownevent"><code>cooldownEvent</code></h3>
+<p>In this example, a fighting game has an "invincible" mechanic where player attacks are not interrupted while they have this effect. Some powerful attacks make the player invincible during the entire active cycle of the ability. The effect is gained at the beginning of the cast phase and is removed at the end of the recovery phase, before the cooldown begins. The resource system is used in keeping track of the invincibility effect.</p>
+<pre><code class="language-lua">--Server script
+local ability = script.parent
+
+function OnCast(ability)
+    ability.owner:AddResource(&quot;invincible&quot;, 1)
+end
+
+function OnCooldown(ability)
+    ability.owner:RemoveResource(&quot;invincible&quot;, 1)
+end
+
+ability.castEvent:Connect(OnCast)
+ability.cooldownEvent:Connect(OnCooldown)
+</code></pre>
+<p>See also: <a href="coreobject.md">CoreObject.parent</a> | <a href="player.md">Player.owner</a> | <a href="ability.md">Ability.castEvent</a> | <a href="event.md">Event.Connect</a></p>
+<hr />
+<p>Example using:</p>
+<h3 id="executeevent"><code>executeEvent</code></h3>
+<p>Weapons implement lots of built-in gameplay that doesn't require any scripting, such as attack and reload abilities. However, they can be augmented with additional mechanics. In this example, a special sound effect is played when a weapon shoots while low on ammunition. The script expects to be a child of a weapon's "Shoot" ability.</p>
+<pre><code class="language-lua">--Server script
+local ability = script.parent
+local weapon = script:FindAncestorByType('Weapon')
+local lowAmmoSound = script:GetCustomProperty(&quot;LowAmmoSound&quot;)
+
+local LOW_AMMO_PERCENTAGE = 0.2
+
+function OnExecute(ability)
+    if weapon.currentAmmo / weapon.maxAmmo &lt;= LOW_AMMO_PERCENTAGE then
+        World.SpawnAsset(lowAmmoSound, {position = weapon:GetWorldPosition()})
+    end
+end
+
+ability.executeEvent:Connect(OnExecute)
+</code></pre>
+<p>See also: <a href="coreobject.md">CoreObject.parent</a> | <a href="weapon.md">Weapon.currentAmmo</a> | <a href="world.md">World.SpawnAsset</a> | <a href="ability.md">Ability.executeEvent</a> | <a href="event.md">Event.Connect</a></p>
+<hr />
+<p>Example using:</p>
+<h3 id="interruptedevent"><code>interruptedEvent</code></h3>
+<p>The <code>interruptedEvent</code> fires when an ability is going through it's activation process and <code>Interrupt()</code> is called on it, or if it becomes disabled. In this example, interruption is a key part of the game design, so a visual effect is spawned at the player's position to help communicate the interaction between players.</p>
+<pre><code class="language-lua">--Server script
+local ability = script.parent
+local interruptedVfx = script:GetCustomProperty(&quot;InterruptedVfx&quot;)
+
+function OnInterrupted(ability)
+    if Object.IsValid(ability.owner) then
+        World.SpawnAsset(interruptedVfx, {position = ability.owner:GetWorldPosition()})
+    end
+end
+
+ability.interruptedEvent:Connect(OnInterrupted)
+</code></pre>
+<p>See also: <a href="coreobject.md">CoreObject.parent</a> | <a href="object.md">Object.IsValid</a> | <a href="ability.md">Ability.owner</a> | <a href="world.md">World.SpawnAsset</a> | <a href="player.md">Player.GetWorldPosition</a> | <a href="event.md">Event.Connect</a></p>
+<hr />
+<p>Example using:</p>
+<h3 id="readyevent"><code>readyEvent</code></h3>
+<p>The Ready phase begins when an ability comes off cooldown and is "ready" to be used again. In this example, we create an invisibility effect that takes advantage of the <code>readyEvent</code>, leveraging the cooldown duration of the ability as a clock to determine when to make the player visible again.</p>
+<pre><code class="language-lua">-- Server script
+local ability = script.parent
+
+function OnExecute(ability)
+    -- Hide the player
+    ability.owner:SetVisibility(false)
+end
+
+function OnReady(ability)
+    -- Show the player
+    ability.owner:SetVisibility(true)
+end
+
+ability.readyEvent:Connect(OnReady)
+ability.executeEvent:Connect(OnExecute)
+</code></pre>
+<p>See also: <a href="coreobject.md">CoreObject.parent</a> | <a href="ability.md">Ability.owner</a> | <a href="player.md">Player.SetVisibility</a> | <a href="event.md">Event.Connect</a></p>
+<hr />
+<p>Example using:</p>
+<h3 id="recoveryevent"><code>recoveryEvent</code></h3>
+<p>The <code>recoveryEvent</code> marks the end of an ability's Execute phase and the beginning of its Recovery phase. In this example, a melee punch ability has a trigger that causes damage to enemies who overlap it. For it to work the trigger is only enabled for a brief moment, during the Execute phase.</p>
+<pre><code class="language-lua">--Server script
+local ability = script.parent
+local trigger = script:GetCustomProperty(&quot;ImpactTrigger&quot;):WaitForObject()
+trigger.collision = Collision.FORCE_OFF
+
+local DAMAGE_AMOUNT = 10
+
+function OnExecute(ability)
+    trigger.collision = Collision.FORCE_ON
+end
+
+function OnRecovery(ability)
+    trigger.collision = Collision.FORCE_OFF
+end
+
+ability.executeEvent:Connect(OnExecute)
+ability.recoveryEvent:Connect(OnRecovery)
+
+function OnBeginOverlap(trigger, other)
+    -- Only damage enemy players
+    if other:IsA(&quot;Player&quot;) and other.team ~= ability.owner.team then
+        other:ApplyDamage(Damage.New(DAMAGE_AMOUNT))
+    end
+end
+
+trigger.beginOverlapEvent:Connect(OnBeginOverlap)
+</code></pre>
+<p>See also: <a href="coreobject.md">CoreObject.parent</a> | <a href="coreobjectreference.md">CoreObjectReference.WaitForObject</a> | <a href="ability.md">Ability.executeEvent</a> | <a href="event.md">Event.Connect</a> | <a href="other.md">other.IsA</a> | <a href="player.md">Player.team</a> | <a href="damage.md">Damage.New</a> | <a href="trigger.md">Trigger.beginOverlapEvent</a></p>
+<hr />
+<p>Example using:</p>
+<h3 id="tickevent"><code>tickEvent</code></h3>
+<p>Abilities fire the <code>tickEvent</code> while they are active or on cooldown (not on Ready state). In this example, a piece of equipment carries several abilities, but we want to do a common update logic on all of them. Note: <code>Ability.tickEvent</code> works somewhat differently from a <code>Tick()</code> function - <code>tickEvent</code> is an actual event that just happens to fire once per tick. Each invocation of the callback runs on its own task. This means that, unlike <code>Tick()</code>, there is no guarantee that it will wait for the previous <code>tickEvent</code> to finish before starting the next one. This means you can't use things like <code>Task.Wait()</code> to add time between ticks.</p>
+<pre><code class="language-lua">local equipment = script.parent
+local allAbilities = equipment:GetAbilities()
+
+function OnTick(ability, deltaTime)
+    print(&quot;Updating ability &quot; .. ability.name)
+end
+
+for _, ability in ipairs(allAbilities) do
+    ability.tickEvent:Connect(OnTick)
+end
+</code></pre>
+<p>See also: <a href="coreobject.md">CoreObject.parent</a> | <a href="equipment.md">Equipment.GetAbilities</a> | <a href="event.md">Event.Connect</a> | <a href="coreluafunctions.md">CoreLua.print</a></p>
+<hr />
+<p>Example using:</p>
+<h3 id="activate"><code>Activate</code></h3>
+<p>The Ability <code>Activate()</code> function behaves as if the player had pressed the key binding. In order for a server gameplay decision to result in an ability activation, it must be communicated over the network somehow. In this example, a trigger overlap is representative of an arbitrary gameplay decision on the server. A broadcast message is sent to the client, who receives the event and activates the ability.</p>
+<pre><code class="language-lua">--Server script
+local trigger = script.parent
+local function OnBeginOverlap(trigger, other)
+    if other:IsA(&quot;Player&quot;) then
+        Events.BroadcastToPlayer(other, &quot;SteppedOnObject&quot;)
+    end
+end
+
+trigger.beginOverlapEvent(OnBeginOverlap)
+
+--[[#description
+    Client context script under the ability:
+]]
+local ability = script:FindAncestorByType(&quot;Ability&quot;)
+
+function OnPlayAnimation()
+    if ability.owner and ability.owner == Game.GetLocalPlayer() then
+        ability:Activate()
+    end
+end
+
+Events.Connect(&quot;SteppedOnObject&quot;, OnPlayAnimation)
+</code></pre>
+<p>See also: <a href="coreobject.md">CoreObject.parent</a> | <a href="trigger.md">Trigger.beginOverlapEvent</a> | <a href="other.md">other.IsA</a> | <a href="events.md">Events.BroadcastToPlayer</a> | <a href="ability.md">Ability.owner</a> | <a href="game.md">Game.GetLocalPlayer()</a></p>
+<hr />
+<p>Example using:</p>
+<h3 id="advancephase"><code>AdvancePhase</code></h3>
+<h3 id="getcurrentphase"><code>GetCurrentPhase</code></h3>
+<p>In this example an ability is on cooldown, but can be set back to <code>Ready</code> by calling <code>AdvancePhase()</code>.</p>
+<pre><code class="language-lua">function EndAbilityCooldown(ability)
+    if ability:GetCurrentPhase() == AbilityPhase.COOLDOWN then
+        ability:AdvancePhase()
+    end
+end
+</code></pre>
+<hr />
+<p>Example using:</p>
+<h3 id="getcurrentphase_1"><code>GetCurrentPhase</code></h3>
+<h3 id="getphasetimeremaining"><code>GetPhaseTimeRemaining</code></h3>
+<p>In this example, while the ability is on cooldown, the percentage completion of the cooldown is calculated. This could be useful, for instance, in displaying user interface.</p>
+<pre><code class="language-lua">local ability = script:FindAncestorByType(&quot;Ability&quot;)
+
+function Tick()
+    if ability:GetCurrentPhase() == AbilityPhase.COOLDOWN then
+        local duration = ability.cooldownPhaseSettings.duration
+        local remaining = ability:GetPhaseTimeRemaining()
+        local percent = 100 * (1 - remaining / duration)
+
+        print(&quot;Cooldown remaining: %&quot; .. string.format(&quot;%.2f&quot;,percent))
+    end
+end
+</code></pre>
+<p>See also: <a href="coreobject.md">CoreObject.FindAncestorByType</a> | <a href="ability.md">Ability.GetCurrentPhase</a> | <a href="abilityphasesettings.md">AbilityPhaseSettings.duration</a> | <a href="coreluafunctions.md">CoreLua.print</a></p>
+<hr />
+<p>Example using:</p>
+<h3 id="gettargetdata"><code>GetTargetData</code></h3>
+<h3 id="settargetdata"><code>SetTargetData</code></h3>
+<p>The ability's targeting data gives a lot of information about where and what the player is aiming at. If setup correctly, it can also be modified programmatically. In this example, the Z position of the target is flattened horizontally. Useful, for example, in a top-down shooter. For this to work it should be placed in a client context under the ability. The ability should also have the option "Is Target Data Update" turned off for the Execute phase, otherwise any data set programmatically will be overwritten when the phase changes.</p>
+<pre><code class="language-lua">--Server script
+local ability = script:FindAncestorByType(&quot;Ability&quot;)
+
+function OnCast(ability)
+    local abilityTarget = ability:GetTargetData()
+    local pos = abilityTarget:GetHitPosition()
+
+    pos.z = ability.owner:GetWorldPosition().z + 50
+
+    abilityTarget:SetHitPosition(pos)
+    ability:SetTargetData(abilityTarget)
+end
+
+ability.castEvent:Connect(OnCast)
+</code></pre>
+<p>See also: <a href="coreobject.md">CoreObject.FindAncestorByType</a> | <a href="abilitytarget.md">AbilityTarget.GetHitPosition</a> | <a href="ability.md">Ability.owner</a> | <a href="player.md">Player.GetWorldPosition</a> | <a href="event.md">Event.Connect</a></p>
+<hr />
+<p>Example using:</p>
+<h3 id="interrupt"><code>Interrupt</code></h3>
+<p>Interrupting an ability either sends it back into ready state (if it was still in the Cast phase) or puts it on cooldown. In this example, we have an ability that searches for all enemies in a 10 meter radius and interrupts their abilities.</p>
+<pre><code class="language-lua">--Server script
+local ability = script.parent
+local RADIUS = 1000 -- 10 meters
+
+function OnExecute(ability)
+    local center = ability.owner:GetWorldPosition()
+    -- Search for enemies
+    local enemies = Game.FindPlayersInCylinder(center, RADIUS, {ignoreTeams = ability.owner.team})
+    for _, enemy in ipairs(enemies) do
+        -- Interrupt all their abilities
+        local enemyAbilities = enemy:GetAbilities()
+        for _,a in ipairs(enemyAbilities) do
+            a:Interrupt()
+        end
+    end
+end
+
+ability.executeEvent:Connect(OnExecute)
+</code></pre>
+<p>See also: <a href="coreobject.md">CoreObject.parent</a> | <a href="ability.md">Ability.owner</a> | <a href="player.md">Player.GetWorldPosition</a> | <a href="game.md">Game.FindPlayersInCylinder</a> | <a href="event.md">Event.Connect</a></p>
+<hr />
+<p>Example using:</p>
+<h3 id="actionname"><code>actionName</code></h3>
+<p>Even though some API properties are read-only, they are useful is solutions such as user interface. In this example, a client context script searches the local player's list of abilities to find one that matches the action name (input) designated for this UI component. When it's found, the ability's name is written to the UI Text object.</p>
+<pre><code class="language-lua">--Client script
+local ACTION_NAME = script:GetCustomProperty(&quot;ActionName&quot;)
+local NAME_UI = script:GetCustomProperty(&quot;NameUIText&quot;):WaitForObject()
+
+function GetLocalPlayerAbilityWithActionName()
+    local player = Game.GetLocalPlayer()
+    local abilities = player:GetAbilities()
+
+    for _, ability in pairs(abilities) do
+        if ability.actionName == ACTION_NAME then
+            return ability
+        end
+    end
+
+    return nil
+end
+
+function Tick()
+    local ability = GetLocalPlayerAbilityWithActionName()
+    if ability then
+        NAME_UI.text = ability.name
+    end
+end
+</code></pre>
+<p>See also: <a href="coreobject.md">CoreObject.name</a> | <a href="coreobjectreference.md">CoreObjectReference.WaitForObject</a> | <a href="game.md">Game.GetLocalPlayer</a> | <a href="player.md">Player.GetAbilities</a> | <a href="uitext.md">UIText.text</a></p>
+<hr />
+<p>Example using:</p>
+<h3 id="animation"><code>animation</code></h3>
+<p>In this example, the <code>ProcessAbilities()</code> function can be called once, such as at the beginning of a round, to take inventory of a player's abilities and classify them based on animation. This example also demonstrates how to disconnect event listeners so that we don't listen for the same event multiple times.</p>
+<pre><code class="language-lua">--Server script
+function OnMelee1HandCast(ability)
+    print(&quot;One-handed melee attack&quot;)
+end
+
+function OnMelee2HandCast(ability)
+    print(&quot;Two-handed melee attack&quot;)
+end
+
+local abilityEventListeners = {}
+
+function CleanupListeners(player)
+    -- If we have previously processed this player, cleanup all listeners
+    if abilityEventListeners[player] then
+        for i, eventListener in ipairs(abilityEventListeners[player]) do
+            eventListener:Disconnect()
+        end
+        abilityEventListeners[player] = nil
+    end
+end
+
+function ProcessAbilities(player)
+    CleanupListeners(player)
+
+    local allAbilities = player:GetAbilities()
+
+    for _, ability in ipairs(allAbilities) do
+        if string.match(ability.animation, &quot;melee&quot;) then
+            local eventListener
+            if string.match(ability.animation, &quot;1h&quot;) then
+                eventListener = ability.castEvent:Connect(OnMelee1HandCast)
+            else
+                eventListener = ability.castEvent:Connect(OnMelee2HandCast)
+            end
+            table.insert(abilityEventListeners[player], eventListener)
+        end
+    end
+end
+
+-- Lets also cleanup when a player leaves the game, as perhaps their ability objects might stay in the game.
+Game.playerLeftEvent:Connect(CleanupListeners)
+</code></pre>
+<p>See also: <a href="eventlistener.md">EventListener.Disconnect</a> | <a href="player.md">Player.GetAbilities</a> | <a href="ability.md">Ability.castEvent</a> | <a href="event.md">Event.Connect</a> | <a href="game.md">Game.playerLeftEvent</a> | <a href="coreluafunctions.md">CoreLua.print</a></p>
+<hr />
+<p>Example using:</p>
+<h3 id="canactivatewhiledead"><code>canActivateWhileDead</code></h3>
+<p>Some games may have abilities that can be used while the player is dead. In this example, we have abilities that can <strong>only</strong> be activated while dead. If not dead, then it's interrupted.</p>
+<pre><code class="language-lua">--Server script
+local ability = script:FindAncestorByType(&quot;Ability&quot;)
+
+function OnCast(ability)
+    if ability.canActivateWhileDead and not ability.owner.isDead then
+        ability:Interrupt()
+    end
+end
+
+ability.castEvent:Connect(OnCast)
+
+--[[#description
+    On the client context, a user interface component that displays ability details is hidden until the player dies:
+]]
+local abilityCanvas = script:GetCustomProperty(&quot;Canvas&quot;)
+local ACTION_NAME = script:GetCustomProperty(&quot;ActionName&quot;)
+
+function Tick(deltaTime)
+    local ability = GetLocalPlayerAbilityWithActionName()
+
+    if ability
+    and ability.isEnabled
+    and ability.canActivateWhileDead
+    and ability.owner
+    and ability.owner.isDead then
+
+        abilityCanvas.visibility = Visibility.INHERIT
+    else
+        abilityCanvas.visibility = Visibility.FORCE_OFF
+    end
+end
+
+-- Searches the local player's abilities until one with a matching action name is found
+-- The ACTION_NAME search criteria should be set in the custom property
+function GetLocalPlayerAbilityWithActionName()
+    local abilities = Game.GetLocalPlayer():GetAbilities()
+    for _, ability in pairs(abilities) do
+        if ability.actionName == ACTION_NAME then
+            return ability
+        end
+    end
+
+    return nil
+end
+</code></pre>
+<p>See also: <a href="coreobject.md">CoreObject.FindAncestorByType</a> | <a href="ability.md">Ability.owner</a> | <a href="player.md">Player.isDead</a> | <a href="event.md">Event.Connect</a> | <a href="coreluafunctions.md">CoreLua.Tick</a></p>
+<hr />
+<p>Example using:</p>
+<h3 id="canbeprevented"><code>canBePrevented</code></h3>
+<p>In this example, an ability recognizes that it has been interrupted by the activation of another, special ability, that is setup to serve for animation cancelling. The <code>canBePrevented</code> property is usually true in this game, but in this special case it has been configured as false so that it can be activated at any time. The player gains vertical impulse as result of the synergy and hears a small audio cue that helps communicate the mechanic.</p>
+<pre><code class="language-lua">--Server script
+local ability = script.parent
+local cancelSound = script:GetCustomProperty(&quot;CancelSound&quot;)
+
+function OnInterrupted(ability)
+    local player = ability.owner
+    if not Object.IsValid(player) then return end
+
+    for _, a in ipairs(player:GetAbilities()) do
+        if a:GetCurrentPhase() ~= AbilityPhase.READY and not a.canBePrevented then
+            player:AddImpulse(Vector3.UP * 1000)
+            World.SpawnAsset(cancelSound, {position = player:GetWorldPosition()})
+            return
+        end
+    end
+end
+
+ability.interruptedEvent:Connect(OnInterrupted)
+</code></pre>
+<p>See also: <a href="coreobject.md">CoreObject.parent</a> | <a href="ability.md">Ability.owner</a> | <a href="object.md">Object.IsValid</a> | <a href="player.md">Player.GetAbilities</a> | <a href="vector3.md">Vector3.UP</a> | <a href="world.md">World.SpawnAsset</a> | <a href="event.md">Event.Connect</a></p>
+<hr />
+<p>Example using:</p>
+<h3 id="castphasesettings"><code>castPhaseSettings</code></h3>
+<h3 id="executephasesettings"><code>executePhaseSettings</code></h3>
+<h3 id="recoveryphasesettings"><code>recoveryPhaseSettings</code></h3>
+<h3 id="cooldownphasesettings"><code>cooldownPhaseSettings</code></h3>
+<p>In this example, a function in a client context script can be called to show the elapsed times for an ability. The UI Text it controls displays how many seconds are remaining in the current phase, and the color of the text blends from black to white to indicate the percentage of completion. Although the Execute and Recovery phases are actually separate, they are here presented to the player as a single phase.</p>
+<pre><code class="language-lua">--Client script
+local COUNTDOWN_TEXT = script:GetCustomProperty(&quot;CountdownText&quot;):WaitForObject()
+
+function UpdateForAbility(ability)
+    local currentPhase = ability:GetCurrentPhase()
+
+    local percent = 1
+    local cooldownText = &quot;Ready&quot;
+
+    if currentPhase ~= AbilityPhase.READY then
+        local phaseDuration
+        local timeRemaining = ability:GetPhaseTimeRemaining()
+
+        if currentPhase == AbilityPhase.CAST then
+            phaseDuration = ability.castPhaseSettings.duration
+        elseif currentPhase == AbilityPhase.EXECUTE then
+            -- In the case of Execute and Recovery phases, we can show those as a single one
+            local recoveryD = ability.recoveryPhaseSettings.duration
+            phaseDuration = ability.executePhaseSettings.duration + recoveryD
+            timeRemaining = timeRemaining + recoveryD
+        elseif currentPhase == AbilityPhase.RECOVERY then
+            phaseDuration = ability.recoveryPhaseSettings.duration
+        else --currentPhase == AbilityPhase.COOLDOWN
+            phaseDuration = ability.cooldownPhaseSettings.duration
+        end
+
+        if phaseDuration &gt; 0 then
+            percent = 1 - timeRemaining / phaseDuration
+        end
+        cooldownText = string.format(&quot;%.1f&quot;, timeRemaining)
+    end
+
+    COUNTDOWN_TEXT.text = cooldownText
+
+    local c = Color.Lerp(Color.BLACK, Color.WHITE, percent)
+    COUNTDOWN_TEXT:SetColor(c)
+end
+</code></pre>
+<p>See also: <a href="coreobject.md">CoreObject.GetCustomProperty</a> | <a href="coreobjectreference.md">CoreObjectReference.WaitForObject</a> | <a href="ability.md">Ability.GetCurrentPhase</a> | <a href="abilityphasesettings.md">AbilityPhaseSettings.duration</a> | <a href="uitext.md">UIText.text</a> | <a href="color.md">Color.Lerp</a></p>
+<hr />
+<p>Example using:</p>
+<h3 id="isenabled"><code>isEnabled</code></h3>
+<p>In this example, an equipment is setup with multiple abilities that all use the same action binding. This script cycles through the abilities, making sure only one is enabled at a time. The <code>owner</code> property is cleared for the previous ability and set for the next one, as part of ensuring the correct one activates when the binding is pressed.</p>
+<pre><code class="language-lua">--Server script
+local equipment = script:FindAncestorByType(&quot;Equipment&quot;)
+local abilities = {}
+local abilityIndex = 1
+
+function OnAbilityRecovery(ability)
+    if (#abilities &gt; 1) then
+        abilities[abilityIndex].isEnabled = false
+        abilities[abilityIndex].owner = nil
+
+        abilityIndex = abilityIndex + 1
+        if (abilityIndex &gt; #abilities) then
+            abilityIndex = 1
+        end
+
+        abilities[abilityIndex].isEnabled = true
+        abilities[abilityIndex].owner = equipment.owner
+    end
+end
+
+for _, child in pairs(equipment:FindDescendantsByType(&quot;Ability&quot;)) do
+    table.insert(abilities, child)
+
+    child.isEnabled = (#abilities == 1)
+
+    child.recoveryEvent:Connect(OnAbilityRecovery)
+end
+</code></pre>
+<p>See also: <a href="coreobject.md">CoreObject.FindAncestorByType</a> | <a href="ability.md">Ability.owner</a> | <a href="equipment.md">Equipment.owner</a> | <a href="event.md">Event.Connect</a></p>
+<hr />
+<p>Example using:</p>
+<h3 id="owner"><code>owner</code></h3>
+<p>Usually, abilities are presented as part of an equipment, but that isn't a requirement. In this example, when new players join the game they are assigned an ability through the use of the <code>owner</code> property.</p>
+<pre><code class="language-lua">--Server script
+local abilityTemplate = script:GetCustomProperty(&quot;AbilityTemplate&quot;)
+
+function OnPlayerJoined(player)
+    local ability = World.SpawnAsset(abilityTemplate)
+    ability.owner = player
+end
+
+Game.playerJoinedEvent:Connect(OnPlayerJoined)
+</code></pre>
+<p>See also: <a href="coreobject.md">CoreObject.GetCustomProperty</a> | <a href="world.md">World.SpawnAsset</a> | <a href="player.md">Player.owner</a> | <a href="game.md">Game.playerJoinedEvent</a> | <a href="event.md">Event.Connect</a></p>
+<hr />
+<h2 id="tutorials">Tutorials</h2>
+<p><a href="../tutorials/ability_tutorial.md">Abilities in Core</a></p>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

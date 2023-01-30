@@ -29,4 +29,18 @@ nav:
 #
 
 #theme: readthedocs
-theme: windmill
+theme: material
+
+markdown_extensions:
+  - abbr
+  - meta
+  - markdown.extensions.admonition
+  - markdown.extensions.attr_list
+  - markdown.extensions.def_list
+  - markdown.extensions.footnotes
+  - markdown.extensions.meta
+  - markdown.extensions.toc:
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+      anchorlink: true

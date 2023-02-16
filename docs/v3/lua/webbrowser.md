@@ -75,6 +75,47 @@ Browser.Navigate(instance, url)
 Browser.Navigate('StartView', 'https://www.my-url.com/mypage')
 ```
 
+### Show
+
+The `Browser.Show` function is similar to the `Browser.Navigate` function, but also ensures the webbrowser is actually visible. The actual behaviour depends on the view - e.g. for the `SidePanel` view, the side panel pops out. For the `ProcessView` view, this switches from the image-view to the web view.
+
+```LUA
+local oldUrl = Browser.Show(instance, url)
+```
+
+#### Parameters
+
+- instance [string]: Web browser instance name (one of 'StartView', 'ProcessView', 'SidePanel', 'InstructionView') 
+- url [string]: Url to navigate the browser instance to (in the standard URL format, e.g. file://filename or https://server/page)
+
+#### Return value
+
+The function returns the "current" URL of the webbrowser (the URL before changing to the given one). This can be used to return to the previous URL after hiding the browser.)
+
+#### Sample code
+```LUA
+-- Make the SidePanel visible and navigate the web browser to https://www.my-url.com/mypage
+local oldUrl = Browser.Show('SidePanel', 'https://www.my-url.com/mypage')
+```
+
+### Hide
+
+The `Browser.Hide` function is complementary to the `Browser.Show` function - it closes the browser view (only relevant for `SidePanel` and `ProcessView`).
+
+```LUA
+Browser.Hide(instance)
+```
+
+#### Parameters
+
+- instance [string]: Web browser instance name (one of 'StartView', 'ProcessView', 'SidePanel', 'InstructionView') 
+
+#### Sample code
+```LUA
+-- Hide the SidePanel
+Browser.Hide('SidePanel')
+```
+
 ### RegMsgHandler
 
 The `Browser.RegMsgHandler` function registers or unregisters a LUA function to be called whenever the JavaScript running in the browser writes a message to the hostObject bridge `OGS.ObjectMessage` property.

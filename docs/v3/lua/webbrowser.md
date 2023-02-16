@@ -3,6 +3,7 @@
 ## Overview 
 
 The OGS runtime uses up to 4 web browser (Microsoft WebView2) instances. The instances are:
+
 - `StartView`: Browser on the start screen
 - `ProcessView`: Browser on the process screen (only visible, if the `url`-parameter in the job/task is set)
 - `SidePanel`: Browser on the slide-in side panel (requires enabling the sidepanel in `station.ini`)
@@ -11,6 +12,7 @@ The OGS runtime uses up to 4 web browser (Microsoft WebView2) instances. The ins
 The OGS infrastructure provides functions to bidirectionally exchange data between the JavaScript code running inside the web browser and the LUA code running inside OGS. There is a LUA function to execute JavaScript code in the webbrowser and a JavaScript bride, which calls a LUA function (if registered accordingly).
 
 To implement this functionality, OGS provides the following:
+
 - For the JavaScript side: a bridge implementation accessibal through the `hostObjects` interface of the Chromium browser (`window.chrome.webview.hostObjects.sync.OGS`)
 - For the LUA side: a global `Browser` table with functions to manipulate the browser instances
 
@@ -90,7 +92,7 @@ local oldUrl = Browser.Show(instance, url)
 
 #### Return value
 
-The function returns the "current" URL of the webbrowser (the URL before changing to the given one). This can be used to return to the previous URL after hiding the browser.)
+The function returns the "current" URL of the webbrowser (the URL before changing to the given one). This can be used to return to the previous URL after hiding the browser.
 
 #### Sample code
 ```LUA

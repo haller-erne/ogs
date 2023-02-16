@@ -1010,15 +1010,19 @@
 
 <h1 id="browser"><a class="toclink" href="#browser">Browser</a></h1>
 <h2 id="overview"><a class="toclink" href="#overview">Overview</a></h2>
-<p>The OGS runtime uses up to 4 web browser (Microsoft WebView2) instances. The instances are:
-- <code>StartView</code>: Browser on the start screen
-- <code>ProcessView</code>: Browser on the process screen (only visible, if the <code>url</code>-parameter in the job/task is set)
-- <code>SidePanel</code>: Browser on the slide-in side panel (requires enabling the sidepanel in <code>station.ini</code>)
-- <code>InstructionView</code>: Browser in the instruction view popup (is triggered from LUA, so only visible with custom LUA code)</p>
+<p>The OGS runtime uses up to 4 web browser (Microsoft WebView2) instances. The instances are:</p>
+<ul>
+<li><code>StartView</code>: Browser on the start screen</li>
+<li><code>ProcessView</code>: Browser on the process screen (only visible, if the <code>url</code>-parameter in the job/task is set)</li>
+<li><code>SidePanel</code>: Browser on the slide-in side panel (requires enabling the sidepanel in <code>station.ini</code>)</li>
+<li><code>InstructionView</code>: Browser in the instruction view popup (is triggered from LUA, so only visible with custom LUA code)</li>
+</ul>
 <p>The OGS infrastructure provides functions to bidirectionally exchange data between the JavaScript code running inside the web browser and the LUA code running inside OGS. There is a LUA function to execute JavaScript code in the webbrowser and a JavaScript bride, which calls a LUA function (if registered accordingly).</p>
-<p>To implement this functionality, OGS provides the following:
-- For the JavaScript side: a bridge implementation accessibal through the <code>hostObjects</code> interface of the Chromium browser (<code>window.chrome.webview.hostObjects.sync.OGS</code>)
-- For the LUA side: a global <code>Browser</code> table with functions to manipulate the browser instances</p>
+<p>To implement this functionality, OGS provides the following:</p>
+<ul>
+<li>For the JavaScript side: a bridge implementation accessibal through the <code>hostObjects</code> interface of the Chromium browser (<code>window.chrome.webview.hostObjects.sync.OGS</code>)</li>
+<li>For the LUA side: a global <code>Browser</code> table with functions to manipulate the browser instances</li>
+</ul>
 <h2 id="javascript-hostobjects-bridge"><a class="toclink" href="#javascript-hostobjects-bridge">JavaScript hostObjects bridge</a></h2>
 <p>OGS registers a <a href="https://learn.microsoft.com/en-us/dotnet/api/microsoft.web.webview2.core.corewebview2.addhostobjecttoscript">hostObject</a> in the WebView2 browser for the JavaScript side. The registered object is named <code>OGS</code> and implements a single string property <code>ObjectMessage</code>.</p>
 <p>To send a string to OGS from JavaScript, simply assign a value to the <code>window.chrome.webview.hostObjects.sync.OGS.ObjectMessage</code> property.</p>
@@ -1077,7 +1081,7 @@ Browser.Navigate('StartView', 'https://www.my-url.com/mypage')
 <li>url [string]: Url to navigate the browser instance to (in the standard URL format, e.g. file://filename or https://server/page)</li>
 </ul>
 <h4 id="return-value"><a class="toclink" href="#return-value">Return value</a></h4>
-<p>The function returns the "current" URL of the webbrowser (the URL before changing to the given one). This can be used to return to the previous URL after hiding the browser.)</p>
+<p>The function returns the "current" URL of the webbrowser (the URL before changing to the given one). This can be used to return to the previous URL after hiding the browser.</p>
 <h4 id="sample-code_2"><a class="toclink" href="#sample-code_2">Sample code</a></h4>
 <pre><code class="language-LUA">-- Make the SidePanel visible and navigate the web browser to https://www.my-url.com/mypage
 local oldUrl = Browser.Show('SidePanel', 'https://www.my-url.com/mypage')

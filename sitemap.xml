@@ -2,62 +2,62 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://haller-erne.github.io/ogs/</loc>
-         <lastmod>2023-01-30</lastmod>
+         <lastmod>2023-02-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/libs/_template_/</loc>
-         <lastmod>2023-01-30</lastmod>
+         <lastmod>2023-02-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/libs/lua-ads/</loc>
-         <lastmod>2023-01-30</lastmod>
+         <lastmod>2023-02-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/libs/lua-hid/</loc>
-         <lastmod>2023-01-30</lastmod>
+         <lastmod>2023-02-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/libs/lua-modbus/</loc>
-         <lastmod>2023-01-30</lastmod>
+         <lastmod>2023-02-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/libs/lua-opcua/</loc>
-         <lastmod>2023-01-30</lastmod>
+         <lastmod>2023-02-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/tools/</loc>
-         <lastmod>2023-01-30</lastmod>
+         <lastmod>2023-02-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/tools/remote-tool/</loc>
-         <lastmod>2023-01-30</lastmod>
+         <lastmod>2023-02-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/tools/openprotocol/</loc>
-         <lastmod>2023-01-30</lastmod>
+         <lastmod>2023-02-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/v3/getting-started/</loc>
-         <lastmod>2023-01-30</lastmod>
+         <lastmod>2023-02-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/v3/lua/webbrowser/</loc>
-         <lastmod>2023-01-30</lastmod>
+         <lastmod>2023-02-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/v3/lua/webserver/</loc>
-         <lastmod>2023-01-30</lastmod>
+         <lastmod>2023-02-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>

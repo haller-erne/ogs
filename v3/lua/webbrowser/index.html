@@ -17,7 +17,7 @@
         <link rel="next" href="../webserver/">
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.8">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.12">
     
     
       
@@ -524,6 +524,67 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#show" class="md-nav__link">
+    Show
+  </a>
+  
+    <nav class="md-nav" aria-label="Show">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parameters_1" class="md-nav__link">
+    Parameters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#return-value" class="md-nav__link">
+    Return value
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sample-code_2" class="md-nav__link">
+    Sample code
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hide" class="md-nav__link">
+    Hide
+  </a>
+  
+    <nav class="md-nav" aria-label="Hide">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parameters_2" class="md-nav__link">
+    Parameters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sample-code_3" class="md-nav__link">
+    Sample code
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#regmsghandler" class="md-nav__link">
     RegMsgHandler
   </a>
@@ -532,7 +593,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#parameters_1" class="md-nav__link">
+  <a href="#parameters_3" class="md-nav__link">
     Parameters
   </a>
   
@@ -546,7 +607,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#sample-code_2" class="md-nav__link">
+  <a href="#sample-code_4" class="md-nav__link">
     Sample code
   </a>
   
@@ -566,14 +627,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#parameters_2" class="md-nav__link">
+  <a href="#parameters_4" class="md-nav__link">
     Parameters
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#sample-code_3" class="md-nav__link">
+  <a href="#sample-code_5" class="md-nav__link">
     Sample code
   </a>
   
@@ -805,6 +866,67 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#show" class="md-nav__link">
+    Show
+  </a>
+  
+    <nav class="md-nav" aria-label="Show">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parameters_1" class="md-nav__link">
+    Parameters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#return-value" class="md-nav__link">
+    Return value
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sample-code_2" class="md-nav__link">
+    Sample code
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hide" class="md-nav__link">
+    Hide
+  </a>
+  
+    <nav class="md-nav" aria-label="Hide">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parameters_2" class="md-nav__link">
+    Parameters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sample-code_3" class="md-nav__link">
+    Sample code
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#regmsghandler" class="md-nav__link">
     RegMsgHandler
   </a>
@@ -813,7 +935,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#parameters_1" class="md-nav__link">
+  <a href="#parameters_3" class="md-nav__link">
     Parameters
   </a>
   
@@ -827,7 +949,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#sample-code_2" class="md-nav__link">
+  <a href="#sample-code_4" class="md-nav__link">
     Sample code
   </a>
   
@@ -847,14 +969,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#parameters_2" class="md-nav__link">
+  <a href="#parameters_4" class="md-nav__link">
     Parameters
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#sample-code_3" class="md-nav__link">
+  <a href="#sample-code_5" class="md-nav__link">
     Sample code
   </a>
   
@@ -945,12 +1067,39 @@ The following functions are also available, but are not fully implemented at the
 <pre><code class="language-LUA">-- Navigate the StartView browser to https://www.my-url.com/mypage
 Browser.Navigate('StartView', 'https://www.my-url.com/mypage')
 </code></pre>
+<h3 id="show"><a class="toclink" href="#show">Show</a></h3>
+<p>The <code>Browser.Show</code> function is similar to the <code>Browser.Navigate</code> function, but also ensures the webbrowser is actually visible. The actual behaviour depends on the view - e.g. for the <code>SidePanel</code> view, the side panel pops out. For the <code>ProcessView</code> view, this switches from the image-view to the web view.</p>
+<pre><code class="language-LUA">local oldUrl = Browser.Show(instance, url)
+</code></pre>
+<h4 id="parameters_1"><a class="toclink" href="#parameters_1">Parameters</a></h4>
+<ul>
+<li>instance [string]: Web browser instance name (one of 'StartView', 'ProcessView', 'SidePanel', 'InstructionView') </li>
+<li>url [string]: Url to navigate the browser instance to (in the standard URL format, e.g. file://filename or https://server/page)</li>
+</ul>
+<h4 id="return-value"><a class="toclink" href="#return-value">Return value</a></h4>
+<p>The function returns the "current" URL of the webbrowser (the URL before changing to the given one). This can be used to return to the previous URL after hiding the browser.)</p>
+<h4 id="sample-code_2"><a class="toclink" href="#sample-code_2">Sample code</a></h4>
+<pre><code class="language-LUA">-- Make the SidePanel visible and navigate the web browser to https://www.my-url.com/mypage
+local oldUrl = Browser.Show('SidePanel', 'https://www.my-url.com/mypage')
+</code></pre>
+<h3 id="hide"><a class="toclink" href="#hide">Hide</a></h3>
+<p>The <code>Browser.Hide</code> function is complementary to the <code>Browser.Show</code> function - it closes the browser view (only relevant for <code>SidePanel</code> and <code>ProcessView</code>).</p>
+<pre><code class="language-LUA">Browser.Hide(instance)
+</code></pre>
+<h4 id="parameters_2"><a class="toclink" href="#parameters_2">Parameters</a></h4>
+<ul>
+<li>instance [string]: Web browser instance name (one of 'StartView', 'ProcessView', 'SidePanel', 'InstructionView') </li>
+</ul>
+<h4 id="sample-code_3"><a class="toclink" href="#sample-code_3">Sample code</a></h4>
+<pre><code class="language-LUA">-- Hide the SidePanel
+Browser.Hide('SidePanel')
+</code></pre>
 <h3 id="regmsghandler"><a class="toclink" href="#regmsghandler">RegMsgHandler</a></h3>
 <p>The <code>Browser.RegMsgHandler</code> function registers or unregisters a LUA function to be called whenever the JavaScript running in the browser writes a message to the hostObject bridge <code>OGS.ObjectMessage</code> property.</p>
 <pre><code class="language-LUA">-- Register the callback function
 fn, err = Browser.RegMsgHandler(instance, callbackfn)
 </code></pre>
-<h4 id="parameters_1"><a class="toclink" href="#parameters_1">Parameters</a></h4>
+<h4 id="parameters_3"><a class="toclink" href="#parameters_3">Parameters</a></h4>
 <ul>
 <li>instance [string]: Web browser instance name (one of 'StartView', 'ProcessView', 'SidePanel', 'InstructionView') </li>
 <li>callbackfn [function]: LUA function to be called when the JavaScript code writes a string to the <code>OGS.ObjectMessage</code> hostObject. If callbackfn is <code>nil</code>, then the current registration is removed. The callback function has the following signature:<pre><code>callbackfn(instance, objectMessage)
@@ -960,7 +1109,7 @@ fn, err = Browser.RegMsgHandler(instance, callbackfn)
 <p>Where instance [string] is the web browsers instance name (e.g. 'StartView') and objectMessage [string] the text which was written to the <code>OGS.ObjectMessage</code> property of the hostObject bridge from the JavaScript side.</p>
 <h4 id="return-values"><a class="toclink" href="#return-values">Return values</a></h4>
 <p>If the function was executed successfully, the callbackfn is returned as the first return value. Else nil is returned and the second return value has an error message string (wrong parameters or unknown instance).</p>
-<h4 id="sample-code_2"><a class="toclink" href="#sample-code_2">Sample code</a></h4>
+<h4 id="sample-code_4"><a class="toclink" href="#sample-code_4">Sample code</a></h4>
 <pre><code class="language-LUA">local function callbackfn(instance, objectMessage)
     -- do whatever you want to do here if the javascript 
     -- code writes the OGS.ObjectMessage property
@@ -973,7 +1122,7 @@ Browser.RegMsgHandler('StartView', callbackfn)
 <p>The <code>Browser.ExecJS_nonblocking</code> executes JavaScript code in the web browser instance.</p>
 <pre><code class="language-LUA">Browser.ExecJS_nonblocking(instance, jstext)
 </code></pre>
-<h4 id="parameters_2"><a class="toclink" href="#parameters_2">Parameters</a></h4>
+<h4 id="parameters_4"><a class="toclink" href="#parameters_4">Parameters</a></h4>
 <ul>
 <li>instance [string]: Web browser instance name (one of 'StartView', 'ProcessView', 'SidePanel', 'InstructionView') </li>
 <li>jstext [string]: JavaScript string to execute in the browser. Note that this must be valid JavaScript code. </li>
@@ -984,7 +1133,7 @@ Browser.RegMsgHandler('StartView', callbackfn)
 <li>Best practice is to write a JavaScript function in the web page and only call it through this function.</li>
 <li>You can serialize LUA objects to a JSON string and pass this through the function. The JavaScript side can then easily deserialize it.</li>
 </ul>
-<h4 id="sample-code_3"><a class="toclink" href="#sample-code_3">Sample code</a></h4>
+<h4 id="sample-code_5"><a class="toclink" href="#sample-code_5">Sample code</a></h4>
 <pre><code class="language-LUA">-- Build a JavaScript command, call the function &quot;my_function&quot; with
 -- some JSON text
 local param = '{ &quot;cmd&quot;: &quot;showmessage&quot; }'
@@ -1032,7 +1181,7 @@ Browser.ExecJS_nonblocking('StartView', command)
     <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.db81ec45.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.a00a7c5e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.4b2c34cd.min.js"></script>
       
     
   </body>

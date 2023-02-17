@@ -39,6 +39,9 @@ theme:
     - content.code.copy
     - content.code.annotate 
 
+plugins:
+    - search
+    
 markdown_extensions:
   - abbr
   - meta

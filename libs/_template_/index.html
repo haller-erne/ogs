@@ -1028,171 +1028,171 @@
 <p>Example using:</p>
 <h3 id="castevent"><a class="toclink" href="#castevent"><code>castEvent</code></a></h3>
 <p>The Cast phase begins as soon as an ability is activated. By checking if the player casting the ability <code>isGrounded</code> we can create an effect that propels you upwards, but it doesn't work if you are already jumping or flying. We detect this is the <code>castEvent</code>, which is early enough for an <code>Interrupt()</code> to reset the ability.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">--Server script</span>
-<span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">.</span><span class="n">parent</span>
-
-<span class="kr">function</span> <span class="nf">OnCast</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
-    <span class="kr">if</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">.</span><span class="n">isGrounded</span> <span class="kr">then</span>
-        <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">:</span><span class="n">SetVelocity</span><span class="p">(</span><span class="n">Vector3</span><span class="p">.</span><span class="n">UP</span> <span class="o">*</span> <span class="mi">2000</span><span class="p">)</span>
-    <span class="kr">else</span>
-        <span class="n">ability</span><span class="p">:</span><span class="n">Interrupt</span><span class="p">()</span>
-    <span class="kr">end</span>
-<span class="kr">end</span>
-
-<span class="n">ability</span><span class="p">.</span><span class="n">castEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnCast</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">--Server script</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">.</span><span class="n">parent</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kr">function</span> <span class="nf">OnCast</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="kr">if</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">.</span><span class="n">isGrounded</span> <span class="kr">then</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">:</span><span class="n">SetVelocity</span><span class="p">(</span><span class="n">Vector3</span><span class="p">.</span><span class="n">UP</span> <span class="o">*</span> <span class="mi">2000</span><span class="p">)</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="kr">else</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>        <span class="n">ability</span><span class="p">:</span><span class="n">Interrupt</span><span class="p">()</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="kr">end</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="kr">end</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="n">ability</span><span class="p">.</span><span class="n">castEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnCast</span><span class="p">)</span>
 </code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.parent</a> | <a href="ability.md">Ability.owner</a> | <a href="player.md">Player.isGrounded</a> | <a href="vector3.md">Vector3.UP</a> | <a href="event.md">Event.Connect</a></p>
 <hr />
 <p>Example using:</p>
 <h3 id="cooldownevent"><a class="toclink" href="#cooldownevent"><code>cooldownEvent</code></a></h3>
 <p>In this example, a fighting game has an "invincible" mechanic where player attacks are not interrupted while they have this effect. Some powerful attacks make the player invincible during the entire active cycle of the ability. The effect is gained at the beginning of the cast phase and is removed at the end of the recovery phase, before the cooldown begins. The resource system is used in keeping track of the invincibility effect.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">--Server script</span>
-<span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">.</span><span class="n">parent</span>
-
-<span class="kr">function</span> <span class="nf">OnCast</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
-    <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">:</span><span class="n">AddResource</span><span class="p">(</span><span class="s2">&quot;invincible&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="kr">end</span>
-
-<span class="kr">function</span> <span class="nf">OnCooldown</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
-    <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">:</span><span class="n">RemoveResource</span><span class="p">(</span><span class="s2">&quot;invincible&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="kr">end</span>
-
-<span class="n">ability</span><span class="p">.</span><span class="n">castEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnCast</span><span class="p">)</span>
-<span class="n">ability</span><span class="p">.</span><span class="n">cooldownEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnCooldown</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">--Server script</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">.</span><span class="n">parent</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="kr">function</span> <span class="nf">OnCast</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">:</span><span class="n">AddResource</span><span class="p">(</span><span class="s2">&quot;invincible&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="kr">end</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="kr">function</span> <span class="nf">OnCooldown</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">:</span><span class="n">RemoveResource</span><span class="p">(</span><span class="s2">&quot;invincible&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="kr">end</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="n">ability</span><span class="p">.</span><span class="n">castEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnCast</span><span class="p">)</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="n">ability</span><span class="p">.</span><span class="n">cooldownEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnCooldown</span><span class="p">)</span>
 </code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.parent</a> | <a href="player.md">Player.owner</a> | <a href="ability.md">Ability.castEvent</a> | <a href="event.md">Event.Connect</a></p>
 <hr />
 <p>Example using:</p>
 <h3 id="executeevent"><a class="toclink" href="#executeevent"><code>executeEvent</code></a></h3>
 <p>Weapons implement lots of built-in gameplay that doesn't require any scripting, such as attack and reload abilities. However, they can be augmented with additional mechanics. In this example, a special sound effect is played when a weapon shoots while low on ammunition. The script expects to be a child of a weapon's "Shoot" ability.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">--Server script</span>
-<span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">.</span><span class="n">parent</span>
-<span class="kd">local</span> <span class="n">weapon</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">FindAncestorByType</span><span class="p">(</span><span class="s1">&#39;Weapon&#39;</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">lowAmmoSound</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">GetCustomProperty</span><span class="p">(</span><span class="s2">&quot;LowAmmoSound&quot;</span><span class="p">)</span>
-
-<span class="kd">local</span> <span class="n">LOW_AMMO_PERCENTAGE</span> <span class="o">=</span> <span class="mf">0.2</span>
-
-<span class="kr">function</span> <span class="nf">OnExecute</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
-    <span class="kr">if</span> <span class="n">weapon</span><span class="p">.</span><span class="n">currentAmmo</span> <span class="o">/</span> <span class="n">weapon</span><span class="p">.</span><span class="n">maxAmmo</span> <span class="o">&lt;=</span> <span class="n">LOW_AMMO_PERCENTAGE</span> <span class="kr">then</span>
-        <span class="n">World</span><span class="p">.</span><span class="n">SpawnAsset</span><span class="p">(</span><span class="n">lowAmmoSound</span><span class="p">,</span> <span class="p">{</span><span class="n">position</span> <span class="o">=</span> <span class="n">weapon</span><span class="p">:</span><span class="n">GetWorldPosition</span><span class="p">()})</span>
-    <span class="kr">end</span>
-<span class="kr">end</span>
-
-<span class="n">ability</span><span class="p">.</span><span class="n">executeEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnExecute</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">--Server script</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">.</span><span class="n">parent</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kd">local</span> <span class="n">weapon</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">FindAncestorByType</span><span class="p">(</span><span class="s1">&#39;Weapon&#39;</span><span class="p">)</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="kd">local</span> <span class="n">lowAmmoSound</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">GetCustomProperty</span><span class="p">(</span><span class="s2">&quot;LowAmmoSound&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="kd">local</span> <span class="n">LOW_AMMO_PERCENTAGE</span> <span class="o">=</span> <span class="mf">0.2</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="kr">function</span> <span class="nf">OnExecute</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    <span class="kr">if</span> <span class="n">weapon</span><span class="p">.</span><span class="n">currentAmmo</span> <span class="o">/</span> <span class="n">weapon</span><span class="p">.</span><span class="n">maxAmmo</span> <span class="o">&lt;=</span> <span class="n">LOW_AMMO_PERCENTAGE</span> <span class="kr">then</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>        <span class="n">World</span><span class="p">.</span><span class="n">SpawnAsset</span><span class="p">(</span><span class="n">lowAmmoSound</span><span class="p">,</span> <span class="p">{</span><span class="n">position</span> <span class="o">=</span> <span class="n">weapon</span><span class="p">:</span><span class="n">GetWorldPosition</span><span class="p">()})</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    <span class="kr">end</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="kr">end</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="n">ability</span><span class="p">.</span><span class="n">executeEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnExecute</span><span class="p">)</span>
 </code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.parent</a> | <a href="weapon.md">Weapon.currentAmmo</a> | <a href="world.md">World.SpawnAsset</a> | <a href="ability.md">Ability.executeEvent</a> | <a href="event.md">Event.Connect</a></p>
 <hr />
 <p>Example using:</p>
 <h3 id="interruptedevent"><a class="toclink" href="#interruptedevent"><code>interruptedEvent</code></a></h3>
 <p>The <code>interruptedEvent</code> fires when an ability is going through it's activation process and <code>Interrupt()</code> is called on it, or if it becomes disabled. In this example, interruption is a key part of the game design, so a visual effect is spawned at the player's position to help communicate the interaction between players.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">--Server script</span>
-<span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">.</span><span class="n">parent</span>
-<span class="kd">local</span> <span class="n">interruptedVfx</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">GetCustomProperty</span><span class="p">(</span><span class="s2">&quot;InterruptedVfx&quot;</span><span class="p">)</span>
-
-<span class="kr">function</span> <span class="nf">OnInterrupted</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
-    <span class="kr">if</span> <span class="n">Object</span><span class="p">.</span><span class="n">IsValid</span><span class="p">(</span><span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">)</span> <span class="kr">then</span>
-        <span class="n">World</span><span class="p">.</span><span class="n">SpawnAsset</span><span class="p">(</span><span class="n">interruptedVfx</span><span class="p">,</span> <span class="p">{</span><span class="n">position</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">:</span><span class="n">GetWorldPosition</span><span class="p">()})</span>
-    <span class="kr">end</span>
-<span class="kr">end</span>
-
-<span class="n">ability</span><span class="p">.</span><span class="n">interruptedEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnInterrupted</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">--Server script</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">.</span><span class="n">parent</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="kd">local</span> <span class="n">interruptedVfx</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">GetCustomProperty</span><span class="p">(</span><span class="s2">&quot;InterruptedVfx&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="kr">function</span> <span class="nf">OnInterrupted</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="kr">if</span> <span class="n">Object</span><span class="p">.</span><span class="n">IsValid</span><span class="p">(</span><span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">)</span> <span class="kr">then</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>        <span class="n">World</span><span class="p">.</span><span class="n">SpawnAsset</span><span class="p">(</span><span class="n">interruptedVfx</span><span class="p">,</span> <span class="p">{</span><span class="n">position</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">:</span><span class="n">GetWorldPosition</span><span class="p">()})</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="kr">end</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="kr">end</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="n">ability</span><span class="p">.</span><span class="n">interruptedEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnInterrupted</span><span class="p">)</span>
 </code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.parent</a> | <a href="object.md">Object.IsValid</a> | <a href="ability.md">Ability.owner</a> | <a href="world.md">World.SpawnAsset</a> | <a href="player.md">Player.GetWorldPosition</a> | <a href="event.md">Event.Connect</a></p>
 <hr />
 <p>Example using:</p>
 <h3 id="readyevent"><a class="toclink" href="#readyevent"><code>readyEvent</code></a></h3>
 <p>The Ready phase begins when an ability comes off cooldown and is "ready" to be used again. In this example, we create an invisibility effect that takes advantage of the <code>readyEvent</code>, leveraging the cooldown duration of the ability as a clock to determine when to make the player visible again.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">-- Server script</span>
-<span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">.</span><span class="n">parent</span>
-
-<span class="kr">function</span> <span class="nf">OnExecute</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
-    <span class="c1">-- Hide the player</span>
-    <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">:</span><span class="n">SetVisibility</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
-<span class="kr">end</span>
-
-<span class="kr">function</span> <span class="nf">OnReady</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
-    <span class="c1">-- Show the player</span>
-    <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">:</span><span class="n">SetVisibility</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
-<span class="kr">end</span>
-
-<span class="n">ability</span><span class="p">.</span><span class="n">readyEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnReady</span><span class="p">)</span>
-<span class="n">ability</span><span class="p">.</span><span class="n">executeEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnExecute</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">-- Server script</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">.</span><span class="n">parent</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="kr">function</span> <span class="nf">OnExecute</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    <span class="c1">-- Hide the player</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">:</span><span class="n">SetVisibility</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="kr">end</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="kr">function</span> <span class="nf">OnReady</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>    <span class="c1">-- Show the player</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>    <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">:</span><span class="n">SetVisibility</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="kr">end</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="n">ability</span><span class="p">.</span><span class="n">readyEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnReady</span><span class="p">)</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="n">ability</span><span class="p">.</span><span class="n">executeEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnExecute</span><span class="p">)</span>
 </code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.parent</a> | <a href="ability.md">Ability.owner</a> | <a href="player.md">Player.SetVisibility</a> | <a href="event.md">Event.Connect</a></p>
 <hr />
 <p>Example using:</p>
 <h3 id="recoveryevent"><a class="toclink" href="#recoveryevent"><code>recoveryEvent</code></a></h3>
 <p>The <code>recoveryEvent</code> marks the end of an ability's Execute phase and the beginning of its Recovery phase. In this example, a melee punch ability has a trigger that causes damage to enemies who overlap it. For it to work the trigger is only enabled for a brief moment, during the Execute phase.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">--Server script</span>
-<span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">.</span><span class="n">parent</span>
-<span class="kd">local</span> <span class="n">trigger</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">GetCustomProperty</span><span class="p">(</span><span class="s2">&quot;ImpactTrigger&quot;</span><span class="p">):</span><span class="n">WaitForObject</span><span class="p">()</span>
-<span class="n">trigger</span><span class="p">.</span><span class="n">collision</span> <span class="o">=</span> <span class="n">Collision</span><span class="p">.</span><span class="n">FORCE_OFF</span>
-
-<span class="kd">local</span> <span class="n">DAMAGE_AMOUNT</span> <span class="o">=</span> <span class="mi">10</span>
-
-<span class="kr">function</span> <span class="nf">OnExecute</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
-    <span class="n">trigger</span><span class="p">.</span><span class="n">collision</span> <span class="o">=</span> <span class="n">Collision</span><span class="p">.</span><span class="n">FORCE_ON</span>
-<span class="kr">end</span>
-
-<span class="kr">function</span> <span class="nf">OnRecovery</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
-    <span class="n">trigger</span><span class="p">.</span><span class="n">collision</span> <span class="o">=</span> <span class="n">Collision</span><span class="p">.</span><span class="n">FORCE_OFF</span>
-<span class="kr">end</span>
-
-<span class="n">ability</span><span class="p">.</span><span class="n">executeEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnExecute</span><span class="p">)</span>
-<span class="n">ability</span><span class="p">.</span><span class="n">recoveryEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnRecovery</span><span class="p">)</span>
-
-<span class="kr">function</span> <span class="nf">OnBeginOverlap</span><span class="p">(</span><span class="n">trigger</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
-    <span class="c1">-- Only damage enemy players</span>
-    <span class="kr">if</span> <span class="n">other</span><span class="p">:</span><span class="n">IsA</span><span class="p">(</span><span class="s2">&quot;Player&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">other</span><span class="p">.</span><span class="n">team</span> <span class="o">~=</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">.</span><span class="n">team</span> <span class="kr">then</span>
-        <span class="n">other</span><span class="p">:</span><span class="n">ApplyDamage</span><span class="p">(</span><span class="n">Damage</span><span class="p">.</span><span class="n">New</span><span class="p">(</span><span class="n">DAMAGE_AMOUNT</span><span class="p">))</span>
-    <span class="kr">end</span>
-<span class="kr">end</span>
-
-<span class="n">trigger</span><span class="p">.</span><span class="n">beginOverlapEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnBeginOverlap</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">--Server script</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">.</span><span class="n">parent</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="kd">local</span> <span class="n">trigger</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">GetCustomProperty</span><span class="p">(</span><span class="s2">&quot;ImpactTrigger&quot;</span><span class="p">):</span><span class="n">WaitForObject</span><span class="p">()</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">trigger</span><span class="p">.</span><span class="n">collision</span> <span class="o">=</span> <span class="n">Collision</span><span class="p">.</span><span class="n">FORCE_OFF</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="kd">local</span> <span class="n">DAMAGE_AMOUNT</span> <span class="o">=</span> <span class="mi">10</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="kr">function</span> <span class="nf">OnExecute</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>    <span class="n">trigger</span><span class="p">.</span><span class="n">collision</span> <span class="o">=</span> <span class="n">Collision</span><span class="p">.</span><span class="n">FORCE_ON</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="kr">end</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="kr">function</span> <span class="nf">OnRecovery</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>    <span class="n">trigger</span><span class="p">.</span><span class="n">collision</span> <span class="o">=</span> <span class="n">Collision</span><span class="p">.</span><span class="n">FORCE_OFF</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="kr">end</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="n">ability</span><span class="p">.</span><span class="n">executeEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnExecute</span><span class="p">)</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="n">ability</span><span class="p">.</span><span class="n">recoveryEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnRecovery</span><span class="p">)</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="kr">function</span> <span class="nf">OnBeginOverlap</span><span class="p">(</span><span class="n">trigger</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>    <span class="c1">-- Only damage enemy players</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>    <span class="kr">if</span> <span class="n">other</span><span class="p">:</span><span class="n">IsA</span><span class="p">(</span><span class="s2">&quot;Player&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">other</span><span class="p">.</span><span class="n">team</span> <span class="o">~=</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">.</span><span class="n">team</span> <span class="kr">then</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>        <span class="n">other</span><span class="p">:</span><span class="n">ApplyDamage</span><span class="p">(</span><span class="n">Damage</span><span class="p">.</span><span class="n">New</span><span class="p">(</span><span class="n">DAMAGE_AMOUNT</span><span class="p">))</span>
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>    <span class="kr">end</span>
+<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a><span class="kr">end</span>
+<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a>
+<a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a><span class="n">trigger</span><span class="p">.</span><span class="n">beginOverlapEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnBeginOverlap</span><span class="p">)</span>
 </code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.parent</a> | <a href="coreobjectreference.md">CoreObjectReference.WaitForObject</a> | <a href="ability.md">Ability.executeEvent</a> | <a href="event.md">Event.Connect</a> | <a href="other.md">other.IsA</a> | <a href="player.md">Player.team</a> | <a href="damage.md">Damage.New</a> | <a href="trigger.md">Trigger.beginOverlapEvent</a></p>
 <hr />
 <p>Example using:</p>
 <h3 id="tickevent"><a class="toclink" href="#tickevent"><code>tickEvent</code></a></h3>
 <p>Abilities fire the <code>tickEvent</code> while they are active or on cooldown (not on Ready state). In this example, a piece of equipment carries several abilities, but we want to do a common update logic on all of them. Note: <code>Ability.tickEvent</code> works somewhat differently from a <code>Tick()</code> function - <code>tickEvent</code> is an actual event that just happens to fire once per tick. Each invocation of the callback runs on its own task. This means that, unlike <code>Tick()</code>, there is no guarantee that it will wait for the previous <code>tickEvent</code> to finish before starting the next one. This means you can't use things like <code>Task.Wait()</code> to add time between ticks.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">equipment</span> <span class="o">=</span> <span class="n">script</span><span class="p">.</span><span class="n">parent</span>
-<span class="kd">local</span> <span class="n">allAbilities</span> <span class="o">=</span> <span class="n">equipment</span><span class="p">:</span><span class="n">GetAbilities</span><span class="p">()</span>
-
-<span class="kr">function</span> <span class="nf">OnTick</span><span class="p">(</span><span class="n">ability</span><span class="p">,</span> <span class="n">deltaTime</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Updating ability &quot;</span> <span class="o">..</span> <span class="n">ability</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>
-<span class="kr">end</span>
-
-<span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">ability</span> <span class="kr">in</span> <span class="nb">ipairs</span><span class="p">(</span><span class="n">allAbilities</span><span class="p">)</span> <span class="kr">do</span>
-    <span class="n">ability</span><span class="p">.</span><span class="n">tickEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnTick</span><span class="p">)</span>
-<span class="kr">end</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kd">local</span> <span class="n">equipment</span> <span class="o">=</span> <span class="n">script</span><span class="p">.</span><span class="n">parent</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kd">local</span> <span class="n">allAbilities</span> <span class="o">=</span> <span class="n">equipment</span><span class="p">:</span><span class="n">GetAbilities</span><span class="p">()</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="kr">function</span> <span class="nf">OnTick</span><span class="p">(</span><span class="n">ability</span><span class="p">,</span> <span class="n">deltaTime</span><span class="p">)</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Updating ability &quot;</span> <span class="o">..</span> <span class="n">ability</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="kr">end</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">ability</span> <span class="kr">in</span> <span class="nb">ipairs</span><span class="p">(</span><span class="n">allAbilities</span><span class="p">)</span> <span class="kr">do</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>    <span class="n">ability</span><span class="p">.</span><span class="n">tickEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnTick</span><span class="p">)</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="kr">end</span>
 </code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.parent</a> | <a href="equipment.md">Equipment.GetAbilities</a> | <a href="event.md">Event.Connect</a> | <a href="coreluafunctions.md">CoreLua.print</a></p>
 <hr />
 <p>Example using:</p>
 <h3 id="activate"><a class="toclink" href="#activate"><code>Activate</code></a></h3>
 <p>The Ability <code>Activate()</code> function behaves as if the player had pressed the key binding. In order for a server gameplay decision to result in an ability activation, it must be communicated over the network somehow. In this example, a trigger overlap is representative of an arbitrary gameplay decision on the server. A broadcast message is sent to the client, who receives the event and activates the ability.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">--Server script</span>
-<span class="kd">local</span> <span class="n">trigger</span> <span class="o">=</span> <span class="n">script</span><span class="p">.</span><span class="n">parent</span>
-<span class="kd">local</span> <span class="kr">function</span> <span class="nf">OnBeginOverlap</span><span class="p">(</span><span class="n">trigger</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
-    <span class="kr">if</span> <span class="n">other</span><span class="p">:</span><span class="n">IsA</span><span class="p">(</span><span class="s2">&quot;Player&quot;</span><span class="p">)</span> <span class="kr">then</span>
-        <span class="n">Events</span><span class="p">.</span><span class="n">BroadcastToPlayer</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s2">&quot;SteppedOnObject&quot;</span><span class="p">)</span>
-    <span class="kr">end</span>
-<span class="kr">end</span>
-
-<span class="n">trigger</span><span class="p">.</span><span class="n">beginOverlapEvent</span><span class="p">(</span><span class="n">OnBeginOverlap</span><span class="p">)</span>
-
-<span class="cm">--[[#description</span>
-<span class="cm">    Client context script under the ability:</span>
-<span class="cm">]]</span>
-<span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">FindAncestorByType</span><span class="p">(</span><span class="s2">&quot;Ability&quot;</span><span class="p">)</span>
-
-<span class="kr">function</span> <span class="nf">OnPlayAnimation</span><span class="p">()</span>
-    <span class="kr">if</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span> <span class="ow">and</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span> <span class="o">==</span> <span class="n">Game</span><span class="p">.</span><span class="n">GetLocalPlayer</span><span class="p">()</span> <span class="kr">then</span>
-        <span class="n">ability</span><span class="p">:</span><span class="n">Activate</span><span class="p">()</span>
-    <span class="kr">end</span>
-<span class="kr">end</span>
-
-<span class="n">Events</span><span class="p">.</span><span class="n">Connect</span><span class="p">(</span><span class="s2">&quot;SteppedOnObject&quot;</span><span class="p">,</span> <span class="n">OnPlayAnimation</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">--Server script</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kd">local</span> <span class="n">trigger</span> <span class="o">=</span> <span class="n">script</span><span class="p">.</span><span class="n">parent</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="kd">local</span> <span class="kr">function</span> <span class="nf">OnBeginOverlap</span><span class="p">(</span><span class="n">trigger</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>    <span class="kr">if</span> <span class="n">other</span><span class="p">:</span><span class="n">IsA</span><span class="p">(</span><span class="s2">&quot;Player&quot;</span><span class="p">)</span> <span class="kr">then</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>        <span class="n">Events</span><span class="p">.</span><span class="n">BroadcastToPlayer</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s2">&quot;SteppedOnObject&quot;</span><span class="p">)</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>    <span class="kr">end</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="kr">end</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="n">trigger</span><span class="p">.</span><span class="n">beginOverlapEvent</span><span class="p">(</span><span class="n">OnBeginOverlap</span><span class="p">)</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="cm">--[[#description</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="cm">    Client context script under the ability:</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="cm">]]</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">FindAncestorByType</span><span class="p">(</span><span class="s2">&quot;Ability&quot;</span><span class="p">)</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="kr">function</span> <span class="nf">OnPlayAnimation</span><span class="p">()</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>    <span class="kr">if</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span> <span class="ow">and</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span> <span class="o">==</span> <span class="n">Game</span><span class="p">.</span><span class="n">GetLocalPlayer</span><span class="p">()</span> <span class="kr">then</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>        <span class="n">ability</span><span class="p">:</span><span class="n">Activate</span><span class="p">()</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a>    <span class="kr">end</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="kr">end</span>
+<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a>
+<a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a><span class="n">Events</span><span class="p">.</span><span class="n">Connect</span><span class="p">(</span><span class="s2">&quot;SteppedOnObject&quot;</span><span class="p">,</span> <span class="n">OnPlayAnimation</span><span class="p">)</span>
 </code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.parent</a> | <a href="trigger.md">Trigger.beginOverlapEvent</a> | <a href="other.md">other.IsA</a> | <a href="events.md">Events.BroadcastToPlayer</a> | <a href="ability.md">Ability.owner</a> | <a href="game.md">Game.GetLocalPlayer()</a></p>
 <hr />
@@ -1200,28 +1200,28 @@
 <h3 id="advancephase"><a class="toclink" href="#advancephase"><code>AdvancePhase</code></a></h3>
 <h3 id="getcurrentphase"><a class="toclink" href="#getcurrentphase"><code>GetCurrentPhase</code></a></h3>
 <p>In this example an ability is on cooldown, but can be set back to <code>Ready</code> by calling <code>AdvancePhase()</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="kr">function</span> <span class="nf">EndAbilityCooldown</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
-    <span class="kr">if</span> <span class="n">ability</span><span class="p">:</span><span class="n">GetCurrentPhase</span><span class="p">()</span> <span class="o">==</span> <span class="n">AbilityPhase</span><span class="p">.</span><span class="n">COOLDOWN</span> <span class="kr">then</span>
-        <span class="n">ability</span><span class="p">:</span><span class="n">AdvancePhase</span><span class="p">()</span>
-    <span class="kr">end</span>
-<span class="kr">end</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kr">function</span> <span class="nf">EndAbilityCooldown</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    <span class="kr">if</span> <span class="n">ability</span><span class="p">:</span><span class="n">GetCurrentPhase</span><span class="p">()</span> <span class="o">==</span> <span class="n">AbilityPhase</span><span class="p">.</span><span class="n">COOLDOWN</span> <span class="kr">then</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>        <span class="n">ability</span><span class="p">:</span><span class="n">AdvancePhase</span><span class="p">()</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    <span class="kr">end</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="kr">end</span>
 </code></pre></div>
 <hr />
 <p>Example using:</p>
 <h3 id="getcurrentphase_1"><a class="toclink" href="#getcurrentphase_1"><code>GetCurrentPhase</code></a></h3>
 <h3 id="getphasetimeremaining"><a class="toclink" href="#getphasetimeremaining"><code>GetPhaseTimeRemaining</code></a></h3>
 <p>In this example, while the ability is on cooldown, the percentage completion of the cooldown is calculated. This could be useful, for instance, in displaying user interface.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">FindAncestorByType</span><span class="p">(</span><span class="s2">&quot;Ability&quot;</span><span class="p">)</span>
-
-<span class="kr">function</span> <span class="nf">Tick</span><span class="p">()</span>
-    <span class="kr">if</span> <span class="n">ability</span><span class="p">:</span><span class="n">GetCurrentPhase</span><span class="p">()</span> <span class="o">==</span> <span class="n">AbilityPhase</span><span class="p">.</span><span class="n">COOLDOWN</span> <span class="kr">then</span>
-        <span class="kd">local</span> <span class="n">duration</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">cooldownPhaseSettings</span><span class="p">.</span><span class="n">duration</span>
-        <span class="kd">local</span> <span class="n">remaining</span> <span class="o">=</span> <span class="n">ability</span><span class="p">:</span><span class="n">GetPhaseTimeRemaining</span><span class="p">()</span>
-        <span class="kd">local</span> <span class="n">percent</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">remaining</span> <span class="o">/</span> <span class="n">duration</span><span class="p">)</span>
-
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cooldown remaining: %&quot;</span> <span class="o">..</span> <span class="nb">string.format</span><span class="p">(</span><span class="s2">&quot;%.2f&quot;</span><span class="p">,</span><span class="n">percent</span><span class="p">))</span>
-    <span class="kr">end</span>
-<span class="kr">end</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">FindAncestorByType</span><span class="p">(</span><span class="s2">&quot;Ability&quot;</span><span class="p">)</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="kr">function</span> <span class="nf">Tick</span><span class="p">()</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>    <span class="kr">if</span> <span class="n">ability</span><span class="p">:</span><span class="n">GetCurrentPhase</span><span class="p">()</span> <span class="o">==</span> <span class="n">AbilityPhase</span><span class="p">.</span><span class="n">COOLDOWN</span> <span class="kr">then</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>        <span class="kd">local</span> <span class="n">duration</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">cooldownPhaseSettings</span><span class="p">.</span><span class="n">duration</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>        <span class="kd">local</span> <span class="n">remaining</span> <span class="o">=</span> <span class="n">ability</span><span class="p">:</span><span class="n">GetPhaseTimeRemaining</span><span class="p">()</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>        <span class="kd">local</span> <span class="n">percent</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">remaining</span> <span class="o">/</span> <span class="n">duration</span><span class="p">)</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cooldown remaining: %&quot;</span> <span class="o">..</span> <span class="nb">string.format</span><span class="p">(</span><span class="s2">&quot;%.2f&quot;</span><span class="p">,</span><span class="n">percent</span><span class="p">))</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>    <span class="kr">end</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="kr">end</span>
 </code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.FindAncestorByType</a> | <a href="ability.md">Ability.GetCurrentPhase</a> | <a href="abilityphasesettings.md">AbilityPhaseSettings.duration</a> | <a href="coreluafunctions.md">CoreLua.print</a></p>
 <hr />
@@ -1229,194 +1229,194 @@
 <h3 id="gettargetdata"><a class="toclink" href="#gettargetdata"><code>GetTargetData</code></a></h3>
 <h3 id="settargetdata"><a class="toclink" href="#settargetdata"><code>SetTargetData</code></a></h3>
 <p>The ability's targeting data gives a lot of information about where and what the player is aiming at. If setup correctly, it can also be modified programmatically. In this example, the Z position of the target is flattened horizontally. Useful, for example, in a top-down shooter. For this to work it should be placed in a client context under the ability. The ability should also have the option "Is Target Data Update" turned off for the Execute phase, otherwise any data set programmatically will be overwritten when the phase changes.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">--Server script</span>
-<span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">FindAncestorByType</span><span class="p">(</span><span class="s2">&quot;Ability&quot;</span><span class="p">)</span>
-
-<span class="kr">function</span> <span class="nf">OnCast</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
-    <span class="kd">local</span> <span class="n">abilityTarget</span> <span class="o">=</span> <span class="n">ability</span><span class="p">:</span><span class="n">GetTargetData</span><span class="p">()</span>
-    <span class="kd">local</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">abilityTarget</span><span class="p">:</span><span class="n">GetHitPosition</span><span class="p">()</span>
-
-    <span class="n">pos</span><span class="p">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">:</span><span class="n">GetWorldPosition</span><span class="p">().</span><span class="n">z</span> <span class="o">+</span> <span class="mi">50</span>
-
-    <span class="n">abilityTarget</span><span class="p">:</span><span class="n">SetHitPosition</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
-    <span class="n">ability</span><span class="p">:</span><span class="n">SetTargetData</span><span class="p">(</span><span class="n">abilityTarget</span><span class="p">)</span>
-<span class="kr">end</span>
-
-<span class="n">ability</span><span class="p">.</span><span class="n">castEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnCast</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1">--Server script</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">FindAncestorByType</span><span class="p">(</span><span class="s2">&quot;Ability&quot;</span><span class="p">)</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="kr">function</span> <span class="nf">OnCast</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>    <span class="kd">local</span> <span class="n">abilityTarget</span> <span class="o">=</span> <span class="n">ability</span><span class="p">:</span><span class="n">GetTargetData</span><span class="p">()</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>    <span class="kd">local</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">abilityTarget</span><span class="p">:</span><span class="n">GetHitPosition</span><span class="p">()</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>    <span class="n">pos</span><span class="p">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">:</span><span class="n">GetWorldPosition</span><span class="p">().</span><span class="n">z</span> <span class="o">+</span> <span class="mi">50</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>    <span class="n">abilityTarget</span><span class="p">:</span><span class="n">SetHitPosition</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>    <span class="n">ability</span><span class="p">:</span><span class="n">SetTargetData</span><span class="p">(</span><span class="n">abilityTarget</span><span class="p">)</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="kr">end</span>
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="n">ability</span><span class="p">.</span><span class="n">castEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnCast</span><span class="p">)</span>
 </code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.FindAncestorByType</a> | <a href="abilitytarget.md">AbilityTarget.GetHitPosition</a> | <a href="ability.md">Ability.owner</a> | <a href="player.md">Player.GetWorldPosition</a> | <a href="event.md">Event.Connect</a></p>
 <hr />
 <p>Example using:</p>
 <h3 id="interrupt"><a class="toclink" href="#interrupt"><code>Interrupt</code></a></h3>
 <p>Interrupting an ability either sends it back into ready state (if it was still in the Cast phase) or puts it on cooldown. In this example, we have an ability that searches for all enemies in a 10 meter radius and interrupts their abilities.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">--Server script</span>
-<span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">.</span><span class="n">parent</span>
-<span class="kd">local</span> <span class="n">RADIUS</span> <span class="o">=</span> <span class="mi">1000</span> <span class="c1">-- 10 meters</span>
-
-<span class="kr">function</span> <span class="nf">OnExecute</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
-    <span class="kd">local</span> <span class="n">center</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">:</span><span class="n">GetWorldPosition</span><span class="p">()</span>
-    <span class="c1">-- Search for enemies</span>
-    <span class="kd">local</span> <span class="n">enemies</span> <span class="o">=</span> <span class="n">Game</span><span class="p">.</span><span class="n">FindPlayersInCylinder</span><span class="p">(</span><span class="n">center</span><span class="p">,</span> <span class="n">RADIUS</span><span class="p">,</span> <span class="p">{</span><span class="n">ignoreTeams</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">.</span><span class="n">team</span><span class="p">})</span>
-    <span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">enemy</span> <span class="kr">in</span> <span class="nb">ipairs</span><span class="p">(</span><span class="n">enemies</span><span class="p">)</span> <span class="kr">do</span>
-        <span class="c1">-- Interrupt all their abilities</span>
-        <span class="kd">local</span> <span class="n">enemyAbilities</span> <span class="o">=</span> <span class="n">enemy</span><span class="p">:</span><span class="n">GetAbilities</span><span class="p">()</span>
-        <span class="kr">for</span> <span class="n">_</span><span class="p">,</span><span class="n">a</span> <span class="kr">in</span> <span class="nb">ipairs</span><span class="p">(</span><span class="n">enemyAbilities</span><span class="p">)</span> <span class="kr">do</span>
-            <span class="n">a</span><span class="p">:</span><span class="n">Interrupt</span><span class="p">()</span>
-        <span class="kr">end</span>
-    <span class="kr">end</span>
-<span class="kr">end</span>
-
-<span class="n">ability</span><span class="p">.</span><span class="n">executeEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnExecute</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1">--Server script</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">.</span><span class="n">parent</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="kd">local</span> <span class="n">RADIUS</span> <span class="o">=</span> <span class="mi">1000</span> <span class="c1">-- 10 meters</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="kr">function</span> <span class="nf">OnExecute</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>    <span class="kd">local</span> <span class="n">center</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">:</span><span class="n">GetWorldPosition</span><span class="p">()</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>    <span class="c1">-- Search for enemies</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>    <span class="kd">local</span> <span class="n">enemies</span> <span class="o">=</span> <span class="n">Game</span><span class="p">.</span><span class="n">FindPlayersInCylinder</span><span class="p">(</span><span class="n">center</span><span class="p">,</span> <span class="n">RADIUS</span><span class="p">,</span> <span class="p">{</span><span class="n">ignoreTeams</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">.</span><span class="n">team</span><span class="p">})</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>    <span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">enemy</span> <span class="kr">in</span> <span class="nb">ipairs</span><span class="p">(</span><span class="n">enemies</span><span class="p">)</span> <span class="kr">do</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>        <span class="c1">-- Interrupt all their abilities</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>        <span class="kd">local</span> <span class="n">enemyAbilities</span> <span class="o">=</span> <span class="n">enemy</span><span class="p">:</span><span class="n">GetAbilities</span><span class="p">()</span>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>        <span class="kr">for</span> <span class="n">_</span><span class="p">,</span><span class="n">a</span> <span class="kr">in</span> <span class="nb">ipairs</span><span class="p">(</span><span class="n">enemyAbilities</span><span class="p">)</span> <span class="kr">do</span>
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>            <span class="n">a</span><span class="p">:</span><span class="n">Interrupt</span><span class="p">()</span>
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>        <span class="kr">end</span>
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>    <span class="kr">end</span>
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="kr">end</span>
+<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>
+<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="n">ability</span><span class="p">.</span><span class="n">executeEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnExecute</span><span class="p">)</span>
 </code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.parent</a> | <a href="ability.md">Ability.owner</a> | <a href="player.md">Player.GetWorldPosition</a> | <a href="game.md">Game.FindPlayersInCylinder</a> | <a href="event.md">Event.Connect</a></p>
 <hr />
 <p>Example using:</p>
 <h3 id="actionname"><a class="toclink" href="#actionname"><code>actionName</code></a></h3>
 <p>Even though some API properties are read-only, they are useful is solutions such as user interface. In this example, a client context script searches the local player's list of abilities to find one that matches the action name (input) designated for this UI component. When it's found, the ability's name is written to the UI Text object.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">--Client script</span>
-<span class="kd">local</span> <span class="n">ACTION_NAME</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">GetCustomProperty</span><span class="p">(</span><span class="s2">&quot;ActionName&quot;</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">NAME_UI</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">GetCustomProperty</span><span class="p">(</span><span class="s2">&quot;NameUIText&quot;</span><span class="p">):</span><span class="n">WaitForObject</span><span class="p">()</span>
-
-<span class="kr">function</span> <span class="nf">GetLocalPlayerAbilityWithActionName</span><span class="p">()</span>
-    <span class="kd">local</span> <span class="n">player</span> <span class="o">=</span> <span class="n">Game</span><span class="p">.</span><span class="n">GetLocalPlayer</span><span class="p">()</span>
-    <span class="kd">local</span> <span class="n">abilities</span> <span class="o">=</span> <span class="n">player</span><span class="p">:</span><span class="n">GetAbilities</span><span class="p">()</span>
-
-    <span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">ability</span> <span class="kr">in</span> <span class="nb">pairs</span><span class="p">(</span><span class="n">abilities</span><span class="p">)</span> <span class="kr">do</span>
-        <span class="kr">if</span> <span class="n">ability</span><span class="p">.</span><span class="n">actionName</span> <span class="o">==</span> <span class="n">ACTION_NAME</span> <span class="kr">then</span>
-            <span class="kr">return</span> <span class="n">ability</span>
-        <span class="kr">end</span>
-    <span class="kr">end</span>
-
-    <span class="kr">return</span> <span class="kc">nil</span>
-<span class="kr">end</span>
-
-<span class="kr">function</span> <span class="nf">Tick</span><span class="p">()</span>
-    <span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">GetLocalPlayerAbilityWithActionName</span><span class="p">()</span>
-    <span class="kr">if</span> <span class="n">ability</span> <span class="kr">then</span>
-        <span class="n">NAME_UI</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">name</span>
-    <span class="kr">end</span>
-<span class="kr">end</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1">--Client script</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="kd">local</span> <span class="n">ACTION_NAME</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">GetCustomProperty</span><span class="p">(</span><span class="s2">&quot;ActionName&quot;</span><span class="p">)</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="kd">local</span> <span class="n">NAME_UI</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">GetCustomProperty</span><span class="p">(</span><span class="s2">&quot;NameUIText&quot;</span><span class="p">):</span><span class="n">WaitForObject</span><span class="p">()</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="kr">function</span> <span class="nf">GetLocalPlayerAbilityWithActionName</span><span class="p">()</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>    <span class="kd">local</span> <span class="n">player</span> <span class="o">=</span> <span class="n">Game</span><span class="p">.</span><span class="n">GetLocalPlayer</span><span class="p">()</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>    <span class="kd">local</span> <span class="n">abilities</span> <span class="o">=</span> <span class="n">player</span><span class="p">:</span><span class="n">GetAbilities</span><span class="p">()</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>    <span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">ability</span> <span class="kr">in</span> <span class="nb">pairs</span><span class="p">(</span><span class="n">abilities</span><span class="p">)</span> <span class="kr">do</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>        <span class="kr">if</span> <span class="n">ability</span><span class="p">.</span><span class="n">actionName</span> <span class="o">==</span> <span class="n">ACTION_NAME</span> <span class="kr">then</span>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>            <span class="kr">return</span> <span class="n">ability</span>
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>        <span class="kr">end</span>
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>    <span class="kr">end</span>
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>
+<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>    <span class="kr">return</span> <span class="kc">nil</span>
+<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="kr">end</span>
+<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>
+<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="kr">function</span> <span class="nf">Tick</span><span class="p">()</span>
+<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a>    <span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">GetLocalPlayerAbilityWithActionName</span><span class="p">()</span>
+<a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a>    <span class="kr">if</span> <span class="n">ability</span> <span class="kr">then</span>
+<a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a>        <span class="n">NAME_UI</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">name</span>
+<a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a>    <span class="kr">end</span>
+<a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a><span class="kr">end</span>
 </code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.name</a> | <a href="coreobjectreference.md">CoreObjectReference.WaitForObject</a> | <a href="game.md">Game.GetLocalPlayer</a> | <a href="player.md">Player.GetAbilities</a> | <a href="uitext.md">UIText.text</a></p>
 <hr />
 <p>Example using:</p>
 <h3 id="animation"><a class="toclink" href="#animation"><code>animation</code></a></h3>
 <p>In this example, the <code>ProcessAbilities()</code> function can be called once, such as at the beginning of a round, to take inventory of a player's abilities and classify them based on animation. This example also demonstrates how to disconnect event listeners so that we don't listen for the same event multiple times.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">--Server script</span>
-<span class="kr">function</span> <span class="nf">OnMelee1HandCast</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;One-handed melee attack&quot;</span><span class="p">)</span>
-<span class="kr">end</span>
-
-<span class="kr">function</span> <span class="nf">OnMelee2HandCast</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Two-handed melee attack&quot;</span><span class="p">)</span>
-<span class="kr">end</span>
-
-<span class="kd">local</span> <span class="n">abilityEventListeners</span> <span class="o">=</span> <span class="p">{}</span>
-
-<span class="kr">function</span> <span class="nf">CleanupListeners</span><span class="p">(</span><span class="n">player</span><span class="p">)</span>
-    <span class="c1">-- If we have previously processed this player, cleanup all listeners</span>
-    <span class="kr">if</span> <span class="n">abilityEventListeners</span><span class="p">[</span><span class="n">player</span><span class="p">]</span> <span class="kr">then</span>
-        <span class="kr">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">eventListener</span> <span class="kr">in</span> <span class="nb">ipairs</span><span class="p">(</span><span class="n">abilityEventListeners</span><span class="p">[</span><span class="n">player</span><span class="p">])</span> <span class="kr">do</span>
-            <span class="n">eventListener</span><span class="p">:</span><span class="n">Disconnect</span><span class="p">()</span>
-        <span class="kr">end</span>
-        <span class="n">abilityEventListeners</span><span class="p">[</span><span class="n">player</span><span class="p">]</span> <span class="o">=</span> <span class="kc">nil</span>
-    <span class="kr">end</span>
-<span class="kr">end</span>
-
-<span class="kr">function</span> <span class="nf">ProcessAbilities</span><span class="p">(</span><span class="n">player</span><span class="p">)</span>
-    <span class="n">CleanupListeners</span><span class="p">(</span><span class="n">player</span><span class="p">)</span>
-
-    <span class="kd">local</span> <span class="n">allAbilities</span> <span class="o">=</span> <span class="n">player</span><span class="p">:</span><span class="n">GetAbilities</span><span class="p">()</span>
-
-    <span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">ability</span> <span class="kr">in</span> <span class="nb">ipairs</span><span class="p">(</span><span class="n">allAbilities</span><span class="p">)</span> <span class="kr">do</span>
-        <span class="kr">if</span> <span class="nb">string.match</span><span class="p">(</span><span class="n">ability</span><span class="p">.</span><span class="n">animation</span><span class="p">,</span> <span class="s2">&quot;melee&quot;</span><span class="p">)</span> <span class="kr">then</span>
-            <span class="kd">local</span> <span class="n">eventListener</span>
-            <span class="kr">if</span> <span class="nb">string.match</span><span class="p">(</span><span class="n">ability</span><span class="p">.</span><span class="n">animation</span><span class="p">,</span> <span class="s2">&quot;1h&quot;</span><span class="p">)</span> <span class="kr">then</span>
-                <span class="n">eventListener</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">castEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnMelee1HandCast</span><span class="p">)</span>
-            <span class="kr">else</span>
-                <span class="n">eventListener</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">castEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnMelee2HandCast</span><span class="p">)</span>
-            <span class="kr">end</span>
-            <span class="nb">table.insert</span><span class="p">(</span><span class="n">abilityEventListeners</span><span class="p">[</span><span class="n">player</span><span class="p">],</span> <span class="n">eventListener</span><span class="p">)</span>
-        <span class="kr">end</span>
-    <span class="kr">end</span>
-<span class="kr">end</span>
-
-<span class="c1">-- Lets also cleanup when a player leaves the game, as perhaps their ability objects might stay in the game.</span>
-<span class="n">Game</span><span class="p">.</span><span class="n">playerLeftEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">CleanupListeners</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1">--Server script</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="kr">function</span> <span class="nf">OnMelee1HandCast</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;One-handed melee attack&quot;</span><span class="p">)</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="kr">end</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="kr">function</span> <span class="nf">OnMelee2HandCast</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Two-handed melee attack&quot;</span><span class="p">)</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="kr">end</span>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="kd">local</span> <span class="n">abilityEventListeners</span> <span class="o">=</span> <span class="p">{}</span>
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="kr">function</span> <span class="nf">CleanupListeners</span><span class="p">(</span><span class="n">player</span><span class="p">)</span>
+<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>    <span class="c1">-- If we have previously processed this player, cleanup all listeners</span>
+<a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a>    <span class="kr">if</span> <span class="n">abilityEventListeners</span><span class="p">[</span><span class="n">player</span><span class="p">]</span> <span class="kr">then</span>
+<a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>        <span class="kr">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">eventListener</span> <span class="kr">in</span> <span class="nb">ipairs</span><span class="p">(</span><span class="n">abilityEventListeners</span><span class="p">[</span><span class="n">player</span><span class="p">])</span> <span class="kr">do</span>
+<a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a>            <span class="n">eventListener</span><span class="p">:</span><span class="n">Disconnect</span><span class="p">()</span>
+<a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a>        <span class="kr">end</span>
+<a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a>        <span class="n">abilityEventListeners</span><span class="p">[</span><span class="n">player</span><span class="p">]</span> <span class="o">=</span> <span class="kc">nil</span>
+<a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a>    <span class="kr">end</span>
+<a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a><span class="kr">end</span>
+<a id="__codelineno-13-21" name="__codelineno-13-21" href="#__codelineno-13-21"></a>
+<a id="__codelineno-13-22" name="__codelineno-13-22" href="#__codelineno-13-22"></a><span class="kr">function</span> <span class="nf">ProcessAbilities</span><span class="p">(</span><span class="n">player</span><span class="p">)</span>
+<a id="__codelineno-13-23" name="__codelineno-13-23" href="#__codelineno-13-23"></a>    <span class="n">CleanupListeners</span><span class="p">(</span><span class="n">player</span><span class="p">)</span>
+<a id="__codelineno-13-24" name="__codelineno-13-24" href="#__codelineno-13-24"></a>
+<a id="__codelineno-13-25" name="__codelineno-13-25" href="#__codelineno-13-25"></a>    <span class="kd">local</span> <span class="n">allAbilities</span> <span class="o">=</span> <span class="n">player</span><span class="p">:</span><span class="n">GetAbilities</span><span class="p">()</span>
+<a id="__codelineno-13-26" name="__codelineno-13-26" href="#__codelineno-13-26"></a>
+<a id="__codelineno-13-27" name="__codelineno-13-27" href="#__codelineno-13-27"></a>    <span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">ability</span> <span class="kr">in</span> <span class="nb">ipairs</span><span class="p">(</span><span class="n">allAbilities</span><span class="p">)</span> <span class="kr">do</span>
+<a id="__codelineno-13-28" name="__codelineno-13-28" href="#__codelineno-13-28"></a>        <span class="kr">if</span> <span class="nb">string.match</span><span class="p">(</span><span class="n">ability</span><span class="p">.</span><span class="n">animation</span><span class="p">,</span> <span class="s2">&quot;melee&quot;</span><span class="p">)</span> <span class="kr">then</span>
+<a id="__codelineno-13-29" name="__codelineno-13-29" href="#__codelineno-13-29"></a>            <span class="kd">local</span> <span class="n">eventListener</span>
+<a id="__codelineno-13-30" name="__codelineno-13-30" href="#__codelineno-13-30"></a>            <span class="kr">if</span> <span class="nb">string.match</span><span class="p">(</span><span class="n">ability</span><span class="p">.</span><span class="n">animation</span><span class="p">,</span> <span class="s2">&quot;1h&quot;</span><span class="p">)</span> <span class="kr">then</span>
+<a id="__codelineno-13-31" name="__codelineno-13-31" href="#__codelineno-13-31"></a>                <span class="n">eventListener</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">castEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnMelee1HandCast</span><span class="p">)</span>
+<a id="__codelineno-13-32" name="__codelineno-13-32" href="#__codelineno-13-32"></a>            <span class="kr">else</span>
+<a id="__codelineno-13-33" name="__codelineno-13-33" href="#__codelineno-13-33"></a>                <span class="n">eventListener</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">castEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnMelee2HandCast</span><span class="p">)</span>
+<a id="__codelineno-13-34" name="__codelineno-13-34" href="#__codelineno-13-34"></a>            <span class="kr">end</span>
+<a id="__codelineno-13-35" name="__codelineno-13-35" href="#__codelineno-13-35"></a>            <span class="nb">table.insert</span><span class="p">(</span><span class="n">abilityEventListeners</span><span class="p">[</span><span class="n">player</span><span class="p">],</span> <span class="n">eventListener</span><span class="p">)</span>
+<a id="__codelineno-13-36" name="__codelineno-13-36" href="#__codelineno-13-36"></a>        <span class="kr">end</span>
+<a id="__codelineno-13-37" name="__codelineno-13-37" href="#__codelineno-13-37"></a>    <span class="kr">end</span>
+<a id="__codelineno-13-38" name="__codelineno-13-38" href="#__codelineno-13-38"></a><span class="kr">end</span>
+<a id="__codelineno-13-39" name="__codelineno-13-39" href="#__codelineno-13-39"></a>
+<a id="__codelineno-13-40" name="__codelineno-13-40" href="#__codelineno-13-40"></a><span class="c1">-- Lets also cleanup when a player leaves the game, as perhaps their ability objects might stay in the game.</span>
+<a id="__codelineno-13-41" name="__codelineno-13-41" href="#__codelineno-13-41"></a><span class="n">Game</span><span class="p">.</span><span class="n">playerLeftEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">CleanupListeners</span><span class="p">)</span>
 </code></pre></div>
 <p>See also: <a href="eventlistener.md">EventListener.Disconnect</a> | <a href="player.md">Player.GetAbilities</a> | <a href="ability.md">Ability.castEvent</a> | <a href="event.md">Event.Connect</a> | <a href="game.md">Game.playerLeftEvent</a> | <a href="coreluafunctions.md">CoreLua.print</a></p>
 <hr />
 <p>Example using:</p>
 <h3 id="canactivatewhiledead"><a class="toclink" href="#canactivatewhiledead"><code>canActivateWhileDead</code></a></h3>
 <p>Some games may have abilities that can be used while the player is dead. In this example, we have abilities that can <strong>only</strong> be activated while dead. If not dead, then it's interrupted.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">--Server script</span>
-<span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">FindAncestorByType</span><span class="p">(</span><span class="s2">&quot;Ability&quot;</span><span class="p">)</span>
-
-<span class="kr">function</span> <span class="nf">OnCast</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
-    <span class="kr">if</span> <span class="n">ability</span><span class="p">.</span><span class="n">canActivateWhileDead</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">.</span><span class="n">isDead</span> <span class="kr">then</span>
-        <span class="n">ability</span><span class="p">:</span><span class="n">Interrupt</span><span class="p">()</span>
-    <span class="kr">end</span>
-<span class="kr">end</span>
-
-<span class="n">ability</span><span class="p">.</span><span class="n">castEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnCast</span><span class="p">)</span>
-
-<span class="cm">--[[#description</span>
-<span class="cm">    On the client context, a user interface component that displays ability details is hidden until the player dies:</span>
-<span class="cm">]]</span>
-<span class="kd">local</span> <span class="n">abilityCanvas</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">GetCustomProperty</span><span class="p">(</span><span class="s2">&quot;Canvas&quot;</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">ACTION_NAME</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">GetCustomProperty</span><span class="p">(</span><span class="s2">&quot;ActionName&quot;</span><span class="p">)</span>
-
-<span class="kr">function</span> <span class="nf">Tick</span><span class="p">(</span><span class="n">deltaTime</span><span class="p">)</span>
-    <span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">GetLocalPlayerAbilityWithActionName</span><span class="p">()</span>
-
-    <span class="kr">if</span> <span class="n">ability</span>
-    <span class="ow">and</span> <span class="n">ability</span><span class="p">.</span><span class="n">isEnabled</span>
-    <span class="ow">and</span> <span class="n">ability</span><span class="p">.</span><span class="n">canActivateWhileDead</span>
-    <span class="ow">and</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span>
-    <span class="ow">and</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">.</span><span class="n">isDead</span> <span class="kr">then</span>
-
-        <span class="n">abilityCanvas</span><span class="p">.</span><span class="n">visibility</span> <span class="o">=</span> <span class="n">Visibility</span><span class="p">.</span><span class="n">INHERIT</span>
-    <span class="kr">else</span>
-        <span class="n">abilityCanvas</span><span class="p">.</span><span class="n">visibility</span> <span class="o">=</span> <span class="n">Visibility</span><span class="p">.</span><span class="n">FORCE_OFF</span>
-    <span class="kr">end</span>
-<span class="kr">end</span>
-
-<span class="c1">-- Searches the local player&#39;s abilities until one with a matching action name is found</span>
-<span class="c1">-- The ACTION_NAME search criteria should be set in the custom property</span>
-<span class="kr">function</span> <span class="nf">GetLocalPlayerAbilityWithActionName</span><span class="p">()</span>
-    <span class="kd">local</span> <span class="n">abilities</span> <span class="o">=</span> <span class="n">Game</span><span class="p">.</span><span class="n">GetLocalPlayer</span><span class="p">():</span><span class="n">GetAbilities</span><span class="p">()</span>
-    <span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">ability</span> <span class="kr">in</span> <span class="nb">pairs</span><span class="p">(</span><span class="n">abilities</span><span class="p">)</span> <span class="kr">do</span>
-        <span class="kr">if</span> <span class="n">ability</span><span class="p">.</span><span class="n">actionName</span> <span class="o">==</span> <span class="n">ACTION_NAME</span> <span class="kr">then</span>
-            <span class="kr">return</span> <span class="n">ability</span>
-        <span class="kr">end</span>
-    <span class="kr">end</span>
-
-    <span class="kr">return</span> <span class="kc">nil</span>
-<span class="kr">end</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1">--Server script</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">FindAncestorByType</span><span class="p">(</span><span class="s2">&quot;Ability&quot;</span><span class="p">)</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="kr">function</span> <span class="nf">OnCast</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>    <span class="kr">if</span> <span class="n">ability</span><span class="p">.</span><span class="n">canActivateWhileDead</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">.</span><span class="n">isDead</span> <span class="kr">then</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>        <span class="n">ability</span><span class="p">:</span><span class="n">Interrupt</span><span class="p">()</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>    <span class="kr">end</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="kr">end</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="n">ability</span><span class="p">.</span><span class="n">castEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnCast</span><span class="p">)</span>
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="cm">--[[#description</span>
+<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="cm">    On the client context, a user interface component that displays ability details is hidden until the player dies:</span>
+<a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a><span class="cm">]]</span>
+<a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a><span class="kd">local</span> <span class="n">abilityCanvas</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">GetCustomProperty</span><span class="p">(</span><span class="s2">&quot;Canvas&quot;</span><span class="p">)</span>
+<a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a><span class="kd">local</span> <span class="n">ACTION_NAME</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">GetCustomProperty</span><span class="p">(</span><span class="s2">&quot;ActionName&quot;</span><span class="p">)</span>
+<a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a>
+<a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a><span class="kr">function</span> <span class="nf">Tick</span><span class="p">(</span><span class="n">deltaTime</span><span class="p">)</span>
+<a id="__codelineno-14-19" name="__codelineno-14-19" href="#__codelineno-14-19"></a>    <span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">GetLocalPlayerAbilityWithActionName</span><span class="p">()</span>
+<a id="__codelineno-14-20" name="__codelineno-14-20" href="#__codelineno-14-20"></a>
+<a id="__codelineno-14-21" name="__codelineno-14-21" href="#__codelineno-14-21"></a>    <span class="kr">if</span> <span class="n">ability</span>
+<a id="__codelineno-14-22" name="__codelineno-14-22" href="#__codelineno-14-22"></a>    <span class="ow">and</span> <span class="n">ability</span><span class="p">.</span><span class="n">isEnabled</span>
+<a id="__codelineno-14-23" name="__codelineno-14-23" href="#__codelineno-14-23"></a>    <span class="ow">and</span> <span class="n">ability</span><span class="p">.</span><span class="n">canActivateWhileDead</span>
+<a id="__codelineno-14-24" name="__codelineno-14-24" href="#__codelineno-14-24"></a>    <span class="ow">and</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span>
+<a id="__codelineno-14-25" name="__codelineno-14-25" href="#__codelineno-14-25"></a>    <span class="ow">and</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">.</span><span class="n">isDead</span> <span class="kr">then</span>
+<a id="__codelineno-14-26" name="__codelineno-14-26" href="#__codelineno-14-26"></a>
+<a id="__codelineno-14-27" name="__codelineno-14-27" href="#__codelineno-14-27"></a>        <span class="n">abilityCanvas</span><span class="p">.</span><span class="n">visibility</span> <span class="o">=</span> <span class="n">Visibility</span><span class="p">.</span><span class="n">INHERIT</span>
+<a id="__codelineno-14-28" name="__codelineno-14-28" href="#__codelineno-14-28"></a>    <span class="kr">else</span>
+<a id="__codelineno-14-29" name="__codelineno-14-29" href="#__codelineno-14-29"></a>        <span class="n">abilityCanvas</span><span class="p">.</span><span class="n">visibility</span> <span class="o">=</span> <span class="n">Visibility</span><span class="p">.</span><span class="n">FORCE_OFF</span>
+<a id="__codelineno-14-30" name="__codelineno-14-30" href="#__codelineno-14-30"></a>    <span class="kr">end</span>
+<a id="__codelineno-14-31" name="__codelineno-14-31" href="#__codelineno-14-31"></a><span class="kr">end</span>
+<a id="__codelineno-14-32" name="__codelineno-14-32" href="#__codelineno-14-32"></a>
+<a id="__codelineno-14-33" name="__codelineno-14-33" href="#__codelineno-14-33"></a><span class="c1">-- Searches the local player&#39;s abilities until one with a matching action name is found</span>
+<a id="__codelineno-14-34" name="__codelineno-14-34" href="#__codelineno-14-34"></a><span class="c1">-- The ACTION_NAME search criteria should be set in the custom property</span>
+<a id="__codelineno-14-35" name="__codelineno-14-35" href="#__codelineno-14-35"></a><span class="kr">function</span> <span class="nf">GetLocalPlayerAbilityWithActionName</span><span class="p">()</span>
+<a id="__codelineno-14-36" name="__codelineno-14-36" href="#__codelineno-14-36"></a>    <span class="kd">local</span> <span class="n">abilities</span> <span class="o">=</span> <span class="n">Game</span><span class="p">.</span><span class="n">GetLocalPlayer</span><span class="p">():</span><span class="n">GetAbilities</span><span class="p">()</span>
+<a id="__codelineno-14-37" name="__codelineno-14-37" href="#__codelineno-14-37"></a>    <span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">ability</span> <span class="kr">in</span> <span class="nb">pairs</span><span class="p">(</span><span class="n">abilities</span><span class="p">)</span> <span class="kr">do</span>
+<a id="__codelineno-14-38" name="__codelineno-14-38" href="#__codelineno-14-38"></a>        <span class="kr">if</span> <span class="n">ability</span><span class="p">.</span><span class="n">actionName</span> <span class="o">==</span> <span class="n">ACTION_NAME</span> <span class="kr">then</span>
+<a id="__codelineno-14-39" name="__codelineno-14-39" href="#__codelineno-14-39"></a>            <span class="kr">return</span> <span class="n">ability</span>
+<a id="__codelineno-14-40" name="__codelineno-14-40" href="#__codelineno-14-40"></a>        <span class="kr">end</span>
+<a id="__codelineno-14-41" name="__codelineno-14-41" href="#__codelineno-14-41"></a>    <span class="kr">end</span>
+<a id="__codelineno-14-42" name="__codelineno-14-42" href="#__codelineno-14-42"></a>
+<a id="__codelineno-14-43" name="__codelineno-14-43" href="#__codelineno-14-43"></a>    <span class="kr">return</span> <span class="kc">nil</span>
+<a id="__codelineno-14-44" name="__codelineno-14-44" href="#__codelineno-14-44"></a><span class="kr">end</span>
 </code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.FindAncestorByType</a> | <a href="ability.md">Ability.owner</a> | <a href="player.md">Player.isDead</a> | <a href="event.md">Event.Connect</a> | <a href="coreluafunctions.md">CoreLua.Tick</a></p>
 <hr />
 <p>Example using:</p>
 <h3 id="canbeprevented"><a class="toclink" href="#canbeprevented"><code>canBePrevented</code></a></h3>
 <p>In this example, an ability recognizes that it has been interrupted by the activation of another, special ability, that is setup to serve for animation cancelling. The <code>canBePrevented</code> property is usually true in this game, but in this special case it has been configured as false so that it can be activated at any time. The player gains vertical impulse as result of the synergy and hears a small audio cue that helps communicate the mechanic.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">--Server script</span>
-<span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">.</span><span class="n">parent</span>
-<span class="kd">local</span> <span class="n">cancelSound</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">GetCustomProperty</span><span class="p">(</span><span class="s2">&quot;CancelSound&quot;</span><span class="p">)</span>
-
-<span class="kr">function</span> <span class="nf">OnInterrupted</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
-    <span class="kd">local</span> <span class="n">player</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span>
-    <span class="kr">if</span> <span class="ow">not</span> <span class="n">Object</span><span class="p">.</span><span class="n">IsValid</span><span class="p">(</span><span class="n">player</span><span class="p">)</span> <span class="kr">then</span> <span class="kr">return</span> <span class="kr">end</span>
-
-    <span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">a</span> <span class="kr">in</span> <span class="nb">ipairs</span><span class="p">(</span><span class="n">player</span><span class="p">:</span><span class="n">GetAbilities</span><span class="p">())</span> <span class="kr">do</span>
-        <span class="kr">if</span> <span class="n">a</span><span class="p">:</span><span class="n">GetCurrentPhase</span><span class="p">()</span> <span class="o">~=</span> <span class="n">AbilityPhase</span><span class="p">.</span><span class="n">READY</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">a</span><span class="p">.</span><span class="n">canBePrevented</span> <span class="kr">then</span>
-            <span class="n">player</span><span class="p">:</span><span class="n">AddImpulse</span><span class="p">(</span><span class="n">Vector3</span><span class="p">.</span><span class="n">UP</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
-            <span class="n">World</span><span class="p">.</span><span class="n">SpawnAsset</span><span class="p">(</span><span class="n">cancelSound</span><span class="p">,</span> <span class="p">{</span><span class="n">position</span> <span class="o">=</span> <span class="n">player</span><span class="p">:</span><span class="n">GetWorldPosition</span><span class="p">()})</span>
-            <span class="kr">return</span>
-        <span class="kr">end</span>
-    <span class="kr">end</span>
-<span class="kr">end</span>
-
-<span class="n">ability</span><span class="p">.</span><span class="n">interruptedEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnInterrupted</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1">--Server script</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">.</span><span class="n">parent</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="kd">local</span> <span class="n">cancelSound</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">GetCustomProperty</span><span class="p">(</span><span class="s2">&quot;CancelSound&quot;</span><span class="p">)</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="kr">function</span> <span class="nf">OnInterrupted</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>    <span class="kd">local</span> <span class="n">player</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>    <span class="kr">if</span> <span class="ow">not</span> <span class="n">Object</span><span class="p">.</span><span class="n">IsValid</span><span class="p">(</span><span class="n">player</span><span class="p">)</span> <span class="kr">then</span> <span class="kr">return</span> <span class="kr">end</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>    <span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">a</span> <span class="kr">in</span> <span class="nb">ipairs</span><span class="p">(</span><span class="n">player</span><span class="p">:</span><span class="n">GetAbilities</span><span class="p">())</span> <span class="kr">do</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>        <span class="kr">if</span> <span class="n">a</span><span class="p">:</span><span class="n">GetCurrentPhase</span><span class="p">()</span> <span class="o">~=</span> <span class="n">AbilityPhase</span><span class="p">.</span><span class="n">READY</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">a</span><span class="p">.</span><span class="n">canBePrevented</span> <span class="kr">then</span>
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>            <span class="n">player</span><span class="p">:</span><span class="n">AddImpulse</span><span class="p">(</span><span class="n">Vector3</span><span class="p">.</span><span class="n">UP</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>            <span class="n">World</span><span class="p">.</span><span class="n">SpawnAsset</span><span class="p">(</span><span class="n">cancelSound</span><span class="p">,</span> <span class="p">{</span><span class="n">position</span> <span class="o">=</span> <span class="n">player</span><span class="p">:</span><span class="n">GetWorldPosition</span><span class="p">()})</span>
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>            <span class="kr">return</span>
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>        <span class="kr">end</span>
+<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a>    <span class="kr">end</span>
+<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a><span class="kr">end</span>
+<a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a>
+<a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a><span class="n">ability</span><span class="p">.</span><span class="n">interruptedEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnInterrupted</span><span class="p">)</span>
 </code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.parent</a> | <a href="ability.md">Ability.owner</a> | <a href="object.md">Object.IsValid</a> | <a href="player.md">Player.GetAbilities</a> | <a href="vector3.md">Vector3.UP</a> | <a href="world.md">World.SpawnAsset</a> | <a href="event.md">Event.Connect</a></p>
 <hr />
@@ -1426,91 +1426,91 @@
 <h3 id="recoveryphasesettings"><a class="toclink" href="#recoveryphasesettings"><code>recoveryPhaseSettings</code></a></h3>
 <h3 id="cooldownphasesettings"><a class="toclink" href="#cooldownphasesettings"><code>cooldownPhaseSettings</code></a></h3>
 <p>In this example, a function in a client context script can be called to show the elapsed times for an ability. The UI Text it controls displays how many seconds are remaining in the current phase, and the color of the text blends from black to white to indicate the percentage of completion. Although the Execute and Recovery phases are actually separate, they are here presented to the player as a single phase.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">--Client script</span>
-<span class="kd">local</span> <span class="n">COUNTDOWN_TEXT</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">GetCustomProperty</span><span class="p">(</span><span class="s2">&quot;CountdownText&quot;</span><span class="p">):</span><span class="n">WaitForObject</span><span class="p">()</span>
-
-<span class="kr">function</span> <span class="nf">UpdateForAbility</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
-    <span class="kd">local</span> <span class="n">currentPhase</span> <span class="o">=</span> <span class="n">ability</span><span class="p">:</span><span class="n">GetCurrentPhase</span><span class="p">()</span>
-
-    <span class="kd">local</span> <span class="n">percent</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="kd">local</span> <span class="n">cooldownText</span> <span class="o">=</span> <span class="s2">&quot;Ready&quot;</span>
-
-    <span class="kr">if</span> <span class="n">currentPhase</span> <span class="o">~=</span> <span class="n">AbilityPhase</span><span class="p">.</span><span class="n">READY</span> <span class="kr">then</span>
-        <span class="kd">local</span> <span class="n">phaseDuration</span>
-        <span class="kd">local</span> <span class="n">timeRemaining</span> <span class="o">=</span> <span class="n">ability</span><span class="p">:</span><span class="n">GetPhaseTimeRemaining</span><span class="p">()</span>
-
-        <span class="kr">if</span> <span class="n">currentPhase</span> <span class="o">==</span> <span class="n">AbilityPhase</span><span class="p">.</span><span class="n">CAST</span> <span class="kr">then</span>
-            <span class="n">phaseDuration</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">castPhaseSettings</span><span class="p">.</span><span class="n">duration</span>
-        <span class="kr">elseif</span> <span class="n">currentPhase</span> <span class="o">==</span> <span class="n">AbilityPhase</span><span class="p">.</span><span class="n">EXECUTE</span> <span class="kr">then</span>
-            <span class="c1">-- In the case of Execute and Recovery phases, we can show those as a single one</span>
-            <span class="kd">local</span> <span class="n">recoveryD</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">recoveryPhaseSettings</span><span class="p">.</span><span class="n">duration</span>
-            <span class="n">phaseDuration</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">executePhaseSettings</span><span class="p">.</span><span class="n">duration</span> <span class="o">+</span> <span class="n">recoveryD</span>
-            <span class="n">timeRemaining</span> <span class="o">=</span> <span class="n">timeRemaining</span> <span class="o">+</span> <span class="n">recoveryD</span>
-        <span class="kr">elseif</span> <span class="n">currentPhase</span> <span class="o">==</span> <span class="n">AbilityPhase</span><span class="p">.</span><span class="n">RECOVERY</span> <span class="kr">then</span>
-            <span class="n">phaseDuration</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">recoveryPhaseSettings</span><span class="p">.</span><span class="n">duration</span>
-        <span class="kr">else</span> <span class="c1">--currentPhase == AbilityPhase.COOLDOWN</span>
-            <span class="n">phaseDuration</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">cooldownPhaseSettings</span><span class="p">.</span><span class="n">duration</span>
-        <span class="kr">end</span>
-
-        <span class="kr">if</span> <span class="n">phaseDuration</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="kr">then</span>
-            <span class="n">percent</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">timeRemaining</span> <span class="o">/</span> <span class="n">phaseDuration</span>
-        <span class="kr">end</span>
-        <span class="n">cooldownText</span> <span class="o">=</span> <span class="nb">string.format</span><span class="p">(</span><span class="s2">&quot;%.1f&quot;</span><span class="p">,</span> <span class="n">timeRemaining</span><span class="p">)</span>
-    <span class="kr">end</span>
-
-    <span class="n">COUNTDOWN_TEXT</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">cooldownText</span>
-
-    <span class="kd">local</span> <span class="n">c</span> <span class="o">=</span> <span class="n">Color</span><span class="p">.</span><span class="n">Lerp</span><span class="p">(</span><span class="n">Color</span><span class="p">.</span><span class="n">BLACK</span><span class="p">,</span> <span class="n">Color</span><span class="p">.</span><span class="n">WHITE</span><span class="p">,</span> <span class="n">percent</span><span class="p">)</span>
-    <span class="n">COUNTDOWN_TEXT</span><span class="p">:</span><span class="n">SetColor</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
-<span class="kr">end</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1">--Client script</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="kd">local</span> <span class="n">COUNTDOWN_TEXT</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">GetCustomProperty</span><span class="p">(</span><span class="s2">&quot;CountdownText&quot;</span><span class="p">):</span><span class="n">WaitForObject</span><span class="p">()</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="kr">function</span> <span class="nf">UpdateForAbility</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>    <span class="kd">local</span> <span class="n">currentPhase</span> <span class="o">=</span> <span class="n">ability</span><span class="p">:</span><span class="n">GetCurrentPhase</span><span class="p">()</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>    <span class="kd">local</span> <span class="n">percent</span> <span class="o">=</span> <span class="mi">1</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>    <span class="kd">local</span> <span class="n">cooldownText</span> <span class="o">=</span> <span class="s2">&quot;Ready&quot;</span>
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>    <span class="kr">if</span> <span class="n">currentPhase</span> <span class="o">~=</span> <span class="n">AbilityPhase</span><span class="p">.</span><span class="n">READY</span> <span class="kr">then</span>
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>        <span class="kd">local</span> <span class="n">phaseDuration</span>
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>        <span class="kd">local</span> <span class="n">timeRemaining</span> <span class="o">=</span> <span class="n">ability</span><span class="p">:</span><span class="n">GetPhaseTimeRemaining</span><span class="p">()</span>
+<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>
+<a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a>        <span class="kr">if</span> <span class="n">currentPhase</span> <span class="o">==</span> <span class="n">AbilityPhase</span><span class="p">.</span><span class="n">CAST</span> <span class="kr">then</span>
+<a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a>            <span class="n">phaseDuration</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">castPhaseSettings</span><span class="p">.</span><span class="n">duration</span>
+<a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a>        <span class="kr">elseif</span> <span class="n">currentPhase</span> <span class="o">==</span> <span class="n">AbilityPhase</span><span class="p">.</span><span class="n">EXECUTE</span> <span class="kr">then</span>
+<a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a>            <span class="c1">-- In the case of Execute and Recovery phases, we can show those as a single one</span>
+<a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a>            <span class="kd">local</span> <span class="n">recoveryD</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">recoveryPhaseSettings</span><span class="p">.</span><span class="n">duration</span>
+<a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a>            <span class="n">phaseDuration</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">executePhaseSettings</span><span class="p">.</span><span class="n">duration</span> <span class="o">+</span> <span class="n">recoveryD</span>
+<a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a>            <span class="n">timeRemaining</span> <span class="o">=</span> <span class="n">timeRemaining</span> <span class="o">+</span> <span class="n">recoveryD</span>
+<a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a>        <span class="kr">elseif</span> <span class="n">currentPhase</span> <span class="o">==</span> <span class="n">AbilityPhase</span><span class="p">.</span><span class="n">RECOVERY</span> <span class="kr">then</span>
+<a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a>            <span class="n">phaseDuration</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">recoveryPhaseSettings</span><span class="p">.</span><span class="n">duration</span>
+<a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a>        <span class="kr">else</span> <span class="c1">--currentPhase == AbilityPhase.COOLDOWN</span>
+<a id="__codelineno-16-24" name="__codelineno-16-24" href="#__codelineno-16-24"></a>            <span class="n">phaseDuration</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">cooldownPhaseSettings</span><span class="p">.</span><span class="n">duration</span>
+<a id="__codelineno-16-25" name="__codelineno-16-25" href="#__codelineno-16-25"></a>        <span class="kr">end</span>
+<a id="__codelineno-16-26" name="__codelineno-16-26" href="#__codelineno-16-26"></a>
+<a id="__codelineno-16-27" name="__codelineno-16-27" href="#__codelineno-16-27"></a>        <span class="kr">if</span> <span class="n">phaseDuration</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="kr">then</span>
+<a id="__codelineno-16-28" name="__codelineno-16-28" href="#__codelineno-16-28"></a>            <span class="n">percent</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">timeRemaining</span> <span class="o">/</span> <span class="n">phaseDuration</span>
+<a id="__codelineno-16-29" name="__codelineno-16-29" href="#__codelineno-16-29"></a>        <span class="kr">end</span>
+<a id="__codelineno-16-30" name="__codelineno-16-30" href="#__codelineno-16-30"></a>        <span class="n">cooldownText</span> <span class="o">=</span> <span class="nb">string.format</span><span class="p">(</span><span class="s2">&quot;%.1f&quot;</span><span class="p">,</span> <span class="n">timeRemaining</span><span class="p">)</span>
+<a id="__codelineno-16-31" name="__codelineno-16-31" href="#__codelineno-16-31"></a>    <span class="kr">end</span>
+<a id="__codelineno-16-32" name="__codelineno-16-32" href="#__codelineno-16-32"></a>
+<a id="__codelineno-16-33" name="__codelineno-16-33" href="#__codelineno-16-33"></a>    <span class="n">COUNTDOWN_TEXT</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">cooldownText</span>
+<a id="__codelineno-16-34" name="__codelineno-16-34" href="#__codelineno-16-34"></a>
+<a id="__codelineno-16-35" name="__codelineno-16-35" href="#__codelineno-16-35"></a>    <span class="kd">local</span> <span class="n">c</span> <span class="o">=</span> <span class="n">Color</span><span class="p">.</span><span class="n">Lerp</span><span class="p">(</span><span class="n">Color</span><span class="p">.</span><span class="n">BLACK</span><span class="p">,</span> <span class="n">Color</span><span class="p">.</span><span class="n">WHITE</span><span class="p">,</span> <span class="n">percent</span><span class="p">)</span>
+<a id="__codelineno-16-36" name="__codelineno-16-36" href="#__codelineno-16-36"></a>    <span class="n">COUNTDOWN_TEXT</span><span class="p">:</span><span class="n">SetColor</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<a id="__codelineno-16-37" name="__codelineno-16-37" href="#__codelineno-16-37"></a><span class="kr">end</span>
 </code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.GetCustomProperty</a> | <a href="coreobjectreference.md">CoreObjectReference.WaitForObject</a> | <a href="ability.md">Ability.GetCurrentPhase</a> | <a href="abilityphasesettings.md">AbilityPhaseSettings.duration</a> | <a href="uitext.md">UIText.text</a> | <a href="color.md">Color.Lerp</a></p>
 <hr />
 <p>Example using:</p>
 <h3 id="isenabled"><a class="toclink" href="#isenabled"><code>isEnabled</code></a></h3>
 <p>In this example, an equipment is setup with multiple abilities that all use the same action binding. This script cycles through the abilities, making sure only one is enabled at a time. The <code>owner</code> property is cleared for the previous ability and set for the next one, as part of ensuring the correct one activates when the binding is pressed.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">--Server script</span>
-<span class="kd">local</span> <span class="n">equipment</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">FindAncestorByType</span><span class="p">(</span><span class="s2">&quot;Equipment&quot;</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">abilities</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="kd">local</span> <span class="n">abilityIndex</span> <span class="o">=</span> <span class="mi">1</span>
-
-<span class="kr">function</span> <span class="nf">OnAbilityRecovery</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
-    <span class="kr">if</span> <span class="p">(</span><span class="o">#</span><span class="n">abilities</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="kr">then</span>
-        <span class="n">abilities</span><span class="p">[</span><span class="n">abilityIndex</span><span class="p">].</span><span class="n">isEnabled</span> <span class="o">=</span> <span class="kc">false</span>
-        <span class="n">abilities</span><span class="p">[</span><span class="n">abilityIndex</span><span class="p">].</span><span class="n">owner</span> <span class="o">=</span> <span class="kc">nil</span>
-
-        <span class="n">abilityIndex</span> <span class="o">=</span> <span class="n">abilityIndex</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="kr">if</span> <span class="p">(</span><span class="n">abilityIndex</span> <span class="o">&gt;</span> <span class="o">#</span><span class="n">abilities</span><span class="p">)</span> <span class="kr">then</span>
-            <span class="n">abilityIndex</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="kr">end</span>
-
-        <span class="n">abilities</span><span class="p">[</span><span class="n">abilityIndex</span><span class="p">].</span><span class="n">isEnabled</span> <span class="o">=</span> <span class="kc">true</span>
-        <span class="n">abilities</span><span class="p">[</span><span class="n">abilityIndex</span><span class="p">].</span><span class="n">owner</span> <span class="o">=</span> <span class="n">equipment</span><span class="p">.</span><span class="n">owner</span>
-    <span class="kr">end</span>
-<span class="kr">end</span>
-
-<span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">child</span> <span class="kr">in</span> <span class="nb">pairs</span><span class="p">(</span><span class="n">equipment</span><span class="p">:</span><span class="n">FindDescendantsByType</span><span class="p">(</span><span class="s2">&quot;Ability&quot;</span><span class="p">))</span> <span class="kr">do</span>
-    <span class="nb">table.insert</span><span class="p">(</span><span class="n">abilities</span><span class="p">,</span> <span class="n">child</span><span class="p">)</span>
-
-    <span class="n">child</span><span class="p">.</span><span class="n">isEnabled</span> <span class="o">=</span> <span class="p">(</span><span class="o">#</span><span class="n">abilities</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
-
-    <span class="n">child</span><span class="p">.</span><span class="n">recoveryEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnAbilityRecovery</span><span class="p">)</span>
-<span class="kr">end</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1">--Server script</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="kd">local</span> <span class="n">equipment</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">FindAncestorByType</span><span class="p">(</span><span class="s2">&quot;Equipment&quot;</span><span class="p">)</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="kd">local</span> <span class="n">abilities</span> <span class="o">=</span> <span class="p">{}</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="kd">local</span> <span class="n">abilityIndex</span> <span class="o">=</span> <span class="mi">1</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="kr">function</span> <span class="nf">OnAbilityRecovery</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>    <span class="kr">if</span> <span class="p">(</span><span class="o">#</span><span class="n">abilities</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="kr">then</span>
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>        <span class="n">abilities</span><span class="p">[</span><span class="n">abilityIndex</span><span class="p">].</span><span class="n">isEnabled</span> <span class="o">=</span> <span class="kc">false</span>
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>        <span class="n">abilities</span><span class="p">[</span><span class="n">abilityIndex</span><span class="p">].</span><span class="n">owner</span> <span class="o">=</span> <span class="kc">nil</span>
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>        <span class="n">abilityIndex</span> <span class="o">=</span> <span class="n">abilityIndex</span> <span class="o">+</span> <span class="mi">1</span>
+<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>        <span class="kr">if</span> <span class="p">(</span><span class="n">abilityIndex</span> <span class="o">&gt;</span> <span class="o">#</span><span class="n">abilities</span><span class="p">)</span> <span class="kr">then</span>
+<a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a>            <span class="n">abilityIndex</span> <span class="o">=</span> <span class="mi">1</span>
+<a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>        <span class="kr">end</span>
+<a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a>
+<a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a>        <span class="n">abilities</span><span class="p">[</span><span class="n">abilityIndex</span><span class="p">].</span><span class="n">isEnabled</span> <span class="o">=</span> <span class="kc">true</span>
+<a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a>        <span class="n">abilities</span><span class="p">[</span><span class="n">abilityIndex</span><span class="p">].</span><span class="n">owner</span> <span class="o">=</span> <span class="n">equipment</span><span class="p">.</span><span class="n">owner</span>
+<a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a>    <span class="kr">end</span>
+<a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a><span class="kr">end</span>
+<a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a>
+<a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a><span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">child</span> <span class="kr">in</span> <span class="nb">pairs</span><span class="p">(</span><span class="n">equipment</span><span class="p">:</span><span class="n">FindDescendantsByType</span><span class="p">(</span><span class="s2">&quot;Ability&quot;</span><span class="p">))</span> <span class="kr">do</span>
+<a id="__codelineno-17-22" name="__codelineno-17-22" href="#__codelineno-17-22"></a>    <span class="nb">table.insert</span><span class="p">(</span><span class="n">abilities</span><span class="p">,</span> <span class="n">child</span><span class="p">)</span>
+<a id="__codelineno-17-23" name="__codelineno-17-23" href="#__codelineno-17-23"></a>
+<a id="__codelineno-17-24" name="__codelineno-17-24" href="#__codelineno-17-24"></a>    <span class="n">child</span><span class="p">.</span><span class="n">isEnabled</span> <span class="o">=</span> <span class="p">(</span><span class="o">#</span><span class="n">abilities</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-17-25" name="__codelineno-17-25" href="#__codelineno-17-25"></a>
+<a id="__codelineno-17-26" name="__codelineno-17-26" href="#__codelineno-17-26"></a>    <span class="n">child</span><span class="p">.</span><span class="n">recoveryEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnAbilityRecovery</span><span class="p">)</span>
+<a id="__codelineno-17-27" name="__codelineno-17-27" href="#__codelineno-17-27"></a><span class="kr">end</span>
 </code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.FindAncestorByType</a> | <a href="ability.md">Ability.owner</a> | <a href="equipment.md">Equipment.owner</a> | <a href="event.md">Event.Connect</a></p>
 <hr />
 <p>Example using:</p>
 <h3 id="owner"><a class="toclink" href="#owner"><code>owner</code></a></h3>
 <p>Usually, abilities are presented as part of an equipment, but that isn't a requirement. In this example, when new players join the game they are assigned an ability through the use of the <code>owner</code> property.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">--Server script</span>
-<span class="kd">local</span> <span class="n">abilityTemplate</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">GetCustomProperty</span><span class="p">(</span><span class="s2">&quot;AbilityTemplate&quot;</span><span class="p">)</span>
-
-<span class="kr">function</span> <span class="nf">OnPlayerJoined</span><span class="p">(</span><span class="n">player</span><span class="p">)</span>
-    <span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">World</span><span class="p">.</span><span class="n">SpawnAsset</span><span class="p">(</span><span class="n">abilityTemplate</span><span class="p">)</span>
-    <span class="n">ability</span><span class="p">.</span><span class="n">owner</span> <span class="o">=</span> <span class="n">player</span>
-<span class="kr">end</span>
-
-<span class="n">Game</span><span class="p">.</span><span class="n">playerJoinedEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnPlayerJoined</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1">--Server script</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="kd">local</span> <span class="n">abilityTemplate</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">GetCustomProperty</span><span class="p">(</span><span class="s2">&quot;AbilityTemplate&quot;</span><span class="p">)</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="kr">function</span> <span class="nf">OnPlayerJoined</span><span class="p">(</span><span class="n">player</span><span class="p">)</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>    <span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">World</span><span class="p">.</span><span class="n">SpawnAsset</span><span class="p">(</span><span class="n">abilityTemplate</span><span class="p">)</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>    <span class="n">ability</span><span class="p">.</span><span class="n">owner</span> <span class="o">=</span> <span class="n">player</span>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="kr">end</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="n">Game</span><span class="p">.</span><span class="n">playerJoinedEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnPlayerJoined</span><span class="p">)</span>
 </code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.GetCustomProperty</a> | <a href="world.md">World.SpawnAsset</a> | <a href="player.md">Player.owner</a> | <a href="game.md">Game.playerJoinedEvent</a> | <a href="event.md">Event.Connect</a></p>
 <hr />

@@ -745,28 +745,28 @@
 <h2 id="installation"><a class="toclink" href="#installation">Installation</a></h2>
 <p>The <code>RemoteTool</code> driver is implemented in <code>RemoteTool.dll</code>. To use any <code>RemoteTool</code> tool, the driver must be loaded in the <code>[TOOL_DLL]</code> section of the projects <code>station.ini</code> configuration file (see also <a href="/docs/tools/README.md">Tool configuration</a>).</p>
 <p>To enable the driver in station.ini, set it as follows:</p>
-<pre><code>[TOOL_DLL]
+<div class="highlight"><pre><span></span><code>[TOOL_DLL]
 RemoteTool.dll=1
-</code></pre>
+</code></pre></div>
 <p>The overall parameters for the <code>RemoteTool</code> driver are configured in the ´[RemoteTool]<code>section. This is basically used to configure the</code>ToolGateway` connection parameters, here is a sample setup:</p>
-<pre><code>[RemoteTool]
+<div class="highlight"><pre><span></span><code>[RemoteTool]
 ToolGateway_Addr=mytoolgateway.mycompany.com
 ToolGateway_Port=
-</code></pre>
+</code></pre></div>
 <p>For more information about the driver parameters, see <a href="#driver-parameter-reference">Driver Parameters</a> below.</p>
 <h2 id="tool-registration-and-configuration"><a class="toclink" href="#tool-registration-and-configuration">Tool registration and configuration</a></h2>
 <p>All <code>RemoteTool</code>-tools are registered in the <code>[CHANNELS]</code> section of the projects <code>station.ini</code> file.</p>
 <p>The <code>[CHANNELS]</code> section only defines a channel number to channel name mapping - the channel/tool specific settings are then configured in a seperate section defined by the channel name. Inside the section, a reference to the <code>RemoteTool</code> driver then links driver and channel accordingly.</p>
 <p>The overall layout is therefore as follows (sample is for channel 2):</p>
-<pre><code>[CHANNELS]
-# Map the channel/tool 2 to the 'RemoteTool_Nexo1'-section
+<div class="highlight"><pre><span></span><code>[CHANNELS]
+# Map the channel/tool 2 to the &#39;RemoteTool_Nexo1&#39;-section
 2=RemoteTool_Nexo1
 
 [RemoteTool_Nexo1]
 # link to the RemoteTool driver
 DRIVER=RemoteTool
 # more channel/tool specific parameters for this tool/driver
-</code></pre>
+</code></pre></div>
 <p>Please see <a href="#channeltool-parameter-reference">Channel/tool parameter reference</a> below for more information about the available parameters.</p>
 <h2 id="channeltool-parameter-reference"><a class="toclink" href="#channeltool-parameter-reference">Channel/tool parameter reference</a></h2>
 <p>Currently, there are no channel/tool-specific parameters needed (other than specifying the <code>DRIVER=RemoteTool</code>) to use this driver. All concrete tool communication settings are to be configured on the <code>ToolGateway</code> server side. </p>

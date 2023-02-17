@@ -1041,20 +1041,20 @@
 <p>OGS registers a <a href="https://learn.microsoft.com/en-us/dotnet/api/microsoft.web.webview2.core.corewebview2.addhostobjecttoscript">hostObject</a> in the WebView2 browser for the JavaScript side. The registered object is named <code>OGS</code> and implements a single string property <code>ObjectMessage</code>.</p>
 <p>To send a string to OGS from JavaScript, simply assign a value to the <code>window.chrome.webview.hostObjects.sync.OGS.ObjectMessage</code> property.</p>
 <h4 id="sample-code"><a class="toclink" href="#sample-code">Sample code</a></h4>
-<div class="highlight"><pre><span></span><code><span class="c1">// send a command string to OGS </span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">sendOgsCommand</span><span class="p">(</span><span class="nx">cmd</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">chrome</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">chrome</span><span class="p">.</span><span class="nx">webview</span>
-<span class="w">     </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">chrome</span><span class="p">.</span><span class="nx">webview</span><span class="p">.</span><span class="nx">hostObjects</span>
-<span class="w">     </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">chrome</span><span class="p">.</span><span class="nx">webview</span><span class="p">.</span><span class="nx">hostObjects</span><span class="p">.</span><span class="nx">sync</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// WebView2 is not yet fully initialized</span>
-<span class="w">        </span><span class="k">return</span><span class="p">;</span><span class="w">     </span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">ogs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">chrome</span><span class="p">.</span><span class="nx">webview</span><span class="p">.</span><span class="nx">hostObjects</span><span class="p">.</span><span class="nx">sync</span><span class="p">.</span><span class="nx">OGS</span><span class="p">;</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">ogs</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">ogs</span><span class="p">.</span><span class="nx">ObjectMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">cmd</span><span class="p">;</span><span class="w">    </span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">// send a command string to OGS </span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kd">function</span><span class="w"> </span><span class="nx">sendOgsCommand</span><span class="p">(</span><span class="nx">cmd</span><span class="p">)</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="p">{</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">chrome</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">chrome</span><span class="p">.</span><span class="nx">webview</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">     </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">chrome</span><span class="p">.</span><span class="nx">webview</span><span class="p">.</span><span class="nx">hostObjects</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">     </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">chrome</span><span class="p">.</span><span class="nx">webview</span><span class="p">.</span><span class="nx">hostObjects</span><span class="p">.</span><span class="nx">sync</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">        </span><span class="c1">// WebView2 is not yet fully initialized</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">        </span><span class="k">return</span><span class="p">;</span><span class="w">     </span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">ogs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">chrome</span><span class="p">.</span><span class="nx">webview</span><span class="p">.</span><span class="nx">hostObjects</span><span class="p">.</span><span class="nx">sync</span><span class="p">.</span><span class="nx">OGS</span><span class="p">;</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">ogs</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">        </span><span class="nx">ogs</span><span class="p">.</span><span class="nx">ObjectMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">cmd</span><span class="p">;</span><span class="w">    </span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="p">}</span>
 </code></pre></div>
 <h2 id="global-browser-table"><a class="toclink" href="#global-browser-table">Global Browser table</a></h2>
 <p>OGS exposes the browser instances through the global <code>Browser</code> object. The <code>Browser</code> object implements the following functions:</p>
@@ -1074,7 +1074,7 @@ The following functions are also available, but are not fully implemented at the
 
 <h3 id="navigate"><a class="toclink" href="#navigate">Navigate</a></h3>
 <p>The <code>Browser.Navigate</code> function starts loading a new URL into the given browser instance.</p>
-<div class="highlight"><pre><span></span><code><span class="n">Browser</span><span class="p">.</span><span class="n">Navigate</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">Browser</span><span class="p">.</span><span class="n">Navigate</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
 </code></pre></div>
 <h4 id="parameters"><a class="toclink" href="#parameters">Parameters</a></h4>
 <ul>
@@ -1082,12 +1082,12 @@ The following functions are also available, but are not fully implemented at the
 <li>url [string]: Url to navigate the browser instance to (in the standard URL format, e.g. file://filename or https://server/page)</li>
 </ul>
 <h4 id="sample-code_1"><a class="toclink" href="#sample-code_1">Sample code</a></h4>
-<div class="highlight"><pre><span></span><code><span class="c1">-- Navigate the StartView browser to https://www.my-url.com/mypage</span>
-<span class="n">Browser</span><span class="p">.</span><span class="n">Navigate</span><span class="p">(</span><span class="s1">&#39;StartView&#39;</span><span class="p">,</span> <span class="s1">&#39;https://www.my-url.com/mypage&#39;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">-- Navigate the StartView browser to https://www.my-url.com/mypage</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">Browser</span><span class="p">.</span><span class="n">Navigate</span><span class="p">(</span><span class="s1">&#39;StartView&#39;</span><span class="p">,</span> <span class="s1">&#39;https://www.my-url.com/mypage&#39;</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="show"><a class="toclink" href="#show">Show</a></h3>
 <p>The <code>Browser.Show</code> function is similar to the <code>Browser.Navigate</code> function, but also ensures the webbrowser is actually visible. The actual behaviour depends on the view - e.g. for the <code>SidePanel</code> view, the side panel pops out. For the <code>ProcessView</code> view, this switches from the image-view to the web view.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">oldUrl</span> <span class="o">=</span> <span class="n">Browser</span><span class="p">.</span><span class="n">Show</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kd">local</span> <span class="n">oldUrl</span> <span class="o">=</span> <span class="n">Browser</span><span class="p">.</span><span class="n">Show</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
 </code></pre></div>
 <h4 id="parameters_1"><a class="toclink" href="#parameters_1">Parameters</a></h4>
 <ul>
@@ -1097,48 +1097,48 @@ The following functions are also available, but are not fully implemented at the
 <h4 id="return-value"><a class="toclink" href="#return-value">Return value</a></h4>
 <p>The function returns the "current" URL of the webbrowser (the URL before changing to the given one). This can be used to return to the previous URL after hiding the browser.</p>
 <h4 id="sample-code_2"><a class="toclink" href="#sample-code_2">Sample code</a></h4>
-<div class="highlight"><pre><span></span><code><span class="c1">-- Make the SidePanel visible and navigate the web browser to https://www.my-url.com/mypage</span>
-<span class="kd">local</span> <span class="n">oldUrl</span> <span class="o">=</span> <span class="n">Browser</span><span class="p">.</span><span class="n">Show</span><span class="p">(</span><span class="s1">&#39;SidePanel&#39;</span><span class="p">,</span> <span class="s1">&#39;https://www.my-url.com/mypage&#39;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">-- Make the SidePanel visible and navigate the web browser to https://www.my-url.com/mypage</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kd">local</span> <span class="n">oldUrl</span> <span class="o">=</span> <span class="n">Browser</span><span class="p">.</span><span class="n">Show</span><span class="p">(</span><span class="s1">&#39;SidePanel&#39;</span><span class="p">,</span> <span class="s1">&#39;https://www.my-url.com/mypage&#39;</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="hide"><a class="toclink" href="#hide">Hide</a></h3>
 <p>The <code>Browser.Hide</code> function is complementary to the <code>Browser.Show</code> function - it closes the browser view (only relevant for <code>SidePanel</code> and <code>ProcessView</code>).</p>
-<div class="highlight"><pre><span></span><code><span class="n">Browser</span><span class="p">.</span><span class="n">Hide</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">Browser</span><span class="p">.</span><span class="n">Hide</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
 </code></pre></div>
 <h4 id="parameters_2"><a class="toclink" href="#parameters_2">Parameters</a></h4>
 <ul>
 <li>instance [string]: Web browser instance name (one of 'StartView', 'ProcessView', 'SidePanel', 'InstructionView') </li>
 </ul>
 <h4 id="sample-code_3"><a class="toclink" href="#sample-code_3">Sample code</a></h4>
-<div class="highlight"><pre><span></span><code><span class="c1">-- Hide the SidePanel</span>
-<span class="n">Browser</span><span class="p">.</span><span class="n">Hide</span><span class="p">(</span><span class="s1">&#39;SidePanel&#39;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">-- Hide the SidePanel</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">Browser</span><span class="p">.</span><span class="n">Hide</span><span class="p">(</span><span class="s1">&#39;SidePanel&#39;</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="regmsghandler"><a class="toclink" href="#regmsghandler">RegMsgHandler</a></h3>
 <p>The <code>Browser.RegMsgHandler</code> function registers or unregisters a LUA function to be called whenever the JavaScript running in the browser writes a message to the hostObject bridge <code>OGS.ObjectMessage</code> property.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">-- Register the callback function</span>
-<span class="n">fn</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">Browser</span><span class="p">.</span><span class="n">RegMsgHandler</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">callbackfn</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">-- Register the callback function</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">fn</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">Browser</span><span class="p">.</span><span class="n">RegMsgHandler</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">callbackfn</span><span class="p">)</span>
 </code></pre></div>
 <h4 id="parameters_3"><a class="toclink" href="#parameters_3">Parameters</a></h4>
 <ul>
 <li>instance [string]: Web browser instance name (one of 'StartView', 'ProcessView', 'SidePanel', 'InstructionView') </li>
-<li>callbackfn [function]: LUA function to be called when the JavaScript code writes a string to the <code>OGS.ObjectMessage</code> hostObject. If callbackfn is <code>nil</code>, then the current registration is removed. The callback function has the following signature:<pre><code>callbackfn(instance, objectMessage)
-</code></pre>
+<li>callbackfn [function]: LUA function to be called when the JavaScript code writes a string to the <code>OGS.ObjectMessage</code> hostObject. If callbackfn is <code>nil</code>, then the current registration is removed. The callback function has the following signature:<div class="highlight"><pre><span></span><code>callbackfn(instance, objectMessage)
+</code></pre></div>
 </li>
 </ul>
 <p>Where instance [string] is the web browsers instance name (e.g. 'StartView') and objectMessage [string] the text which was written to the <code>OGS.ObjectMessage</code> property of the hostObject bridge from the JavaScript side.</p>
 <h4 id="return-values"><a class="toclink" href="#return-values">Return values</a></h4>
 <p>If the function was executed successfully, the callbackfn is returned as the first return value. Else nil is returned and the second return value has an error message string (wrong parameters or unknown instance).</p>
 <h4 id="sample-code_4"><a class="toclink" href="#sample-code_4">Sample code</a></h4>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">callbackfn</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">objectMessage</span><span class="p">)</span>
-    <span class="c1">-- do whatever you want to do here if the javascript </span>
-    <span class="c1">-- code writes the OGS.ObjectMessage property</span>
-<span class="kr">end</span>
-
-<span class="c1">-- Register a LUA function to be called from the JavaScript side</span>
-<span class="n">Browser</span><span class="p">.</span><span class="n">RegMsgHandler</span><span class="p">(</span><span class="s1">&#39;StartView&#39;</span><span class="p">,</span> <span class="n">callbackfn</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kd">local</span> <span class="kr">function</span> <span class="nf">callbackfn</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">objectMessage</span><span class="p">)</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    <span class="c1">-- do whatever you want to do here if the javascript </span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    <span class="c1">-- code writes the OGS.ObjectMessage property</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="kr">end</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="c1">-- Register a LUA function to be called from the JavaScript side</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="n">Browser</span><span class="p">.</span><span class="n">RegMsgHandler</span><span class="p">(</span><span class="s1">&#39;StartView&#39;</span><span class="p">,</span> <span class="n">callbackfn</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="execjs_nonblocking"><a class="toclink" href="#execjs_nonblocking">ExecJS_nonblocking</a></h3>
 <p>The <code>Browser.ExecJS_nonblocking</code> executes JavaScript code in the web browser instance.</p>
-<div class="highlight"><pre><span></span><code><span class="n">Browser</span><span class="p">.</span><span class="n">ExecJS_nonblocking</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">jstext</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">Browser</span><span class="p">.</span><span class="n">ExecJS_nonblocking</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">jstext</span><span class="p">)</span>
 </code></pre></div>
 <h4 id="parameters_4"><a class="toclink" href="#parameters_4">Parameters</a></h4>
 <ul>
@@ -1152,12 +1152,12 @@ The following functions are also available, but are not fully implemented at the
 <li>You can serialize LUA objects to a JSON string and pass this through the function. The JavaScript side can then easily deserialize it.</li>
 </ul>
 <h4 id="sample-code_5"><a class="toclink" href="#sample-code_5">Sample code</a></h4>
-<div class="highlight"><pre><span></span><code><span class="c1">-- Build a JavaScript command, call the function &quot;my_function&quot; with</span>
-<span class="c1">-- some JSON text</span>
-<span class="kd">local</span> <span class="n">param</span> <span class="o">=</span> <span class="s1">&#39;{ &quot;cmd&quot;: &quot;showmessage&quot; }&#39;</span>
-<span class="kd">local</span> <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;my_function(&quot;</span><span class="o">..</span><span class="n">param</span><span class="o">..</span><span class="s2">&quot;);&quot;</span>
-<span class="c1">-- Call the JavaScript function in the StartView browser</span>
-<span class="n">Browser</span><span class="p">.</span><span class="n">ExecJS_nonblocking</span><span class="p">(</span><span class="s1">&#39;StartView&#39;</span><span class="p">,</span> <span class="n">command</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1">-- Build a JavaScript command, call the function &quot;my_function&quot; with</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="c1">-- some JSON text</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="kd">local</span> <span class="n">param</span> <span class="o">=</span> <span class="s1">&#39;{ &quot;cmd&quot;: &quot;showmessage&quot; }&#39;</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="kd">local</span> <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;my_function(&quot;</span><span class="o">..</span><span class="n">param</span><span class="o">..</span><span class="s2">&quot;);&quot;</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="c1">-- Call the JavaScript function in the StartView browser</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="n">Browser</span><span class="p">.</span><span class="n">ExecJS_nonblocking</span><span class="p">(</span><span class="s1">&#39;StartView&#39;</span><span class="p">,</span> <span class="n">command</span><span class="p">)</span>
 </code></pre></div>
 
 

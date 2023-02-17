@@ -791,15 +791,15 @@ The following functions are also available, but are not fully implemented at the
 
 <h3 id="regurl"><a class="toclink" href="#regurl">RegUrl</a></h3>
 <p>The <code>Webserver.RegUrl</code> function registers or unregisters a LUA function to be called whenever the web server receives a request to the given URL prefix.</p>
-<div class="highlight"><pre><span></span><code><span class="n">fn</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">Webserver</span><span class="p">.</span><span class="n">RegUrl</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">callbackfn</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">fn</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">Webserver</span><span class="p">.</span><span class="n">RegUrl</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">callbackfn</span><span class="p">)</span>
 </code></pre></div>
 <h4 id="parameters"><a class="toclink" href="#parameters">Parameters</a></h4>
 <ul>
 <li>prefix [string]: Path prefix to match against when checking the request URL. Note that this only checks for the path part of the URL (e.g. '/home'). </li>
 <li>
 <p>callbackfn [function]: LUA function to be called when a web request matches the prefix. The callback function has the following signature:</p>
-<pre><code>table = callbackfn(reqpath, reqparams, verb, body)
-</code></pre>
+<div class="highlight"><pre><span></span><code>table = callbackfn(reqpath, reqparams, verb, body)
+</code></pre></div>
 <p>Where reqpath [string] is the full request path, (e.g. '/api/items'), reqparams [string] the request parameters (e.g. '?max=10&amp;class=5'), verb [integer] the request type (GET, PUT, POST, DELETE) and body [string] the body (binaty) string value (only for POST and PUT).</p>
 <p>The callback function should return a response table with the required parameters to build the http response (optional body).</p>
 <p>[Datails tbd.]</p>
@@ -808,14 +808,14 @@ The following functions are also available, but are not fully implemented at the
 <h4 id="return-values"><a class="toclink" href="#return-values">Return values</a></h4>
 <p>If the function was executed successfully, the callbackfn is returned as the first return value. Else nil is returned and the second return value has an error message string (wrong parameters or unknown instance).</p>
 <h4 id="sample-code"><a class="toclink" href="#sample-code">Sample code</a></h4>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">handlerfn</span><span class="p">(</span><span class="n">reqpath</span><span class="p">,</span> <span class="n">reqparams</span><span class="p">,</span> <span class="n">verb</span><span class="p">,</span> <span class="n">body</span><span class="p">)</span>
-    <span class="c1">-- process the request, return the response object (or nil</span>
-    <span class="c1">-- if this request is not handled) </span>
-    <span class="kr">return</span> <span class="kc">nil</span>
-<span class="kr">end</span>
-<span class="c1">-- Register a LUA function to be called whenever a web request to /api/lua</span>
-<span class="c1">-- is made</span>
-<span class="n">Browser</span><span class="p">.</span><span class="n">RegMsgHandler</span><span class="p">(</span><span class="s1">&#39;/api/lua&#39;</span><span class="p">,</span> <span class="n">handlerfn</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kd">local</span> <span class="kr">function</span> <span class="nf">handlerfn</span><span class="p">(</span><span class="n">reqpath</span><span class="p">,</span> <span class="n">reqparams</span><span class="p">,</span> <span class="n">verb</span><span class="p">,</span> <span class="n">body</span><span class="p">)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="c1">-- process the request, return the response object (or nil</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="c1">-- if this request is not handled) </span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="kr">return</span> <span class="kc">nil</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="kr">end</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="c1">-- Register a LUA function to be called whenever a web request to /api/lua</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1">-- is made</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="n">Browser</span><span class="p">.</span><span class="n">RegMsgHandler</span><span class="p">(</span><span class="s1">&#39;/api/lua&#39;</span><span class="p">,</span> <span class="n">handlerfn</span><span class="p">)</span>
 </code></pre></div>
 
 

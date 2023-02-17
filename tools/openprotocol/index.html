@@ -992,8 +992,8 @@
 <p>All <code>OpenProtocol</code>-tools are registered in the <code>[OPENPROTO]</code> section of the projects <code>station.ini</code> file.</p>
 <p>The <code>[OPENPROTO]</code> section mixes the tool parameters and the channel mapping (due to historic reasons) by combining the channel number and the parameter name/value in the <code>station.ini</code> entry. </p>
 <p>Each parameter is prefixed with the channel number and followed by parameter name as follows:</p>
-<pre><code>CHANNEL_&lt;two-digit channel&gt;_&lt;param name&gt;=&lt;param value&gt;
-</code></pre>
+<div class="highlight"><pre><span></span><code>CHANNEL_&lt;two-digit channel&gt;_&lt;param name&gt;=&lt;param value&gt;
+</code></pre></div>
 <p>Where
 - <code>&lt;two-digit channel&gt;</code> is the channel number in the range 01...99 (the channel number maps 1:1 to the tool number from the workflow configuration) 
 - <code>&lt;param name&gt;</code> is the parameter name (see <a href="#channel-parameter-reference">Channel parameter reference</a>)
@@ -1001,7 +1001,7 @@
 <p>In addition to the channel-specific parameters, there are also shared parameters. These act as default parameters for the channel-specific settings and can be overridden by the channel specific values.</p>
 <p>For more details on the shared parameters, see <a href="#shared-parameter-reference">Shared parameter reference</a>) below .</p>
 <p>A sample <code>OpenProtocol</code> tool configuration (channel 01) would therefore look similar to the following:</p>
-<pre><code>[OPENPROTO]
+<div class="highlight"><pre><span></span><code>[OPENPROTO]
 # Shared/default parameters
 PORT=4545
 # Channel/Tool 1 parameters
@@ -1010,7 +1010,7 @@ CHANNEL_01_TYPE=NEXO
 CHANNEL_01_CHECK_TIME_ENABLED=1
 CHANNEL_01_NEXONAR_CHANNEL=6
 CHANNEL_01_CURVE_REQUEST=1
-</code></pre>
+</code></pre></div>
 <h2 id="shared-parameter-reference"><a class="toclink" href="#shared-parameter-reference">Shared parameter reference</a></h2>
 <h4 id="port"><a class="toclink" href="#port">PORT</a></h4>
 <p>(optional, defaults to 4545)</p>

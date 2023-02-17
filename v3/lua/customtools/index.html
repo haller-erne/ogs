@@ -69,7 +69,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#mermaid-test" class="md-skip">
+        <a href="#simplified-api" class="md-skip">
           Skip to content
         </a>
       
@@ -491,6 +491,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#simplified-api" class="md-nav__link">
+    Simplified API
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#mermaid-test" class="md-nav__link">
     Mermaid test
   </a>
@@ -628,6 +635,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#simplified-api" class="md-nav__link">
+    Simplified API
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#mermaid-test" class="md-nav__link">
     Mermaid test
   </a>
@@ -652,6 +666,17 @@
 
   <h1>LUA custom tools</h1>
 
+<h3 id="simplified-api"><a class="toclink" href="#simplified-api">Simplified API</a></h3>
+<p>The simplified custom tool API uses four states and associated transitions to implement the tool behaviour. Each transitions can be implemented in the custom tool LUA code to provide the custom functionality - if not implemented, the transition is executed without a custom action.</p>
+<p>Here is the state diagram for the behaviour:</p>
+<pre class="mermaid"><code>stateDiagram-v2
+    inactive --&gt; active: activate()
+    active --&gt; inactive: deactivate()
+    active --&gt; enabled: enable()
+    enabled --&gt; enabled: execute()
+    enabled --&gt; disabled: disable()
+    disabled --&gt; enabled: enable()
+    disabled --&gt; inactive: deactivate()</code></pre>
 <h3 id="mermaid-test"><a class="toclink" href="#mermaid-test">Mermaid test</a></h3>
 <p>The following is a simple mermaid sequence diagram, for more details, see <a href="https://squidfunk.github.io/mkdocs-material/reference/diagrams/">https://squidfunk.github.io/mkdocs-material/reference/diagrams/</a></p>
 <pre class="mermaid"><code>sequenceDiagram

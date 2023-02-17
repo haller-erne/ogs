@@ -1014,396 +1014,396 @@
 <p>Example using:</p>
 <h3 id="castevent"><a class="toclink" href="#castevent"><code>castEvent</code></a></h3>
 <p>The Cast phase begins as soon as an ability is activated. By checking if the player casting the ability <code>isGrounded</code> we can create an effect that propels you upwards, but it doesn't work if you are already jumping or flying. We detect this is the <code>castEvent</code>, which is early enough for an <code>Interrupt()</code> to reset the ability.</p>
-<pre><code class="language-lua">--Server script
-local ability = script.parent
+<div class="highlight"><pre><span></span><code><span class="c1">--Server script</span>
+<span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">.</span><span class="n">parent</span>
 
-function OnCast(ability)
-    if ability.owner.isGrounded then
-        ability.owner:SetVelocity(Vector3.UP * 2000)
-    else
-        ability:Interrupt()
-    end
-end
+<span class="kr">function</span> <span class="nf">OnCast</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+    <span class="kr">if</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">.</span><span class="n">isGrounded</span> <span class="kr">then</span>
+        <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">:</span><span class="n">SetVelocity</span><span class="p">(</span><span class="n">Vector3</span><span class="p">.</span><span class="n">UP</span> <span class="o">*</span> <span class="mi">2000</span><span class="p">)</span>
+    <span class="kr">else</span>
+        <span class="n">ability</span><span class="p">:</span><span class="n">Interrupt</span><span class="p">()</span>
+    <span class="kr">end</span>
+<span class="kr">end</span>
 
-ability.castEvent:Connect(OnCast)
-</code></pre>
+<span class="n">ability</span><span class="p">.</span><span class="n">castEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnCast</span><span class="p">)</span>
+</code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.parent</a> | <a href="ability.md">Ability.owner</a> | <a href="player.md">Player.isGrounded</a> | <a href="vector3.md">Vector3.UP</a> | <a href="event.md">Event.Connect</a></p>
 <hr />
 <p>Example using:</p>
 <h3 id="cooldownevent"><a class="toclink" href="#cooldownevent"><code>cooldownEvent</code></a></h3>
 <p>In this example, a fighting game has an "invincible" mechanic where player attacks are not interrupted while they have this effect. Some powerful attacks make the player invincible during the entire active cycle of the ability. The effect is gained at the beginning of the cast phase and is removed at the end of the recovery phase, before the cooldown begins. The resource system is used in keeping track of the invincibility effect.</p>
-<pre><code class="language-lua">--Server script
-local ability = script.parent
+<div class="highlight"><pre><span></span><code><span class="c1">--Server script</span>
+<span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">.</span><span class="n">parent</span>
 
-function OnCast(ability)
-    ability.owner:AddResource(&quot;invincible&quot;, 1)
-end
+<span class="kr">function</span> <span class="nf">OnCast</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+    <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">:</span><span class="n">AddResource</span><span class="p">(</span><span class="s2">&quot;invincible&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="kr">end</span>
 
-function OnCooldown(ability)
-    ability.owner:RemoveResource(&quot;invincible&quot;, 1)
-end
+<span class="kr">function</span> <span class="nf">OnCooldown</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+    <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">:</span><span class="n">RemoveResource</span><span class="p">(</span><span class="s2">&quot;invincible&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="kr">end</span>
 
-ability.castEvent:Connect(OnCast)
-ability.cooldownEvent:Connect(OnCooldown)
-</code></pre>
+<span class="n">ability</span><span class="p">.</span><span class="n">castEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnCast</span><span class="p">)</span>
+<span class="n">ability</span><span class="p">.</span><span class="n">cooldownEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnCooldown</span><span class="p">)</span>
+</code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.parent</a> | <a href="player.md">Player.owner</a> | <a href="ability.md">Ability.castEvent</a> | <a href="event.md">Event.Connect</a></p>
 <hr />
 <p>Example using:</p>
 <h3 id="executeevent"><a class="toclink" href="#executeevent"><code>executeEvent</code></a></h3>
 <p>Weapons implement lots of built-in gameplay that doesn't require any scripting, such as attack and reload abilities. However, they can be augmented with additional mechanics. In this example, a special sound effect is played when a weapon shoots while low on ammunition. The script expects to be a child of a weapon's "Shoot" ability.</p>
-<pre><code class="language-lua">--Server script
-local ability = script.parent
-local weapon = script:FindAncestorByType('Weapon')
-local lowAmmoSound = script:GetCustomProperty(&quot;LowAmmoSound&quot;)
+<div class="highlight"><pre><span></span><code><span class="c1">--Server script</span>
+<span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">.</span><span class="n">parent</span>
+<span class="kd">local</span> <span class="n">weapon</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">FindAncestorByType</span><span class="p">(</span><span class="s1">&#39;Weapon&#39;</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">lowAmmoSound</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">GetCustomProperty</span><span class="p">(</span><span class="s2">&quot;LowAmmoSound&quot;</span><span class="p">)</span>
 
-local LOW_AMMO_PERCENTAGE = 0.2
+<span class="kd">local</span> <span class="n">LOW_AMMO_PERCENTAGE</span> <span class="o">=</span> <span class="mf">0.2</span>
 
-function OnExecute(ability)
-    if weapon.currentAmmo / weapon.maxAmmo &lt;= LOW_AMMO_PERCENTAGE then
-        World.SpawnAsset(lowAmmoSound, {position = weapon:GetWorldPosition()})
-    end
-end
+<span class="kr">function</span> <span class="nf">OnExecute</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+    <span class="kr">if</span> <span class="n">weapon</span><span class="p">.</span><span class="n">currentAmmo</span> <span class="o">/</span> <span class="n">weapon</span><span class="p">.</span><span class="n">maxAmmo</span> <span class="o">&lt;=</span> <span class="n">LOW_AMMO_PERCENTAGE</span> <span class="kr">then</span>
+        <span class="n">World</span><span class="p">.</span><span class="n">SpawnAsset</span><span class="p">(</span><span class="n">lowAmmoSound</span><span class="p">,</span> <span class="p">{</span><span class="n">position</span> <span class="o">=</span> <span class="n">weapon</span><span class="p">:</span><span class="n">GetWorldPosition</span><span class="p">()})</span>
+    <span class="kr">end</span>
+<span class="kr">end</span>
 
-ability.executeEvent:Connect(OnExecute)
-</code></pre>
+<span class="n">ability</span><span class="p">.</span><span class="n">executeEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnExecute</span><span class="p">)</span>
+</code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.parent</a> | <a href="weapon.md">Weapon.currentAmmo</a> | <a href="world.md">World.SpawnAsset</a> | <a href="ability.md">Ability.executeEvent</a> | <a href="event.md">Event.Connect</a></p>
 <hr />
 <p>Example using:</p>
 <h3 id="interruptedevent"><a class="toclink" href="#interruptedevent"><code>interruptedEvent</code></a></h3>
 <p>The <code>interruptedEvent</code> fires when an ability is going through it's activation process and <code>Interrupt()</code> is called on it, or if it becomes disabled. In this example, interruption is a key part of the game design, so a visual effect is spawned at the player's position to help communicate the interaction between players.</p>
-<pre><code class="language-lua">--Server script
-local ability = script.parent
-local interruptedVfx = script:GetCustomProperty(&quot;InterruptedVfx&quot;)
+<div class="highlight"><pre><span></span><code><span class="c1">--Server script</span>
+<span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">.</span><span class="n">parent</span>
+<span class="kd">local</span> <span class="n">interruptedVfx</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">GetCustomProperty</span><span class="p">(</span><span class="s2">&quot;InterruptedVfx&quot;</span><span class="p">)</span>
 
-function OnInterrupted(ability)
-    if Object.IsValid(ability.owner) then
-        World.SpawnAsset(interruptedVfx, {position = ability.owner:GetWorldPosition()})
-    end
-end
+<span class="kr">function</span> <span class="nf">OnInterrupted</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+    <span class="kr">if</span> <span class="n">Object</span><span class="p">.</span><span class="n">IsValid</span><span class="p">(</span><span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">)</span> <span class="kr">then</span>
+        <span class="n">World</span><span class="p">.</span><span class="n">SpawnAsset</span><span class="p">(</span><span class="n">interruptedVfx</span><span class="p">,</span> <span class="p">{</span><span class="n">position</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">:</span><span class="n">GetWorldPosition</span><span class="p">()})</span>
+    <span class="kr">end</span>
+<span class="kr">end</span>
 
-ability.interruptedEvent:Connect(OnInterrupted)
-</code></pre>
+<span class="n">ability</span><span class="p">.</span><span class="n">interruptedEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnInterrupted</span><span class="p">)</span>
+</code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.parent</a> | <a href="object.md">Object.IsValid</a> | <a href="ability.md">Ability.owner</a> | <a href="world.md">World.SpawnAsset</a> | <a href="player.md">Player.GetWorldPosition</a> | <a href="event.md">Event.Connect</a></p>
 <hr />
 <p>Example using:</p>
 <h3 id="readyevent"><a class="toclink" href="#readyevent"><code>readyEvent</code></a></h3>
 <p>The Ready phase begins when an ability comes off cooldown and is "ready" to be used again. In this example, we create an invisibility effect that takes advantage of the <code>readyEvent</code>, leveraging the cooldown duration of the ability as a clock to determine when to make the player visible again.</p>
-<pre><code class="language-lua">-- Server script
-local ability = script.parent
+<div class="highlight"><pre><span></span><code><span class="c1">-- Server script</span>
+<span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">.</span><span class="n">parent</span>
 
-function OnExecute(ability)
-    -- Hide the player
-    ability.owner:SetVisibility(false)
-end
+<span class="kr">function</span> <span class="nf">OnExecute</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+    <span class="c1">-- Hide the player</span>
+    <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">:</span><span class="n">SetVisibility</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+<span class="kr">end</span>
 
-function OnReady(ability)
-    -- Show the player
-    ability.owner:SetVisibility(true)
-end
+<span class="kr">function</span> <span class="nf">OnReady</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+    <span class="c1">-- Show the player</span>
+    <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">:</span><span class="n">SetVisibility</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+<span class="kr">end</span>
 
-ability.readyEvent:Connect(OnReady)
-ability.executeEvent:Connect(OnExecute)
-</code></pre>
+<span class="n">ability</span><span class="p">.</span><span class="n">readyEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnReady</span><span class="p">)</span>
+<span class="n">ability</span><span class="p">.</span><span class="n">executeEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnExecute</span><span class="p">)</span>
+</code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.parent</a> | <a href="ability.md">Ability.owner</a> | <a href="player.md">Player.SetVisibility</a> | <a href="event.md">Event.Connect</a></p>
 <hr />
 <p>Example using:</p>
 <h3 id="recoveryevent"><a class="toclink" href="#recoveryevent"><code>recoveryEvent</code></a></h3>
 <p>The <code>recoveryEvent</code> marks the end of an ability's Execute phase and the beginning of its Recovery phase. In this example, a melee punch ability has a trigger that causes damage to enemies who overlap it. For it to work the trigger is only enabled for a brief moment, during the Execute phase.</p>
-<pre><code class="language-lua">--Server script
-local ability = script.parent
-local trigger = script:GetCustomProperty(&quot;ImpactTrigger&quot;):WaitForObject()
-trigger.collision = Collision.FORCE_OFF
+<div class="highlight"><pre><span></span><code><span class="c1">--Server script</span>
+<span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">.</span><span class="n">parent</span>
+<span class="kd">local</span> <span class="n">trigger</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">GetCustomProperty</span><span class="p">(</span><span class="s2">&quot;ImpactTrigger&quot;</span><span class="p">):</span><span class="n">WaitForObject</span><span class="p">()</span>
+<span class="n">trigger</span><span class="p">.</span><span class="n">collision</span> <span class="o">=</span> <span class="n">Collision</span><span class="p">.</span><span class="n">FORCE_OFF</span>
 
-local DAMAGE_AMOUNT = 10
+<span class="kd">local</span> <span class="n">DAMAGE_AMOUNT</span> <span class="o">=</span> <span class="mi">10</span>
 
-function OnExecute(ability)
-    trigger.collision = Collision.FORCE_ON
-end
+<span class="kr">function</span> <span class="nf">OnExecute</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+    <span class="n">trigger</span><span class="p">.</span><span class="n">collision</span> <span class="o">=</span> <span class="n">Collision</span><span class="p">.</span><span class="n">FORCE_ON</span>
+<span class="kr">end</span>
 
-function OnRecovery(ability)
-    trigger.collision = Collision.FORCE_OFF
-end
+<span class="kr">function</span> <span class="nf">OnRecovery</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+    <span class="n">trigger</span><span class="p">.</span><span class="n">collision</span> <span class="o">=</span> <span class="n">Collision</span><span class="p">.</span><span class="n">FORCE_OFF</span>
+<span class="kr">end</span>
 
-ability.executeEvent:Connect(OnExecute)
-ability.recoveryEvent:Connect(OnRecovery)
+<span class="n">ability</span><span class="p">.</span><span class="n">executeEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnExecute</span><span class="p">)</span>
+<span class="n">ability</span><span class="p">.</span><span class="n">recoveryEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnRecovery</span><span class="p">)</span>
 
-function OnBeginOverlap(trigger, other)
-    -- Only damage enemy players
-    if other:IsA(&quot;Player&quot;) and other.team ~= ability.owner.team then
-        other:ApplyDamage(Damage.New(DAMAGE_AMOUNT))
-    end
-end
+<span class="kr">function</span> <span class="nf">OnBeginOverlap</span><span class="p">(</span><span class="n">trigger</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+    <span class="c1">-- Only damage enemy players</span>
+    <span class="kr">if</span> <span class="n">other</span><span class="p">:</span><span class="n">IsA</span><span class="p">(</span><span class="s2">&quot;Player&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">other</span><span class="p">.</span><span class="n">team</span> <span class="o">~=</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">.</span><span class="n">team</span> <span class="kr">then</span>
+        <span class="n">other</span><span class="p">:</span><span class="n">ApplyDamage</span><span class="p">(</span><span class="n">Damage</span><span class="p">.</span><span class="n">New</span><span class="p">(</span><span class="n">DAMAGE_AMOUNT</span><span class="p">))</span>
+    <span class="kr">end</span>
+<span class="kr">end</span>
 
-trigger.beginOverlapEvent:Connect(OnBeginOverlap)
-</code></pre>
+<span class="n">trigger</span><span class="p">.</span><span class="n">beginOverlapEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnBeginOverlap</span><span class="p">)</span>
+</code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.parent</a> | <a href="coreobjectreference.md">CoreObjectReference.WaitForObject</a> | <a href="ability.md">Ability.executeEvent</a> | <a href="event.md">Event.Connect</a> | <a href="other.md">other.IsA</a> | <a href="player.md">Player.team</a> | <a href="damage.md">Damage.New</a> | <a href="trigger.md">Trigger.beginOverlapEvent</a></p>
 <hr />
 <p>Example using:</p>
 <h3 id="tickevent"><a class="toclink" href="#tickevent"><code>tickEvent</code></a></h3>
 <p>Abilities fire the <code>tickEvent</code> while they are active or on cooldown (not on Ready state). In this example, a piece of equipment carries several abilities, but we want to do a common update logic on all of them. Note: <code>Ability.tickEvent</code> works somewhat differently from a <code>Tick()</code> function - <code>tickEvent</code> is an actual event that just happens to fire once per tick. Each invocation of the callback runs on its own task. This means that, unlike <code>Tick()</code>, there is no guarantee that it will wait for the previous <code>tickEvent</code> to finish before starting the next one. This means you can't use things like <code>Task.Wait()</code> to add time between ticks.</p>
-<pre><code class="language-lua">local equipment = script.parent
-local allAbilities = equipment:GetAbilities()
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">equipment</span> <span class="o">=</span> <span class="n">script</span><span class="p">.</span><span class="n">parent</span>
+<span class="kd">local</span> <span class="n">allAbilities</span> <span class="o">=</span> <span class="n">equipment</span><span class="p">:</span><span class="n">GetAbilities</span><span class="p">()</span>
 
-function OnTick(ability, deltaTime)
-    print(&quot;Updating ability &quot; .. ability.name)
-end
+<span class="kr">function</span> <span class="nf">OnTick</span><span class="p">(</span><span class="n">ability</span><span class="p">,</span> <span class="n">deltaTime</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Updating ability &quot;</span> <span class="o">..</span> <span class="n">ability</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>
+<span class="kr">end</span>
 
-for _, ability in ipairs(allAbilities) do
-    ability.tickEvent:Connect(OnTick)
-end
-</code></pre>
+<span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">ability</span> <span class="kr">in</span> <span class="nb">ipairs</span><span class="p">(</span><span class="n">allAbilities</span><span class="p">)</span> <span class="kr">do</span>
+    <span class="n">ability</span><span class="p">.</span><span class="n">tickEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnTick</span><span class="p">)</span>
+<span class="kr">end</span>
+</code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.parent</a> | <a href="equipment.md">Equipment.GetAbilities</a> | <a href="event.md">Event.Connect</a> | <a href="coreluafunctions.md">CoreLua.print</a></p>
 <hr />
 <p>Example using:</p>
 <h3 id="activate"><a class="toclink" href="#activate"><code>Activate</code></a></h3>
 <p>The Ability <code>Activate()</code> function behaves as if the player had pressed the key binding. In order for a server gameplay decision to result in an ability activation, it must be communicated over the network somehow. In this example, a trigger overlap is representative of an arbitrary gameplay decision on the server. A broadcast message is sent to the client, who receives the event and activates the ability.</p>
-<pre><code class="language-lua">--Server script
-local trigger = script.parent
-local function OnBeginOverlap(trigger, other)
-    if other:IsA(&quot;Player&quot;) then
-        Events.BroadcastToPlayer(other, &quot;SteppedOnObject&quot;)
-    end
-end
+<div class="highlight"><pre><span></span><code><span class="c1">--Server script</span>
+<span class="kd">local</span> <span class="n">trigger</span> <span class="o">=</span> <span class="n">script</span><span class="p">.</span><span class="n">parent</span>
+<span class="kd">local</span> <span class="kr">function</span> <span class="nf">OnBeginOverlap</span><span class="p">(</span><span class="n">trigger</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+    <span class="kr">if</span> <span class="n">other</span><span class="p">:</span><span class="n">IsA</span><span class="p">(</span><span class="s2">&quot;Player&quot;</span><span class="p">)</span> <span class="kr">then</span>
+        <span class="n">Events</span><span class="p">.</span><span class="n">BroadcastToPlayer</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s2">&quot;SteppedOnObject&quot;</span><span class="p">)</span>
+    <span class="kr">end</span>
+<span class="kr">end</span>
 
-trigger.beginOverlapEvent(OnBeginOverlap)
+<span class="n">trigger</span><span class="p">.</span><span class="n">beginOverlapEvent</span><span class="p">(</span><span class="n">OnBeginOverlap</span><span class="p">)</span>
 
---[[#description
-    Client context script under the ability:
-]]
-local ability = script:FindAncestorByType(&quot;Ability&quot;)
+<span class="cm">--[[#description</span>
+<span class="cm">    Client context script under the ability:</span>
+<span class="cm">]]</span>
+<span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">FindAncestorByType</span><span class="p">(</span><span class="s2">&quot;Ability&quot;</span><span class="p">)</span>
 
-function OnPlayAnimation()
-    if ability.owner and ability.owner == Game.GetLocalPlayer() then
-        ability:Activate()
-    end
-end
+<span class="kr">function</span> <span class="nf">OnPlayAnimation</span><span class="p">()</span>
+    <span class="kr">if</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span> <span class="ow">and</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span> <span class="o">==</span> <span class="n">Game</span><span class="p">.</span><span class="n">GetLocalPlayer</span><span class="p">()</span> <span class="kr">then</span>
+        <span class="n">ability</span><span class="p">:</span><span class="n">Activate</span><span class="p">()</span>
+    <span class="kr">end</span>
+<span class="kr">end</span>
 
-Events.Connect(&quot;SteppedOnObject&quot;, OnPlayAnimation)
-</code></pre>
+<span class="n">Events</span><span class="p">.</span><span class="n">Connect</span><span class="p">(</span><span class="s2">&quot;SteppedOnObject&quot;</span><span class="p">,</span> <span class="n">OnPlayAnimation</span><span class="p">)</span>
+</code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.parent</a> | <a href="trigger.md">Trigger.beginOverlapEvent</a> | <a href="other.md">other.IsA</a> | <a href="events.md">Events.BroadcastToPlayer</a> | <a href="ability.md">Ability.owner</a> | <a href="game.md">Game.GetLocalPlayer()</a></p>
 <hr />
 <p>Example using:</p>
 <h3 id="advancephase"><a class="toclink" href="#advancephase"><code>AdvancePhase</code></a></h3>
 <h3 id="getcurrentphase"><a class="toclink" href="#getcurrentphase"><code>GetCurrentPhase</code></a></h3>
 <p>In this example an ability is on cooldown, but can be set back to <code>Ready</code> by calling <code>AdvancePhase()</code>.</p>
-<pre><code class="language-lua">function EndAbilityCooldown(ability)
-    if ability:GetCurrentPhase() == AbilityPhase.COOLDOWN then
-        ability:AdvancePhase()
-    end
-end
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kr">function</span> <span class="nf">EndAbilityCooldown</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+    <span class="kr">if</span> <span class="n">ability</span><span class="p">:</span><span class="n">GetCurrentPhase</span><span class="p">()</span> <span class="o">==</span> <span class="n">AbilityPhase</span><span class="p">.</span><span class="n">COOLDOWN</span> <span class="kr">then</span>
+        <span class="n">ability</span><span class="p">:</span><span class="n">AdvancePhase</span><span class="p">()</span>
+    <span class="kr">end</span>
+<span class="kr">end</span>
+</code></pre></div>
 <hr />
 <p>Example using:</p>
 <h3 id="getcurrentphase_1"><a class="toclink" href="#getcurrentphase_1"><code>GetCurrentPhase</code></a></h3>
 <h3 id="getphasetimeremaining"><a class="toclink" href="#getphasetimeremaining"><code>GetPhaseTimeRemaining</code></a></h3>
 <p>In this example, while the ability is on cooldown, the percentage completion of the cooldown is calculated. This could be useful, for instance, in displaying user interface.</p>
-<pre><code class="language-lua">local ability = script:FindAncestorByType(&quot;Ability&quot;)
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">FindAncestorByType</span><span class="p">(</span><span class="s2">&quot;Ability&quot;</span><span class="p">)</span>
 
-function Tick()
-    if ability:GetCurrentPhase() == AbilityPhase.COOLDOWN then
-        local duration = ability.cooldownPhaseSettings.duration
-        local remaining = ability:GetPhaseTimeRemaining()
-        local percent = 100 * (1 - remaining / duration)
+<span class="kr">function</span> <span class="nf">Tick</span><span class="p">()</span>
+    <span class="kr">if</span> <span class="n">ability</span><span class="p">:</span><span class="n">GetCurrentPhase</span><span class="p">()</span> <span class="o">==</span> <span class="n">AbilityPhase</span><span class="p">.</span><span class="n">COOLDOWN</span> <span class="kr">then</span>
+        <span class="kd">local</span> <span class="n">duration</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">cooldownPhaseSettings</span><span class="p">.</span><span class="n">duration</span>
+        <span class="kd">local</span> <span class="n">remaining</span> <span class="o">=</span> <span class="n">ability</span><span class="p">:</span><span class="n">GetPhaseTimeRemaining</span><span class="p">()</span>
+        <span class="kd">local</span> <span class="n">percent</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">remaining</span> <span class="o">/</span> <span class="n">duration</span><span class="p">)</span>
 
-        print(&quot;Cooldown remaining: %&quot; .. string.format(&quot;%.2f&quot;,percent))
-    end
-end
-</code></pre>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cooldown remaining: %&quot;</span> <span class="o">..</span> <span class="nb">string.format</span><span class="p">(</span><span class="s2">&quot;%.2f&quot;</span><span class="p">,</span><span class="n">percent</span><span class="p">))</span>
+    <span class="kr">end</span>
+<span class="kr">end</span>
+</code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.FindAncestorByType</a> | <a href="ability.md">Ability.GetCurrentPhase</a> | <a href="abilityphasesettings.md">AbilityPhaseSettings.duration</a> | <a href="coreluafunctions.md">CoreLua.print</a></p>
 <hr />
 <p>Example using:</p>
 <h3 id="gettargetdata"><a class="toclink" href="#gettargetdata"><code>GetTargetData</code></a></h3>
 <h3 id="settargetdata"><a class="toclink" href="#settargetdata"><code>SetTargetData</code></a></h3>
 <p>The ability's targeting data gives a lot of information about where and what the player is aiming at. If setup correctly, it can also be modified programmatically. In this example, the Z position of the target is flattened horizontally. Useful, for example, in a top-down shooter. For this to work it should be placed in a client context under the ability. The ability should also have the option "Is Target Data Update" turned off for the Execute phase, otherwise any data set programmatically will be overwritten when the phase changes.</p>
-<pre><code class="language-lua">--Server script
-local ability = script:FindAncestorByType(&quot;Ability&quot;)
+<div class="highlight"><pre><span></span><code><span class="c1">--Server script</span>
+<span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">FindAncestorByType</span><span class="p">(</span><span class="s2">&quot;Ability&quot;</span><span class="p">)</span>
 
-function OnCast(ability)
-    local abilityTarget = ability:GetTargetData()
-    local pos = abilityTarget:GetHitPosition()
+<span class="kr">function</span> <span class="nf">OnCast</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+    <span class="kd">local</span> <span class="n">abilityTarget</span> <span class="o">=</span> <span class="n">ability</span><span class="p">:</span><span class="n">GetTargetData</span><span class="p">()</span>
+    <span class="kd">local</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">abilityTarget</span><span class="p">:</span><span class="n">GetHitPosition</span><span class="p">()</span>
 
-    pos.z = ability.owner:GetWorldPosition().z + 50
+    <span class="n">pos</span><span class="p">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">:</span><span class="n">GetWorldPosition</span><span class="p">().</span><span class="n">z</span> <span class="o">+</span> <span class="mi">50</span>
 
-    abilityTarget:SetHitPosition(pos)
-    ability:SetTargetData(abilityTarget)
-end
+    <span class="n">abilityTarget</span><span class="p">:</span><span class="n">SetHitPosition</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
+    <span class="n">ability</span><span class="p">:</span><span class="n">SetTargetData</span><span class="p">(</span><span class="n">abilityTarget</span><span class="p">)</span>
+<span class="kr">end</span>
 
-ability.castEvent:Connect(OnCast)
-</code></pre>
+<span class="n">ability</span><span class="p">.</span><span class="n">castEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnCast</span><span class="p">)</span>
+</code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.FindAncestorByType</a> | <a href="abilitytarget.md">AbilityTarget.GetHitPosition</a> | <a href="ability.md">Ability.owner</a> | <a href="player.md">Player.GetWorldPosition</a> | <a href="event.md">Event.Connect</a></p>
 <hr />
 <p>Example using:</p>
 <h3 id="interrupt"><a class="toclink" href="#interrupt"><code>Interrupt</code></a></h3>
 <p>Interrupting an ability either sends it back into ready state (if it was still in the Cast phase) or puts it on cooldown. In this example, we have an ability that searches for all enemies in a 10 meter radius and interrupts their abilities.</p>
-<pre><code class="language-lua">--Server script
-local ability = script.parent
-local RADIUS = 1000 -- 10 meters
+<div class="highlight"><pre><span></span><code><span class="c1">--Server script</span>
+<span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">.</span><span class="n">parent</span>
+<span class="kd">local</span> <span class="n">RADIUS</span> <span class="o">=</span> <span class="mi">1000</span> <span class="c1">-- 10 meters</span>
 
-function OnExecute(ability)
-    local center = ability.owner:GetWorldPosition()
-    -- Search for enemies
-    local enemies = Game.FindPlayersInCylinder(center, RADIUS, {ignoreTeams = ability.owner.team})
-    for _, enemy in ipairs(enemies) do
-        -- Interrupt all their abilities
-        local enemyAbilities = enemy:GetAbilities()
-        for _,a in ipairs(enemyAbilities) do
-            a:Interrupt()
-        end
-    end
-end
+<span class="kr">function</span> <span class="nf">OnExecute</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+    <span class="kd">local</span> <span class="n">center</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">:</span><span class="n">GetWorldPosition</span><span class="p">()</span>
+    <span class="c1">-- Search for enemies</span>
+    <span class="kd">local</span> <span class="n">enemies</span> <span class="o">=</span> <span class="n">Game</span><span class="p">.</span><span class="n">FindPlayersInCylinder</span><span class="p">(</span><span class="n">center</span><span class="p">,</span> <span class="n">RADIUS</span><span class="p">,</span> <span class="p">{</span><span class="n">ignoreTeams</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">.</span><span class="n">team</span><span class="p">})</span>
+    <span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">enemy</span> <span class="kr">in</span> <span class="nb">ipairs</span><span class="p">(</span><span class="n">enemies</span><span class="p">)</span> <span class="kr">do</span>
+        <span class="c1">-- Interrupt all their abilities</span>
+        <span class="kd">local</span> <span class="n">enemyAbilities</span> <span class="o">=</span> <span class="n">enemy</span><span class="p">:</span><span class="n">GetAbilities</span><span class="p">()</span>
+        <span class="kr">for</span> <span class="n">_</span><span class="p">,</span><span class="n">a</span> <span class="kr">in</span> <span class="nb">ipairs</span><span class="p">(</span><span class="n">enemyAbilities</span><span class="p">)</span> <span class="kr">do</span>
+            <span class="n">a</span><span class="p">:</span><span class="n">Interrupt</span><span class="p">()</span>
+        <span class="kr">end</span>
+    <span class="kr">end</span>
+<span class="kr">end</span>
 
-ability.executeEvent:Connect(OnExecute)
-</code></pre>
+<span class="n">ability</span><span class="p">.</span><span class="n">executeEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnExecute</span><span class="p">)</span>
+</code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.parent</a> | <a href="ability.md">Ability.owner</a> | <a href="player.md">Player.GetWorldPosition</a> | <a href="game.md">Game.FindPlayersInCylinder</a> | <a href="event.md">Event.Connect</a></p>
 <hr />
 <p>Example using:</p>
 <h3 id="actionname"><a class="toclink" href="#actionname"><code>actionName</code></a></h3>
 <p>Even though some API properties are read-only, they are useful is solutions such as user interface. In this example, a client context script searches the local player's list of abilities to find one that matches the action name (input) designated for this UI component. When it's found, the ability's name is written to the UI Text object.</p>
-<pre><code class="language-lua">--Client script
-local ACTION_NAME = script:GetCustomProperty(&quot;ActionName&quot;)
-local NAME_UI = script:GetCustomProperty(&quot;NameUIText&quot;):WaitForObject()
+<div class="highlight"><pre><span></span><code><span class="c1">--Client script</span>
+<span class="kd">local</span> <span class="n">ACTION_NAME</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">GetCustomProperty</span><span class="p">(</span><span class="s2">&quot;ActionName&quot;</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">NAME_UI</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">GetCustomProperty</span><span class="p">(</span><span class="s2">&quot;NameUIText&quot;</span><span class="p">):</span><span class="n">WaitForObject</span><span class="p">()</span>
 
-function GetLocalPlayerAbilityWithActionName()
-    local player = Game.GetLocalPlayer()
-    local abilities = player:GetAbilities()
+<span class="kr">function</span> <span class="nf">GetLocalPlayerAbilityWithActionName</span><span class="p">()</span>
+    <span class="kd">local</span> <span class="n">player</span> <span class="o">=</span> <span class="n">Game</span><span class="p">.</span><span class="n">GetLocalPlayer</span><span class="p">()</span>
+    <span class="kd">local</span> <span class="n">abilities</span> <span class="o">=</span> <span class="n">player</span><span class="p">:</span><span class="n">GetAbilities</span><span class="p">()</span>
 
-    for _, ability in pairs(abilities) do
-        if ability.actionName == ACTION_NAME then
-            return ability
-        end
-    end
+    <span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">ability</span> <span class="kr">in</span> <span class="nb">pairs</span><span class="p">(</span><span class="n">abilities</span><span class="p">)</span> <span class="kr">do</span>
+        <span class="kr">if</span> <span class="n">ability</span><span class="p">.</span><span class="n">actionName</span> <span class="o">==</span> <span class="n">ACTION_NAME</span> <span class="kr">then</span>
+            <span class="kr">return</span> <span class="n">ability</span>
+        <span class="kr">end</span>
+    <span class="kr">end</span>
 
-    return nil
-end
+    <span class="kr">return</span> <span class="kc">nil</span>
+<span class="kr">end</span>
 
-function Tick()
-    local ability = GetLocalPlayerAbilityWithActionName()
-    if ability then
-        NAME_UI.text = ability.name
-    end
-end
-</code></pre>
+<span class="kr">function</span> <span class="nf">Tick</span><span class="p">()</span>
+    <span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">GetLocalPlayerAbilityWithActionName</span><span class="p">()</span>
+    <span class="kr">if</span> <span class="n">ability</span> <span class="kr">then</span>
+        <span class="n">NAME_UI</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">name</span>
+    <span class="kr">end</span>
+<span class="kr">end</span>
+</code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.name</a> | <a href="coreobjectreference.md">CoreObjectReference.WaitForObject</a> | <a href="game.md">Game.GetLocalPlayer</a> | <a href="player.md">Player.GetAbilities</a> | <a href="uitext.md">UIText.text</a></p>
 <hr />
 <p>Example using:</p>
 <h3 id="animation"><a class="toclink" href="#animation"><code>animation</code></a></h3>
 <p>In this example, the <code>ProcessAbilities()</code> function can be called once, such as at the beginning of a round, to take inventory of a player's abilities and classify them based on animation. This example also demonstrates how to disconnect event listeners so that we don't listen for the same event multiple times.</p>
-<pre><code class="language-lua">--Server script
-function OnMelee1HandCast(ability)
-    print(&quot;One-handed melee attack&quot;)
-end
+<div class="highlight"><pre><span></span><code><span class="c1">--Server script</span>
+<span class="kr">function</span> <span class="nf">OnMelee1HandCast</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;One-handed melee attack&quot;</span><span class="p">)</span>
+<span class="kr">end</span>
 
-function OnMelee2HandCast(ability)
-    print(&quot;Two-handed melee attack&quot;)
-end
+<span class="kr">function</span> <span class="nf">OnMelee2HandCast</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Two-handed melee attack&quot;</span><span class="p">)</span>
+<span class="kr">end</span>
 
-local abilityEventListeners = {}
+<span class="kd">local</span> <span class="n">abilityEventListeners</span> <span class="o">=</span> <span class="p">{}</span>
 
-function CleanupListeners(player)
-    -- If we have previously processed this player, cleanup all listeners
-    if abilityEventListeners[player] then
-        for i, eventListener in ipairs(abilityEventListeners[player]) do
-            eventListener:Disconnect()
-        end
-        abilityEventListeners[player] = nil
-    end
-end
+<span class="kr">function</span> <span class="nf">CleanupListeners</span><span class="p">(</span><span class="n">player</span><span class="p">)</span>
+    <span class="c1">-- If we have previously processed this player, cleanup all listeners</span>
+    <span class="kr">if</span> <span class="n">abilityEventListeners</span><span class="p">[</span><span class="n">player</span><span class="p">]</span> <span class="kr">then</span>
+        <span class="kr">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">eventListener</span> <span class="kr">in</span> <span class="nb">ipairs</span><span class="p">(</span><span class="n">abilityEventListeners</span><span class="p">[</span><span class="n">player</span><span class="p">])</span> <span class="kr">do</span>
+            <span class="n">eventListener</span><span class="p">:</span><span class="n">Disconnect</span><span class="p">()</span>
+        <span class="kr">end</span>
+        <span class="n">abilityEventListeners</span><span class="p">[</span><span class="n">player</span><span class="p">]</span> <span class="o">=</span> <span class="kc">nil</span>
+    <span class="kr">end</span>
+<span class="kr">end</span>
 
-function ProcessAbilities(player)
-    CleanupListeners(player)
+<span class="kr">function</span> <span class="nf">ProcessAbilities</span><span class="p">(</span><span class="n">player</span><span class="p">)</span>
+    <span class="n">CleanupListeners</span><span class="p">(</span><span class="n">player</span><span class="p">)</span>
 
-    local allAbilities = player:GetAbilities()
+    <span class="kd">local</span> <span class="n">allAbilities</span> <span class="o">=</span> <span class="n">player</span><span class="p">:</span><span class="n">GetAbilities</span><span class="p">()</span>
 
-    for _, ability in ipairs(allAbilities) do
-        if string.match(ability.animation, &quot;melee&quot;) then
-            local eventListener
-            if string.match(ability.animation, &quot;1h&quot;) then
-                eventListener = ability.castEvent:Connect(OnMelee1HandCast)
-            else
-                eventListener = ability.castEvent:Connect(OnMelee2HandCast)
-            end
-            table.insert(abilityEventListeners[player], eventListener)
-        end
-    end
-end
+    <span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">ability</span> <span class="kr">in</span> <span class="nb">ipairs</span><span class="p">(</span><span class="n">allAbilities</span><span class="p">)</span> <span class="kr">do</span>
+        <span class="kr">if</span> <span class="nb">string.match</span><span class="p">(</span><span class="n">ability</span><span class="p">.</span><span class="n">animation</span><span class="p">,</span> <span class="s2">&quot;melee&quot;</span><span class="p">)</span> <span class="kr">then</span>
+            <span class="kd">local</span> <span class="n">eventListener</span>
+            <span class="kr">if</span> <span class="nb">string.match</span><span class="p">(</span><span class="n">ability</span><span class="p">.</span><span class="n">animation</span><span class="p">,</span> <span class="s2">&quot;1h&quot;</span><span class="p">)</span> <span class="kr">then</span>
+                <span class="n">eventListener</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">castEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnMelee1HandCast</span><span class="p">)</span>
+            <span class="kr">else</span>
+                <span class="n">eventListener</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">castEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnMelee2HandCast</span><span class="p">)</span>
+            <span class="kr">end</span>
+            <span class="nb">table.insert</span><span class="p">(</span><span class="n">abilityEventListeners</span><span class="p">[</span><span class="n">player</span><span class="p">],</span> <span class="n">eventListener</span><span class="p">)</span>
+        <span class="kr">end</span>
+    <span class="kr">end</span>
+<span class="kr">end</span>
 
--- Lets also cleanup when a player leaves the game, as perhaps their ability objects might stay in the game.
-Game.playerLeftEvent:Connect(CleanupListeners)
-</code></pre>
+<span class="c1">-- Lets also cleanup when a player leaves the game, as perhaps their ability objects might stay in the game.</span>
+<span class="n">Game</span><span class="p">.</span><span class="n">playerLeftEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">CleanupListeners</span><span class="p">)</span>
+</code></pre></div>
 <p>See also: <a href="eventlistener.md">EventListener.Disconnect</a> | <a href="player.md">Player.GetAbilities</a> | <a href="ability.md">Ability.castEvent</a> | <a href="event.md">Event.Connect</a> | <a href="game.md">Game.playerLeftEvent</a> | <a href="coreluafunctions.md">CoreLua.print</a></p>
 <hr />
 <p>Example using:</p>
 <h3 id="canactivatewhiledead"><a class="toclink" href="#canactivatewhiledead"><code>canActivateWhileDead</code></a></h3>
 <p>Some games may have abilities that can be used while the player is dead. In this example, we have abilities that can <strong>only</strong> be activated while dead. If not dead, then it's interrupted.</p>
-<pre><code class="language-lua">--Server script
-local ability = script:FindAncestorByType(&quot;Ability&quot;)
+<div class="highlight"><pre><span></span><code><span class="c1">--Server script</span>
+<span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">FindAncestorByType</span><span class="p">(</span><span class="s2">&quot;Ability&quot;</span><span class="p">)</span>
 
-function OnCast(ability)
-    if ability.canActivateWhileDead and not ability.owner.isDead then
-        ability:Interrupt()
-    end
-end
+<span class="kr">function</span> <span class="nf">OnCast</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+    <span class="kr">if</span> <span class="n">ability</span><span class="p">.</span><span class="n">canActivateWhileDead</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">.</span><span class="n">isDead</span> <span class="kr">then</span>
+        <span class="n">ability</span><span class="p">:</span><span class="n">Interrupt</span><span class="p">()</span>
+    <span class="kr">end</span>
+<span class="kr">end</span>
 
-ability.castEvent:Connect(OnCast)
+<span class="n">ability</span><span class="p">.</span><span class="n">castEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnCast</span><span class="p">)</span>
 
---[[#description
-    On the client context, a user interface component that displays ability details is hidden until the player dies:
-]]
-local abilityCanvas = script:GetCustomProperty(&quot;Canvas&quot;)
-local ACTION_NAME = script:GetCustomProperty(&quot;ActionName&quot;)
+<span class="cm">--[[#description</span>
+<span class="cm">    On the client context, a user interface component that displays ability details is hidden until the player dies:</span>
+<span class="cm">]]</span>
+<span class="kd">local</span> <span class="n">abilityCanvas</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">GetCustomProperty</span><span class="p">(</span><span class="s2">&quot;Canvas&quot;</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">ACTION_NAME</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">GetCustomProperty</span><span class="p">(</span><span class="s2">&quot;ActionName&quot;</span><span class="p">)</span>
 
-function Tick(deltaTime)
-    local ability = GetLocalPlayerAbilityWithActionName()
+<span class="kr">function</span> <span class="nf">Tick</span><span class="p">(</span><span class="n">deltaTime</span><span class="p">)</span>
+    <span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">GetLocalPlayerAbilityWithActionName</span><span class="p">()</span>
 
-    if ability
-    and ability.isEnabled
-    and ability.canActivateWhileDead
-    and ability.owner
-    and ability.owner.isDead then
+    <span class="kr">if</span> <span class="n">ability</span>
+    <span class="ow">and</span> <span class="n">ability</span><span class="p">.</span><span class="n">isEnabled</span>
+    <span class="ow">and</span> <span class="n">ability</span><span class="p">.</span><span class="n">canActivateWhileDead</span>
+    <span class="ow">and</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span>
+    <span class="ow">and</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span><span class="p">.</span><span class="n">isDead</span> <span class="kr">then</span>
 
-        abilityCanvas.visibility = Visibility.INHERIT
-    else
-        abilityCanvas.visibility = Visibility.FORCE_OFF
-    end
-end
+        <span class="n">abilityCanvas</span><span class="p">.</span><span class="n">visibility</span> <span class="o">=</span> <span class="n">Visibility</span><span class="p">.</span><span class="n">INHERIT</span>
+    <span class="kr">else</span>
+        <span class="n">abilityCanvas</span><span class="p">.</span><span class="n">visibility</span> <span class="o">=</span> <span class="n">Visibility</span><span class="p">.</span><span class="n">FORCE_OFF</span>
+    <span class="kr">end</span>
+<span class="kr">end</span>
 
--- Searches the local player's abilities until one with a matching action name is found
--- The ACTION_NAME search criteria should be set in the custom property
-function GetLocalPlayerAbilityWithActionName()
-    local abilities = Game.GetLocalPlayer():GetAbilities()
-    for _, ability in pairs(abilities) do
-        if ability.actionName == ACTION_NAME then
-            return ability
-        end
-    end
+<span class="c1">-- Searches the local player&#39;s abilities until one with a matching action name is found</span>
+<span class="c1">-- The ACTION_NAME search criteria should be set in the custom property</span>
+<span class="kr">function</span> <span class="nf">GetLocalPlayerAbilityWithActionName</span><span class="p">()</span>
+    <span class="kd">local</span> <span class="n">abilities</span> <span class="o">=</span> <span class="n">Game</span><span class="p">.</span><span class="n">GetLocalPlayer</span><span class="p">():</span><span class="n">GetAbilities</span><span class="p">()</span>
+    <span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">ability</span> <span class="kr">in</span> <span class="nb">pairs</span><span class="p">(</span><span class="n">abilities</span><span class="p">)</span> <span class="kr">do</span>
+        <span class="kr">if</span> <span class="n">ability</span><span class="p">.</span><span class="n">actionName</span> <span class="o">==</span> <span class="n">ACTION_NAME</span> <span class="kr">then</span>
+            <span class="kr">return</span> <span class="n">ability</span>
+        <span class="kr">end</span>
+    <span class="kr">end</span>
 
-    return nil
-end
-</code></pre>
+    <span class="kr">return</span> <span class="kc">nil</span>
+<span class="kr">end</span>
+</code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.FindAncestorByType</a> | <a href="ability.md">Ability.owner</a> | <a href="player.md">Player.isDead</a> | <a href="event.md">Event.Connect</a> | <a href="coreluafunctions.md">CoreLua.Tick</a></p>
 <hr />
 <p>Example using:</p>
 <h3 id="canbeprevented"><a class="toclink" href="#canbeprevented"><code>canBePrevented</code></a></h3>
 <p>In this example, an ability recognizes that it has been interrupted by the activation of another, special ability, that is setup to serve for animation cancelling. The <code>canBePrevented</code> property is usually true in this game, but in this special case it has been configured as false so that it can be activated at any time. The player gains vertical impulse as result of the synergy and hears a small audio cue that helps communicate the mechanic.</p>
-<pre><code class="language-lua">--Server script
-local ability = script.parent
-local cancelSound = script:GetCustomProperty(&quot;CancelSound&quot;)
+<div class="highlight"><pre><span></span><code><span class="c1">--Server script</span>
+<span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">script</span><span class="p">.</span><span class="n">parent</span>
+<span class="kd">local</span> <span class="n">cancelSound</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">GetCustomProperty</span><span class="p">(</span><span class="s2">&quot;CancelSound&quot;</span><span class="p">)</span>
 
-function OnInterrupted(ability)
-    local player = ability.owner
-    if not Object.IsValid(player) then return end
+<span class="kr">function</span> <span class="nf">OnInterrupted</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+    <span class="kd">local</span> <span class="n">player</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">owner</span>
+    <span class="kr">if</span> <span class="ow">not</span> <span class="n">Object</span><span class="p">.</span><span class="n">IsValid</span><span class="p">(</span><span class="n">player</span><span class="p">)</span> <span class="kr">then</span> <span class="kr">return</span> <span class="kr">end</span>
 
-    for _, a in ipairs(player:GetAbilities()) do
-        if a:GetCurrentPhase() ~= AbilityPhase.READY and not a.canBePrevented then
-            player:AddImpulse(Vector3.UP * 1000)
-            World.SpawnAsset(cancelSound, {position = player:GetWorldPosition()})
-            return
-        end
-    end
-end
+    <span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">a</span> <span class="kr">in</span> <span class="nb">ipairs</span><span class="p">(</span><span class="n">player</span><span class="p">:</span><span class="n">GetAbilities</span><span class="p">())</span> <span class="kr">do</span>
+        <span class="kr">if</span> <span class="n">a</span><span class="p">:</span><span class="n">GetCurrentPhase</span><span class="p">()</span> <span class="o">~=</span> <span class="n">AbilityPhase</span><span class="p">.</span><span class="n">READY</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">a</span><span class="p">.</span><span class="n">canBePrevented</span> <span class="kr">then</span>
+            <span class="n">player</span><span class="p">:</span><span class="n">AddImpulse</span><span class="p">(</span><span class="n">Vector3</span><span class="p">.</span><span class="n">UP</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+            <span class="n">World</span><span class="p">.</span><span class="n">SpawnAsset</span><span class="p">(</span><span class="n">cancelSound</span><span class="p">,</span> <span class="p">{</span><span class="n">position</span> <span class="o">=</span> <span class="n">player</span><span class="p">:</span><span class="n">GetWorldPosition</span><span class="p">()})</span>
+            <span class="kr">return</span>
+        <span class="kr">end</span>
+    <span class="kr">end</span>
+<span class="kr">end</span>
 
-ability.interruptedEvent:Connect(OnInterrupted)
-</code></pre>
+<span class="n">ability</span><span class="p">.</span><span class="n">interruptedEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnInterrupted</span><span class="p">)</span>
+</code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.parent</a> | <a href="ability.md">Ability.owner</a> | <a href="object.md">Object.IsValid</a> | <a href="player.md">Player.GetAbilities</a> | <a href="vector3.md">Vector3.UP</a> | <a href="world.md">World.SpawnAsset</a> | <a href="event.md">Event.Connect</a></p>
 <hr />
 <p>Example using:</p>
@@ -1412,92 +1412,92 @@ ability.interruptedEvent:Connect(OnInterrupted)
 <h3 id="recoveryphasesettings"><a class="toclink" href="#recoveryphasesettings"><code>recoveryPhaseSettings</code></a></h3>
 <h3 id="cooldownphasesettings"><a class="toclink" href="#cooldownphasesettings"><code>cooldownPhaseSettings</code></a></h3>
 <p>In this example, a function in a client context script can be called to show the elapsed times for an ability. The UI Text it controls displays how many seconds are remaining in the current phase, and the color of the text blends from black to white to indicate the percentage of completion. Although the Execute and Recovery phases are actually separate, they are here presented to the player as a single phase.</p>
-<pre><code class="language-lua">--Client script
-local COUNTDOWN_TEXT = script:GetCustomProperty(&quot;CountdownText&quot;):WaitForObject()
+<div class="highlight"><pre><span></span><code><span class="c1">--Client script</span>
+<span class="kd">local</span> <span class="n">COUNTDOWN_TEXT</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">GetCustomProperty</span><span class="p">(</span><span class="s2">&quot;CountdownText&quot;</span><span class="p">):</span><span class="n">WaitForObject</span><span class="p">()</span>
 
-function UpdateForAbility(ability)
-    local currentPhase = ability:GetCurrentPhase()
+<span class="kr">function</span> <span class="nf">UpdateForAbility</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+    <span class="kd">local</span> <span class="n">currentPhase</span> <span class="o">=</span> <span class="n">ability</span><span class="p">:</span><span class="n">GetCurrentPhase</span><span class="p">()</span>
 
-    local percent = 1
-    local cooldownText = &quot;Ready&quot;
+    <span class="kd">local</span> <span class="n">percent</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="kd">local</span> <span class="n">cooldownText</span> <span class="o">=</span> <span class="s2">&quot;Ready&quot;</span>
 
-    if currentPhase ~= AbilityPhase.READY then
-        local phaseDuration
-        local timeRemaining = ability:GetPhaseTimeRemaining()
+    <span class="kr">if</span> <span class="n">currentPhase</span> <span class="o">~=</span> <span class="n">AbilityPhase</span><span class="p">.</span><span class="n">READY</span> <span class="kr">then</span>
+        <span class="kd">local</span> <span class="n">phaseDuration</span>
+        <span class="kd">local</span> <span class="n">timeRemaining</span> <span class="o">=</span> <span class="n">ability</span><span class="p">:</span><span class="n">GetPhaseTimeRemaining</span><span class="p">()</span>
 
-        if currentPhase == AbilityPhase.CAST then
-            phaseDuration = ability.castPhaseSettings.duration
-        elseif currentPhase == AbilityPhase.EXECUTE then
-            -- In the case of Execute and Recovery phases, we can show those as a single one
-            local recoveryD = ability.recoveryPhaseSettings.duration
-            phaseDuration = ability.executePhaseSettings.duration + recoveryD
-            timeRemaining = timeRemaining + recoveryD
-        elseif currentPhase == AbilityPhase.RECOVERY then
-            phaseDuration = ability.recoveryPhaseSettings.duration
-        else --currentPhase == AbilityPhase.COOLDOWN
-            phaseDuration = ability.cooldownPhaseSettings.duration
-        end
+        <span class="kr">if</span> <span class="n">currentPhase</span> <span class="o">==</span> <span class="n">AbilityPhase</span><span class="p">.</span><span class="n">CAST</span> <span class="kr">then</span>
+            <span class="n">phaseDuration</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">castPhaseSettings</span><span class="p">.</span><span class="n">duration</span>
+        <span class="kr">elseif</span> <span class="n">currentPhase</span> <span class="o">==</span> <span class="n">AbilityPhase</span><span class="p">.</span><span class="n">EXECUTE</span> <span class="kr">then</span>
+            <span class="c1">-- In the case of Execute and Recovery phases, we can show those as a single one</span>
+            <span class="kd">local</span> <span class="n">recoveryD</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">recoveryPhaseSettings</span><span class="p">.</span><span class="n">duration</span>
+            <span class="n">phaseDuration</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">executePhaseSettings</span><span class="p">.</span><span class="n">duration</span> <span class="o">+</span> <span class="n">recoveryD</span>
+            <span class="n">timeRemaining</span> <span class="o">=</span> <span class="n">timeRemaining</span> <span class="o">+</span> <span class="n">recoveryD</span>
+        <span class="kr">elseif</span> <span class="n">currentPhase</span> <span class="o">==</span> <span class="n">AbilityPhase</span><span class="p">.</span><span class="n">RECOVERY</span> <span class="kr">then</span>
+            <span class="n">phaseDuration</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">recoveryPhaseSettings</span><span class="p">.</span><span class="n">duration</span>
+        <span class="kr">else</span> <span class="c1">--currentPhase == AbilityPhase.COOLDOWN</span>
+            <span class="n">phaseDuration</span> <span class="o">=</span> <span class="n">ability</span><span class="p">.</span><span class="n">cooldownPhaseSettings</span><span class="p">.</span><span class="n">duration</span>
+        <span class="kr">end</span>
 
-        if phaseDuration &gt; 0 then
-            percent = 1 - timeRemaining / phaseDuration
-        end
-        cooldownText = string.format(&quot;%.1f&quot;, timeRemaining)
-    end
+        <span class="kr">if</span> <span class="n">phaseDuration</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="kr">then</span>
+            <span class="n">percent</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">timeRemaining</span> <span class="o">/</span> <span class="n">phaseDuration</span>
+        <span class="kr">end</span>
+        <span class="n">cooldownText</span> <span class="o">=</span> <span class="nb">string.format</span><span class="p">(</span><span class="s2">&quot;%.1f&quot;</span><span class="p">,</span> <span class="n">timeRemaining</span><span class="p">)</span>
+    <span class="kr">end</span>
 
-    COUNTDOWN_TEXT.text = cooldownText
+    <span class="n">COUNTDOWN_TEXT</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">cooldownText</span>
 
-    local c = Color.Lerp(Color.BLACK, Color.WHITE, percent)
-    COUNTDOWN_TEXT:SetColor(c)
-end
-</code></pre>
+    <span class="kd">local</span> <span class="n">c</span> <span class="o">=</span> <span class="n">Color</span><span class="p">.</span><span class="n">Lerp</span><span class="p">(</span><span class="n">Color</span><span class="p">.</span><span class="n">BLACK</span><span class="p">,</span> <span class="n">Color</span><span class="p">.</span><span class="n">WHITE</span><span class="p">,</span> <span class="n">percent</span><span class="p">)</span>
+    <span class="n">COUNTDOWN_TEXT</span><span class="p">:</span><span class="n">SetColor</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="kr">end</span>
+</code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.GetCustomProperty</a> | <a href="coreobjectreference.md">CoreObjectReference.WaitForObject</a> | <a href="ability.md">Ability.GetCurrentPhase</a> | <a href="abilityphasesettings.md">AbilityPhaseSettings.duration</a> | <a href="uitext.md">UIText.text</a> | <a href="color.md">Color.Lerp</a></p>
 <hr />
 <p>Example using:</p>
 <h3 id="isenabled"><a class="toclink" href="#isenabled"><code>isEnabled</code></a></h3>
 <p>In this example, an equipment is setup with multiple abilities that all use the same action binding. This script cycles through the abilities, making sure only one is enabled at a time. The <code>owner</code> property is cleared for the previous ability and set for the next one, as part of ensuring the correct one activates when the binding is pressed.</p>
-<pre><code class="language-lua">--Server script
-local equipment = script:FindAncestorByType(&quot;Equipment&quot;)
-local abilities = {}
-local abilityIndex = 1
+<div class="highlight"><pre><span></span><code><span class="c1">--Server script</span>
+<span class="kd">local</span> <span class="n">equipment</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">FindAncestorByType</span><span class="p">(</span><span class="s2">&quot;Equipment&quot;</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">abilities</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="kd">local</span> <span class="n">abilityIndex</span> <span class="o">=</span> <span class="mi">1</span>
 
-function OnAbilityRecovery(ability)
-    if (#abilities &gt; 1) then
-        abilities[abilityIndex].isEnabled = false
-        abilities[abilityIndex].owner = nil
+<span class="kr">function</span> <span class="nf">OnAbilityRecovery</span><span class="p">(</span><span class="n">ability</span><span class="p">)</span>
+    <span class="kr">if</span> <span class="p">(</span><span class="o">#</span><span class="n">abilities</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="kr">then</span>
+        <span class="n">abilities</span><span class="p">[</span><span class="n">abilityIndex</span><span class="p">].</span><span class="n">isEnabled</span> <span class="o">=</span> <span class="kc">false</span>
+        <span class="n">abilities</span><span class="p">[</span><span class="n">abilityIndex</span><span class="p">].</span><span class="n">owner</span> <span class="o">=</span> <span class="kc">nil</span>
 
-        abilityIndex = abilityIndex + 1
-        if (abilityIndex &gt; #abilities) then
-            abilityIndex = 1
-        end
+        <span class="n">abilityIndex</span> <span class="o">=</span> <span class="n">abilityIndex</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="kr">if</span> <span class="p">(</span><span class="n">abilityIndex</span> <span class="o">&gt;</span> <span class="o">#</span><span class="n">abilities</span><span class="p">)</span> <span class="kr">then</span>
+            <span class="n">abilityIndex</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="kr">end</span>
 
-        abilities[abilityIndex].isEnabled = true
-        abilities[abilityIndex].owner = equipment.owner
-    end
-end
+        <span class="n">abilities</span><span class="p">[</span><span class="n">abilityIndex</span><span class="p">].</span><span class="n">isEnabled</span> <span class="o">=</span> <span class="kc">true</span>
+        <span class="n">abilities</span><span class="p">[</span><span class="n">abilityIndex</span><span class="p">].</span><span class="n">owner</span> <span class="o">=</span> <span class="n">equipment</span><span class="p">.</span><span class="n">owner</span>
+    <span class="kr">end</span>
+<span class="kr">end</span>
 
-for _, child in pairs(equipment:FindDescendantsByType(&quot;Ability&quot;)) do
-    table.insert(abilities, child)
+<span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">child</span> <span class="kr">in</span> <span class="nb">pairs</span><span class="p">(</span><span class="n">equipment</span><span class="p">:</span><span class="n">FindDescendantsByType</span><span class="p">(</span><span class="s2">&quot;Ability&quot;</span><span class="p">))</span> <span class="kr">do</span>
+    <span class="nb">table.insert</span><span class="p">(</span><span class="n">abilities</span><span class="p">,</span> <span class="n">child</span><span class="p">)</span>
 
-    child.isEnabled = (#abilities == 1)
+    <span class="n">child</span><span class="p">.</span><span class="n">isEnabled</span> <span class="o">=</span> <span class="p">(</span><span class="o">#</span><span class="n">abilities</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
 
-    child.recoveryEvent:Connect(OnAbilityRecovery)
-end
-</code></pre>
+    <span class="n">child</span><span class="p">.</span><span class="n">recoveryEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnAbilityRecovery</span><span class="p">)</span>
+<span class="kr">end</span>
+</code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.FindAncestorByType</a> | <a href="ability.md">Ability.owner</a> | <a href="equipment.md">Equipment.owner</a> | <a href="event.md">Event.Connect</a></p>
 <hr />
 <p>Example using:</p>
 <h3 id="owner"><a class="toclink" href="#owner"><code>owner</code></a></h3>
 <p>Usually, abilities are presented as part of an equipment, but that isn't a requirement. In this example, when new players join the game they are assigned an ability through the use of the <code>owner</code> property.</p>
-<pre><code class="language-lua">--Server script
-local abilityTemplate = script:GetCustomProperty(&quot;AbilityTemplate&quot;)
+<div class="highlight"><pre><span></span><code><span class="c1">--Server script</span>
+<span class="kd">local</span> <span class="n">abilityTemplate</span> <span class="o">=</span> <span class="n">script</span><span class="p">:</span><span class="n">GetCustomProperty</span><span class="p">(</span><span class="s2">&quot;AbilityTemplate&quot;</span><span class="p">)</span>
 
-function OnPlayerJoined(player)
-    local ability = World.SpawnAsset(abilityTemplate)
-    ability.owner = player
-end
+<span class="kr">function</span> <span class="nf">OnPlayerJoined</span><span class="p">(</span><span class="n">player</span><span class="p">)</span>
+    <span class="kd">local</span> <span class="n">ability</span> <span class="o">=</span> <span class="n">World</span><span class="p">.</span><span class="n">SpawnAsset</span><span class="p">(</span><span class="n">abilityTemplate</span><span class="p">)</span>
+    <span class="n">ability</span><span class="p">.</span><span class="n">owner</span> <span class="o">=</span> <span class="n">player</span>
+<span class="kr">end</span>
 
-Game.playerJoinedEvent:Connect(OnPlayerJoined)
-</code></pre>
+<span class="n">Game</span><span class="p">.</span><span class="n">playerJoinedEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">OnPlayerJoined</span><span class="p">)</span>
+</code></pre></div>
 <p>See also: <a href="coreobject.md">CoreObject.GetCustomProperty</a> | <a href="world.md">World.SpawnAsset</a> | <a href="player.md">Player.owner</a> | <a href="game.md">Game.playerJoinedEvent</a> | <a href="event.md">Event.Connect</a></p>
 <hr />
 <h2 id="tutorials"><a class="toclink" href="#tutorials">Tutorials</a></h2>

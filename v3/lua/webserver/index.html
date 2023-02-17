@@ -777,8 +777,8 @@ The following functions are also available, but are not fully implemented at the
 
 <h3 id="regurl"><a class="toclink" href="#regurl">RegUrl</a></h3>
 <p>The <code>Webserver.RegUrl</code> function registers or unregisters a LUA function to be called whenever the web server receives a request to the given URL prefix.</p>
-<pre><code class="language-LUA">fn, err = Webserver.RegUrl(prefix, callbackfn)
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">fn</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">Webserver</span><span class="p">.</span><span class="n">RegUrl</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">callbackfn</span><span class="p">)</span>
+</code></pre></div>
 <h4 id="parameters"><a class="toclink" href="#parameters">Parameters</a></h4>
 <ul>
 <li>prefix [string]: Path prefix to match against when checking the request URL. Note that this only checks for the path part of the URL (e.g. '/home'). </li>
@@ -794,15 +794,15 @@ The following functions are also available, but are not fully implemented at the
 <h4 id="return-values"><a class="toclink" href="#return-values">Return values</a></h4>
 <p>If the function was executed successfully, the callbackfn is returned as the first return value. Else nil is returned and the second return value has an error message string (wrong parameters or unknown instance).</p>
 <h4 id="sample-code"><a class="toclink" href="#sample-code">Sample code</a></h4>
-<pre><code class="language-LUA">local function handlerfn(reqpath, reqparams, verb, body)
-    -- process the request, return the response object (or nil
-    -- if this request is not handled) 
-    return nil
-end
--- Register a LUA function to be called whenever a web request to /api/lua
--- is made
-Browser.RegMsgHandler('/api/lua', handlerfn)
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">handlerfn</span><span class="p">(</span><span class="n">reqpath</span><span class="p">,</span> <span class="n">reqparams</span><span class="p">,</span> <span class="n">verb</span><span class="p">,</span> <span class="n">body</span><span class="p">)</span>
+    <span class="c1">-- process the request, return the response object (or nil</span>
+    <span class="c1">-- if this request is not handled) </span>
+    <span class="kr">return</span> <span class="kc">nil</span>
+<span class="kr">end</span>
+<span class="c1">-- Register a LUA function to be called whenever a web request to /api/lua</span>
+<span class="c1">-- is made</span>
+<span class="n">Browser</span><span class="p">.</span><span class="n">RegMsgHandler</span><span class="p">(</span><span class="s1">&#39;/api/lua&#39;</span><span class="p">,</span> <span class="n">handlerfn</span><span class="p">)</span>
+</code></pre></div>
 
 
 

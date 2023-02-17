@@ -24,7 +24,7 @@ To send a string to OGS from JavaScript, simply assign a value to the `window.ch
 
 #### Sample code
 
-```javascript
+``` javascript
 // send a command string to OGS	
 function sendOgsCommand(cmd)
 {

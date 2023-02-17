@@ -15,6 +15,7 @@ nav:
         - LUA interfaces:
             - Web browsers: v3/lua/webbrowser.md
             - Webserver (and REST API): v3/lua/webserver.md
+        - LUA custom tools: v3/lua/customtools.md
     - LUA helper libraries:
         - ADS communication (TwinCat, Nexeed, Beckhoff): libs/lua-ads.md
         - OpcUA communication: libs/lua-opcua.md

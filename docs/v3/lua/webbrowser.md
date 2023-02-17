@@ -96,7 +96,8 @@ The function returns the "current" URL of the webbrowser (the URL before changin
 
 #### Sample code
 ```LUA
--- Make the SidePanel visible and navigate the web browser to https://www.my-url.com/mypage
+-- Make the SidePanel visible and navigate the
+-- web browser to https://www.my-url.com/mypage
 local oldUrl = Browser.Show('SidePanel', 'https://www.my-url.com/mypage')
 ```
 

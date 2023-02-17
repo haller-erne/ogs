@@ -30,7 +30,14 @@ nav:
 #
 
 #theme: readthedocs
-theme: material
+theme: 
+  name: material
+  # Favicon and logo
+  # favicon: path/to/file.png
+  # logo: path/to/file.png
+  features:
+    - content.code.copy
+    - content.code.annotate 
 
 markdown_extensions:
   - abbr

@@ -51,6 +51,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://haller-erne.github.io/ogs/v3/lua/customtools/</loc>
+         <lastmod>2023-02-17</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://haller-erne.github.io/ogs/v3/lua/webbrowser/</loc>
          <lastmod>2023-02-17</lastmod>
          <changefreq>daily</changefreq>

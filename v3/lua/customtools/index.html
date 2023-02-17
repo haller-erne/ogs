@@ -8,27 +8,27 @@
       
       
       
-        <link rel="canonical" href="https://haller-erne.github.io/ogs/libs/lua-ads/">
+        <link rel="canonical" href="https://haller-erne.github.io/ogs/v3/lua/customtools/">
       
       
-        <link rel="prev" href="../../v3/lua/customtools/">
+        <link rel="prev" href="../webserver/">
       
       
-        <link rel="next" href="../lua-opcua/">
+        <link rel="next" href="../../../libs/lua-ads/">
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.12">
     
     
       
-        <title>ADS communication (TwinCat, Nexeed, Beckhoff) - OGS Documentation</title>
+        <title>LUA custom tools - OGS Documentation</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.0d440cfe.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.0d440cfe.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.2505c338.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.2505c338.min.css">
       
       
 
@@ -44,7 +44,7 @@
       
     
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -68,6 +68,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#mermaid-test" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -78,7 +83,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="OGS Documentation" class="md-header__button md-logo" aria-label="OGS Documentation" data-md-component="logo">
+    <a href="../../.." title="OGS Documentation" class="md-header__button md-logo" aria-label="OGS Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -97,7 +102,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              ADS communication (TwinCat, Nexeed, Beckhoff)
+              LUA custom tools
             
           </span>
         </div>
@@ -164,7 +169,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="OGS Documentation" class="md-nav__button md-logo" aria-label="OGS Documentation" data-md-component="logo">
+    <a href="../../.." title="OGS Documentation" class="md-nav__button md-logo" aria-label="OGS Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -183,7 +188,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         Home
       </a>
     </li>
@@ -225,7 +230,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tools/" class="md-nav__link">
+      <a href="../../../tools/" class="md-nav__link">
         Overview
       </a>
     </li>
@@ -239,7 +244,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tools/remote-tool/" class="md-nav__link">
+      <a href="../../../tools/remote-tool/" class="md-nav__link">
         Remote Tool
       </a>
     </li>
@@ -280,7 +285,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tools/openprotocol/" class="md-nav__link">
+      <a href="../../../tools/openprotocol/" class="md-nav__link">
         Overview
       </a>
     </li>
@@ -294,7 +299,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tools/openprotocol/nexo.md" class="md-nav__link">
+      <a href="../../../tools/openprotocol/nexo.md" class="md-nav__link">
         Nexo
       </a>
     </li>
@@ -308,7 +313,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tools/openprotocol/sys350.md" class="md-nav__link">
+      <a href="../../../tools/openprotocol/sys350.md" class="md-nav__link">
         CS351/KE350
       </a>
     </li>
@@ -322,7 +327,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tools/openprotocol/gwk.md" class="md-nav__link">
+      <a href="../../../tools/openprotocol/gwk.md" class="md-nav__link">
         GWK Operator+
       </a>
     </li>
@@ -349,14 +354,16 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
       
       
       
@@ -365,7 +372,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
           Scripting
@@ -378,7 +385,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../v3/getting-started/" class="md-nav__link">
+      <a href="../../getting-started/" class="md-nav__link">
         Getting Started
       </a>
     </li>
@@ -419,7 +426,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../v3/lua/webbrowser/" class="md-nav__link">
+      <a href="../webbrowser/" class="md-nav__link">
         Web browsers
       </a>
     </li>
@@ -433,7 +440,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../v3/lua/webserver/" class="md-nav__link">
+      <a href="../webserver/" class="md-nav__link">
         Webserver (and REST API)
       </a>
     </li>
@@ -452,11 +459,48 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../v3/lua/customtools/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          LUA custom tools
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         LUA custom tools
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#mermaid-test" class="md-nav__link">
+    Mermaid test
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -474,16 +518,14 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
       
       
       
@@ -492,7 +534,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_4">
           <span class="md-nav__icon md-icon"></span>
           LUA helper libraries
@@ -503,19 +545,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../../libs/lua-ads/" class="md-nav__link">
         ADS communication (TwinCat, Nexeed, Beckhoff)
       </a>
-      
     </li>
   
 
@@ -527,7 +561,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../lua-opcua/" class="md-nav__link">
+      <a href="../../../libs/lua-opcua/" class="md-nav__link">
         OpcUA communication
       </a>
     </li>
@@ -541,7 +575,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../lua-modbus/" class="md-nav__link">
+      <a href="../../../libs/lua-modbus/" class="md-nav__link">
         Modbus/TCP/UDP communication
       </a>
     </li>
@@ -555,7 +589,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../lua-hid/" class="md-nav__link">
+      <a href="../../../libs/lua-hid/" class="md-nav__link">
         USB HID Devices (Buttons, Arduino, etc.)
       </a>
     </li>
@@ -587,6 +621,21 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#mermaid-test" class="md-nav__link">
+    Mermaid test
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -601,7 +650,20 @@
 
 
 
+  <h1>LUA custom tools</h1>
 
+<h3 id="mermaid-test"><a class="toclink" href="#mermaid-test">Mermaid test</a></h3>
+<p>The following is a simple mermaid sequence diagram, for more details, see <a href="https://squidfunk.github.io/mkdocs-material/reference/diagrams/">https://squidfunk.github.io/mkdocs-material/reference/diagrams/</a></p>
+<pre class="mermaid"><code>sequenceDiagram
+  autonumber
+  Alice-&gt;&gt;John: Hello John, how are you?
+  loop Healthcheck
+      John-&gt;&gt;John: Fight against hypochondria
+  end
+  Note right of John: Rational thoughts!
+  John--&gt;&gt;Alice: Great!
+  John-&gt;&gt;Bob: How about you?
+  Bob--&gt;&gt;John: Jolly good!</code></pre>
 
 
 
@@ -639,10 +701,10 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.db81ec45.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.db81ec45.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.4b2c34cd.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.4b2c34cd.min.js"></script>
       
     
   </body>

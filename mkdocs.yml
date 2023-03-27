@@ -15,6 +15,7 @@ nav:
         - LUA interfaces:
             - Web browsers: v3/lua/webbrowser.md
             - Webserver (and REST API): v3/lua/webserver.md
+        - LUA custom tools: v3/lua/customtools.md
     - LUA helper libraries:
         - ADS communication (TwinCat, Nexeed, Beckhoff): libs/lua-ads.md
         - OpcUA communication: libs/lua-opcua.md
@@ -29,8 +30,18 @@ nav:
 #
 
 #theme: readthedocs
-theme: material
+theme: 
+  name: material
+  # Favicon and logo
+  # favicon: path/to/file.png
+  # logo: path/to/file.png
+  features:
+    - content.code.copy
+    - content.code.annotate 
 
+plugins:
+    - search
+    
 markdown_extensions:
   - abbr
   - meta
@@ -44,3 +55,13 @@ markdown_extensions:
         kwds:
           case: lower
       anchorlink: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences

@@ -3,6 +3,7 @@
 ## Overview 
 
 The OGS runtime uses up to 4 web browser (Microsoft WebView2) instances. The instances are:
+
 - `StartView`: Browser on the start screen
 - `ProcessView`: Browser on the process screen (only visible, if the `url`-parameter in the job/task is set)
 - `SidePanel`: Browser on the slide-in side panel (requires enabling the sidepanel in `station.ini`)
@@ -11,6 +12,7 @@ The OGS runtime uses up to 4 web browser (Microsoft WebView2) instances. The ins
 The OGS infrastructure provides functions to bidirectionally exchange data between the JavaScript code running inside the web browser and the LUA code running inside OGS. There is a LUA function to execute JavaScript code in the webbrowser and a JavaScript bride, which calls a LUA function (if registered accordingly).
 
 To implement this functionality, OGS provides the following:
+
 - For the JavaScript side: a bridge implementation accessibal through the `hostObjects` interface of the Chromium browser (`window.chrome.webview.hostObjects.sync.OGS`)
 - For the LUA side: a global `Browser` table with functions to manipulate the browser instances
 
@@ -22,7 +24,7 @@ To send a string to OGS from JavaScript, simply assign a value to the `window.ch
 
 #### Sample code
 
-```javascript
+``` javascript
 // send a command string to OGS	
 function sendOgsCommand(cmd)
 {
@@ -73,6 +75,48 @@ Browser.Navigate(instance, url)
 ```LUA
 -- Navigate the StartView browser to https://www.my-url.com/mypage
 Browser.Navigate('StartView', 'https://www.my-url.com/mypage')
+```
+
+### Show
+
+The `Browser.Show` function is similar to the `Browser.Navigate` function, but also ensures the webbrowser is actually visible. The actual behaviour depends on the view - e.g. for the `SidePanel` view, the side panel pops out. For the `ProcessView` view, this switches from the image-view to the web view.
+
+```LUA
+local oldUrl = Browser.Show(instance, url)
+```
+
+#### Parameters
+
+- instance [string]: Web browser instance name (one of 'StartView', 'ProcessView', 'SidePanel', 'InstructionView') 
+- url [string]: Url to navigate the browser instance to (in the standard URL format, e.g. file://filename or https://server/page)
+
+#### Return value
+
+The function returns the "current" URL of the webbrowser (the URL before changing to the given one). This can be used to return to the previous URL after hiding the browser.
+
+#### Sample code
+```LUA
+-- Make the SidePanel visible and navigate the
+-- web browser to https://www.my-url.com/mypage
+local oldUrl = Browser.Show('SidePanel', 'https://www.my-url.com/mypage')
+```
+
+### Hide
+
+The `Browser.Hide` function is complementary to the `Browser.Show` function - it closes the browser view (only relevant for `SidePanel` and `ProcessView`).
+
+```LUA
+Browser.Hide(instance)
+```
+
+#### Parameters
+
+- instance [string]: Web browser instance name (one of 'StartView', 'ProcessView', 'SidePanel', 'InstructionView') 
+
+#### Sample code
+```LUA
+-- Hide the SidePanel
+Browser.Hide('SidePanel')
 ```
 
 ### RegMsgHandler

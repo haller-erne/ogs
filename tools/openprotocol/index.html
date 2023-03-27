@@ -394,8 +394,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#connection-information" class="md-nav__link">
-    Connection information
+  <a href="#ip" class="md-nav__link">
+    IP
   </a>
   
 </li>
@@ -412,7 +412,8 @@
     TYPE
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="TYPE">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#ccw_ack" class="md-nav__link">
@@ -488,6 +489,11 @@
   <a href="#ignore_id" class="md-nav__link">
     IGNORE_ID
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -886,8 +892,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#connection-information" class="md-nav__link">
-    Connection information
+  <a href="#ip" class="md-nav__link">
+    IP
   </a>
   
 </li>
@@ -904,7 +910,8 @@
     TYPE
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="TYPE">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#ccw_ack" class="md-nav__link">
@@ -987,6 +994,11 @@
     </nav>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
     </ul>
   
@@ -1014,6 +1026,62 @@
 <li>Sturtevant Richmont Global 400 MP connected Exacta 2 digital torque wrenches (for more information, see <a href="/docs/tools/openprotocol/sturtevant.md">Sturtevant Richmond OpenProtocol</a>)</li>
 </ul>
 <p>The overall configuration for these tools is similar and the actual driver has the same set of configuration parameters - described on this page.</p>
+<p>To workaround various glitches in the tools concrete OpenProtocol implementation, the tools are identified by their MID0002 vendor string and their tool type name. For more details, see the <a href="#type">CHANNEL TYPE Parameter</a> description in the <a href="#channel-parameter-reference">Channel parameter reference</a> below. </p>
+<p>The supported tool types and vendor codes are:</p>
+<table>
+<thead>
+<tr>
+<th>Tool type</th>
+<th>Vendor code</th>
+<th>Vendor</th>
+<th>Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NEXO</td>
+<td>BRC</td>
+<td>Bosch Rexroth</td>
+<td>Wireless Nexo Tool</td>
+</tr>
+<tr>
+<td>CS351</td>
+<td>BRC</td>
+<td>Bosch Rexroth</td>
+<td>Single channel Compact Box</td>
+</tr>
+<tr>
+<td>KE350</td>
+<td>BRC</td>
+<td>Bosch Rexroth</td>
+<td>Multispindle system</td>
+</tr>
+<tr>
+<td>CRANE</td>
+<td>CEL</td>
+<td>Crane Electronics</td>
+<td>TCI Multi, Wrenchstar</td>
+</tr>
+<tr>
+<td>GHM</td>
+<td>GHM</td>
+<td>Gehmeyr</td>
+<td>GF-ION-EXACT</td>
+</tr>
+<tr>
+<td>GWK</td>
+<td>GWK</td>
+<td>GWK</td>
+<td>Operator+</td>
+</tr>
+<tr>
+<td>CET</td>
+<td>CET</td>
+<td>Sturtevant Richmond</td>
+<td>Global 400mt controller</td>
+</tr>
+</tbody>
+</table>
 <h2 id="installation"><a class="toclink" href="#installation">Installation</a></h2>
 <p>The <code>OpenProtocol</code> driver is implemented in <code>OpConn.dll</code>. To use any <code>OpenProtocol</code> tool, the driver must be loaded in the <code>[TOOL_DLL]</code> section of the projects <code>station.ini</code> configuration file (see also <a href="/docs/tools/README.md">Tool configuration</a>).</p>
 <h2 id="tool-registration-and-configuration"><a class="toclink" href="#tool-registration-and-configuration">Tool registration and configuration</a></h2>
@@ -1049,12 +1117,73 @@ CHANNEL_01_CURVE_REQUEST=1
 <h4 id="external_io_offset"><a class="toclink" href="#external_io_offset">EXTERNAL_IO_OFFSET</a></h4>
 <h2 id="channel-parameter-reference"><a class="toclink" href="#channel-parameter-reference">Channel parameter reference</a></h2>
 <p>For specific information about a tools settings or the tools configuration needed (on the tool side), please see the tool-specific information.</p>
+<p>The parameter names are composed of the channel prefix <code>CHANNEL_</code> followed by the channel/tool number (1-32) and the actual parameter name (e.g. <code>TYPE</code>). - see the detailed description above. </p>
 <p>In general, the following parameters are available for a <code>OpenProtocol</code>-tool:</p>
-<h4 id="connection-information"><a class="toclink" href="#connection-information">Connection information</a></h4>
+<h4 id="ip"><a class="toclink" href="#ip">IP</a></h4>
 <h4 id="port_1"><a class="toclink" href="#port_1">PORT</a></h4>
 <p>(optional, defaults to the shared parameter value)</p>
-<h4 id="type"><a class="toclink" href="#type">TYPE</a></h4>
-<p>(mandatory)</p>
+<h3 id="type"><a class="toclink" href="#type">TYPE</a></h3>
+<p><em>(mandatory)</em></p>
+<p>The allowed tool types and their default parameters are listed in the following table:</p>
+<table>
+<thead>
+<tr>
+<th>Tool type</th>
+<th>Alive send rate</th>
+<th>Response Timeout</th>
+<th>Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NEXO</td>
+<td>2</td>
+<td>5</td>
+<td></td>
+</tr>
+<tr>
+<td>CS351</td>
+<td>5</td>
+<td>15</td>
+<td></td>
+</tr>
+<tr>
+<td>KE350</td>
+<td>5</td>
+<td>15</td>
+<td></td>
+</tr>
+<tr>
+<td>CRANE</td>
+<td>1</td>
+<td>5</td>
+<td></td>
+</tr>
+<tr>
+<td>GHM</td>
+<td>2</td>
+<td>5</td>
+<td>MID0060 Rev 999 only, no alarms</td>
+</tr>
+<tr>
+<td>GWK</td>
+<td>2</td>
+<td>5</td>
+<td>No MID0040 support, use MID0061 tool SN</td>
+</tr>
+<tr>
+<td>CET</td>
+<td>2</td>
+<td>5</td>
+<td>no alarms, incorrect (+1) result ID sequence</td>
+</tr>
+</tbody>
+</table>
+<p>NOTES:
+- The Alive send rate and Response timeout default parameter values can be overridden by the <a href="alivexmtt">ALIVEXMTT</a> and <a href="rsptimeout">RSPTIMEOUT</a> parameters. 
+- All tools use a slightly different set of MIDs to control operation, e.g. some do support alarms, others don't or allow different revisions of the MID commands.
+- For Nexo with firmware &lt; V1500, a Alive send rate of 1000ms or less is recommended to ensure stable WiFi operation
+- For CS351 and KE350, do not use a Alive send rate less than 5 second, else the controller may become unresponsive </p>
 <h4 id="ccw_ack"><a class="toclink" href="#ccw_ack">CCW_ACK</a></h4>
 <h4 id="params"><a class="toclink" href="#params">PARAMS</a></h4>
 <h4 id="alivexmtt"><a class="toclink" href="#alivexmtt">ALIVEXMTT</a></h4>

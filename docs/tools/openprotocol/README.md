@@ -7,6 +7,7 @@ OGS supports connecting tools with `OpenProtocol` interface. As tools differ in 
 - GWK Operator+ torque wrenches (for more information, see [GWK Operator+ OpenProtocol](/docs/tools/openprotocol/nexo.md))
 - Crane TCI torque wrenches (for more information, see [Crane OpenProtocol](/docs/tools/openprotocol/crane.md))
 - Gehmeyr Exact Wifi tools (for more information, see [Gehmeyr OpenProtocol](/docs/tools/openprotocol/gehmeyr.md))
+- Sturtevant Richmont Global 400 MP connected Exacta 2 digital torque wrenches (for more information, see [Sturtevant Richmond OpenProtocol](/docs/tools/openprotocol/sturtevant.md))
 
 The overall configuration for these tools is similar and the actual driver has the same set of configuration parameters - described on this page.
 
@@ -50,13 +51,16 @@ A sample `OpenProtocol` tool configuration (channel 01) would therefore look sim
 
 ## Shared parameter reference
 
-#### PORT
+The shared parameters can be used to change the global defaults for all OpenProtocol tools. If assigned, then these settings will override the built-in defaults. Note, that a channel-specific setting will take priority anyways.
 
-(optional, defaults to 4545)
+### PORT 
+_(optional, defaults to 4545)_
 
-#### EXTERNAL_IO_OFFSET
+Defines the TCP port used for OpenProtocol communication. By default uses the standard OpenProtocol port 4545. If the controller supports multiple tools through a single IP address, then typically this setting must be changed to correctly connect to the individual tool.
 
-#### CHECK_TIME_INTERVAL and TIME_TOLERANCE
+### CHECK_TIME_INTERVAL 
+
+### TIME_TOLERANCE
 
 #### EXTERNAL_IO_OFFSET
 

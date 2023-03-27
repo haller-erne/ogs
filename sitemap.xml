@@ -46,6 +46,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://haller-erne.github.io/ogs/tools/openprotocol/sturtevant/</loc>
+         <lastmod>2023-03-27</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://haller-erne.github.io/ogs/v3/getting-started/</loc>
          <lastmod>2023-03-27</lastmod>
          <changefreq>daily</changefreq>

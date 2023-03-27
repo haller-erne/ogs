@@ -11,6 +11,21 @@ OGS supports connecting tools with `OpenProtocol` interface. As tools differ in 
 
 The overall configuration for these tools is similar and the actual driver has the same set of configuration parameters - described on this page.
 
+To workaround various glitches in the tools concrete OpenProtocol implementation, the tools are identified by their MID0002 vendor string and their tool type name. For more details, see the [CHANNEL TYPE Parameter](#type) description in the [Channel parameter reference](#channel-parameter-reference) below. 
+
+The supported tool types and vendor codes are:
+
+| Tool type | Vendor code | Vendor | Comments |
+| --- | ---- | ---- | ---- |
+| NEXO | BRC | Bosch Rexroth | Wireless Nexo Tool |
+| CS351 | BRC | Bosch Rexroth | Single channel Compact Box |
+| KE350 | BRC | Bosch Rexroth | Multispindle system |
+| CRANE | CEL | Crane Electronics | TCI Multi, Wrenchstar |
+| GHM | GHM | Gehmeyr | GF-ION-EXACT |
+| GWK | GWK | GWK | Operator+ |
+| CET | CET | Sturtevant Richmond | Global 400mt controller |
+
+
 ## Installation
 
 The `OpenProtocol` driver is implemented in `OpConn.dll`. To use any `OpenProtocol` tool, the driver must be loaded in the `[TOOL_DLL]` section of the projects `station.ini` configuration file (see also [Tool configuration](/docs/tools/README.md)).
@@ -70,17 +85,38 @@ Defines the TCP port used for OpenProtocol communication. By default uses the st
 
 For specific information about a tools settings or the tools configuration needed (on the tool side), please see the tool-specific information.
 
+The parameter names are composed of the channel prefix `CHANNEL_` followed by the channel/tool number (1-32) and the actual parameter name (e.g. `TYPE`). - see the detailed description above. 
+
 In general, the following parameters are available for a `OpenProtocol`-tool:
 
-#### Connection information
+#### IP 
 
 #### PORT
 
 (optional, defaults to the shared parameter value)
 
-#### TYPE
+### TYPE
 
-(mandatory)
+_(mandatory)_
+
+The allowed tool types and their default parameters are listed in the following table:
+
+| Tool type | Alive send rate | Response Timeout | Comments |
+| ---   | ---- | ---- | ---- |
+| NEXO  | 2 | 5  |  |
+| CS351 | 5 | 15 |  |
+| KE350 | 5 | 15 |  |
+| CRANE | 1 | 5  |  |
+| GHM   | 2 | 5  | MID0060 Rev 999 only, no alarms |
+| GWK   | 2 | 5  | No MID0040 support, use MID0061 tool SN |
+| CET   | 2 | 5  | no alarms, incorrect (+1) result ID sequence |
+
+NOTES:
+- The Alive send rate and Response timeout default parameter values can be overridden by the [ALIVEXMTT](alivexmtt) and [RSPTIMEOUT](rsptimeout) parameters. 
+- All tools use a slightly different set of MIDs to control operation, e.g. some do support alarms, others don't or allow different revisions of the MID commands.
+- For Nexo with firmware < V1500, a Alive send rate of 1000ms or less is recommended to ensure stable WiFi operation
+- For CS351 and KE350, do not use a Alive send rate less than 5 second, else the controller may become unresponsive 
+
 
 #### CCW_ACK
 

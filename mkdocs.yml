@@ -10,6 +10,7 @@ nav:
             - Nexo: tools/openprotocol/nexo.md
             - CS351/KE350: tools/openprotocol/sys350.md
             - GWK Operator+: tools/openprotocol/gwk.md
+            - Sturtevant 400mp: tools/openprotocol/sturtevant.md
     - Scripting:
         - Getting Started: v3/getting-started.md
         - LUA interfaces:

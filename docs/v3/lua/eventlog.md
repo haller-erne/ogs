@@ -178,7 +178,7 @@ EventLog.Init = function()
     ]]
 
     -- send a MQTT bootup message
-    local msg = json.encode({type=0,name='CUSTOM',status=0,text='OGS started'})        
+    local msg = json.encode({type=0,name='COMMON',status=0,text='OGS started'})        
     MC:Publish(MqttTopic, 0, msg)
     
     return true
@@ -187,7 +187,7 @@ end
 -- The Stop function - send a MQTT shutdown message
 EventLog.Stop = function()
     -- send a MQTT shutdown message
-    local msg = json.encode({type=0,name='CUSTOM',status=0,text='OGS shutdown'})        
+    local msg = json.encode({type=0,name='COMMON',status=0,text='OGS shutdown'})        
     MC:Publish(MqttTopic, 0, msg)
 end
 

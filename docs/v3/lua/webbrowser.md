@@ -13,19 +13,21 @@ The OGS infrastructure provides functions to bidirectionally exchange data betwe
 
 To implement this functionality, OGS provides the following:
 
-- For the JavaScript side: a bridge implementation accessibal through the `hostObjects` interface of the Chromium browser (`window.chrome.webview.hostObjects.sync.OGS`)
+- For the JavaScript side: a bridge implementation accessibal through the `hostObjects` interface of the Chromium browser (`window.chrome.webview.hostObjects.sync.<instance>`, with `instance` one of the above)
 - For the LUA side: a global `Browser` table with functions to manipulate the browser instances
 
 ## JavaScript hostObjects bridge
 
-OGS registers a [hostObject](https://learn.microsoft.com/en-us/dotnet/api/microsoft.web.webview2.core.corewebview2.addhostobjecttoscript) in the WebView2 browser for the JavaScript side. The registered object is named `OGS` and implements a single string property `ObjectMessage`.
+OGS registers a [hostObject](https://learn.microsoft.com/en-us/dotnet/api/microsoft.web.webview2.core.corewebview2.addhostobjecttoscript) in the WebView2 browser for the JavaScript side. The registered object is named identically to the browser instance, e.g. `StartView` and implements a single string property `ObjectMessage`.
 
-To send a string to OGS from JavaScript, simply assign a value to the `window.chrome.webview.hostObjects.sync.OGS.ObjectMessage` property.
+To send a string to OGS from JavaScript, simply assign a value to the `window.chrome.webview.hostObjects.sync.<instance>.ObjectMessage` property (`instance` is the name of the actual browser instance, e.g. `StartView`, `ProcessView`, ..., see above).
+
+**NOTE**: To use the bridge, one has to use the correct `<instance>`!
 
 #### Sample code
 
 ``` javascript
-// send a command string to OGS	
+// send a command string to OGS	- from the StartView instance
 function sendOgsCommand(cmd)
 {
 	if (!window.chrome || !window.chrome.webview
@@ -34,7 +36,7 @@ function sendOgsCommand(cmd)
         // WebView2 is not yet fully initialized
 		return;     
 	}
-	let ogs = window.chrome.webview.hostObjects.sync.OGS;
+	let ogs = window.chrome.webview.hostObjects.sync.StartView;
 	if (ogs) {
 		ogs.ObjectMessage = cmd;	
 	}

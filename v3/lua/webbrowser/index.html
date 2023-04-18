@@ -17,7 +17,7 @@
         <link rel="next" href="../webserver/">
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.4">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.6">
     
     
       
@@ -25,7 +25,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.240905d7.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ded33207.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.a0c5b2b5.min.css">
@@ -1063,14 +1063,15 @@
 <p>The OGS infrastructure provides functions to bidirectionally exchange data between the JavaScript code running inside the web browser and the LUA code running inside OGS. There is a LUA function to execute JavaScript code in the webbrowser and a JavaScript bride, which calls a LUA function (if registered accordingly).</p>
 <p>To implement this functionality, OGS provides the following:</p>
 <ul>
-<li>For the JavaScript side: a bridge implementation accessibal through the <code>hostObjects</code> interface of the Chromium browser (<code>window.chrome.webview.hostObjects.sync.OGS</code>)</li>
+<li>For the JavaScript side: a bridge implementation accessibal through the <code>hostObjects</code> interface of the Chromium browser (<code>window.chrome.webview.hostObjects.sync.&lt;instance&gt;</code>, with <code>instance</code> one of the above)</li>
 <li>For the LUA side: a global <code>Browser</code> table with functions to manipulate the browser instances</li>
 </ul>
 <h2 id="javascript-hostobjects-bridge"><a class="toclink" href="#javascript-hostobjects-bridge">JavaScript hostObjects bridge</a></h2>
-<p>OGS registers a <a href="https://learn.microsoft.com/en-us/dotnet/api/microsoft.web.webview2.core.corewebview2.addhostobjecttoscript">hostObject</a> in the WebView2 browser for the JavaScript side. The registered object is named <code>OGS</code> and implements a single string property <code>ObjectMessage</code>.</p>
-<p>To send a string to OGS from JavaScript, simply assign a value to the <code>window.chrome.webview.hostObjects.sync.OGS.ObjectMessage</code> property.</p>
+<p>OGS registers a <a href="https://learn.microsoft.com/en-us/dotnet/api/microsoft.web.webview2.core.corewebview2.addhostobjecttoscript">hostObject</a> in the WebView2 browser for the JavaScript side. The registered object is named identically to the browser instance, e.g. <code>StartView</code> and implements a single string property <code>ObjectMessage</code>.</p>
+<p>To send a string to OGS from JavaScript, simply assign a value to the <code>window.chrome.webview.hostObjects.sync.&lt;instance&gt;.ObjectMessage</code> property (<code>instance</code> is the name of the actual browser instance, e.g. <code>StartView</code>, <code>ProcessView</code>, ..., see above).</p>
+<p><strong>NOTE</strong>: To use the bridge, one has to use the correct <code>&lt;instance&gt;</code>!</p>
 <h4 id="sample-code"><a class="toclink" href="#sample-code">Sample code</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">// send a command string to OGS </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">// send a command string to OGS - from the StartView instance</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kd">function</span><span class="w"> </span><span class="nx">sendOgsCommand</span><span class="p">(</span><span class="nx">cmd</span><span class="p">)</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="p">{</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">chrome</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">chrome</span><span class="p">.</span><span class="nx">webview</span>
@@ -1079,7 +1080,7 @@
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">        </span><span class="c1">// WebView2 is not yet fully initialized</span>
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">        </span><span class="k">return</span><span class="p">;</span><span class="w">     </span>
 <a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">ogs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">chrome</span><span class="p">.</span><span class="nx">webview</span><span class="p">.</span><span class="nx">hostObjects</span><span class="p">.</span><span class="nx">sync</span><span class="p">.</span><span class="nx">OGS</span><span class="p">;</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">ogs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">chrome</span><span class="p">.</span><span class="nx">webview</span><span class="p">.</span><span class="nx">hostObjects</span><span class="p">.</span><span class="nx">sync</span><span class="p">.</span><span class="nx">StartView</span><span class="p">;</span>
 <a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">ogs</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">        </span><span class="nx">ogs</span><span class="p">.</span><span class="nx">ObjectMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">cmd</span><span class="p">;</span><span class="w">    </span>
 <a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">    </span><span class="p">}</span>
@@ -1229,7 +1230,7 @@ The following functions are also available, but are not fully implemented at the
     <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.copy", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.19047be9.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.51198bba.min.js"></script>
       
     
   </body>

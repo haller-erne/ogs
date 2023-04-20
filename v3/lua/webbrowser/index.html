@@ -1079,17 +1079,20 @@
 <ul>
 <li>For the LUA side: a global <code>Browser</code> table with functions to manipulate the browser instances</li>
 <li>For the JavaScript side: <ul>
-<li>an <a href="#injected-javascript-helper-object">injected JavaScript helper object</a>, which provides easy to use functions to access the Bridje and send a message string</li>
+<li>an <a href="#injected-javascript-helper-object">injected JavaScript helper object</a>, which provides easy to use functions to access the Bridge and send a message string</li>
 <li>the (lowlevel) <a href="#javascript-hostobjects-bridge">JavaScript hostObjects bridge</a> accessibal through the <code>hostObjects</code> interface of the Chromium browser (<code>window.chrome.webview.hostObjects.sync.&lt;instance&gt;</code>, with <code>instance</code> one of the above)</li>
 </ul>
 </li>
 </ul>
 <h2 id="injected-javascript-helper-object"><a class="toclink" href="#injected-javascript-helper-object">Injected JavaScript helper object</a></h2>
 <p><strong>NOTE</strong>: Available starting with OGS V3.0.8510.</p>
-<p>OGS injects a JavaScript <code>OGS</code> object into the page after the "NavigationComplete" Event of the Edge Browser. This especially makes using the <code>Bridge</code> to send messages out to the OGS core easier (see <a href="#javascript-hostobjects-bridge">JavaScript hostObjects bridge</a> below for details) The <code>OGS</code>-object provides the following members:</p>
+<p>OGS injects a JavaScript <code>OGS</code> object into the page after the "NavigationComplete" Event of the Edge Browser. This especially makes using the <code>Bridge</code> to send messages out to the OGS core easier (see <a href="#javascript-hostobjects-bridge">JavaScript hostObjects bridge</a> below for details) and also allows overriding some events. The <code>OGS</code>-object provides the following members:</p>
 <ul>
 <li><code>getBridgeName(): string</code>: Returns the bridge instance name (which is identical to the browser instance name, e.g. <code>'StartView'</code>).</li>
-<li><code>SendCmd(cmd: string): boolean</code>: send the <code>cmd</code> string  to the OGS core. The function returns <code>true</code>, if the string was sent correctly. If <code>false</code> is returned, the command was not sent. This usually happens during and shortly after page load (and even for a small time after DocumentComplete), as the Edge bridge host object needs some time to initialize. Best practice is to embed the <code>SendCmd()</code> into a timer started with window.onload() or in the body.</li>
+<li><code>SendCmd(cmd: string): boolean</code>: send the <code>cmd</code> string  to the OGS core. The function returns <code>true</code>, if the string was sent correctly. If <code>false</code> is returned, the command was not sent. This usually happens during and shortly after page load (and even for a small time after DocumentComplete), as the Edge bridge host object needs some time to initialize. Best practice is to embed the <code>SendCmd()</code> into a timer started with window.onload() or in the body. An even <strong>better option</strong> is to implement the OGS.onInit() override (see sample below).</li>
+<li>event: <code>onInit(url: string)</code>: This function can be implemented on the JavaScript side to get notified when OGS is done loading the webpage (called after the <code>OnNavigateComplete</code>-Event of the Edge browser). This can(should) be used to have a reliable event on when the OGS-Communication is available.</li>
+<li>event: <code>onShow()</code>: This function can be implemented on the JavaScript side to get notified when the web browser gets visible to the user. This is especially useful for the <code>SidePanel</code> view, as the user can open/close the browser view without reloading the page.</li>
+<li>event: <code>onHide()</code>: This function can be implemented on the JavaScript side to get notified when the web browser gets visible to the user.</li>
 </ul>
 <p>Here is a sample on how to use the <code>OGS</code>-JavaScript helper oject to send a "hello"-message after the bridge gets ready:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="cp">&lt;!DOCTYPE html&gt;</span>
@@ -1100,21 +1103,36 @@
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c1">// Send Hello after the bridge is ready</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="kd">function</span><span class="w"> </span><span class="nx">SendHello</span><span class="p">()</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">timer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">setInterval</span><span class="p">(</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">OGS</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="c1">// check, if the global OGS object exists</span>
-<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">OGS</span><span class="p">.</span><span class="nx">SendCmd</span><span class="p">(</span><span class="s1">&#39;Hello&#39;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">                </span><span class="c1">// successfully send, remove the timer</span>
-<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">                </span><span class="nx">clearInterval</span><span class="p">(</span><span class="nx">timer</span><span class="p">);</span>
-<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">            </span><span class="p">}</span>
-<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">    </span><span class="p">},</span><span class="w"> </span><span class="mf">100</span><span class="p">);</span><span class="w">    </span><span class="c1">// execute every 100ms until the bridge is ready</span>
-<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="nx">end</span>
-<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="nb">window</span><span class="p">.</span><span class="nx">onload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">    </span><span class="nx">SendHello</span><span class="p">();</span>
-<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="p">}</span>
-<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c1">// Create the OGS object and implement the callbacks/events</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="nx">OGS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{};</span><span class="w">       </span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="nx">OGS</span><span class="p">.</span><span class="nx">onInit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;OGS.onInit called: &quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">url</span><span class="p">,</span><span class="w"> </span><span class="nx">OGS</span><span class="p">);</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">    </span><span class="c1">// if we get here, everyhing is initialized, so now send the &#39;hello&#39; message</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">    </span><span class="nx">OGS</span><span class="p">.</span><span class="nx">SendCmd</span><span class="p">(</span><span class="s1">&#39;hello!&#39;</span><span class="p">);</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="p">}</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="nx">OGS</span><span class="p">.</span><span class="nx">onShow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">OGS_onShow</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;OGS.onShow called!&quot;</span><span class="p">);</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="p">}</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="nx">OGS</span><span class="p">.</span><span class="nx">onHide</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;OGS.onHide called!&quot;</span><span class="p">);</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="p">}</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</code></pre></div>
+<p>An alternative way (without using the OGS object) would be to poll until everything is ready:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">// Send Hello after the bridge is ready</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kd">function</span><span class="w"> </span><span class="nx">SendHello</span><span class="p">()</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">timer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">setInterval</span><span class="p">(</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">OGS</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="c1">// check, if the global OGS object exists</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">OGS</span><span class="p">.</span><span class="nx">SendCmd</span><span class="p">(</span><span class="s1">&#39;Hello&#39;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">                </span><span class="c1">// successfully send, remove the timer</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">                </span><span class="nx">clearInterval</span><span class="p">(</span><span class="nx">timer</span><span class="p">);</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="p">},</span><span class="w"> </span><span class="mf">100</span><span class="p">);</span><span class="w">    </span><span class="c1">// execute every 100ms until the bridge is ready</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="nx">end</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="nb">window</span><span class="p">.</span><span class="nx">onload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">    </span><span class="nx">SendHello</span><span class="p">();</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="p">}</span>
 </code></pre></div>
 <h2 id="javascript-hostobjects-bridge"><a class="toclink" href="#javascript-hostobjects-bridge">JavaScript hostObjects bridge</a></h2>
 <p><strong>NOTE</strong>: Starting with OGS V3.0.8510, it is recommended to use the <a href="#javascript-hostobjects-bridge">JavaScript hostObjects bridge</a> instead. </p>
@@ -1122,20 +1140,20 @@
 <p>To send a string to OGS from JavaScript, simply assign a value to the <code>window.chrome.webview.hostObjects.sync.&lt;instance&gt;.ObjectMessage</code> property (<code>instance</code> is the name of the actual browser instance, e.g. <code>StartView</code>, <code>ProcessView</code>, ..., see above).</p>
 <p><strong>NOTE</strong>: To use the bridge, one has to use the correct <code>&lt;instance&gt;</code>!</p>
 <h4 id="sample-code"><a class="toclink" href="#sample-code">Sample code</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">// send a command string to OGS - from the StartView instance</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kd">function</span><span class="w"> </span><span class="nx">sendOgsCommand</span><span class="p">(</span><span class="nx">cmd</span><span class="p">)</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="p">{</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">chrome</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">chrome</span><span class="p">.</span><span class="nx">webview</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">     </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">chrome</span><span class="p">.</span><span class="nx">webview</span><span class="p">.</span><span class="nx">hostObjects</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">     </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">chrome</span><span class="p">.</span><span class="nx">webview</span><span class="p">.</span><span class="nx">hostObjects</span><span class="p">.</span><span class="nx">sync</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">        </span><span class="c1">// WebView2 is not yet fully initialized</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">        </span><span class="k">return</span><span class="p">;</span><span class="w">     </span>
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">ogs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">chrome</span><span class="p">.</span><span class="nx">webview</span><span class="p">.</span><span class="nx">hostObjects</span><span class="p">.</span><span class="nx">sync</span><span class="p">.</span><span class="nx">StartView</span><span class="p">;</span>
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">ogs</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">        </span><span class="nx">ogs</span><span class="p">.</span><span class="nx">ObjectMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">cmd</span><span class="p">;</span><span class="w">    </span>
-<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// send a command string to OGS - from the StartView instance</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kd">function</span><span class="w"> </span><span class="nx">sendOgsCommand</span><span class="p">(</span><span class="nx">cmd</span><span class="p">)</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="p">{</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">chrome</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">chrome</span><span class="p">.</span><span class="nx">webview</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">     </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">chrome</span><span class="p">.</span><span class="nx">webview</span><span class="p">.</span><span class="nx">hostObjects</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">     </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">chrome</span><span class="p">.</span><span class="nx">webview</span><span class="p">.</span><span class="nx">hostObjects</span><span class="p">.</span><span class="nx">sync</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">        </span><span class="c1">// WebView2 is not yet fully initialized</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">        </span><span class="k">return</span><span class="p">;</span><span class="w">     </span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">ogs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">chrome</span><span class="p">.</span><span class="nx">webview</span><span class="p">.</span><span class="nx">hostObjects</span><span class="p">.</span><span class="nx">sync</span><span class="p">.</span><span class="nx">StartView</span><span class="p">;</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">ogs</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">        </span><span class="nx">ogs</span><span class="p">.</span><span class="nx">ObjectMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">cmd</span><span class="p">;</span><span class="w">    </span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="p">}</span>
 </code></pre></div>
 <h2 id="global-browser-table"><a class="toclink" href="#global-browser-table">Global Browser table</a></h2>
 <p>OGS exposes the browser instances through the global <code>Browser</code> object. The <code>Browser</code> object implements the following functions:</p>
@@ -1155,7 +1173,7 @@ The following functions are also available, but are not fully implemented at the
 
 <h3 id="navigate"><a class="toclink" href="#navigate">Navigate</a></h3>
 <p>The <code>Browser.Navigate</code> function starts loading a new URL into the given browser instance.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">Browser</span><span class="p">.</span><span class="n">Navigate</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">Browser</span><span class="p">.</span><span class="n">Navigate</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
 </code></pre></div>
 <h4 id="parameters"><a class="toclink" href="#parameters">Parameters</a></h4>
 <ul>
@@ -1163,12 +1181,12 @@ The following functions are also available, but are not fully implemented at the
 <li>url [string]: Url to navigate the browser instance to (in the standard URL format, e.g. file://filename or https://server/page)</li>
 </ul>
 <h4 id="sample-code_1"><a class="toclink" href="#sample-code_1">Sample code</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">-- Navigate the StartView browser to https://www.my-url.com/mypage</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">Browser</span><span class="p">.</span><span class="n">Navigate</span><span class="p">(</span><span class="s1">&#39;StartView&#39;</span><span class="p">,</span> <span class="s1">&#39;https://www.my-url.com/mypage&#39;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">-- Navigate the StartView browser to https://www.my-url.com/mypage</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">Browser</span><span class="p">.</span><span class="n">Navigate</span><span class="p">(</span><span class="s1">&#39;StartView&#39;</span><span class="p">,</span> <span class="s1">&#39;https://www.my-url.com/mypage&#39;</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="show"><a class="toclink" href="#show">Show</a></h3>
 <p>The <code>Browser.Show</code> function is similar to the <code>Browser.Navigate</code> function, but also ensures the webbrowser is actually visible. The actual behaviour depends on the view - e.g. for the <code>SidePanel</code> view, the side panel pops out. For the <code>ProcessView</code> view, this switches from the image-view to the web view.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kd">local</span> <span class="n">oldUrl</span> <span class="o">=</span> <span class="n">Browser</span><span class="p">.</span><span class="n">Show</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kd">local</span> <span class="n">oldUrl</span> <span class="o">=</span> <span class="n">Browser</span><span class="p">.</span><span class="n">Show</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
 </code></pre></div>
 <h4 id="parameters_1"><a class="toclink" href="#parameters_1">Parameters</a></h4>
 <ul>
@@ -1178,26 +1196,26 @@ The following functions are also available, but are not fully implemented at the
 <h4 id="return-value"><a class="toclink" href="#return-value">Return value</a></h4>
 <p>The function returns the "current" URL of the webbrowser (the URL before changing to the given one). This can be used to return to the previous URL after hiding the browser.</p>
 <h4 id="sample-code_2"><a class="toclink" href="#sample-code_2">Sample code</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">-- Make the SidePanel visible and navigate the</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1">-- web browser to https://www.my-url.com/mypage</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="kd">local</span> <span class="n">oldUrl</span> <span class="o">=</span> <span class="n">Browser</span><span class="p">.</span><span class="n">Show</span><span class="p">(</span><span class="s1">&#39;SidePanel&#39;</span><span class="p">,</span> <span class="s1">&#39;https://www.my-url.com/mypage&#39;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">-- Make the SidePanel visible and navigate the</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="c1">-- web browser to https://www.my-url.com/mypage</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="kd">local</span> <span class="n">oldUrl</span> <span class="o">=</span> <span class="n">Browser</span><span class="p">.</span><span class="n">Show</span><span class="p">(</span><span class="s1">&#39;SidePanel&#39;</span><span class="p">,</span> <span class="s1">&#39;https://www.my-url.com/mypage&#39;</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="hide"><a class="toclink" href="#hide">Hide</a></h3>
 <p>The <code>Browser.Hide</code> function is complementary to the <code>Browser.Show</code> function - it closes the browser view (only relevant for <code>SidePanel</code> and <code>ProcessView</code>).</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">Browser</span><span class="p">.</span><span class="n">Hide</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">Browser</span><span class="p">.</span><span class="n">Hide</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
 </code></pre></div>
 <h4 id="parameters_2"><a class="toclink" href="#parameters_2">Parameters</a></h4>
 <ul>
 <li>instance [string]: Web browser instance name (one of 'StartView', 'ProcessView', 'SidePanel', 'InstructionView') </li>
 </ul>
 <h4 id="sample-code_3"><a class="toclink" href="#sample-code_3">Sample code</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">-- Hide the SidePanel</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">Browser</span><span class="p">.</span><span class="n">Hide</span><span class="p">(</span><span class="s1">&#39;SidePanel&#39;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1">-- Hide the SidePanel</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">Browser</span><span class="p">.</span><span class="n">Hide</span><span class="p">(</span><span class="s1">&#39;SidePanel&#39;</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="regmsghandler"><a class="toclink" href="#regmsghandler">RegMsgHandler</a></h3>
 <p>The <code>Browser.RegMsgHandler</code> function registers or unregisters a LUA function to be called whenever the JavaScript running in the browser writes a message to the hostObject bridge <code>OGS.ObjectMessage</code> property.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1">-- Register the callback function</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">fn</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">Browser</span><span class="p">.</span><span class="n">RegMsgHandler</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">callbackfn</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1">-- Register the callback function</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">fn</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">Browser</span><span class="p">.</span><span class="n">RegMsgHandler</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">callbackfn</span><span class="p">)</span>
 </code></pre></div>
 <h4 id="parameters_3"><a class="toclink" href="#parameters_3">Parameters</a></h4>
 <ul>
@@ -1210,17 +1228,17 @@ The following functions are also available, but are not fully implemented at the
 <h4 id="return-values"><a class="toclink" href="#return-values">Return values</a></h4>
 <p>If the function was executed successfully, the callbackfn is returned as the first return value. Else nil is returned and the second return value has an error message string (wrong parameters or unknown instance).</p>
 <h4 id="sample-code_4"><a class="toclink" href="#sample-code_4">Sample code</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kd">local</span> <span class="kr">function</span> <span class="nf">callbackfn</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">objectMessage</span><span class="p">)</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>    <span class="c1">-- do whatever you want to do here if the javascript </span>
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    <span class="c1">-- code writes the OGS.ObjectMessage property</span>
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="kr">end</span>
-<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>
-<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="c1">-- Register a LUA function to be called from the JavaScript side</span>
-<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="n">Browser</span><span class="p">.</span><span class="n">RegMsgHandler</span><span class="p">(</span><span class="s1">&#39;StartView&#39;</span><span class="p">,</span> <span class="n">callbackfn</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kd">local</span> <span class="kr">function</span> <span class="nf">callbackfn</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">objectMessage</span><span class="p">)</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    <span class="c1">-- do whatever you want to do here if the javascript </span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    <span class="c1">-- code writes the OGS.ObjectMessage property</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="kr">end</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="c1">-- Register a LUA function to be called from the JavaScript side</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="n">Browser</span><span class="p">.</span><span class="n">RegMsgHandler</span><span class="p">(</span><span class="s1">&#39;StartView&#39;</span><span class="p">,</span> <span class="n">callbackfn</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="execjs_nonblocking"><a class="toclink" href="#execjs_nonblocking">ExecJS_nonblocking</a></h3>
 <p>The <code>Browser.ExecJS_nonblocking</code> executes JavaScript code in the web browser instance.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">Browser</span><span class="p">.</span><span class="n">ExecJS_nonblocking</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">jstext</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">Browser</span><span class="p">.</span><span class="n">ExecJS_nonblocking</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">jstext</span><span class="p">)</span>
 </code></pre></div>
 <h4 id="parameters_4"><a class="toclink" href="#parameters_4">Parameters</a></h4>
 <ul>
@@ -1234,12 +1252,12 @@ The following functions are also available, but are not fully implemented at the
 <li>You can serialize LUA objects to a JSON string and pass this through the function. The JavaScript side can then easily deserialize it.</li>
 </ul>
 <h4 id="sample-code_5"><a class="toclink" href="#sample-code_5">Sample code</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1">-- Build a JavaScript command, call the function &quot;my_function&quot; with</span>
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="c1">-- some JSON text</span>
-<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="kd">local</span> <span class="n">param</span> <span class="o">=</span> <span class="s1">&#39;{ &quot;cmd&quot;: &quot;showmessage&quot; }&#39;</span>
-<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="kd">local</span> <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;my_function(&quot;</span><span class="o">..</span><span class="n">param</span><span class="o">..</span><span class="s2">&quot;);&quot;</span>
-<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="c1">-- Call the JavaScript function in the StartView browser</span>
-<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="n">Browser</span><span class="p">.</span><span class="n">ExecJS_nonblocking</span><span class="p">(</span><span class="s1">&#39;StartView&#39;</span><span class="p">,</span> <span class="n">command</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1">-- Build a JavaScript command, call the function &quot;my_function&quot; with</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="c1">-- some JSON text</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="kd">local</span> <span class="n">param</span> <span class="o">=</span> <span class="s1">&#39;{ &quot;cmd&quot;: &quot;showmessage&quot; }&#39;</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="kd">local</span> <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;my_function(&quot;</span><span class="o">..</span><span class="n">param</span><span class="o">..</span><span class="s2">&quot;);&quot;</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="c1">-- Call the JavaScript function in the StartView browser</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="n">Browser</span><span class="p">.</span><span class="n">ExecJS_nonblocking</span><span class="p">(</span><span class="s1">&#39;StartView&#39;</span><span class="p">,</span> <span class="n">command</span><span class="p">)</span>
 </code></pre></div>
 
 

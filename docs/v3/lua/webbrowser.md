@@ -15,17 +15,21 @@ To implement this functionality, OGS provides the following:
 
 - For the LUA side: a global `Browser` table with functions to manipulate the browser instances
 - For the JavaScript side: 
-	- an [injected JavaScript helper object](#injected-javascript-helper-object), which provides easy to use functions to access the Bridje and send a message string
+	- an [injected JavaScript helper object](#injected-javascript-helper-object), which provides easy to use functions to access the Bridge and send a message string
 	- the (lowlevel) [JavaScript hostObjects bridge](#javascript-hostobjects-bridge) accessibal through the `hostObjects` interface of the Chromium browser (`window.chrome.webview.hostObjects.sync.<instance>`, with `instance` one of the above)
 
 ## Injected JavaScript helper object
 
 **NOTE**: Available starting with OGS V3.0.8510.
 
-OGS injects a JavaScript `OGS` object into the page after the "NavigationComplete" Event of the Edge Browser. This especially makes using the `Bridge` to send messages out to the OGS core easier (see [JavaScript hostObjects bridge](#javascript-hostobjects-bridge) below for details) The `OGS`-object provides the following members:
+OGS injects a JavaScript `OGS` object into the page after the "NavigationComplete" Event of the Edge Browser. This especially makes using the `Bridge` to send messages out to the OGS core easier (see [JavaScript hostObjects bridge](#javascript-hostobjects-bridge) below for details) and also allows overriding some events. The `OGS`-object provides the following members:
 
 - `getBridgeName(): string`: Returns the bridge instance name (which is identical to the browser instance name, e.g. `'StartView'`).
-- `SendCmd(cmd: string): boolean`: send the `cmd` string  to the OGS core. The function returns `true`, if the string was sent correctly. If `false` is returned, the command was not sent. This usually happens during and shortly after page load (and even for a small time after DocumentComplete), as the Edge bridge host object needs some time to initialize. Best practice is to embed the `SendCmd()` into a timer started with window.onload() or in the body.
+- `SendCmd(cmd: string): boolean`: send the `cmd` string  to the OGS core. The function returns `true`, if the string was sent correctly. If `false` is returned, the command was not sent. This usually happens during and shortly after page load (and even for a small time after DocumentComplete), as the Edge bridge host object needs some time to initialize. Best practice is to embed the `SendCmd()` into a timer started with window.onload() or in the body. An even **better option** is to implement the OGS.onInit() override (see sample below).
+- event: `onInit(url: string)`: This function can be implemented on the JavaScript side to get notified when OGS is done loading the webpage (called after the `OnNavigateComplete`-Event of the Edge browser). This can(should) be used to have a reliable event on when the OGS-Communication is available.
+- event: `onShow()`: This function can be implemented on the JavaScript side to get notified when the web browser gets visible to the user. This is especially useful for the `SidePanel` view, as the user can open/close the browser view without reloading the page.
+- event: `onHide()`: This function can be implemented on the JavaScript side to get notified when the web browser gets visible to the user.
+
 
 Here is a sample on how to use the `OGS`-JavaScript helper oject to send a "hello"-message after the bridge gets ready:
 
@@ -38,6 +42,25 @@ Here is a sample on how to use the `OGS`-JavaScript helper oject to send a "hell
 </body>
 
 <script>
+// Create the OGS object and implement the callbacks/events
+OGS = {};		
+OGS.onInit = function(url) {
+	console.log("OGS.onInit called: ", url, OGS);
+	// if we get here, everyhing is initialized, so now send the 'hello' message
+	OGS.SendCmd('hello!');
+}
+OGS.onShow = function OGS_onShow() {
+	console.log("OGS.onShow called!");
+}
+OGS.onHide = function() {
+	console.log("OGS.onHide called!");
+}
+</script>
+``` 
+
+An alternative way (without using the OGS object) would be to poll until everything is ready:
+
+``` JavaScript
 // Send Hello after the bridge is ready
 function SendHello()
 	var timer = window.setInterval( () => {
@@ -52,8 +75,8 @@ end
 window.onload = function() {
 	SendHello();
 }
-</script>
-``` 
+```
+
  
 ## JavaScript hostObjects bridge
 

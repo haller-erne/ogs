@@ -9,16 +9,57 @@ The OGS runtime uses up to 4 web browser (Microsoft WebView2) instances. The ins
 - `SidePanel`: Browser on the slide-in side panel (requires enabling the sidepanel in `station.ini`)
 - `InstructionView`: Browser in the instruction view popup (is triggered from LUA, so only visible with custom LUA code)
 
-The OGS infrastructure provides functions to bidirectionally exchange data between the JavaScript code running inside the web browser and the LUA code running inside OGS. There is a LUA function to execute JavaScript code in the webbrowser and a JavaScript bride, which calls a LUA function (if registered accordingly).
+The OGS infrastructure provides functions to bidirectionally exchange data between the JavaScript code running inside the web browser and the LUA code running inside OGS. There is a LUA function to execute JavaScript code in the webbrowser and a JavaScript bridge, which calls a LUA function (if registered accordingly). To make things a bit easier, starting with OGS V3.0.8510, there is also a JavaScript helper object injected into the page.
 
 To implement this functionality, OGS provides the following:
 
-- For the JavaScript side: a bridge implementation accessibal through the `hostObjects` interface of the Chromium browser (`window.chrome.webview.hostObjects.sync.<instance>`, with `instance` one of the above)
 - For the LUA side: a global `Browser` table with functions to manipulate the browser instances
+- For the JavaScript side: 
+	- an [injected JavaScript helper object](#injected-javascript-helper-object), which provides easy to use functions to access the Bridje and send a message string
+	- the (lowlevel) [JavaScript hostObjects bridge](#javascript-hostobjects-bridge) accessibal through the `hostObjects` interface of the Chromium browser (`window.chrome.webview.hostObjects.sync.<instance>`, with `instance` one of the above)
 
+## Injected JavaScript helper object
+
+**NOTE**: Available starting with OGS V3.0.8510.
+
+OGS injects a JavaScript `OGS` object into the page after the "NavigationComplete" Event of the Edge Browser. This especially makes using the `Bridge` to send messages out to the OGS core easier (see [JavaScript hostObjects bridge](#javascript-hostobjects-bridge) below for details) The `OGS`-object provides the following members:
+
+- `getBridgeName(): string`: Returns the bridge instance name (which is identical to the browser instance name, e.g. `'StartView'`).
+- `SendCmd(cmd: string): boolean`: send the `cmd` string  to the OGS core. The function returns `true`, if the string was sent correctly. If `false` is returned, the command was not sent. This usually happens during and shortly after page load (and even for a small time after DocumentComplete), as the Edge bridge host object needs some time to initialize. Best practice is to embed the `SendCmd()` into a timer started with window.onload() or in the body.
+
+Here is a sample on how to use the `OGS`-JavaScript helper oject to send a "hello"-message after the bridge gets ready:
+
+``` html
+<!DOCTYPE html>
+<html >
+</html>
+<body>
+<!-- whatever content is in the page -->
+</body>
+
+<script>
+// Send Hello after the bridge is ready
+function SendHello()
+	var timer = window.setInterval( () => {
+		if (OGS) {	// check, if the global OGS object exists
+			if (OGS.SendCmd('Hello')) {
+				// successfully send, remove the timer
+				clearInterval(timer);
+			}
+		}
+	}, 100);	// execute every 100ms until the bridge is ready
+end
+window.onload = function() {
+	SendHello();
+}
+</script>
+``` 
+ 
 ## JavaScript hostObjects bridge
 
-OGS registers a [hostObject](https://learn.microsoft.com/en-us/dotnet/api/microsoft.web.webview2.core.corewebview2.addhostobjecttoscript) in the WebView2 browser for the JavaScript side. The registered object is named identically to the browser instance, e.g. `StartView` and implements a single string property `ObjectMessage`.
+**NOTE**: Starting with OGS V3.0.8510, it is recommended to use the [JavaScript hostObjects bridge](#javascript-hostobjects-bridge) instead. 
+
+To allow interaction between the JavaScript code running in the Browser and the OGS core, OGS registers a [hostObject](https://learn.microsoft.com/en-us/dotnet/api/microsoft.web.webview2.core.corewebview2.addhostobjecttoscript) in the WebView2 browser for the JavaScript side. The registered object is named identically to the browser instance, e.g. `StartView` and implements a single string property `ObjectMessage`.
 
 To send a string to OGS from JavaScript, simply assign a value to the `window.chrome.webview.hostObjects.sync.<instance>.ObjectMessage` property (`instance` is the name of the actual browser instance, e.g. `StartView`, `ProcessView`, ..., see above).
 

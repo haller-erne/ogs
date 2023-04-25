@@ -80,7 +80,7 @@ window.onload = function() {
  
 ## JavaScript hostObjects bridge
 
-**NOTE**: Starting with OGS V3.0.8510, it is recommended to use the [JavaScript hostObjects bridge](#javascript-hostobjects-bridge) instead. 
+**NOTE**: Starting with OGS V3.0.8510, it is recommended to use the [JavaScript hostObjects bridge](#javascript-hostobjects-bridge) (see previous section) instead. 
 
 To allow interaction between the JavaScript code running in the Browser and the OGS core, OGS registers a [hostObject](https://learn.microsoft.com/en-us/dotnet/api/microsoft.web.webview2.core.corewebview2.addhostobjecttoscript) in the WebView2 browser for the JavaScript side. The registered object is named identically to the browser instance, e.g. `StartView` and implements a single string property `ObjectMessage`.
 
@@ -189,19 +189,28 @@ Browser.Hide('SidePanel')
 
 The `Browser.RegMsgHandler` function registers or unregisters a LUA function to be called whenever the JavaScript running in the browser writes a message to the hostObject bridge `OGS.ObjectMessage` property.
 
+**NOTE**: Calling the function mutliple times with the same url parameter 
+will replace a previously registered handler for the same url.
+
+#### Function signature
+
 ```LUA
 -- Register the callback function
-fn, err = Browser.RegMsgHandler(instance, callbackfn)
+fn, err = Browser.RegMsgHandler(instance, callbackfn, url)
 ```
 
 #### Parameters
 
 - instance [string]: Web browser instance name (one of 'StartView', 'ProcessView', 'SidePanel', 'InstructionView') 
+
 - callbackfn [function]: LUA function to be called when the JavaScript code writes a string to the `OGS.ObjectMessage` hostObject. If callbackfn is `nil`, then the current registration is removed. The callback function has the following signature:
 
         callbackfn(instance, objectMessage)
 
-Where instance [string] is the web browsers instance name (e.g. 'StartView') and objectMessage [string] the text which was written to the `OGS.ObjectMessage` property of the hostObject bridge from the JavaScript side.
+	`instance` [string] is the web browsers instance name (e.g. 'StartView') and `objectMessage` [string] the text which was written to the `OGS.ObjectMessage` property of the hostObject bridge from the JavaScript side.
+
+- url [string or nil]: The optional `url` parameter allows registering seperate message handlers for different URLs shown in the browser. This is especially handy for the `SidePanel` view, where typically different pages are viewed (see [Browser.show(...url...)](#show) above). If the `url` parameter is missing (on nil), then the handler is registered globally (for the given browser instance).
+
 
 #### Return values
 
@@ -233,17 +242,58 @@ Browser.ExecJS_nonblocking(instance, jstext)
 
 **NOTES**: 
 
-- When passing strings through the function, make sure to propery escape them!
+- When passing strings through the function, make sure to properly escape them!
 - Best practice is to write a JavaScript function in the web page and only call it through this function.
 - You can serialize LUA objects to a JSON string and pass this through the function. The JavaScript side can then easily deserialize it.
+- You can only call Javascript functions defined in the [global scope](https://developer.mozilla.org/en-US/docs/Glossary/Global_object) from the LUA/OGS side. Make sure to either register them in a global object (e.g. add them to the [OGS object](#injected-javascript-helper-object) (best), to [window](https://developer.mozilla.org/en-US/docs/Web/API/Window/window) or to [globalThis](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis)) .
 
 #### Sample code
+
+LUA side:
+
 ```LUA
--- Build a JavaScript command, call the function "my_function" with
+-- define which browser view to use
+local instance = 'StartView'
+
+-- define a function to be called from JavaScript
+local callbackfn = function(instance, msg)
+	XTRACE(16, "I am called from Javascript: msg=" .. msg)
+end
+
+-- Register (global) callback for the browser instance
+Browser.RegMsgHandler(instance, callbackfn)
+
+-- Build a JavaScript command, call the function "OGS.myFunction" with
 -- some JSON text
 local param = '{ "cmd": "showmessage" }'
-local command = "my_function("..param..");"
--- Call the JavaScript function in the StartView browser
-Browser.ExecJS_nonblocking('StartView', command)
+local command = "OGS.myFunction("..param..");"
+-- Call the JavaScript function in the browser instance
+Browser.ExecJS_nonblocking(instance, command)
 ```
 
+Javascript side (for the StartView browser window):
+
+``` html
+<!DOCTYPE html>
+<html >
+</html>
+<body>
+<!-- whatever content is in the page -->
+</body>
+
+<script>
+// Create the OGS object and implement the callbacks/events
+OGS = {};		
+OGS.onInit = function(url) {
+	// if we get here, everyhing is initialized, so now send the 'hello' message
+	OGS.SendCmd('hello!');
+}
+OGS.myFunction = function(params) {
+	// This function was called from LUA code
+	console.log("OGS.myFunction called!", params);
+	// Now call back into OGS and return a complex object
+	var retval = { cmd: 'test', params: { p1: 1, p2: 'string' } };
+	OGS.SendCmd(JSON.stringify(retval));
+}
+</script>
+``` 

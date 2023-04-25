@@ -17,7 +17,7 @@
         <link rel="next" href="../webserver/">
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.6">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.8">
     
     
       
@@ -26,9 +26,6 @@
     
     
       <link rel="stylesheet" href="../../../assets/stylesheets/main.ded33207.min.css">
-      
-        
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a0c5b2b5.min.css">
       
       
 
@@ -54,14 +51,11 @@
   </head>
   
   
-    
-    
-    
-    
-    
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+    <body dir="ltr">
   
     
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -630,6 +624,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#function-signature" class="md-nav__link">
+    Function signature
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#parameters_3" class="md-nav__link">
     Parameters
   </a>
@@ -993,6 +994,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#function-signature" class="md-nav__link">
+    Function signature
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#parameters_3" class="md-nav__link">
     Parameters
   </a>
@@ -1135,7 +1143,7 @@
 <a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="p">}</span>
 </code></pre></div>
 <h2 id="javascript-hostobjects-bridge"><a class="toclink" href="#javascript-hostobjects-bridge">JavaScript hostObjects bridge</a></h2>
-<p><strong>NOTE</strong>: Starting with OGS V3.0.8510, it is recommended to use the <a href="#javascript-hostobjects-bridge">JavaScript hostObjects bridge</a> instead. </p>
+<p><strong>NOTE</strong>: Starting with OGS V3.0.8510, it is recommended to use the <a href="#javascript-hostobjects-bridge">JavaScript hostObjects bridge</a> (see previous section) instead. </p>
 <p>To allow interaction between the JavaScript code running in the Browser and the OGS core, OGS registers a <a href="https://learn.microsoft.com/en-us/dotnet/api/microsoft.web.webview2.core.corewebview2.addhostobjecttoscript">hostObject</a> in the WebView2 browser for the JavaScript side. The registered object is named identically to the browser instance, e.g. <code>StartView</code> and implements a single string property <code>ObjectMessage</code>.</p>
 <p>To send a string to OGS from JavaScript, simply assign a value to the <code>window.chrome.webview.hostObjects.sync.&lt;instance&gt;.ObjectMessage</code> property (<code>instance</code> is the name of the actual browser instance, e.g. <code>StartView</code>, <code>ProcessView</code>, ..., see above).</p>
 <p><strong>NOTE</strong>: To use the bridge, one has to use the correct <code>&lt;instance&gt;</code>!</p>
@@ -1214,17 +1222,27 @@ The following functions are also available, but are not fully implemented at the
 </code></pre></div>
 <h3 id="regmsghandler"><a class="toclink" href="#regmsghandler">RegMsgHandler</a></h3>
 <p>The <code>Browser.RegMsgHandler</code> function registers or unregisters a LUA function to be called whenever the JavaScript running in the browser writes a message to the hostObject bridge <code>OGS.ObjectMessage</code> property.</p>
+<p><strong>NOTE</strong>: Calling the function mutliple times with the same url parameter 
+will replace a previously registered handler for the same url.</p>
+<h4 id="function-signature"><a class="toclink" href="#function-signature">Function signature</a></h4>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1">-- Register the callback function</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">fn</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">Browser</span><span class="p">.</span><span class="n">RegMsgHandler</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">callbackfn</span><span class="p">)</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">fn</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">Browser</span><span class="p">.</span><span class="n">RegMsgHandler</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">callbackfn</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
 </code></pre></div>
 <h4 id="parameters_3"><a class="toclink" href="#parameters_3">Parameters</a></h4>
 <ul>
-<li>instance [string]: Web browser instance name (one of 'StartView', 'ProcessView', 'SidePanel', 'InstructionView') </li>
-<li>callbackfn [function]: LUA function to be called when the JavaScript code writes a string to the <code>OGS.ObjectMessage</code> hostObject. If callbackfn is <code>nil</code>, then the current registration is removed. The callback function has the following signature:<div class="highlight"><pre><span></span><code>callbackfn(instance, objectMessage)
+<li>
+<p>instance [string]: Web browser instance name (one of 'StartView', 'ProcessView', 'SidePanel', 'InstructionView') </p>
+</li>
+<li>
+<p>callbackfn [function]: LUA function to be called when the JavaScript code writes a string to the <code>OGS.ObjectMessage</code> hostObject. If callbackfn is <code>nil</code>, then the current registration is removed. The callback function has the following signature:</p>
+<div class="highlight"><pre><span></span><code>callbackfn(instance, objectMessage)
 </code></pre></div>
+<p><code>instance</code> [string] is the web browsers instance name (e.g. 'StartView') and <code>objectMessage</code> [string] the text which was written to the <code>OGS.ObjectMessage</code> property of the hostObject bridge from the JavaScript side.</p>
+</li>
+<li>
+<p>url [string or nil]: The optional <code>url</code> parameter allows registering seperate message handlers for different URLs shown in the browser. This is especially handy for the <code>SidePanel</code> view, where typically different pages are viewed (see <a href="#show">Browser.show(...url...)</a> above). If the <code>url</code> parameter is missing (on nil), then the handler is registered globally (for the given browser instance).</p>
 </li>
 </ul>
-<p>Where instance [string] is the web browsers instance name (e.g. 'StartView') and objectMessage [string] the text which was written to the <code>OGS.ObjectMessage</code> property of the hostObject bridge from the JavaScript side.</p>
 <h4 id="return-values"><a class="toclink" href="#return-values">Return values</a></h4>
 <p>If the function was executed successfully, the callbackfn is returned as the first return value. Else nil is returned and the second return value has an error message string (wrong parameters or unknown instance).</p>
 <h4 id="sample-code_4"><a class="toclink" href="#sample-code_4">Sample code</a></h4>
@@ -1247,17 +1265,54 @@ The following functions are also available, but are not fully implemented at the
 </ul>
 <p><strong>NOTES</strong>: </p>
 <ul>
-<li>When passing strings through the function, make sure to propery escape them!</li>
+<li>When passing strings through the function, make sure to properly escape them!</li>
 <li>Best practice is to write a JavaScript function in the web page and only call it through this function.</li>
 <li>You can serialize LUA objects to a JSON string and pass this through the function. The JavaScript side can then easily deserialize it.</li>
+<li>You can only call Javascript functions defined in the <a href="https://developer.mozilla.org/en-US/docs/Glossary/Global_object">global scope</a> from the LUA/OGS side. Make sure to either register them in a global object (e.g. add them to the <a href="#injected-javascript-helper-object">OGS object</a> (best), to <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/window">window</a> or to <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis">globalThis</a>) .</li>
 </ul>
 <h4 id="sample-code_5"><a class="toclink" href="#sample-code_5">Sample code</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1">-- Build a JavaScript command, call the function &quot;my_function&quot; with</span>
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="c1">-- some JSON text</span>
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="kd">local</span> <span class="n">param</span> <span class="o">=</span> <span class="s1">&#39;{ &quot;cmd&quot;: &quot;showmessage&quot; }&#39;</span>
-<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="kd">local</span> <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;my_function(&quot;</span><span class="o">..</span><span class="n">param</span><span class="o">..</span><span class="s2">&quot;);&quot;</span>
-<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="c1">-- Call the JavaScript function in the StartView browser</span>
-<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="n">Browser</span><span class="p">.</span><span class="n">ExecJS_nonblocking</span><span class="p">(</span><span class="s1">&#39;StartView&#39;</span><span class="p">,</span> <span class="n">command</span><span class="p">)</span>
+<p>LUA side:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1">-- define which browser view to use</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="kd">local</span> <span class="n">instance</span> <span class="o">=</span> <span class="s1">&#39;StartView&#39;</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="c1">-- define a function to be called from JavaScript</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="kd">local</span> <span class="n">callbackfn</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>    <span class="n">XTRACE</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="s2">&quot;I am called from Javascript: msg=&quot;</span> <span class="o">..</span> <span class="n">msg</span><span class="p">)</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="kr">end</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="c1">-- Register (global) callback for the browser instance</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="n">Browser</span><span class="p">.</span><span class="n">RegMsgHandler</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">callbackfn</span><span class="p">)</span>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="c1">-- Build a JavaScript command, call the function &quot;OGS.myFunction&quot; with</span>
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="c1">-- some JSON text</span>
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="kd">local</span> <span class="n">param</span> <span class="o">=</span> <span class="s1">&#39;{ &quot;cmd&quot;: &quot;showmessage&quot; }&#39;</span>
+<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="kd">local</span> <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;OGS.myFunction(&quot;</span><span class="o">..</span><span class="n">param</span><span class="o">..</span><span class="s2">&quot;);&quot;</span>
+<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="c1">-- Call the JavaScript function in the browser instance</span>
+<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="n">Browser</span><span class="p">.</span><span class="n">ExecJS_nonblocking</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">command</span><span class="p">)</span>
+</code></pre></div>
+<p>Javascript side (for the StartView browser window):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="p">&lt;</span><span class="nt">html</span> <span class="p">&gt;</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="cm">&lt;!-- whatever content is in the page --&gt;</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="c1">// Create the OGS object and implement the callbacks/events</span>
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="nx">OGS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{};</span><span class="w">       </span>
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="nx">OGS</span><span class="p">.</span><span class="nx">onInit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="w">    </span><span class="c1">// if we get here, everyhing is initialized, so now send the &#39;hello&#39; message</span>
+<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a><span class="w">    </span><span class="nx">OGS</span><span class="p">.</span><span class="nx">SendCmd</span><span class="p">(</span><span class="s1">&#39;hello!&#39;</span><span class="p">);</span>
+<a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="p">}</span>
+<a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a><span class="nx">OGS</span><span class="p">.</span><span class="nx">myFunction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">params</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a><span class="w">    </span><span class="c1">// This function was called from LUA code</span>
+<a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a><span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;OGS.myFunction called!&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">params</span><span class="p">);</span>
+<a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a><span class="w">    </span><span class="c1">// Now call back into OGS and return a complex object</span>
+<a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a><span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">retval</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">cmd</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;test&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">params</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">p1</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="nx">p2</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;string&#39;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a><span class="w">    </span><span class="nx">OGS</span><span class="p">.</span><span class="nx">SendCmd</span><span class="p">(</span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">retval</span><span class="p">));</span>
+<a id="__codelineno-13-21" name="__codelineno-13-21" href="#__codelineno-13-21"></a><span class="p">}</span>
+<a id="__codelineno-13-22" name="__codelineno-13-22" href="#__codelineno-13-22"></a><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 
 

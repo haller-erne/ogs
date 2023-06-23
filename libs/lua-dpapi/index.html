@@ -8,20 +8,18 @@
       
       
       
-        <link rel="canonical" href="https://haller-erne.github.io/ogs/libs/lua-ads/">
+        <link rel="canonical" href="https://haller-erne.github.io/ogs/libs/lua-dpapi/">
       
       
-        <link rel="prev" href="../../v3/lua/customtools/">
+        <link rel="prev" href="../lua-hid/">
       
-      
-        <link rel="next" href="../lua-opcua/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.16">
     
     
       
-        <title>ADS communication (TwinCat, Nexeed, Beckhoff) - OGS Documentation</title>
+        <title>Data Protection API (safe secrets storage) - OGS Documentation</title>
       
     
     
@@ -62,6 +60,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#luadpapi" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -93,7 +96,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              ADS communication (TwinCat, Nexeed, Beckhoff)
+              Data Protection API (safe secrets storage)
             
           </span>
         </div>
@@ -527,19 +530,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../lua-ads/" class="md-nav__link">
         ADS communication (TwinCat, Nexeed, Beckhoff)
       </a>
-      
     </li>
   
 
@@ -591,11 +586,21 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../lua-dpapi/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Data Protection API (safe secrets storage)
       </a>
+      
     </li>
   
 
@@ -624,6 +629,8 @@
   
   
   
+    
+  
   
 </nav>
                   </div>
@@ -638,9 +645,99 @@
                   
 
 
-  <h1>ADS communication (TwinCat, Nexeed, Beckhoff)</h1>
-
-
+<p>--
+id: luadpapi
+name: LuaDPApi
+title: LuaDPApi
+tags:
+    - API</p>
+<hr />
+<h1 id="luadpapi"><a class="toclink" href="#luadpapi">LuaDPApi</a></h1>
+<p>LuaDPApi provides an interface to the <a href="https://learn.microsoft.com/en-us/windows/win32/api/dpapi/">Microsoft Data Protection API</a>. It implements a thin LUA wrapper interface over the <code>CryptProtectData</code> and <code>CryptUnprotectData</code> API calls. </p>
+<p>The main purpose is for storing secrets (like passwords, or API token etc.) in a configuration file (like <code>station.ini</code>) without exposing the sensitive data to the world (e.g. if storing backups of these configuration files or versioning these files through git). This works by encrypting the secret data and writing the encrypted string into the configuration file. The application reading the configuration file can the decrypt the data and use it.</p>
+<p>In the background, the <a href="https://learn.microsoft.com/en-us/windows/win32/api/dpapi/">Microsoft Data Protection API</a> encrypts/decrypts data by deriving an encryption key based on either the unique machine-id or a user-specific id:</p>
+<ul>
+<li>If the scope during the encryption is the machine-id, then all users, who are able to log on to this machine, will be able to decrypt the data. </li>
+<li>If the scope during the encryption is the user-id, then only the user, who encrypted the data will be able to decrypt later. Changes top the user password are tracked internally, so even after a password change, the user will be able to decrypt. If a users password is reset, then no access to the encrypted data is possible anymore.</li>
+</ul>
+<p>Note, that in an ActiveDirectory environment, backup keys are stored on the domain controller - allowing the domain administrator to decrypt, too. </p>
+<p>In addition to the user/machine-scope, an additional <code>enthropy</code> parameter can be used during encryption. In this case, the <code>enthropy</code>-data is added as part of the encryption key - effectively allowing successful decryption only, if the very same <code>enthropy</code>-data is added during decryption. This is e.g. used by the Edge browser to encrypt website passwords - the <code>entropy</code> data is the website URL, so without knowng the actual URL, no password can be decrypted.</p>
+<h1 id="module"><a class="toclink" href="#module">Module</a></h1>
+<p>The LuaDPApi module provides global functions to access the <a href="https://learn.microsoft.com/en-us/windows/win32/api/dpapi/">Microsoft Data Protection API</a>.</p>
+<h2 id="functions"><a class="toclink" href="#functions">Functions</a></h2>
+<table>
+<thead>
+<tr>
+<th>Function Name</th>
+<th>Return Type</th>
+<th>Description</th>
+<th>Tags</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>protect(data: string, scope: string = 'machine' entropy: string = nil)</code></td>
+<td><code>data: string</code> or <code>nil, win32error: integer</code></td>
+<td>Encrypts the given data (binary string) using the given scope (one of 'maschine' or 'user') and entropy. Returns the encrypted data (as a binary string) or nil and the Win32 API error code.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>unprotect(data: string, entropy: string = nil)</code></td>
+<td><code>data: string</code> or <code>nil, win32error: integer</code></td>
+<td>Dencrypts the given data (binary string) using the given entropy. Returns the decrypted data (as a binary string) or nil and the Win32 API error code.</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+</div>
+<p>Note that the LUA functions pass raw data strings to the underlying <a href="https://learn.microsoft.com/en-us/windows/win32/api/dpapi/">Microsoft Data Protection API</a> functions. Encoding and decoding text strings (e.g. to read/write the encrypted binary data from/to a configuration file) must be handled by additional code.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+</div>
+<p>Typically encrypted data is stored as bs64 encoded strings. Use the LUA <code>mime</code> library (part of the <code>luasocket</code> library) to encode and decode a base64 string (see below for sample code)</p>
+<h1 id="examples"><a class="toclink" href="#examples">Examples</a></h1>
+<h2 id="enumerate-connected-devices"><a class="toclink" href="#enumerate-connected-devices">Enumerate connected devices</a></h2>
+<p>This sample lists all connected HID devices and shows some of their properties.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">-- Load the LuaHID module</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kd">local</span> <span class="n">hidapi</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s1">&#39;LuaHID&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nb">print</span><span class="p">(</span><span class="nb">string.format</span><span class="p">(</span><span class="s2">&quot;Lib VERSION %s build on %s&quot;</span><span class="p">,</span> <span class="n">hid</span><span class="p">.</span><span class="n">_VERSION</span><span class="p">,</span> <span class="n">hid</span><span class="p">.</span><span class="n">_TIMESTAMP</span><span class="p">))</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1">-- Initialize the library</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="kr">if</span> <span class="n">hidapi</span><span class="p">.</span><span class="n">init</span><span class="p">()</span> <span class="kr">then</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;hid library: init&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="kr">else</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;hid library: init error&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="kr">return</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="kr">end</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="c1">-- Enumerate the currently connected devices and print some information</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="kd">local</span> <span class="n">enum</span> <span class="o">=</span> <span class="n">hidapi</span><span class="p">.</span><span class="n">enumerate</span><span class="p">()</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="kr">if</span> <span class="ow">not</span> <span class="n">enum</span> <span class="kr">then</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Enumeration: no device found or enumeration failed!&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    <span class="kr">return</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="kr">else</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    <span class="kr">while</span> <span class="kc">true</span> <span class="kr">do</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>        <span class="kd">local</span> <span class="n">dev</span> <span class="o">=</span> <span class="n">enum</span><span class="p">:</span><span class="nb">next</span><span class="p">()</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>        <span class="kr">if</span> <span class="ow">not</span> <span class="n">dev</span> <span class="kr">then</span> <span class="kr">break</span> <span class="kr">end</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Device found:&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>            <span class="nb">print</span><span class="p">(</span><span class="nb">string.format</span><span class="p">(</span><span class="s2">&quot;path = &#39;%s&#39;&quot;</span><span class="p">,</span> <span class="n">dev</span><span class="p">.</span><span class="n">path</span><span class="p">))</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>            <span class="nb">print</span><span class="p">(</span><span class="nb">string.format</span><span class="p">(</span><span class="s2">&quot;vid = 0x%04X&quot;</span><span class="p">,</span> <span class="n">dev</span><span class="p">.</span><span class="n">vid</span><span class="p">))</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>            <span class="nb">print</span><span class="p">(</span><span class="nb">string.format</span><span class="p">(</span><span class="s2">&quot;pid = 0x%04X&quot;</span><span class="p">,</span> <span class="n">dev</span><span class="p">.</span><span class="n">pid</span><span class="p">))</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>            <span class="nb">print</span><span class="p">(</span><span class="nb">string.format</span><span class="p">(</span><span class="s2">&quot;serial_number = &#39;%s&#39;&quot;</span><span class="p">,</span> <span class="n">dev</span><span class="p">.</span><span class="n">serial_number</span><span class="p">))</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>        <span class="kr">end</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>    <span class="kr">end</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="kr">end</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="c1">-- Do a clean shutdown</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="kr">if</span> <span class="n">hidapi</span><span class="p">.</span><span class="n">exit</span><span class="p">()</span> <span class="kr">then</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;hid library: exit&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="kr">else</span>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;hid library: exit error&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>    <span class="kr">return</span>
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a><span class="kr">end</span>
+</code></pre></div></p>
 
 
 

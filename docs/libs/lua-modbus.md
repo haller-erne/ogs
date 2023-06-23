@@ -13,7 +13,7 @@ The actual LUA wrapper is based on the [etactica/lua-libmodbus (github.com)](htt
 
 Unless otherwise noted, LuaModbus implements the same set of features as the original lua-libmodbus, so the library documentation ([Reference (etactica.github.io)](http://etactica.github.io/lua-libmodbus/)) is a very good source of information.
 
--------------  TODO  -----------
+<!-- TODO:
 
 ## Module
 
@@ -252,3 +252,8 @@ end
 ### More samples
 
 More samples can be found in then `examples`-folder in the GitHub repository at [luahidapi/doc/examples at master · ynezz/luahidapi (github.com)](https://github.com/ynezz/luahidapi/tree/master/doc/examples).
+
+-->
+
+Content will follow soon...
+

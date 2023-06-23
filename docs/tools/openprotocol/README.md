@@ -4,7 +4,8 @@ OGS supports connecting tools with `OpenProtocol` interface. As tools differ in 
 
 - Rexroth Nexo and Nexo 2 wireless tools (for more information, see [Nexo OpenProtocol](/docs/tools/openprotocol/nexo.md))
 - Rexroth CS351 and KE350 system tools (for more information, see [System 350 OpenProtocol](/docs/tools/openprotocol/sys350.md))
-- GWK Operator+ torque wrenches (for more information, see [GWK Operator+ OpenProtocol](/docs/tools/openprotocol/nexo.md))
+- Rexroth OPEXplus (for more information, see [OPEXplus OpenProtocol](/docs/tools/openprotocol/opexplus.md))
+- GWK Operator+ torque wrenches (for more information, see [GWK Operator+ OpenProtocol](/docs/tools/openprotocol/gwk.md))
 - Crane TCI torque wrenches (for more information, see [Crane OpenProtocol](/docs/tools/openprotocol/crane.md))
 - Gehmeyr Exact Wifi tools (for more information, see [Gehmeyr OpenProtocol](/docs/tools/openprotocol/gehmeyr.md))
 - Sturtevant Richmont Global 400 MP connected Exacta 2 digital torque wrenches (for more information, see [Sturtevant Richmond OpenProtocol](/docs/tools/openprotocol/sturtevant.md))

@@ -13,20 +13,20 @@ LuaHID provides an interface to access USB devices over the `HID` (_human input 
 
 Note, that although USB mice and keyboards are technically HID devices, the Windows API does not allow to access these through the HID API (for security reasons). All other (custom) USB HID devices should work.
 
-# Module
+## Module
 
 The LuaHID module provides global functions to access the systems HID API. Before calling any other function of the module, the `init()` function must be called. 
 
 To actually connect to a physical device, an instance of the `HidDevice` object must be created (see #class_hiddevice below) by calling the `open()` function. This requires specifying the _VID_ (vendor ID) and _PID_ (device id) and (optionally) the _SN_ (serial number). If the parameters are not known beforehand, they may be listed through calling the module level `enumerate()` function. This returns a table of all currently connected devices. Specific device actions (like reading/writing) can then be executed on the object returned from the `open()` call.
 
-## Properties
+### Properties
 
 | Property Name | Return Type | Description | Tags |
 | -------- | ----------- | ----------- | ---- |
 | `_VERSION` | `string` | Current version of the LuaHID module. See also the `version_mod()` function to get more details about the DLL module version. | Read-Only |
 | `_TIMESTAMP` | `string` | Timestamp of the last build of the LuaHID module. | Read-Only |
 
-## Functions
+### Functions
 
 | Function Name | Return Type | Description | Tags |
 | -------- | ----------- | ----------- | ---- |
@@ -46,11 +46,11 @@ To actually connect to a physical device, an instance of the `HidDevice` object 
 | `version_mod()` | `string, table` | Returns the file version info of the LuaHID DLL (as a string in the from "major.minor.build-hi,build-low" and a table with the same values. | None |
 
 
-# Class HidDeviceInfo
+## Class HidDeviceInfo
 
 The HidDeviceInfo table provides information about a USB HID device connected to the system. The HidDeviceInfo is retrieved by calling the `enumerate()` function and iterating the result by calling the `next()` member. 
 
-## Properties
+### Properties
 
 | Property Name | Return Type | Description | Tags |
 | -------- | ----------- | ----------- | ---- |
@@ -65,21 +65,21 @@ The HidDeviceInfo table provides information about a USB HID device connected to
 | `usage` | `integer` | HID usage of the device. | Read-Only |
 | `interface` | `integer` | Interface number of the device. | Read-Only |
 
-# Class HidEnum
+## Class HidEnum
 
 The HidEnum class is actually an iterator and represents the list returned from calling the `enumerate` module function. Each element of the list represents a connected USB HID device and has the properties shown in the following section. 
 To iterate the list, call the `next()` instance function - each call to next returns a `HidDeviceInfo` table and internally advances to the next item.
 
-## Functions
+### Functions
 
 | Function Name | Return Type | Description | Tags |
 | -------- | ----------- | ----------- | ---- |
 | `next()` | `HidDevice` | Returns the current device info data and steps on to the next element in the list. | None |
 | `close()` | `None` | Closes the iterator and frees any resources. There is normally no need to call this, as the object is garbage collected automatically. | None |
 
-# Class HidDevice
+## Class HidDevice
 
-## Functions
+### Functions
 
 The member functions of HidDevice are wrapped functions of the module. The following lines are identical:
 
@@ -104,9 +104,9 @@ dev:write(report_id, report_data)
 | `error()` | `string` | See `LuaHID.error(...)` | None |
 | `close(HidDevice dev)` | `None` | See `LuaHID.close(...)` | None |
 
-# Examples
+## Examples
 
-## Enumerate connected devices
+### Enumerate connected devices
 
 This sample lists all connected HID devices and shows some of their properties.
 ```lua
@@ -150,7 +150,7 @@ end
 ```
 
 
-## Read/write device report data
+### Read/write device report data
 
 This sample tries to connect to a specific device using a given _VID_/_PID_ and writes/reads some data in non-blocking mode. 
 ```lua
@@ -247,6 +247,6 @@ else
 end
 ```
 
-## More samples
+### More samples
 
 More samples can be found in then `examples`-folder in the GitHub repository at [luahidapi/doc/examples at master · ynezz/luahidapi (github.com)](https://github.com/ynezz/luahidapi/tree/master/doc/examples).

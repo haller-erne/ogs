@@ -21,11 +21,11 @@ Note, that in an ActiveDirectory environment, backup keys are stored on the doma
 
 In addition to the user/machine-scope, an additional `enthropy` parameter can be used during encryption. In this case, the `enthropy`-data is added as part of the encryption key - effectively allowing successful decryption only, if the very same `enthropy`-data is added during decryption. This is e.g. used by the Edge browser to encrypt website passwords - the `entropy` data is the website URL, so without knowng the actual URL, no password can be decrypted.
 
-# Module
+## Module
 
 The LuaDPApi module provides global functions to access the [Microsoft Data Protection API](https://learn.microsoft.com/en-us/windows/win32/api/dpapi/).
 
-## Functions
+### Functions
 
 | Function Name | Return Type | Description | Tags |
 | -------- | ----------- | ----------- | ---- |
@@ -41,9 +41,9 @@ The LuaDPApi module provides global functions to access the [Microsoft Data Prot
     As encrypted data is binary, for configuration files, it is usually stored as a base64 encoded string. Use the LUA `mime` library (part of the `luasocket` library) to encode and decode a base64 string (see below for sample code). Also make sure to use the same text encoding for encryption and decryption (LUA uses UTF8-strings)!
 
 
-# Examples
+## Examples
 
-## Encrypt a string
+### Encrypt a string
 
 This sample shows how to encrypt a given plaintext string (LUA string, UTF8-encoded) and encode the encrypted data into a base64 string.
 
@@ -71,7 +71,7 @@ print("encrypted, base64 encoded data: ", encrypted_b64)
 
 ```
 
-## Decrypt base64-encoded data
+### Decrypt base64-encoded data
 
 This sample shows how to decrypt previously encrypted and base64 encoded data. 
 
@@ -98,7 +98,7 @@ print("decrypted data: ", decrypted_data)
 
 ```
 
-## Encrypt/decrypt using Powershell
+### Encrypt/decrypt using Powershell
 
 The DPAPI is also implemented in the [Security.Cryptography.ProtectedData] DotNET assembly, so 
 these functions can be also be used from Powershell.

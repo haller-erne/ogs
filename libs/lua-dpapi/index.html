@@ -597,9 +597,87 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Data Protection API (safe secrets storage)
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         Data Protection API (safe secrets storage)
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#module" class="md-nav__link">
+    Module
+  </a>
+  
+    <nav class="md-nav" aria-label="Module">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
+    Functions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    Examples
+  </a>
+  
+    <nav class="md-nav" aria-label="Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#encrypt-a-string" class="md-nav__link">
+    Encrypt a string
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#decrypt-base64-encoded-data" class="md-nav__link">
+    Decrypt base64-encoded data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#encryptdecrypt-using-powershell" class="md-nav__link">
+    Encrypt/decrypt using Powershell
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -632,6 +710,68 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#module" class="md-nav__link">
+    Module
+  </a>
+  
+    <nav class="md-nav" aria-label="Module">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
+    Functions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    Examples
+  </a>
+  
+    <nav class="md-nav" aria-label="Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#encrypt-a-string" class="md-nav__link">
+    Encrypt a string
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#decrypt-base64-encoded-data" class="md-nav__link">
+    Decrypt base64-encoded data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#encryptdecrypt-using-powershell" class="md-nav__link">
+    Encrypt/decrypt using Powershell
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -655,9 +795,9 @@
 </ul>
 <p>Note, that in an ActiveDirectory environment, backup keys are stored on the domain controller - allowing the domain administrator to decrypt, too. </p>
 <p>In addition to the user/machine-scope, an additional <code>enthropy</code> parameter can be used during encryption. In this case, the <code>enthropy</code>-data is added as part of the encryption key - effectively allowing successful decryption only, if the very same <code>enthropy</code>-data is added during decryption. This is e.g. used by the Edge browser to encrypt website passwords - the <code>entropy</code> data is the website URL, so without knowng the actual URL, no password can be decrypted.</p>
-<h1 id="module"><a class="toclink" href="#module">Module</a></h1>
+<h2 id="module"><a class="toclink" href="#module">Module</a></h2>
 <p>The LuaDPApi module provides global functions to access the <a href="https://learn.microsoft.com/en-us/windows/win32/api/dpapi/">Microsoft Data Protection API</a>.</p>
-<h2 id="functions"><a class="toclink" href="#functions">Functions</a></h2>
+<h3 id="functions"><a class="toclink" href="#functions">Functions</a></h3>
 <table>
 <thead>
 <tr>
@@ -690,8 +830,8 @@
 <p class="admonition-title">Tip</p>
 <p>As encrypted data is binary, for configuration files, it is usually stored as a base64 encoded string. Use the LUA <code>mime</code> library (part of the <code>luasocket</code> library) to encode and decode a base64 string (see below for sample code). Also make sure to use the same text encoding for encryption and decryption (LUA uses UTF8-strings)!</p>
 </div>
-<h1 id="examples"><a class="toclink" href="#examples">Examples</a></h1>
-<h2 id="encrypt-a-string"><a class="toclink" href="#encrypt-a-string">Encrypt a string</a></h2>
+<h2 id="examples"><a class="toclink" href="#examples">Examples</a></h2>
+<h3 id="encrypt-a-string"><a class="toclink" href="#encrypt-a-string">Encrypt a string</a></h3>
 <p>This sample shows how to encrypt a given plaintext string (LUA string, UTF8-encoded) and encode the encrypted data into a base64 string.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kd">local</span> <span class="n">dpapi</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s1">&#39;luadpapi&#39;</span><span class="p">)</span>  <span class="c1">-- load the DPAPI</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kd">local</span> <span class="n">mime</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s1">&#39;mime&#39;</span><span class="p">)</span>       <span class="c1">-- load luasocket/mime (base64)</span>
@@ -714,7 +854,7 @@
 <a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="c1">-- TODO: save to some text file, but for now just print it</span>
 <a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;encrypted, base64 encoded data: &quot;</span><span class="p">,</span> <span class="n">encrypted_b64</span><span class="p">)</span>
 </code></pre></div>
-<h2 id="decrypt-base64-encoded-data"><a class="toclink" href="#decrypt-base64-encoded-data">Decrypt base64-encoded data</a></h2>
+<h3 id="decrypt-base64-encoded-data"><a class="toclink" href="#decrypt-base64-encoded-data">Decrypt base64-encoded data</a></h3>
 <p>This sample shows how to decrypt previously encrypted and base64 encoded data. </p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kd">local</span> <span class="n">dpapi</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s1">&#39;luadpapi&#39;</span><span class="p">)</span>   <span class="c1">-- load the DPAPI</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kd">local</span> <span class="n">mime</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s1">&#39;mime&#39;</span><span class="p">)</span>        <span class="c1">-- load luasocket/mime (base64)</span>
@@ -736,7 +876,7 @@
 <a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="c1">-- TODO: use the decrypted data - assume this is a string and print it:</span>
 <a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;decrypted data: &quot;</span><span class="p">,</span> <span class="n">decrypted_data</span><span class="p">)</span>
 </code></pre></div>
-<h2 id="encryptdecrypt-using-powershell"><a class="toclink" href="#encryptdecrypt-using-powershell">Encrypt/decrypt using Powershell</a></h2>
+<h3 id="encryptdecrypt-using-powershell"><a class="toclink" href="#encryptdecrypt-using-powershell">Encrypt/decrypt using Powershell</a></h3>
 <p>The DPAPI is also implemented in the [Security.Cryptography.ProtectedData] DotNET assembly, so 
 these functions can be also be used from Powershell.</p>
 <div class="admonition warning">

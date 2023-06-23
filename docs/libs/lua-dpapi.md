@@ -38,7 +38,7 @@ The LuaDPApi module provides global functions to access the [Microsoft Data Prot
 
 !!! tip
 
-    As encrypted data is binary, for configuration files, it is usually stored as a base64 encoded string. Use the LUA `mime` library (part of the `luasocket` library) to encode and decode a base64 string (see below for sample code). Also make sure to use the same text encoding fro encryption and decryption (LUA uses UTF8-strings)!
+    As encrypted data is binary, for configuration files, it is usually stored as a base64 encoded string. Use the LUA `mime` library (part of the `luasocket` library) to encode and decode a base64 string (see below for sample code). Also make sure to use the same text encoding for encryption and decryption (LUA uses UTF8-strings)!
 
 
 # Examples
@@ -48,15 +48,14 @@ The LuaDPApi module provides global functions to access the [Microsoft Data Prot
 This sample shows how to encrypt a given plaintext string (LUA string, UTF8-encoded) and encode the encrypted data into a base64 string.
 
 ```lua
--- Load the LuaDPApi module
-local dpapi = require('luadpapi')           -- load the DPAPI
-local mime = require('mime')                -- load luasocket/mime (for base64)
+local dpapi = require('luadpapi')  -- load the DPAPI
+local mime = require('mime')       -- load luasocket/mime (base64)
 
 -- Sample plaintext password (or connection string, etc)
 local plaintext = 'MySuperSecretPassword' 
 
--- Encrypt the plaintext for the 'machine' scope. All users logged into the same machine 
--- will be able to decrypt the data later.
+-- Encrypt the plaintext for the 'machine' scope. All users logged 
+-- into the same machine will be able to decrypt the data later.
 -- encrypt (usually done at the commandline through powershell):
 local encrypted_data, err = dpapi.protect(plaintext, 'machine') 
 if encrypted_data == nil then
@@ -65,28 +64,27 @@ if encrypted_data == nil then
 end
 
 -- Do a base64 encode of the encrypted data for storing in *.ini file:
-local encrypted_b64 = mime.b64(encrypted_data)     -- base64 encoded, encrypted secret
+local encrypted_b64 = mime.b64(encrypted_data)     
 
 -- TODO: save to some text file, but for now just print it
 print("encrypted, base64 encoded data: ", encrypted_b64)
 
 ```
 
-## Decrypt bas64-encoded data
+## Decrypt base64-encoded data
 
 This sample shows how to decrypt previously encrypted and base64 encoded data. 
 
 ```lua
--- Load the LuaDPApi module
-local dpapi = require('luadpapi')               -- load the DPAPI
-local mime = require('mime')                    -- load luasocket/mime (for base64)
+local dpapi = require('luadpapi')   -- load the DPAPI
+local mime = require('mime')        -- load luasocket/mime (base64)
 
 -- Sample plaintext password (or connection string, etc)
 -- !!! Make sure to paste the data generated from the previous sample!
 local encrypted_b64 = 'AQAAANCMnd8BFdERjHoAwE/Cl+'...'ylQ=' 
 
 -- Convert from base64 to raw data
-local encrypted = mime.unb64(encrypted_b64)     -- decode to get the raw (binary) data
+local encrypted = mime.unb64(encrypted_b64)
 
 -- Decrypt the raw data.
 local decrypted_data, err = dpapi.unprotect(plaintext) 

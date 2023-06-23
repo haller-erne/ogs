@@ -688,55 +688,53 @@
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>As encrypted data is binary, for configuration files, it is usually stored as a base64 encoded string. Use the LUA <code>mime</code> library (part of the <code>luasocket</code> library) to encode and decode a base64 string (see below for sample code). Also make sure to use the same text encoding fro encryption and decryption (LUA uses UTF8-strings)!</p>
+<p>As encrypted data is binary, for configuration files, it is usually stored as a base64 encoded string. Use the LUA <code>mime</code> library (part of the <code>luasocket</code> library) to encode and decode a base64 string (see below for sample code). Also make sure to use the same text encoding for encryption and decryption (LUA uses UTF8-strings)!</p>
 </div>
 <h1 id="examples"><a class="toclink" href="#examples">Examples</a></h1>
 <h2 id="encrypt-a-string"><a class="toclink" href="#encrypt-a-string">Encrypt a string</a></h2>
 <p>This sample shows how to encrypt a given plaintext string (LUA string, UTF8-encoded) and encode the encrypted data into a base64 string.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">-- Load the LuaDPApi module</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kd">local</span> <span class="n">dpapi</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s1">&#39;luadpapi&#39;</span><span class="p">)</span>           <span class="c1">-- load the DPAPI</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kd">local</span> <span class="n">mime</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s1">&#39;mime&#39;</span><span class="p">)</span>                <span class="c1">-- load luasocket/mime (for base64)</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1">-- Sample plaintext password (or connection string, etc)</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="kd">local</span> <span class="n">plaintext</span> <span class="o">=</span> <span class="s1">&#39;MySuperSecretPassword&#39;</span> 
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1">-- Encrypt the plaintext for the &#39;machine&#39; scope. All users logged into the same machine </span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c1">-- will be able to decrypt the data later.</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1">-- encrypt (usually done at the commandline through powershell):</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="kd">local</span> <span class="n">encrypted_data</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">dpapi</span><span class="p">.</span><span class="n">protect</span><span class="p">(</span><span class="n">plaintext</span><span class="p">,</span> <span class="s1">&#39;machine&#39;</span><span class="p">)</span> 
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="kr">if</span> <span class="n">encrypted_data</span> <span class="o">==</span> <span class="kc">nil</span> <span class="kr">then</span>
-<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ERROR: encrypt failed, err=&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
-<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="nb">os.exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="kr">end</span>
-<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
-<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="c1">-- Do a base64 encode of the encrypted data for storing in *.ini file:</span>
-<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="kd">local</span> <span class="n">encrypted_b64</span> <span class="o">=</span> <span class="n">mime</span><span class="p">.</span><span class="n">b64</span><span class="p">(</span><span class="n">encrypted_data</span><span class="p">)</span>     <span class="c1">-- base64 encoded, encrypted secret</span>
-<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>
-<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="c1">-- TODO: save to some text file, but for now just print it</span>
-<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;encrypted, base64 encoded data: &quot;</span><span class="p">,</span> <span class="n">encrypted_b64</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kd">local</span> <span class="n">dpapi</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s1">&#39;luadpapi&#39;</span><span class="p">)</span>  <span class="c1">-- load the DPAPI</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kd">local</span> <span class="n">mime</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s1">&#39;mime&#39;</span><span class="p">)</span>       <span class="c1">-- load luasocket/mime (base64)</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1">-- Sample plaintext password (or connection string, etc)</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="kd">local</span> <span class="n">plaintext</span> <span class="o">=</span> <span class="s1">&#39;MySuperSecretPassword&#39;</span> 
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1">-- Encrypt the plaintext for the &#39;machine&#39; scope. All users logged </span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1">-- into the same machine will be able to decrypt the data later.</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c1">-- encrypt (usually done at the commandline through powershell):</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="kd">local</span> <span class="n">encrypted_data</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">dpapi</span><span class="p">.</span><span class="n">protect</span><span class="p">(</span><span class="n">plaintext</span><span class="p">,</span> <span class="s1">&#39;machine&#39;</span><span class="p">)</span> 
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="kr">if</span> <span class="n">encrypted_data</span> <span class="o">==</span> <span class="kc">nil</span> <span class="kr">then</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ERROR: encrypt failed, err=&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="nb">os.exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="kr">end</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="c1">-- Do a base64 encode of the encrypted data for storing in *.ini file:</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="kd">local</span> <span class="n">encrypted_b64</span> <span class="o">=</span> <span class="n">mime</span><span class="p">.</span><span class="n">b64</span><span class="p">(</span><span class="n">encrypted_data</span><span class="p">)</span>     
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="c1">-- TODO: save to some text file, but for now just print it</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;encrypted, base64 encoded data: &quot;</span><span class="p">,</span> <span class="n">encrypted_b64</span><span class="p">)</span>
 </code></pre></div>
-<h2 id="decrypt-bas64-encoded-data"><a class="toclink" href="#decrypt-bas64-encoded-data">Decrypt bas64-encoded data</a></h2>
+<h2 id="decrypt-base64-encoded-data"><a class="toclink" href="#decrypt-base64-encoded-data">Decrypt base64-encoded data</a></h2>
 <p>This sample shows how to decrypt previously encrypted and base64 encoded data. </p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">-- Load the LuaDPApi module</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kd">local</span> <span class="n">dpapi</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s1">&#39;luadpapi&#39;</span><span class="p">)</span>               <span class="c1">-- load the DPAPI</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kd">local</span> <span class="n">mime</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s1">&#39;mime&#39;</span><span class="p">)</span>                    <span class="c1">-- load luasocket/mime (for base64)</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1">-- Sample plaintext password (or connection string, etc)</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="c1">-- !!! Make sure to paste the data generated from the previous sample!</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="kd">local</span> <span class="n">encrypted_b64</span> <span class="o">=</span> <span class="s1">&#39;AQAAANCMnd8BFdERjHoAwE/Cl+&#39;</span><span class="p">...</span><span class="s1">&#39;ylQ=&#39;</span> 
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="c1">-- Convert from base64 to raw data</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="kd">local</span> <span class="n">encrypted</span> <span class="o">=</span> <span class="n">mime</span><span class="p">.</span><span class="n">unb64</span><span class="p">(</span><span class="n">encrypted_b64</span><span class="p">)</span>     <span class="c1">-- decode to get the raw (binary) data</span>
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
-<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="c1">-- Decrypt the raw data.</span>
-<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="kd">local</span> <span class="n">decrypted_data</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">dpapi</span><span class="p">.</span><span class="n">unprotect</span><span class="p">(</span><span class="n">plaintext</span><span class="p">)</span> 
-<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="kr">if</span> <span class="n">decrypted_data</span> <span class="o">==</span> <span class="kc">nil</span> <span class="kr">then</span>
-<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ERROR: decrypt failed, err=&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
-<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>    <span class="nb">os.exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="kr">end</span>
-<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
-<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="c1">-- TODO: use the decrypted data - assume this is a string and print it:</span>
-<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;decrypted data: &quot;</span><span class="p">,</span> <span class="n">decrypted_data</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kd">local</span> <span class="n">dpapi</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s1">&#39;luadpapi&#39;</span><span class="p">)</span>   <span class="c1">-- load the DPAPI</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kd">local</span> <span class="n">mime</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s1">&#39;mime&#39;</span><span class="p">)</span>        <span class="c1">-- load luasocket/mime (base64)</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">-- Sample plaintext password (or connection string, etc)</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1">-- !!! Make sure to paste the data generated from the previous sample!</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="kd">local</span> <span class="n">encrypted_b64</span> <span class="o">=</span> <span class="s1">&#39;AQAAANCMnd8BFdERjHoAwE/Cl+&#39;</span><span class="p">...</span><span class="s1">&#39;ylQ=&#39;</span> 
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="c1">-- Convert from base64 to raw data</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="kd">local</span> <span class="n">encrypted</span> <span class="o">=</span> <span class="n">mime</span><span class="p">.</span><span class="n">unb64</span><span class="p">(</span><span class="n">encrypted_b64</span><span class="p">)</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="c1">-- Decrypt the raw data.</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="kd">local</span> <span class="n">decrypted_data</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">dpapi</span><span class="p">.</span><span class="n">unprotect</span><span class="p">(</span><span class="n">plaintext</span><span class="p">)</span> 
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="kr">if</span> <span class="n">decrypted_data</span> <span class="o">==</span> <span class="kc">nil</span> <span class="kr">then</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ERROR: decrypt failed, err=&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>    <span class="nb">os.exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="kr">end</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="c1">-- TODO: use the decrypted data - assume this is a string and print it:</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;decrypted data: &quot;</span><span class="p">,</span> <span class="n">decrypted_data</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="encryptdecrypt-using-powershell"><a class="toclink" href="#encryptdecrypt-using-powershell">Encrypt/decrypt using Powershell</a></h2>
 <p>The DPAPI is also implemented in the [Security.Cryptography.ProtectedData] DotNET assembly, so 

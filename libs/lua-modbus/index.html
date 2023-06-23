@@ -21,7 +21,7 @@
     
     
       
-        <title>Modbus/TCP/UDP communication - OGS Documentation</title>
+        <title>LuaModbus - OGS Documentation</title>
       
     
     
@@ -98,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Modbus/TCP/UDP communication
+              LuaModbus
             
           </span>
         </div>
@@ -647,13 +647,6 @@
                   
 
 
-<p>--
-id: luamodbus
-name: LuaModbus
-title: LuaModbus
-tags:
-    - API</p>
-<hr />
 <h1 id="luamodbus"><a class="toclink" href="#luamodbus">LuaModbus</a></h1>
 <p>LuaModbus provides a wrapper over libModbus (see <a href="https://libmodbus.org/">libmodbus (github.com)</a>, <a href="https://github.com/stephane/libmodbus/blob/master/COPYING.LESSER">LGPL-2.1</a>) to access Modbus-TCP/UDP-Devices from LUA. In addition to wrapping the libModbus library, LuaModbus also adds a background thread to cyclically read/write a set of registers and automatically reconnect the connection. Using this thread, after the connection is (re)established, a register can automatically be set to a given value (e.g. for setting a "startup" bit as seen in the Rexroth/Phoenix Contact I/O modules).
 The actual LUA wrapper is based on the <a href="https://github.com/etactica/lua-libmodbus">etactica/lua-libmodbus (github.com)</a> LUA bindings (<a href="https://github.com/etactica/lua-libmodbus/blob/master/LICENSE">MIT-License</a>), but heavily modified for use with OGS.</p>

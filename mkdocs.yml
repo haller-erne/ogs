@@ -23,6 +23,7 @@ nav:
         - OpcUA communication: libs/lua-opcua.md
         - Modbus/TCP/UDP communication: libs/lua-modbus.md
         - USB HID Devices (Buttons, Arduino, etc.): libs/lua-hid.md
+        - Data Protection API (safe secrets storage): libs/lua-dpapi.md
 
 # sample
 #    – Version 1.x:

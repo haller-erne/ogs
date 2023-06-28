@@ -906,13 +906,13 @@ in the samples below)!</p>
 <a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>
 <a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="c"># Encrypt</span>
 <a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="nv">$plaintext</span> <span class="p">=</span> <span class="s2">&quot;MySuperSecretPassword&quot;</span>
-<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="nv">$encrypted_b64</span> <span class="p">=</span> <span class="n">Encrypt-WithMachineKey</span><span class="p">(</span><span class="n">plaintext</span><span class="p">)</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="nv">$encrypted_b64</span> <span class="p">=</span> <span class="n">Encrypt-WithMachineKey</span><span class="p">(</span><span class="nv">$plaintext</span><span class="p">)</span>
 <a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>
 <a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="c"># Show the base64-string</span>
 <a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="nv">$encrypted_b64</span>
 <a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>
 <a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a><span class="c"># Decrypt again</span>
-<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a><span class="nv">$decrypted</span> <span class="p">=</span> <span class="n">Decrypt-WithMachineKey</span><span class="p">(</span><span class="n">encrypted_b64</span><span class="p">)</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a><span class="nv">$decrypted</span> <span class="p">=</span> <span class="n">Decrypt-WithMachineKey</span><span class="p">(</span><span class="nv">$encrypted_b64</span><span class="p">)</span>
 <a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>
 <a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a><span class="c"># Show the decrypted string</span>
 <a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a><span class="nv">$decrypted</span>

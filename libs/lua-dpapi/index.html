@@ -670,6 +670,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#sample-powershell-commandlet-for-encryption" class="md-nav__link">
+    Sample powershell commandlet for encryption
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -761,6 +768,13 @@
           <li class="md-nav__item">
   <a href="#encryptdecrypt-using-powershell" class="md-nav__link">
     Encrypt/decrypt using Powershell
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sample-powershell-commandlet-for-encryption" class="md-nav__link">
+    Sample powershell commandlet for encryption
   </a>
   
 </li>
@@ -916,6 +930,37 @@ in the samples below)!</p>
 <a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>
 <a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a><span class="c"># Show the decrypted string</span>
 <a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a><span class="nv">$decrypted</span>
+</code></pre></div>
+<h3 id="sample-powershell-commandlet-for-encryption"><a class="toclink" href="#sample-powershell-commandlet-for-encryption">Sample powershell commandlet for encryption</a></h3>
+<p>The following script is a sample for a commandlet to encrypt sensitive data from the commandline.
+Use this as follows:</p>
+<div class="highlight"><pre><span></span><code>powershell -file myscript.ps1 -data &quot;MySuperSecretPassword&quot;
+</code></pre></div>
+<p>Here is the sample:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c"># Encrypt a given text using DPAPI (machine key)</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c"># </span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c">#   powershell -file myscript.ps1 -data &quot;MySuperSecretPassword&quot;</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c">#</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="k">param</span><span class="p">(</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="p">[</span><span class="k">Parameter</span><span class="p">(</span><span class="k">Mandatory</span><span class="p">=</span><span class="nv">$True</span><span class="p">,</span> <span class="k">Position</span><span class="p">=</span><span class="n">0</span><span class="p">)]</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="no">[System.String]</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="nv">$data</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="p">)</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="k">Function</span> <span class="n">Encrypt-WithMachineKey</span><span class="p">(</span><span class="nv">$s</span><span class="p">)</span> <span class="p">{</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>    <span class="nb">Add-Type</span> <span class="n">-AssemblyName</span> <span class="n">System</span><span class="p">.</span><span class="n">Security</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>    <span class="nv">$bytes</span> <span class="p">=</span> <span class="no">[System.Text.Encoding]</span><span class="p">::</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="nv">$s</span><span class="p">)</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>    <span class="nv">$SecureStr</span> <span class="p">=</span> <span class="no">[Security.Cryptography.ProtectedData]</span><span class="p">::</span><span class="n">Protect</span><span class="p">(</span><span class="nv">$bytes</span><span class="p">,</span> <span class="nv">$null</span><span class="p">,</span> <span class="no">[Security.Cryptography.DataProtectionScope]</span><span class="p">::</span><span class="n">LocalMachine</span><span class="p">)</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>    <span class="nv">$SecureStrBase64</span> <span class="p">=</span> <span class="no">[System.Convert]</span><span class="p">::</span><span class="n">ToBase64String</span><span class="p">(</span><span class="nv">$SecureStr</span><span class="p">)</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>    <span class="k">return</span> <span class="nv">$SecureStrBase64</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="p">}</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="c"># Encrypt</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="nv">$encrypted_b64</span> <span class="p">=</span> <span class="n">Encrypt-WithMachineKey</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="c"># Show the base64-string</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="nv">$encrypted_b64</span>
 </code></pre></div>
 
 

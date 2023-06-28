@@ -87,7 +87,7 @@ local encrypted_b64 = 'AQAAANCMnd8BFdERjHoAwE/Cl+'...'ylQ='
 local encrypted = mime.unb64(encrypted_b64)
 
 -- Decrypt the raw data.
-local decrypted_data, err = dpapi.unprotect(plaintext) 
+local decrypted_data, err = dpapi.unprotect(encrypted) 
 if decrypted_data == nil then
     print("ERROR: decrypt failed, err=", err)
     os.exit(-1)
@@ -136,10 +136,10 @@ $plaintext = "MySuperSecretPassword"
 $encrypted_b64 = Encrypt-WithMachineKey(plaintext)
 
 # Show the base64-string
-$encrypted
+$encrypted_b64
 
 # Decrypt again
-$decrypted = Decrypt-WithMachineKey(encrypted)
+$decrypted = Decrypt-WithMachineKey(encrypted_b64)
 
 # Show the decrypted string
 $decrypted

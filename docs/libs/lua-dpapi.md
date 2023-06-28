@@ -133,13 +133,13 @@ Function Encrypt-WithMachineKey($s) {
 
 # Encrypt
 $plaintext = "MySuperSecretPassword"
-$encrypted_b64 = Encrypt-WithMachineKey(plaintext)
+$encrypted_b64 = Encrypt-WithMachineKey($plaintext)
 
 # Show the base64-string
 $encrypted_b64
 
 # Decrypt again
-$decrypted = Decrypt-WithMachineKey(encrypted_b64)
+$decrypted = Decrypt-WithMachineKey($encrypted_b64)
 
 # Show the decrypted string
 $decrypted

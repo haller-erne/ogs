@@ -146,6 +146,43 @@ $decrypted
 
 ```
 
+### Sample powershell commandlet for encryption
+
+The following script is a sample for a commandlet to encrypt sensitive data from the commandline.
+Use this as follows:
+
+    powershell -file myscript.ps1 -data "MySuperSecretPassword"
+
+Here is the sample:
+
+```powershell
+# Encrypt a given text using DPAPI (machine key)
+# 
+#   powershell -file myscript.ps1 -data "MySuperSecretPassword"
+#
+param(
+    [Parameter(Mandatory=$True, Position=0)]
+    [System.String]
+    $data
+)
+
+Function Encrypt-WithMachineKey($s) {
+    Add-Type -AssemblyName System.Security
+
+    $bytes = [System.Text.Encoding]::UTF8.GetBytes($s)
+    $SecureStr = [Security.Cryptography.ProtectedData]::Protect($bytes, $null, [Security.Cryptography.DataProtectionScope]::LocalMachine)
+    $SecureStrBase64 = [System.Convert]::ToBase64String($SecureStr)
+    return $SecureStrBase64
+}
+
+# Encrypt
+$encrypted_b64 = Encrypt-WithMachineKey($data)
+
+# Show the base64-string
+$encrypted_b64
+
+```
+
 
 
 

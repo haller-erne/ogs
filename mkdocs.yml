@@ -10,7 +10,9 @@ nav:
             - Nexo: tools/openprotocol/nexo.md
             - CS351/KE350: tools/openprotocol/sys350.md
             - GWK Operator+: tools/openprotocol/gwk.md
-            - Sturtevant 400mp: tools/openprotocol/sturtevant.md
+            - Sturtevant 400mp/TCVe2: tools/openprotocol/sturtevant.md
+            - HS-Technik NutBee: tools/openprotocol/hstechnik.md
+            - n-gineric: tools/openprotocol/ngineric.md
     - Scripting:
         - Getting Started: v3/getting-started.md
         - LUA interfaces:
@@ -24,6 +26,7 @@ nav:
         - Modbus/TCP/UDP communication: libs/lua-modbus.md
         - USB HID Devices (Buttons, Arduino, etc.): libs/lua-hid.md
         - Data Protection API (safe secrets storage): libs/lua-dpapi.md
+        - LUA network helpers (REST/OpenAPI): libs/lua-net.md
 
 # sample
 #    – Version 1.x:

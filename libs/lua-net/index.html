@@ -8,20 +8,18 @@
       
       
       
-        <link rel="canonical" href="https://haller-erne.github.io/ogs/libs/lua-dpapi/">
+        <link rel="canonical" href="https://haller-erne.github.io/ogs/libs/lua-net/">
       
       
-        <link rel="prev" href="../lua-hid/">
+        <link rel="prev" href="../lua-dpapi/">
       
-      
-        <link rel="next" href="../lua-net/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.18">
     
     
       
-        <title>LuaDPApi - OGS Documentation</title>
+        <title>LuaNet - OGS Documentation</title>
       
     
     
@@ -63,7 +61,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#luadpapi" class="md-skip">
+        <a href="#luanet" class="md-skip">
           Skip to content
         </a>
       
@@ -98,7 +96,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              LuaDPApi
+              LuaNet
             
           </span>
         </div>
@@ -616,6 +614,20 @@
               
   
   
+  
+    <li class="md-nav__item">
+      <a href="../lua-dpapi/" class="md-nav__link">
+        Data Protection API (safe secrets storage)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
     
   
   
@@ -628,12 +640,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Data Protection API (safe secrets storage)
+          LUA network helpers (REST/OpenAPI)
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Data Protection API (safe secrets storage)
+        LUA network helpers (REST/OpenAPI)
       </a>
       
         
@@ -680,8 +692,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#encrypt-a-string" class="md-nav__link">
-    Encrypt a string
+  <a href="#simple-get-request" class="md-nav__link">
+    Simple get request
   </a>
   
 </li>
@@ -689,20 +701,6 @@
           <li class="md-nav__item">
   <a href="#decrypt-base64-encoded-data" class="md-nav__link">
     Decrypt base64-encoded data
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#encryptdecrypt-using-powershell" class="md-nav__link">
-    Encrypt/decrypt using Powershell
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sample-powershell-commandlet-for-encryption" class="md-nav__link">
-    Sample powershell commandlet for encryption
   </a>
   
 </li>
@@ -716,20 +714,6 @@
   
 </nav>
       
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../lua-net/" class="md-nav__link">
-        LUA network helpers (REST/OpenAPI)
-      </a>
     </li>
   
 
@@ -796,8 +780,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#encrypt-a-string" class="md-nav__link">
-    Encrypt a string
+  <a href="#simple-get-request" class="md-nav__link">
+    Simple get request
   </a>
   
 </li>
@@ -805,20 +789,6 @@
           <li class="md-nav__item">
   <a href="#decrypt-base64-encoded-data" class="md-nav__link">
     Decrypt base64-encoded data
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#encryptdecrypt-using-powershell" class="md-nav__link">
-    Encrypt/decrypt using Powershell
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sample-powershell-commandlet-for-encryption" class="md-nav__link">
-    Sample powershell commandlet for encryption
   </a>
   
 </li>
@@ -843,19 +813,17 @@
                   
 
 
-<h1 id="luadpapi"><a class="toclink" href="#luadpapi">LuaDPApi</a></h1>
-<p>LuaDPApi provides an interface to the <a href="https://learn.microsoft.com/en-us/windows/win32/api/dpapi/">Microsoft Data Protection API</a>. It implements a thin LUA wrapper interface over the <code>CryptProtectData</code> and <code>CryptUnprotectData</code> API calls. </p>
-<p>The main purpose is to store secrets (like passwords, or API token etc.) in a configuration file (like to OGS <code>station.ini</code>) without exposing the sensitive data to the world (e.g. if storing backups of these configuration files or versioning these files through git). This works by encrypting the secret data and writing the encrypted string into the configuration file. The application reading the configuration file can the decrypt the data and use it.</p>
-<p>In the background, the <a href="https://learn.microsoft.com/en-us/windows/win32/api/dpapi/">Microsoft Data Protection API</a> encrypts/decrypts data by deriving an encryption key based on either the unique machine-id or a user-specific id:</p>
-<ul>
-<li>If the scope during the encryption is the machine-id, then all users, who are able to log on to this machine, will be able to decrypt the data. </li>
-<li>If the scope during the encryption is the user-id, then only the user, who encrypted the data will be able to decrypt later. Changes top the user password are tracked internally, so even after a password change, the user will be able to decrypt. If a users password is reset, then no access to the encrypted data is possible anymore.</li>
-</ul>
-<p>Note, that in an ActiveDirectory environment, backup keys are stored on the domain controller - allowing the domain administrator to decrypt, too. </p>
-<p>In addition to the user/machine-scope, an additional <code>enthropy</code> parameter can be used during encryption. In this case, the <code>enthropy</code>-data is added as part of the encryption key - effectively allowing successful decryption only, if the very same <code>enthropy</code>-data is added during decryption. This is e.g. used by the Edge browser to encrypt website passwords - the <code>entropy</code> data is the website URL, so without knowng the actual URL, no password can be decrypted.</p>
+<h1 id="luanet"><a class="toclink" href="#luanet">LuaNet</a></h1>
+<p>LuaNet provides simple to use functions for REST/OpenAPI calls using http and https protocols. Compared to <a href="https://github.com/lunarmodules/luasocket">luasocket</a> and <a href="http://mauriciocarneiro.github.io/software/luassl/index.html">luassl</a>, it uses the the Windows infrastructure and therefore correctly works with system proxies. Feature-wise it is not as flexible as luasocket/luassl at the moment (e.g. no direct access to all headers), but it is good enough for OAuth and SAP endpoints (like the <a href="https://api.sap.com/package/SAPDigitalManufacturingCloud/rest">SAP Digital Manufacturing Cloud</a>).</p>
+<p>The basic functions work in a blocking mode, i.e. the process calling the function is blocked until a response from the endpoint is received. However, there are also asynchronous functions for starting a (post) request and polling for the completion. This is especially useful for long-running OpenAPI calls (like some SAP digital manufacturing cloud endpoints).</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>All functions in LuaNet work transparently, i. e. use raw text strings (binary) for request and response body texts. For OpenAPI/REST services typically JSON encoded objects are used. From the large number of lua json libraries (e. g. see <a href="https://github.com/LewisJEllis/awesome-lua#parsing-and-serialization">Awesome Lua</a>), we recommend to use <a href="https://github.com/mpx/lua-cjson">Lua CJSON</a>. If you use another library, make sure it support UTF8 correctly! </p>
+</div>
 <h2 id="module"><a class="toclink" href="#module">Module</a></h2>
-<p>The LuaDPApi module provides global functions to access the <a href="https://learn.microsoft.com/en-us/windows/win32/api/dpapi/">Microsoft Data Protection API</a>.</p>
+<p>The LuaNet module provides global functions to execute http/https requests.</p>
 <h3 id="functions"><a class="toclink" href="#functions">Functions</a></h3>
+<p>The following table lists blocking functions: </p>
 <table>
 <thead>
 <tr>
@@ -867,50 +835,82 @@
 </thead>
 <tbody>
 <tr>
-<td><code>protect(data: string, scope: string = 'machine' entropy: string = nil)</code></td>
-<td><code>data: string</code> or <code>nil, win32error: integer</code></td>
-<td>Encrypts the given data (binary string) using the given scope (one of 'maschine' or 'user') and entropy. Returns the encrypted data (as a binary string) or nil and the Win32 API error code.</td>
+<td><code>get(url: string, user: string = nil, pass: string = nil)</code></td>
+<td><code>data: string, status: number, statustext: string, data: string</code> or <code>nil, status: number, statustext: number</code></td>
+<td>Executes a blocking get request for the given URL. If the server returns (http) status = 200, then the response is considered valid. In any case, <code>status</code> and <code>statustext</code> will receive the http response header status data. If a response body is available, then this is returned in the <code>data</code> return value (even if status ~= 200).</td>
 <td>None</td>
 </tr>
 <tr>
-<td><code>unprotect(data: string, entropy: string = nil)</code></td>
-<td><code>data: string</code> or <code>nil, win32error: integer</code></td>
-<td>Dencrypts the given data (binary string) using the given entropy. Returns the decrypted data (as a binary string) or nil and the Win32 API error code.</td>
+<td><code>get_oauth_token(url: string, user: string = nil, pass: string = nil)</code></td>
+<td><code>status: number, data: string</code> or <code>nil, status: number, statustext: string</code></td>
+<td>Requests client credentials from an OAuth2 server (granttype = client_credentials).</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>post(url: string, body: string = nil, auth_bearer_token: string = nil)</code></td>
+<td><code>status: number, data: string, statustext: string</code></td>
+<td>Send a post request to the given endpoint <code>URL</code>, with post <code>data</code> in the request body, optinally adding the <code>auth_bearer_token</code> value to the <code>Authorization</code> header.</td>
 <td>None</td>
 </tr>
 </tbody>
 </table>
-<div class="admonition info">
-<p class="admonition-title">Info</p>
-<p>Note that the LUA functions pass raw data strings to the underlying <a href="https://learn.microsoft.com/en-us/windows/win32/api/dpapi/">Microsoft Data Protection API</a> functions. Encoding and decoding text strings (e.g. to read/write the encrypted binary data from/to a configuration file) must be handled by additional code.</p>
-</div>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>As encrypted data is binary, for configuration files, it is usually stored as a base64 encoded string. Use the LUA <code>mime</code> library (part of the <code>luasocket</code> library) to encode and decode a base64 string (see below for sample code). Also make sure to use the same text encoding for encryption and decryption (LUA uses UTF8-strings)!</p>
+<p>The following table lists the non-blocking functions:</p>
+<table>
+<thead>
+<tr>
+<th>Function Name</th>
+<th>Return Type</th>
+<th>Description</th>
+<th>Tags</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>post_async(url: string, body: string = nil, auth_bearer_token: string = nil)</code></td>
+<td><code>handle: number</code> or <code>nil</code></td>
+<td>Starts an async post request (see the blocking <code>post</code> above for parameter descriptions). On success a <code>handle</code> is returned, which can be used for polling the request status or aborting the request.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>abort_async_request(handle: number)</code></td>
+<td>(no return value)</td>
+<td>Tries to abort a currently active request identified by the <code>handle</code> value (as returned from <code>post_async()</code>. If the request is currently active, it might block for a short time - until the request is actually cancelled. If a request was cancelled, then further calls to <code>poll_async_request()</code> will return <code>nil</code>, as the internal request object for the given handle was deleted and does not exist anymore.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>poll_async_request(handle: number)</code></td>
+<td><code>requeststate: number, status: number, data: string, statustext: string</code>  or <code>nil, errorcode: number, errortext: string</code></td>
+<td>Checks the request state of a pending request and returns the current state in <code>requeststate</code>. If the 'handle' was not found, nil is returned for <code>requeststae</code>, else the current (internal) process step. A value of &gt;= 100 indicates, that the request has completed and the other return values are valid (see the blocking <code>post</code> above for result value descriptions). Note, that the internal request object is automatically deleted after <code>poll_async_request()</code> returns a status of &gt;= 100.</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>A request started through <code>post_async()</code> must be completed by either aborting the request through <code>abort_async_request()</code> or by polling the request (by using <code>poll_async_request</code>) until a state of &gt;= 100 is returned. If not, then the internal request object will not get deleted thus consuming more and more resource.</p>
 </div>
 <h2 id="examples"><a class="toclink" href="#examples">Examples</a></h2>
-<h3 id="encrypt-a-string"><a class="toclink" href="#encrypt-a-string">Encrypt a string</a></h3>
-<p>This sample shows how to encrypt a given plaintext string (LUA string, UTF8-encoded) and encode the encrypted data into a base64 string.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kd">local</span> <span class="n">dpapi</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s1">&#39;luadpapi&#39;</span><span class="p">)</span>  <span class="c1">-- load the DPAPI</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kd">local</span> <span class="n">mime</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s1">&#39;mime&#39;</span><span class="p">)</span>       <span class="c1">-- load luasocket/mime (base64)</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1">-- Sample plaintext password (or connection string, etc)</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="kd">local</span> <span class="n">plaintext</span> <span class="o">=</span> <span class="s1">&#39;MySuperSecretPassword&#39;</span> 
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1">-- Encrypt the plaintext for the &#39;machine&#39; scope. All users logged </span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1">-- into the same machine will be able to decrypt the data later.</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c1">-- encrypt (usually done at the commandline through powershell):</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="kd">local</span> <span class="n">encrypted_data</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">dpapi</span><span class="p">.</span><span class="n">protect</span><span class="p">(</span><span class="n">plaintext</span><span class="p">,</span> <span class="s1">&#39;machine&#39;</span><span class="p">)</span> 
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="kr">if</span> <span class="n">encrypted_data</span> <span class="o">==</span> <span class="kc">nil</span> <span class="kr">then</span>
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ERROR: encrypt failed, err=&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
-<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="nb">os.exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="kr">end</span>
-<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
-<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="c1">-- Do a base64 encode of the encrypted data for storing in *.ini file:</span>
-<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="kd">local</span> <span class="n">encrypted_b64</span> <span class="o">=</span> <span class="n">mime</span><span class="p">.</span><span class="n">b64</span><span class="p">(</span><span class="n">encrypted_data</span><span class="p">)</span>     
-<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
-<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="c1">-- TODO: save to some text file, but for now just print it</span>
-<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;encrypted, base64 encoded data: &quot;</span><span class="p">,</span> <span class="n">encrypted_b64</span><span class="p">)</span>
+<h3 id="simple-get-request"><a class="toclink" href="#simple-get-request">Simple get request</a></h3>
+<p>This sample shows how to execute a simple https get request with basic authentication (e.g. typical surveillance camera).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kd">local</span> <span class="n">mime</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s1">&#39;mime&#39;</span><span class="p">)</span>       <span class="c1">-- load luasocket/mime (base64)</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1">-- Sample plaintext password (or connection string, etc)</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kd">local</span> <span class="n">plaintext</span> <span class="o">=</span> <span class="s1">&#39;MySuperSecretPassword&#39;</span> 
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1">-- Encrypt the plaintext for the &#39;machine&#39; scope. All users logged </span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1">-- into the same machine will be able to decrypt the data later.</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1">-- encrypt (usually done at the commandline through powershell):</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="kd">local</span> <span class="n">encrypted_data</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">dpapi</span><span class="p">.</span><span class="n">protect</span><span class="p">(</span><span class="n">plaintext</span><span class="p">,</span> <span class="s1">&#39;machine&#39;</span><span class="p">)</span> 
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="kr">if</span> <span class="n">encrypted_data</span> <span class="o">==</span> <span class="kc">nil</span> <span class="kr">then</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ERROR: encrypt failed, err=&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="nb">os.exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="kr">end</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="c1">-- Do a base64 encode of the encrypted data for storing in *.ini file:</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="kd">local</span> <span class="n">encrypted_b64</span> <span class="o">=</span> <span class="n">mime</span><span class="p">.</span><span class="n">b64</span><span class="p">(</span><span class="n">encrypted_data</span><span class="p">)</span>     
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="c1">-- TODO: save to some text file, but for now just print it</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;encrypted, base64 encoded data: &quot;</span><span class="p">,</span> <span class="n">encrypted_b64</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="decrypt-base64-encoded-data"><a class="toclink" href="#decrypt-base64-encoded-data">Decrypt base64-encoded data</a></h3>
 <p>This sample shows how to decrypt previously encrypted and base64 encoded data. </p>
@@ -933,78 +933,6 @@
 <a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>
 <a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="c1">-- TODO: use the decrypted data - assume this is a string and print it:</span>
 <a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;decrypted data: &quot;</span><span class="p">,</span> <span class="n">decrypted_data</span><span class="p">)</span>
-</code></pre></div>
-<h3 id="encryptdecrypt-using-powershell"><a class="toclink" href="#encryptdecrypt-using-powershell">Encrypt/decrypt using Powershell</a></h3>
-<p>The DPAPI is also implemented in the [Security.Cryptography.ProtectedData] DotNET assembly, so 
-these functions can be also be used from Powershell.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>In contrast to LUA, Powershell by default uses Unicode encodiung (16-Bit characters)! 
-For interoperability with LUA, make sure to encode/decode all strings to UTF8 (as shown 
-in the samples below)!</p>
-</div>
-<p>The following samples are based on <a href="https://stackoverflow.com/questions/46400234/encrypt-string-with-the-machine-key-in-powershell">https://stackoverflow.com/questions/46400234/encrypt-string-with-the-machine-key-in-powershell</a>.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">Function</span> <span class="n">Decrypt-WithMachineKey</span><span class="p">(</span><span class="nv">$s</span><span class="p">)</span> <span class="p">{</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="nb">Add-Type</span> <span class="n">-AssemblyName</span> <span class="n">System</span><span class="p">.</span><span class="n">Security</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="nv">$SecureStr</span> <span class="p">=</span> <span class="no">[System.Convert]</span><span class="p">::</span><span class="n">FromBase64String</span><span class="p">(</span><span class="nv">$s</span><span class="p">)</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="nv">$bytes</span> <span class="p">=</span> <span class="no">[Security.Cryptography.ProtectedData]</span><span class="p">::</span><span class="n">Unprotect</span><span class="p">(</span><span class="nv">$SecureStr</span><span class="p">,</span> <span class="nv">$null</span><span class="p">,</span> <span class="no">[Security.Cryptography.DataProtectionScope]</span><span class="p">::</span><span class="n">LocalMachine</span><span class="p">)</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    <span class="nv">$Password</span> <span class="p">=</span> <span class="no">[System.Text.Encoding]</span><span class="p">::</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="nv">$bytes</span><span class="p">)</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    <span class="k">return</span> <span class="nv">$Password</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="p">}</span>
-<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
-<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="k">Function</span> <span class="n">Encrypt-WithMachineKey</span><span class="p">(</span><span class="nv">$s</span><span class="p">)</span> <span class="p">{</span>
-<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    <span class="nb">Add-Type</span> <span class="n">-AssemblyName</span> <span class="n">System</span><span class="p">.</span><span class="n">Security</span>
-<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>
-<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>    <span class="nv">$bytes</span> <span class="p">=</span> <span class="no">[System.Text.Encoding]</span><span class="p">::</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="nv">$s</span><span class="p">)</span>
-<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>    <span class="nv">$SecureStr</span> <span class="p">=</span> <span class="no">[Security.Cryptography.ProtectedData]</span><span class="p">::</span><span class="n">Protect</span><span class="p">(</span><span class="nv">$bytes</span><span class="p">,</span> <span class="nv">$null</span><span class="p">,</span> <span class="no">[Security.Cryptography.DataProtectionScope]</span><span class="p">::</span><span class="n">LocalMachine</span><span class="p">)</span>
-<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>    <span class="nv">$SecureStrBase64</span> <span class="p">=</span> <span class="no">[System.Convert]</span><span class="p">::</span><span class="n">ToBase64String</span><span class="p">(</span><span class="nv">$SecureStr</span><span class="p">)</span>
-<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>    <span class="k">return</span> <span class="nv">$SecureStrBase64</span>
-<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="p">}</span>
-<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>
-<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="c"># Encrypt</span>
-<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="nv">$plaintext</span> <span class="p">=</span> <span class="s2">&quot;MySuperSecretPassword&quot;</span>
-<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="nv">$encrypted_b64</span> <span class="p">=</span> <span class="n">Encrypt-WithMachineKey</span><span class="p">(</span><span class="nv">$plaintext</span><span class="p">)</span>
-<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>
-<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="c"># Show the base64-string</span>
-<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="nv">$encrypted_b64</span>
-<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>
-<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a><span class="c"># Decrypt again</span>
-<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a><span class="nv">$decrypted</span> <span class="p">=</span> <span class="n">Decrypt-WithMachineKey</span><span class="p">(</span><span class="nv">$encrypted_b64</span><span class="p">)</span>
-<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>
-<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a><span class="c"># Show the decrypted string</span>
-<a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a><span class="nv">$decrypted</span>
-</code></pre></div>
-<h3 id="sample-powershell-commandlet-for-encryption"><a class="toclink" href="#sample-powershell-commandlet-for-encryption">Sample powershell commandlet for encryption</a></h3>
-<p>The following script is a sample for a commandlet to encrypt sensitive data from the commandline.
-Use this as follows:</p>
-<div class="highlight"><pre><span></span><code>powershell -file myscript.ps1 -data &quot;MySuperSecretPassword&quot;
-</code></pre></div>
-<p>Here is the sample:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c"># Encrypt a given text using DPAPI (machine key)</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c"># </span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c">#   powershell -file myscript.ps1 -data &quot;MySuperSecretPassword&quot;</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c">#</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="k">param</span><span class="p">(</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="p">[</span><span class="k">Parameter</span><span class="p">(</span><span class="k">Mandatory</span><span class="p">=</span><span class="nv">$True</span><span class="p">,</span> <span class="k">Position</span><span class="p">=</span><span class="n">0</span><span class="p">)]</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="no">[System.String]</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="nv">$data</span>
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="p">)</span>
-<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
-<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="k">Function</span> <span class="n">Encrypt-WithMachineKey</span><span class="p">(</span><span class="nv">$s</span><span class="p">)</span> <span class="p">{</span>
-<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>    <span class="nb">Add-Type</span> <span class="n">-AssemblyName</span> <span class="n">System</span><span class="p">.</span><span class="n">Security</span>
-<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>
-<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>    <span class="nv">$bytes</span> <span class="p">=</span> <span class="no">[System.Text.Encoding]</span><span class="p">::</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="nv">$s</span><span class="p">)</span>
-<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>    <span class="nv">$SecureStr</span> <span class="p">=</span> <span class="no">[Security.Cryptography.ProtectedData]</span><span class="p">::</span><span class="n">Protect</span><span class="p">(</span><span class="nv">$bytes</span><span class="p">,</span> <span class="nv">$null</span><span class="p">,</span> <span class="no">[Security.Cryptography.DataProtectionScope]</span><span class="p">::</span><span class="n">LocalMachine</span><span class="p">)</span>
-<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>    <span class="nv">$SecureStrBase64</span> <span class="p">=</span> <span class="no">[System.Convert]</span><span class="p">::</span><span class="n">ToBase64String</span><span class="p">(</span><span class="nv">$SecureStr</span><span class="p">)</span>
-<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>    <span class="k">return</span> <span class="nv">$SecureStrBase64</span>
-<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="p">}</span>
-<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>
-<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="c"># Encrypt</span>
-<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="nv">$encrypted_b64</span> <span class="p">=</span> <span class="n">Encrypt-WithMachineKey</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
-<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>
-<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="c"># Show the base64-string</span>
-<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="nv">$encrypted_b64</span>
 </code></pre></div>
 
 

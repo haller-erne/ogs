@@ -6,16 +6,14 @@ Here is the state diagram for the behaviour:
 
 ``` mermaid
 stateDiagram-v2
-    [*] --> Running: init()
-    state Running {
-      inactive --> active: activate()
-      active --> inactive: deactivate()
-      active --> enabled: enable()
-      enabled --> enabled: execute()
-      enabled --> disabled: disable()
-      disabled --> enabled: enable()
-      disabled --> inactive: deactivate()
-    }
+    [*] --> active: init()
+    inactive --> active: activate()
+    active --> inactive: deactivate()
+    active --> enabled: enable()
+    enabled --> enabled: execute()
+    enabled --> disabled: disable()
+    disabled --> enabled: enable()
+    disabled --> inactive: deactivate()
 ```
 
 ### Mermaid test

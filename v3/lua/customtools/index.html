@@ -923,16 +923,14 @@
 <p>The simplified custom tool API uses four states and associated transitions to implement the tool behaviour. Each transitions can be implemented in the custom tool LUA code to provide the custom functionality - if not implemented, the transition is executed without a custom action.</p>
 <p>Here is the state diagram for the behaviour:</p>
 <pre class="mermaid"><code>stateDiagram-v2
-    [*] --&gt; Running: init()
-    state Running {
-      inactive --&gt; active: activate()
-      active --&gt; inactive: deactivate()
-      active --&gt; enabled: enable()
-      enabled --&gt; enabled: execute()
-      enabled --&gt; disabled: disable()
-      disabled --&gt; enabled: enable()
-      disabled --&gt; inactive: deactivate()
-    }</code></pre>
+    [*] --&gt; active: init()
+    inactive --&gt; active: activate()
+    active --&gt; inactive: deactivate()
+    active --&gt; enabled: enable()
+    enabled --&gt; enabled: execute()
+    enabled --&gt; disabled: disable()
+    disabled --&gt; enabled: enable()
+    disabled --&gt; inactive: deactivate()</code></pre>
 <h3 id="mermaid-test"><a class="toclink" href="#mermaid-test">Mermaid test</a></h3>
 <p>The following is a simple mermaid sequence diagram, for more details, see <a href="https://squidfunk.github.io/mkdocs-material/reference/diagrams/">https://squidfunk.github.io/mkdocs-material/reference/diagrams/</a></p>
 <pre class="mermaid"><code>sequenceDiagram

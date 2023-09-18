@@ -681,44 +681,38 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#simplified-api" class="md-nav__link">
-    Simplified API
+  <a href="#lua-driver-anatomy-and-driver-registration" class="md-nav__link">
+    LUA driver anatomy and driver registration
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#luanet" class="md-nav__link">
-    LuaNet
+  <a href="#simplified-api" class="md-nav__link">
+    Simplified API
   </a>
   
-    <nav class="md-nav" aria-label="LuaNet">
+    <nav class="md-nav" aria-label="Simplified API">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#module" class="md-nav__link">
-    Module
-  </a>
-  
-    <nav class="md-nav" aria-label="Module">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#functions" class="md-nav__link">
-    Functions
+  <a href="#tool-driver-interface-functions" class="md-nav__link">
+    Tool driver interface functions
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mermaid-test" class="md-nav__link">
-    Mermaid test
+  <a href="#tool-driver-formatting-functions" class="md-nav__link">
+    Tool driver formatting functions
   </a>
   
 </li>
         
-      </ul>
-    </nav>
+          <li class="md-nav__item">
+  <a href="#tool-driver-miscelaneous-functions" class="md-nav__link">
+    Tool driver miscelaneous functions
+  </a>
   
 </li>
         
@@ -936,44 +930,38 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#simplified-api" class="md-nav__link">
-    Simplified API
+  <a href="#lua-driver-anatomy-and-driver-registration" class="md-nav__link">
+    LUA driver anatomy and driver registration
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#luanet" class="md-nav__link">
-    LuaNet
+  <a href="#simplified-api" class="md-nav__link">
+    Simplified API
   </a>
   
-    <nav class="md-nav" aria-label="LuaNet">
+    <nav class="md-nav" aria-label="Simplified API">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#module" class="md-nav__link">
-    Module
-  </a>
-  
-    <nav class="md-nav" aria-label="Module">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#functions" class="md-nav__link">
-    Functions
+  <a href="#tool-driver-interface-functions" class="md-nav__link">
+    Tool driver interface functions
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mermaid-test" class="md-nav__link">
-    Mermaid test
+  <a href="#tool-driver-formatting-functions" class="md-nav__link">
+    Tool driver formatting functions
   </a>
   
 </li>
         
-      </ul>
-    </nav>
+          <li class="md-nav__item">
+  <a href="#tool-driver-miscelaneous-functions" class="md-nav__link">
+    Tool driver miscelaneous functions
+  </a>
   
 </li>
         
@@ -996,6 +984,8 @@
                 
                   
 
+
+  <h1>LUA custom tools</h1>
 
 <h2 id="overview"><a class="toclink" href="#overview">Overview</a></h2>
 <p>OGS has an interface to add additional tool drivers by adding Windows-DLLs to the <code>[TOOL_DLL]</code> section in <code>station.ini</code>. To make it easier to implement custom tool drivers, OGS provides <code>heLuaTool.dll</code> - this allows implementing tool drivers in pure LUA. </p>
@@ -1037,6 +1027,22 @@
 <p class="admonition-title">Info</p>
 <p>It is highly recommended to use the <a href="#simplified-api">Simplified API</a> described below to implement custom tool drivers - using the low-level API requires in-depth knowledge of the API to not break other drivers!</p>
 </div>
+<h2 id="lua-driver-anatomy-and-driver-registration"><a class="toclink" href="#lua-driver-anatomy-and-driver-registration">LUA driver anatomy and driver registration</a></h2>
+<p>The LUA tool driver must be implemented as LUA module, returning the module table. Another requirement is to have the tool driver type as member <code>type</code> in the module table (this is how <code>station.ini</code> and the actual LUA driver is linked). </p>
+<p>In addition to this, it is <strong>required</strong> to register the driver module with OGS by adding the tool driver type and its module to the global <code>lua_known_tool_types</code> table - best practice is to use the function <code>register_tool</code> from the <code>lua_tool_helpers</code>-module.</p>
+<p>Here is a skeleton of a driver module:</p>
+<div class="highlight"><span class="filename">my_custom__driver.lua</span><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">-- My custom LUA tool driver</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kd">local</span> <span class="n">_M</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="nb">type</span> <span class="o">=</span> <span class="s1">&#39;MyCustomTool&#39;</span><span class="p">,</span>     <span class="c1">-- type id (must match the DRIVER= in INI file)</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="p">}</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="c1">-- register this tool with OGS (heLuaTool.dll)</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="kd">local</span> <span class="n">helpers</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s1">&#39;lua_tool_helpers&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="n">helpers</span><span class="p">.</span><span class="n">register_tool</span><span class="p">(</span><span class="n">_M</span><span class="p">)</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1">-- return the module</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="kr">return</span> <span class="n">_M</span>
+</code></pre></div>
 <h2 id="simplified-api"><a class="toclink" href="#simplified-api">Simplified API</a></h2>
 <p>The simplified custom tool driver API uses five states and associated transitions to implement the tool behaviour. Each transitions can be implemented in the custom tool LUA code to provide the custom functionality - if not implemented, the transition is executed without a custom action.</p>
 <p>Here is the state diagram for the behaviour:</p>
@@ -1049,17 +1055,80 @@
     enabled --&gt; disabled: disable()
     disabled --&gt; enabled: enable()
     disabled --&gt; inactive: deactivate()</code></pre>
-<h1 id="luanet"><a class="toclink" href="#luanet">LuaNet</a></h1>
-<p>LuaNet provides simple to use functions for REST/OpenAPI calls using http and https protocols. Compared to <a href="https://github.com/lunarmodules/luasocket">luasocket</a> and <a href="http://mauriciocarneiro.github.io/software/luassl/index.html">luassl</a>, it uses the the Windows infrastructure and therefore correctly works with system proxies. Feature-wise it is not as flexible as luasocket/luassl at the moment (e.g. no direct access to all headers), but it is good enough for OAuth and SAP endpoints (like the <a href="https://api.sap.com/package/SAPDigitalManufacturingCloud/rest">SAP Digital Manufacturing Cloud</a>).</p>
-<p>The basic functions work in a blocking mode, i.e. the process calling the function is blocked until a response from the endpoint is received. However, there are also asynchronous functions for starting a (post) request and polling for the completion. This is especially useful for long-running OpenAPI calls (like some SAP digital manufacturing cloud endpoints).</p>
+<p>The <code>active</code> state is entered whenever OGS has an active operation for this tool. While the tool is <code>active</code>, it might switch back and forth between <code>disabled</code> and <code>enabled</code> (e.g. depending on any external enable/release condition).  After a tool result has been received, the state typically switches back to <code>inactive</code> (another tool is active or workflow has finished). </p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
-<p>All functions in LuaNet work transparently, i. e. use raw text strings (binary) for request and response body texts. For OpenAPI/REST services typically JSON encoded objects are used. From the large number of lua json libraries (e. g. see <a href="https://github.com/LewisJEllis/awesome-lua#parsing-and-serialization">Awesome Lua</a>), we recommend to use <a href="https://github.com/mpx/lua-cjson">Lua CJSON</a>. If you use another library, make sure it support UTF8 correctly! </p>
+<p>Use the <code>lua_tool_helpers.lua</code> in your code - this provides helpers for registering the tool driver, flexible default formatting functions and a few handy helpers!</p>
 </div>
-<h2 id="module"><a class="toclink" href="#module">Module</a></h2>
-<p>The LuaNet module provides global functions to execute http/https requests.</p>
-<h3 id="functions"><a class="toclink" href="#functions">Functions</a></h3>
-<p>The following table lists blocking functions: </p>
+<h3 id="tool-driver-interface-functions"><a class="toclink" href="#tool-driver-interface-functions">Tool driver interface functions</a></h3>
+<p>The actual tool driver implementation is provided by implementing the tool driver interface functions - and return them as members of the module table. Note that each interface has a <code>channel</code> parameter with</p>
+<p>A typical implementation would look like the following (adding the <code>_M.init()</code>, the <code>_M.enable()</code> and the the <code>_M.execute()</code> functions):</p>
+<div class="highlight"><span class="filename">my_custom__driver.lua</span><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">-- My custom LUA tool driver</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kd">local</span> <span class="n">_M</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="nb">type</span> <span class="o">=</span> <span class="s1">&#39;MyCustomTool&#39;</span><span class="p">,</span>     <span class="c1">-- type id (must match the DRIVER= in INI file)</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="p">}</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="kd">local</span> <span class="n">helpers</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s1">&#39;lua_tool_helpers&#39;</span><span class="p">)</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1">-------------------------------------------------------------</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="c1">-- Tool event: Initialize tool - called once during OGS init </span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="c1">-- return &#39;OK&#39; or some error text if the initialization failes.</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="kr">function</span> <span class="nc">_M</span><span class="p">.</span><span class="nf">init</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    <span class="c1">-- Decode/get my configuration (from station.ini)</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    <span class="kd">local</span> <span class="n">cfg</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>        <span class="n">ComPort</span> <span class="o">=</span> <span class="n">channel</span><span class="p">.</span><span class="n">ini_params</span><span class="p">.</span><span class="n">COM_PORT</span><span class="p">,</span>      <span class="c1">-- COM port</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>    <span class="p">}</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>    <span class="c1">-- Do whatever is needed to initialize your driver</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>    <span class="c1">-- ...</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>    <span class="n">channel</span><span class="p">.</span><span class="n">cfg</span> <span class="o">=</span> <span class="n">cfg</span>         <span class="c1">-- store the channels config data</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>    <span class="kr">return</span> <span class="s1">&#39;OK&#39;</span>               <span class="c1">-- init successfully done</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="kr">end</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="c1">----------------------------------------------------------------------------</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="c1">-- Tool event: Cyclically called while the tool is enabled</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="c1">-- return the tool task state</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="kr">function</span> <span class="nc">_M</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>    <span class="c1">-- Check for tool finished</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>    <span class="kd">local</span> <span class="n">ResultData</span> <span class="o">=</span> <span class="n">_M</span><span class="p">.</span><span class="n">GetResultData</span><span class="p">()</span> <span class="c1">-- must be implemented!</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>    <span class="kr">if</span> <span class="n">ResultData</span> <span class="o">==</span> <span class="kc">nil</span> <span class="kr">then</span>       <span class="c1">-- no data available from the tool</span>
+<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>        <span class="kr">return</span> <span class="n">channel</span><span class="p">.</span><span class="n">task_state</span>   <span class="c1">-- wait more.</span>
+<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>    <span class="kr">end</span>
+<a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>    <span class="kr">if</span> <span class="n">ResultData</span><span class="p">.</span><span class="n">Error</span> <span class="kr">then</span>        <span class="c1">-- some error occurred</span>
+<a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a>        <span class="kr">return</span> <span class="n">lua_task_fault</span>       <span class="c1">-- return an error code</span>
+<a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a>    <span class="kr">end</span>
+<a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a>    <span class="kr">if</span> <span class="n">ResultData</span><span class="p">.</span><span class="n">Data</span> <span class="kr">then</span>         <span class="c1">-- received data</span>
+<a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a>        <span class="c1">-- Build a result data table and notify the OGS core </span>
+<a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a>        <span class="kd">local</span> <span class="n">values</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a>            <span class="n">ResultData</span><span class="p">.</span><span class="n">torque</span><span class="p">,</span>          <span class="c1">-- M1 actual value</span>
+<a id="__codelineno-2-37" name="__codelineno-2-37" href="#__codelineno-2-37"></a>            <span class="n">ResultData</span><span class="p">.</span><span class="n">angle</span><span class="p">,</span>           <span class="c1">-- M2 actual value</span>
+<a id="__codelineno-2-38" name="__codelineno-2-38" href="#__codelineno-2-38"></a>            <span class="n">ResultData</span><span class="p">.</span><span class="n">t_min</span><span class="p">,</span>           <span class="c1">-- M1 min</span>
+<a id="__codelineno-2-39" name="__codelineno-2-39" href="#__codelineno-2-39"></a>            <span class="n">ResultData</span><span class="p">.</span><span class="n">t_max</span><span class="p">,</span>           <span class="c1">-- M1 max</span>
+<a id="__codelineno-2-40" name="__codelineno-2-40" href="#__codelineno-2-40"></a>            <span class="mf">0.0</span><span class="p">,</span>                        <span class="c1">-- M2 min</span>
+<a id="__codelineno-2-41" name="__codelineno-2-41" href="#__codelineno-2-41"></a>            <span class="mf">0.0</span>                         <span class="c1">-- M2 max</span>
+<a id="__codelineno-2-42" name="__codelineno-2-42" href="#__codelineno-2-42"></a>        <span class="p">}</span>
+<a id="__codelineno-2-43" name="__codelineno-2-43" href="#__codelineno-2-43"></a>        <span class="kd">local</span> <span class="n">error_code</span> <span class="o">=</span> <span class="n">helpers</span><span class="p">.</span><span class="n">get_code_from_limits</span><span class="p">(</span><span class="n">ResultData</span><span class="p">.</span><span class="n">torque</span><span class="p">,</span> <span class="n">ResultData</span><span class="p">.</span><span class="n">t_min</span><span class="p">,</span> <span class="n">ResultData</span><span class="p">.</span><span class="n">t_max</span><span class="p">)</span>
+<a id="__codelineno-2-44" name="__codelineno-2-44" href="#__codelineno-2-44"></a>        <span class="n">lua_tool_result_response</span><span class="p">(</span><span class="n">channel</span><span class="p">.</span><span class="n">tool</span><span class="p">,</span> <span class="n">error_code</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;2A&#39;</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+<a id="__codelineno-2-45" name="__codelineno-2-45" href="#__codelineno-2-45"></a>        <span class="kr">return</span> <span class="n">lua_task_completed</span>
+<a id="__codelineno-2-46" name="__codelineno-2-46" href="#__codelineno-2-46"></a>    <span class="kr">end</span>
+<a id="__codelineno-2-47" name="__codelineno-2-47" href="#__codelineno-2-47"></a>    <span class="kr">return</span> <span class="n">channel</span><span class="p">.</span><span class="n">task_state</span>       <span class="c1">-- wait more.</span>
+<a id="__codelineno-2-48" name="__codelineno-2-48" href="#__codelineno-2-48"></a><span class="kr">end</span>
+<a id="__codelineno-2-49" name="__codelineno-2-49" href="#__codelineno-2-49"></a>
+<a id="__codelineno-2-50" name="__codelineno-2-50" href="#__codelineno-2-50"></a><span class="c1">-------------------------------------------------------------</span>
+<a id="__codelineno-2-51" name="__codelineno-2-51" href="#__codelineno-2-51"></a><span class="c1">-- Tool event: Called whenever the tool is to be enabled</span>
+<a id="__codelineno-2-52" name="__codelineno-2-52" href="#__codelineno-2-52"></a><span class="c1">-- @ output: true|false  - tool enabled/not enabled </span>
+<a id="__codelineno-2-53" name="__codelineno-2-53" href="#__codelineno-2-53"></a><span class="c1">--                         (will be called again until enabled!)</span>
+<a id="__codelineno-2-54" name="__codelineno-2-54" href="#__codelineno-2-54"></a><span class="kr">function</span> <span class="nc">_M</span><span class="p">.</span><span class="nf">enable</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+<a id="__codelineno-2-55" name="__codelineno-2-55" href="#__codelineno-2-55"></a>    <span class="kd">local</span> <span class="n">cfg</span> <span class="o">=</span> <span class="n">channel</span><span class="p">.</span><span class="n">cfg</span>     <span class="c1">-- access the channel config data</span>
+<a id="__codelineno-2-56" name="__codelineno-2-56" href="#__codelineno-2-56"></a>    <span class="c1">-- Do whatever is needed</span>
+<a id="__codelineno-2-57" name="__codelineno-2-57" href="#__codelineno-2-57"></a>    <span class="kr">return</span> <span class="kc">true</span>                 <span class="c1">-- tool is enabled</span>
+<a id="__codelineno-2-58" name="__codelineno-2-58" href="#__codelineno-2-58"></a><span class="kr">end</span>
+<a id="__codelineno-2-59" name="__codelineno-2-59" href="#__codelineno-2-59"></a>
+<a id="__codelineno-2-60" name="__codelineno-2-60" href="#__codelineno-2-60"></a><span class="c1">-------------------------------------------------------------</span>
+<a id="__codelineno-2-61" name="__codelineno-2-61" href="#__codelineno-2-61"></a><span class="c1">-- register this tool with OGS (heLuaTool.dll)</span>
+<a id="__codelineno-2-62" name="__codelineno-2-62" href="#__codelineno-2-62"></a><span class="n">helpers</span><span class="p">.</span><span class="n">register_tool</span><span class="p">(</span><span class="n">_M</span><span class="p">)</span>
+<a id="__codelineno-2-63" name="__codelineno-2-63" href="#__codelineno-2-63"></a><span class="c1">-- return the module</span>
+<a id="__codelineno-2-64" name="__codelineno-2-64" href="#__codelineno-2-64"></a><span class="kr">return</span> <span class="n">_M</span>
+</code></pre></div>
+<p>The following functions can be implemented as part of the <code>simple</code> LUA tool driver interface:</p>
 <table>
 <thead>
 <tr>
@@ -1071,37 +1140,144 @@
 </thead>
 <tbody>
 <tr>
-<td><code>get(url: string, user: string = nil, pass: string = nil)</code></td>
-<td><code>data: string, status: number, statustext: string, data: string</code> or <code>nil, status: number, statustext: number</code></td>
-<td>Executes a blocking get request for the given URL. If the server returns (http) status = 200, then the response is considered valid. In any case, <code>status</code> and <code>statustext</code> will receive the http response header status data. If a response body is available, then this is returned in the <code>data</code> return value (even if status ~= 200).</td>
+<td><code>init(channel: table)</code></td>
+<td><code>result: string</code></td>
+<td>Is called once for each tool (channel) registered in <code>station.ini</code> for this driver. The <code>channel</code> table parameter has the <code>channel.tool</code> entry set to the channel/tool number defined in <code>[CHANNELS]</code> (from <code>station.ini</code>) and the <code>channel.ini_params</code> as a table of strings with the complete <code>LuaTool_...</code>-section from <code>station.ini</code>. Return <code>'OK'</code> on successful initialization, else an error message string. <strong>Hint:</strong> The driver can add its own instance data to the <code>channel</code> table for later use.</td>
 <td>None</td>
 </tr>
 <tr>
-<td><code>get_oauth_token(url: string, user: string = nil, pass: string = nil)</code></td>
-<td><code>status: number, data: string</code> or <code>nil, status: number, statustext: string</code></td>
-<td>Requests client credentials from an OAuth2 server (granttype = client_credentials).</td>
+<td><code>activate(channel: table)</code></td>
+<td><code>result: boolean</code></td>
+<td>Is called whenever OGS activates a tool (i.e. the workflow switches to an action/operation where this tool is needed). The function is called cyclically until it returns <code>true</code></td>
 <td>None</td>
 </tr>
 <tr>
-<td><code>post(url: string, body: string = nil, auth_bearer_token: string = nil)</code></td>
-<td><code>status: number, data: string, statustext: string</code></td>
-<td>Send a post request to the given endpoint <code>URL</code>, with post <code>data</code> in the request body, optinally adding the <code>auth_bearer_token</code> value to the <code>Authorization</code> header.</td>
+<td><code>deactivate(channel: table)</code></td>
+<td><code>result: boolean</code></td>
+<td>Is called whenever OGS deactivates a tool (i.e. the workflow switches to another action/operation). The function is called cyclically until it returns <code>true</code></td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>enable(channel: table)</code></td>
+<td><code>result: boolean</code></td>
+<td>Is called whenever the tool is active and OGS needs to enable a tool. The function is called cyclically until it returns <code>true</code></td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>disable(channel: table)</code></td>
+<td><code>result: boolean</code></td>
+<td>Is called whenever the tool is active and OGS needs to disable a tool (e.g. if some external condition is removed like an external enable signal). The function is called cyclically until it returns <code>true</code></td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>execute(channel: table)</code></td>
+<td><code>result: number</code></td>
+<td>Is called while the tool is enabled to check the tool, if it has finished. If so, the global function <code>lua_tool_result_response</code> should be called (to send result data to the OGS core) and a value of <code>lua_task_completed</code> should be returned. If the function should be called again (tool not yet finished), return <code>channel.task_state</code>. In case of an error, return <code>lua_task_fault</code> or some of the other error codes (see <code>lua_tool.lua</code> in the <code>lualibs</code> folder for details)</td>
 <td>None</td>
 </tr>
 </tbody>
 </table>
-<h3 id="mermaid-test"><a class="toclink" href="#mermaid-test">Mermaid test</a></h3>
-<p>The following is a simple mermaid sequence diagram, for more details, see <a href="https://squidfunk.github.io/mkdocs-material/reference/diagrams/">https://squidfunk.github.io/mkdocs-material/reference/diagrams/</a></p>
-<pre class="mermaid"><code>sequenceDiagram
-  autonumber
-  Alice-&gt;&gt;John: Hello John, how are you?
-  loop Healthcheck
-      John-&gt;&gt;John: Fight against hypochondria
-  end
-  Note right of John: Rational thoughts!
-  John--&gt;&gt;Alice: Great!
-  John-&gt;&gt;Bob: How about you?
-  Bob--&gt;&gt;John: Jolly good!</code></pre>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To cyclically poll a tool driver (e.g. to implement network communication), implement the modules <code>_M.poll()</code> function (low-level API) or register a global StatePoll function (use <code>StatePollFunctions.add()</code> and use the (low-level API) _M.channels table to iterate your drivers registered channels).</p>
+</div>
+<h3 id="tool-driver-formatting-functions"><a class="toclink" href="#tool-driver-formatting-functions">Tool driver formatting functions</a></h3>
+<p>To allow the LUA tool drivers to correctly present their values on the OGS user interface screen, the following module interface functions can be used:</p>
+<ul>
+<li>_M.get_tool_units(): Defines the unit texts and number of digits used for formatting the tool results in the action/operation list pane. </li>
+<li>_M.get_tool_result_string(): Defines the main (large) result text shown in the bottom right corner result pane.</li>
+<li>_M.get_footer_string(): Defines the footer string shown in the bottom right corner result pane.</li>
+<li>_M.get_prg_string(): Defines the program string shown in the upper right corner of the bottom right corner result pane.</li>
+</ul>
+<p>As the functions are part of the low-level API, they are passed the the tool number instead of the channel table (as with the simple API interface). As the LUA tool driver infrastructure keeps a list of registered channels in each tool drivers module table, this can be used to access the channel table from a given tool as follows:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">-- Get the channel table from a given tool number</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">_M</span><span class="p">.</span><span class="n">get_channel_from_tool</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="kd">local</span> <span class="n">channel</span> <span class="o">=</span> <span class="n">_M</span><span class="p">.</span><span class="n">channels</span><span class="p">[</span><span class="n">tool</span><span class="p">]</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="kr">return</span> <span class="n">channel</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="kr">end</span>
+</code></pre></div>
+<p>The following functions can be implemented for formatting:</p>
+<table>
+<thead>
+<tr>
+<th>Function Name</th>
+<th>Return Type</th>
+<th>Description</th>
+<th>Tags</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>get_tool_units(tool: number)</code></td>
+<td><code>unit1: string, unit2: string, decimals1: number, decimals2: number</code></td>
+<td>Returns the unit text and number of decimals used for showing the result values in the result list.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>get_tool_result_string(tool: number)</code></td>
+<td><code>text: string</code></td>
+<td>Returns the center text shown in the result pane.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>get_footer_string(tool: number)</code></td>
+<td><code>text: string</code></td>
+<td>Returns the footer text for the result pane.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>get_prg_string(tool: number)</code></td>
+<td><code>text: string</code></td>
+<td>Returns the program name/number text for the result pane (the top right text).</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>lua_tool_helpers</code> module provides a reusable implementation for formatting text by specifying a format string - and a helper function to read the format strings from the <code>station.ini</code> tool driver sections.</p>
+<p>Here is some sample code on how to use it:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kd">local</span> <span class="n">helpers</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s1">&#39;lua_tool_helpers&#39;</span><span class="p">)</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kd">local</span> <span class="n">_M</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    <span class="nb">type</span> <span class="o">=</span> <span class="s1">&#39;MyLuaTool&#39;</span><span class="p">,</span>     <span class="c1">-- type identifier (as in INI file)</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="p">}</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="c1">-------------------------------------------------------------</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="c1">-- Initialize the driver and read the parameter section</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="kr">function</span> <span class="nc">_M</span><span class="p">.</span><span class="nf">init</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>    <span class="c1">-- local (tool instance specific) parameters</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>    <span class="kd">local</span> <span class="n">cfg</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>        <span class="c1">-- Initialize the parameters for formatting</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>        <span class="n">fmt</span> <span class="o">=</span> <span class="n">helpers</span><span class="p">.</span><span class="n">read_fmt_config</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>    <span class="p">}</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>    <span class="n">channel</span><span class="p">.</span><span class="n">cfg</span> <span class="o">=</span> <span class="n">cfg</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>    <span class="kr">return</span> <span class="s1">&#39;OK&#39;</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="kr">end</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="c1">-------------------------------------------------------------</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="c1">-- Get the tool specific measurement units </span>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="c1">-- @param tool: channel number as configured in station.ini</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="c1">-- @return:  applicable only for the first two values (from 6)</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="n">_M</span><span class="p">.</span><span class="n">get_tool_units</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>    <span class="kd">local</span> <span class="n">channel</span> <span class="o">=</span> <span class="n">_M</span><span class="p">.</span><span class="n">channels</span><span class="p">[</span><span class="n">tool</span><span class="p">]</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>    <span class="kr">return</span> <span class="n">helpers</span><span class="p">.</span><span class="n">get_tool_units</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">channel</span><span class="p">.</span><span class="n">cfg</span><span class="p">.</span><span class="n">fmt</span><span class="p">)</span>
+<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a><span class="kr">end</span>
+<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a><span class="c1">-- Get the tool specific result string</span>
+<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a><span class="n">_M</span><span class="p">.</span><span class="n">get_tool_result_string</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+<a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a>    <span class="kd">local</span> <span class="n">channel</span> <span class="o">=</span> <span class="n">_M</span><span class="p">.</span><span class="n">channels</span><span class="p">[</span><span class="n">tool</span><span class="p">]</span>
+<a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a>    <span class="kr">return</span> <span class="n">helpers</span><span class="p">.</span><span class="n">get_tool_result_string</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">channel</span><span class="p">.</span><span class="n">cfg</span><span class="p">.</span><span class="n">fmt</span><span class="p">)</span>
+<a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a><span class="kr">end</span>
+<a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a><span class="c1">-- Get the tool specific footer string</span>
+<a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a><span class="n">_M</span><span class="p">.</span><span class="n">get_footer_string</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+<a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a>    <span class="kd">local</span> <span class="n">channel</span> <span class="o">=</span> <span class="n">_M</span><span class="p">.</span><span class="n">channels</span><span class="p">[</span><span class="n">tool</span><span class="p">]</span>
+<a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a>    <span class="kr">return</span> <span class="n">helpers</span><span class="p">.</span><span class="n">get_footer_string</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">channel</span><span class="p">.</span><span class="n">cfg</span><span class="p">.</span><span class="n">fmt</span><span class="p">)</span>
+<a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a><span class="kr">end</span>
+<a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a><span class="c1">-- Get the tool specific program name</span>
+<a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a><span class="n">_M</span><span class="p">.</span><span class="n">get_prg_string</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+<a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a>    <span class="kd">local</span> <span class="n">channel</span> <span class="o">=</span> <span class="n">_M</span><span class="p">.</span><span class="n">channels</span><span class="p">[</span><span class="n">tool</span><span class="p">]</span>
+<a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a>    <span class="kr">return</span> <span class="n">helpers</span><span class="p">.</span><span class="n">get_prg_string</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">channel</span><span class="p">.</span><span class="n">cfg</span><span class="p">.</span><span class="n">fmt</span><span class="p">)</span>
+<a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a><span class="kr">end</span>
+</code></pre></div>
+<h3 id="tool-driver-miscelaneous-functions"><a class="toclink" href="#tool-driver-miscelaneous-functions">Tool driver miscelaneous functions</a></h3>
+<p>tbd.</p>
 
 
 

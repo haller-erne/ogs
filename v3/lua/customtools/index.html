@@ -1028,12 +1028,15 @@
 <p>Create the channel/tool 20 and assign the configuration section <code>LuaTool_MyCustomTool</code>. Make sure to start the section name with <code>LuaTool_</code>, else the Lua tool DLL will not get loaded for this section!</p>
 </li>
 </ol>
-<p>To implement a tool driver using LUA, there are basically two possibilities:</p>
+<p>To implement a tool driver using LUA, there are basically two options:</p>
 <ol>
 <li>Use the low-level API provided by <code>heLuaTool.dll</code>.</li>
-<li>USe the <a href="#simplified-api">Simplified API</a> </li>
+<li>Use the <a href="#simplified-api">Simplified API</a> </li>
 </ol>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
 <p>It is highly recommended to use the <a href="#simplified-api">Simplified API</a> described below to implement custom tool drivers - using the low-level API requires in-depth knowledge of the API to not break other drivers!</p>
+</div>
 <h2 id="simplified-api"><a class="toclink" href="#simplified-api">Simplified API</a></h2>
 <p>The simplified custom tool driver API uses five states and associated transitions to implement the tool behaviour. Each transitions can be implemented in the custom tool LUA code to provide the custom functionality - if not implemented, the transition is executed without a custom action.</p>
 <p>Here is the state diagram for the behaviour:</p>

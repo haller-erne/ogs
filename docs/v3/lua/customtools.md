@@ -21,7 +21,7 @@ To implement a tool driver in LUA, usually the following steps are required:
 
 Here is an excerpt from `station.ini` showing the relevant entries:
 
-``` ini
+``` ini title="station.ini"
 [TOOL_DLL]
 heLuaTool.dll=1 ; (1)!
 
@@ -32,19 +32,22 @@ heLuaTool.dll=1 ; (1)!
 Driver=heLuaTool
 TYPE=MyCustomTool
 ; additional LUA too specific parameters can follow
-
+```
 
 1. Load and enable the generic LUA tool interface DLL
 
 2. Create the channel/tool 20 and assign the configuration section `LuaTool_MyCustomTool`. Make sure to start the section name with `LuaTool_`, else the Lua tool DLL will not get loaded for this section!
 
+To implement a tool driver using LUA, there are basically two possibilities:
 
+1. Use the low-level API provided by `heLuaTool.dll`.
+2. USe the [Simplified API](#simplified-api) 
 
-```
+It is highly recommended to use the [Simplified API](#simplified-api) described below to implement custom tool drivers - using the low-level API requires in-depth knowledge of the API to not break other drivers!
 
 ## Simplified API
 
-The simplified custom tool API uses four states and associated transitions to implement the tool behaviour. Each transitions can be implemented in the custom tool LUA code to provide the custom functionality - if not implemented, the transition is executed without a custom action.
+The simplified custom tool driver API uses five states and associated transitions to implement the tool behaviour. Each transitions can be implemented in the custom tool LUA code to provide the custom functionality - if not implemented, the transition is executed without a custom action.
 
 Here is the state diagram for the behaviour:
 

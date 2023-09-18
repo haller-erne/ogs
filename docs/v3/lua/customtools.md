@@ -38,12 +38,14 @@ TYPE=MyCustomTool
 
 2. Create the channel/tool 20 and assign the configuration section `LuaTool_MyCustomTool`. Make sure to start the section name with `LuaTool_`, else the Lua tool DLL will not get loaded for this section!
 
-To implement a tool driver using LUA, there are basically two possibilities:
+To implement a tool driver using LUA, there are basically two options:
 
 1. Use the low-level API provided by `heLuaTool.dll`.
-2. USe the [Simplified API](#simplified-api) 
+2. Use the [Simplified API](#simplified-api) 
 
-It is highly recommended to use the [Simplified API](#simplified-api) described below to implement custom tool drivers - using the low-level API requires in-depth knowledge of the API to not break other drivers!
+!!! info
+
+    It is highly recommended to use the [Simplified API](#simplified-api) described below to implement custom tool drivers - using the low-level API requires in-depth knowledge of the API to not break other drivers!
 
 ## Simplified API
 

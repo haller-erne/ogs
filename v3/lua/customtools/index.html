@@ -1009,7 +1009,7 @@
 <li>To allow using the custom tools, add then to the <code>custom</code> section in the heOpCfg tools editor tab. Also add new tool/action properties as required. Make sure to use the same tool/channel numbers as defined in your <code>station.ini</code>. </li>
 </ul>
 <p>Here is an excerpt from <code>station.ini</code> showing the relevant entries:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">[TOOL_DLL]</span>
+<div class="highlight"><span class="filename">station.ini</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">[TOOL_DLL]</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="na">heLuaTool.dll</span><span class="o">=</span><span class="s">1</span><span class="w"> </span><span class="c1">; (1)!</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">[CHANNELS]</span>
@@ -1019,14 +1019,23 @@
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="na">Driver</span><span class="o">=</span><span class="s">heLuaTool</span>
 <a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="na">TYPE</span><span class="o">=</span><span class="s">MyCustomTool</span>
 <a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1">; additional LUA too specific parameters can follow</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
-<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="na">1. Load and enable the generic LUA tool interface DLL</span>
-<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
-<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="na">2. Create the channel/tool 20 and assign the configuration section `LuaTool_MyCustomTool`. Make sure to start the section name with `LuaTool_`, else the Lua tool DLL will not get loaded for this section!</span>
 </code></pre></div>
+<ol>
+<li>
+<p>Load and enable the generic LUA tool interface DLL</p>
+</li>
+<li>
+<p>Create the channel/tool 20 and assign the configuration section <code>LuaTool_MyCustomTool</code>. Make sure to start the section name with <code>LuaTool_</code>, else the Lua tool DLL will not get loaded for this section!</p>
+</li>
+</ol>
+<p>To implement a tool driver using LUA, there are basically two possibilities:</p>
+<ol>
+<li>Use the low-level API provided by <code>heLuaTool.dll</code>.</li>
+<li>USe the <a href="#simplified-api">Simplified API</a> </li>
+</ol>
+<p>It is highly recommended to use the <a href="#simplified-api">Simplified API</a> described below to implement custom tool drivers - using the low-level API requires in-depth knowledge of the API to not break other drivers!</p>
 <h2 id="simplified-api"><a class="toclink" href="#simplified-api">Simplified API</a></h2>
-<p>The simplified custom tool API uses four states and associated transitions to implement the tool behaviour. Each transitions can be implemented in the custom tool LUA code to provide the custom functionality - if not implemented, the transition is executed without a custom action.</p>
+<p>The simplified custom tool driver API uses five states and associated transitions to implement the tool behaviour. Each transitions can be implemented in the custom tool LUA code to provide the custom functionality - if not implemented, the transition is executed without a custom action.</p>
 <p>Here is the state diagram for the behaviour:</p>
 <pre class="mermaid"><code>stateDiagram-v2
     [*] --&gt; active: init()

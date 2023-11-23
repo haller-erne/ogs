@@ -153,6 +153,13 @@ Use this as follows:
 
     powershell -file myscript.ps1 -data "MySuperSecretPassword"
 
+
+!!! warning
+
+    Powershell uses the `$` (dollar) sign as a special character. If your plaintext password
+    contains a dollar sign, then insert a backtick character plus the dollar sign instead of
+    the original `$`.
+
 Here is the sample:
 
 ```powershell

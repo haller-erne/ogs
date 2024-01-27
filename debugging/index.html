@@ -8,25 +8,23 @@
       
       
       
-        <link rel="canonical" href="https://haller-erne.github.io/ogs/v3/lua/webserver/">
+        <link rel="canonical" href="https://haller-erne.github.io/ogs/debugging/">
       
       
-        <link rel="prev" href="../webbrowser/">
+        <link rel="prev" href="../libs/lua-net/">
       
       
-        <link rel="next" href="../customtools/">
       
-      
-      <link rel="icon" href="../../../assets/images/favicon.png">
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.5">
     
     
       
-        <title>Webserver (and REST API) - OGS Documentation</title>
+        <title>Debugging LUA scripts - OGS Documentation</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.50c56a3b.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.50c56a3b.min.css">
       
       
 
@@ -45,7 +43,7 @@
       
     
     
-    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -64,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#webserver" class="md-skip">
+        <a href="#debugging-lua-scripts" class="md-skip">
           Skip to content
         </a>
       
@@ -80,7 +78,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="OGS Documentation" class="md-header__button md-logo" aria-label="OGS Documentation" data-md-component="logo">
+    <a href=".." title="OGS Documentation" class="md-header__button md-logo" aria-label="OGS Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -100,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Webserver (and REST API)
+              Debugging LUA scripts
             
           </span>
         </div>
@@ -175,7 +173,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="OGS Documentation" class="md-nav__button md-logo" aria-label="OGS Documentation" data-md-component="logo">
+    <a href=".." title="OGS Documentation" class="md-nav__button md-logo" aria-label="OGS Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -193,7 +191,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+      <a href=".." class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -250,7 +248,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/" class="md-nav__link">
+      <a href="../tools/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -271,7 +269,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/remote-tool/" class="md-nav__link">
+      <a href="../tools/remote-tool/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -329,7 +327,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/openprotocol/" class="md-nav__link">
+      <a href="../tools/openprotocol/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -350,7 +348,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/openprotocol/nexo.md" class="md-nav__link">
+      <a href="../tools/openprotocol/nexo.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -371,7 +369,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/openprotocol/sys350.md" class="md-nav__link">
+      <a href="../tools/openprotocol/sys350.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -392,7 +390,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/openprotocol/gwk/" class="md-nav__link">
+      <a href="../tools/openprotocol/gwk/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -413,7 +411,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/openprotocol/sturtevant/" class="md-nav__link">
+      <a href="../tools/openprotocol/sturtevant/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -434,7 +432,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/openprotocol/hstechnik.md" class="md-nav__link">
+      <a href="../tools/openprotocol/hstechnik.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -455,7 +453,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/openprotocol/ngineric.md" class="md-nav__link">
+      <a href="../tools/openprotocol/ngineric.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -488,21 +486,19 @@
       
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
@@ -516,7 +512,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             Scripting
@@ -530,7 +526,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../getting-started/" class="md-nav__link">
+      <a href="../v3/getting-started/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -548,21 +544,19 @@
                 
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
         
           
           <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
@@ -576,7 +570,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_2">
             <span class="md-nav__icon md-icon"></span>
             LUA interfaces
@@ -590,7 +584,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../eventlog/" class="md-nav__link">
+      <a href="../v3/lua/eventlog/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -611,7 +605,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../webbrowser/" class="md-nav__link">
+      <a href="../v3/lua/webbrowser/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -629,30 +623,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Webserver (and REST API)
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../v3/lua/webserver/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -661,101 +635,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    <span class="md-ellipsis">
-      Overview
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
-    <span class="md-ellipsis">
-      Prerequisites
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#global-webserver-table" class="md-nav__link">
-    <span class="md-ellipsis">
-      Global Webserver table
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Global Webserver table">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#regurl" class="md-nav__link">
-    <span class="md-ellipsis">
-      RegUrl
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="RegUrl">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#return-values" class="md-nav__link">
-    <span class="md-ellipsis">
-      Return values
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sample-code" class="md-nav__link">
-    <span class="md-ellipsis">
-      Sample code
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -776,7 +655,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../customtools/" class="md-nav__link">
+      <a href="../v3/lua/customtools/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -841,7 +720,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../libs/lua-ads/" class="md-nav__link">
+      <a href="../libs/lua-ads/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -862,7 +741,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../libs/lua-opcua/" class="md-nav__link">
+      <a href="../libs/lua-opcua/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -883,7 +762,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../libs/lua-modbus/" class="md-nav__link">
+      <a href="../libs/lua-modbus/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -904,7 +783,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../libs/lua-hid/" class="md-nav__link">
+      <a href="../libs/lua-hid/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -925,7 +804,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../libs/lua-dpapi/" class="md-nav__link">
+      <a href="../libs/lua-dpapi/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -946,7 +825,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../libs/lua-net/" class="md-nav__link">
+      <a href="../libs/lua-net/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -971,10 +850,30 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../../debugging/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Debugging LUA Scripts
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -983,6 +882,77 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#debugging-with-vscode" class="md-nav__link">
+    <span class="md-ellipsis">
+      Debugging with VSCode
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Debugging with VSCode">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sample-vscode-debugging-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sample VSCode debugging configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start-the-debugger-backend-from-your-lua-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      Start the debugger backend from your LUA script
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#known-issues-and-workarounds" class="md-nav__link">
+    <span class="md-ellipsis">
+      Known issues and workarounds
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#repl" class="md-nav__link">
+    <span class="md-ellipsis">
+      REPL
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1014,65 +984,37 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
+  <a href="#debugging-with-vscode" class="md-nav__link">
     <span class="md-ellipsis">
-      Overview
+      Debugging with VSCode
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
-    <span class="md-ellipsis">
-      Prerequisites
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#global-webserver-table" class="md-nav__link">
-    <span class="md-ellipsis">
-      Global Webserver table
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Global Webserver table">
+    <nav class="md-nav" aria-label="Debugging with VSCode">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#regurl" class="md-nav__link">
+  <a href="#sample-vscode-debugging-configuration" class="md-nav__link">
     <span class="md-ellipsis">
-      RegUrl
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="RegUrl">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
+      Sample VSCode debugging configuration
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#return-values" class="md-nav__link">
+  <a href="#start-the-debugger-backend-from-your-lua-script" class="md-nav__link">
     <span class="md-ellipsis">
-      Return values
+      Start the debugger backend from your LUA script
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#sample-code" class="md-nav__link">
+  <a href="#known-issues-and-workarounds" class="md-nav__link">
     <span class="md-ellipsis">
-      Sample code
+      Known issues and workarounds
     </span>
   </a>
   
@@ -1082,9 +1024,13 @@
     </nav>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#repl" class="md-nav__link">
+    <span class="md-ellipsis">
+      REPL
+    </span>
+  </a>
   
 </li>
       
@@ -1103,63 +1049,80 @@
                   
 
 
-<h1 id="webserver"><a class="toclink" href="#webserver">Webserver</a></h1>
-<h2 id="overview"><a class="toclink" href="#overview">Overview</a></h2>
-<p>The OGS runtime uses the Microsoft Windows builtin <a href="https://learn.microsoft.com/en-us/windows/win32/api/_http/">http.sys web server</a> to server static pages and dynamic pages. The dynamic pages are implemented through LUA scripting and makes it possible to flexibly implement web services like OpenAPI / REST services or others.</p>
-<p>A typical use case is to provide a REST interface for third-party systems to connect them to OGS, another is to implement backend logic for a single page application web page frontend running inside OGS (see also <a href="../webbrowser.md">OGS Webbrowser LUA interface</a>).</p>
-<p>The web server LUA api works by registering LUA callback functions for specific URL prefixes, which are then called by the web server, whenever the given URL is requested from a web client.</p>
-<h2 id="prerequisites"><a class="toclink" href="#prerequisites">Prerequisites</a></h2>
-<p>To use the LUA web server API, the web server must be enabled through <code>station.ini</code> (in the <code>[WebServer]</code> section) and the Microsoft <code>http.sys</code> web server must be configured accordingly (a URL reservation must be activated through the <code>netsh http add urlacl ...</code> command).</p>
-<p>By default the, installer registers a web endpoint at http://localhost:59990, so the endpoint is only accessible from the local machine and only for a locally logged on user.</p>
-<p>To access the web server from the outside, make sure to change the listen address in the <code>station.ini</code> file, the URL reservation through <code>netsh http ...</code> and check the firewall settings. </p>
-<h2 id="global-webserver-table"><a class="toclink" href="#global-webserver-table">Global Webserver table</a></h2>
-<p>OGS exposes the web server through the global <code>Webserver</code> object. The <code>Webserver</code> object implements the following functions:</p>
+<h1 id="debugging-lua-scripts"><a class="toclink" href="#debugging-lua-scripts">Debugging LUA scripts</a></h1>
+<p>OGS ships with a debugging helper script (<code>&lt;instdir&gt;/lualib/libdebug</code>), which is intended to be used with <a href="https://code.visualstudio.com/">Visual Studio Code</a> and Tom Blinds <a href="https://marketplace.visualstudio.com/items?itemName=tomblind.local-lua-debugger-vscode">Local LUA debuger</a>.</p>
+<h2 id="debugging-with-vscode"><a class="toclink" href="#debugging-with-vscode">Debugging with VSCode</a></h2>
+<p>To use the LUA debugger, the following steps are required:</p>
+<ol>
+<li>Install  <a href="https://code.visualstudio.com/">Visual Studio Code</a> and Tom Blinds <a href="https://marketplace.visualstudio.com/items?itemName=tomblind.local-lua-debugger-vscode">Local LUA debuger</a> extension (search for <code>local lua debugger</code> in Visual Studio Code extensions or install from the link)</li>
+<li>Add a debugging configuration (see below for a <a href="#sample-vscode-debugging-configuration">sample debugging configuration</a>)</li>
+<li>Load the debugger from one of the LUA scripts executed by OGS (requires adding one line, see below for a <a href="#start-the-debugger-backend-from-your-lua-script">sample</a>).</li>
+</ol>
+<p>To actually start debugging, open your OGS project folder (something like <code>c:\OGS projects\sample configuration</code>), create the debugging configuration there and hit <code>F5</code> to start debugging.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Currently Tom Blinds <a href="https://marketplace.visualstudio.com/items?itemName=tomblind.local-lua-debugger-vscode">Local LUA debuger</a> does not support changing breakpoints while the code is running. Make sure to set some breakpoints before you start the application therefore...</p>
+</div>
+<h3 id="sample-vscode-debugging-configuration"><a class="toclink" href="#sample-vscode-debugging-configuration">Sample VSCode debugging configuration</a></h3>
+<p>Here is a sample debugging (launch) configuration for VSCode (<code>./vscode/launch.json</code>) - replace <code>&lt;instdir&gt;</code> with the full path where OGS is installed (typically <code>C:/Program Files (x86)/Bosch Rexroth AG/OGS/V3.0</code>)</p>
+<div class="highlight"><span class="filename">.vscode/launch.json</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">        </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.2.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">        </span><span class="nt">&quot;configurations&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">            </span><span class="p">{</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">                </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;OGS (local lua debugger)&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">                </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;lua-local&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">                </span><span class="nt">&quot;request&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;launch&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">                </span><span class="nt">&quot;program&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">                    </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;instdir&gt;/monitor.exe&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">                    </span><span class="nt">&quot;communication&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stdio&quot;</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">                </span><span class="p">},</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">                </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">                </span><span class="p">],</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">                </span><span class="nt">&quot;scriptRoots&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">                    </span><span class="s2">&quot;&lt;instdir&gt;&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">                    </span><span class="s2">&quot;&lt;instdir&gt;/lualibs&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">                </span><span class="p">],</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">                </span><span class="nt">&quot;stopOnEntry&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">                </span><span class="nt">&quot;cwd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;instdir&gt;&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">                </span><span class="nt">&quot;verbose&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">                </span><span class="nt">&quot;integratedTerminal&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">        </span><span class="p">]</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">    </span><span class="p">}</span>
+</code></pre></div>
+<h3 id="start-the-debugger-backend-from-your-lua-script"><a class="toclink" href="#start-the-debugger-backend-from-your-lua-script">Start the debugger backend from your LUA script</a></h3>
+<p>To make the debugger work, it is required to run the debugger backend (VSCode only provides the "frontend" GUI) from your LUA code. </p>
+<p>To do so, add the following line to one of the LUA files loaded by OGS:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>    <span class="nb">require</span><span class="p">(</span><span class="s1">&#39;lua-local-debugger&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>Best is to add it into <code>&lt;yourproject&gt;/config.lua</code> somewhere at the top.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>When starting monitor.exe through VSCode, it will automatically break at the end of <code>lua-local-debugger.lua</code> (if the launch.json settings include "stopOnEntry": true). You can now set breakpoints or step out into the code where you added the require line.</p>
+</div>
+<p>For more details, see https://github.com/tomblind/local-lua-debugger-vscode (lua local debugger) or https://github.com/tarantool/tarantool-lua-debugger-vscode (tarantool lua debugger).</p>
+<h3 id="known-issues-and-workarounds"><a class="toclink" href="#known-issues-and-workarounds">Known issues and workarounds</a></h3>
+<p>Although Tom Blinds <a href="https://marketplace.visualstudio.com/items?itemName=tomblind.local-lua-debugger-vscode">Local LUA debuger</a> is easy to install and configure, it has some known issues:</p>
 <ul>
-<li><a href="#regurl">RegUrl</a>: Register a LUA callback function to be called when a specific URL prefix is requested from the web server.</li>
+<li>On Windows (case sensitive path names), the debugger often misses 
+  breakpoints. See <a href="https://github.com/tomblind/local-lua-debugger-vscode/issues/62#issuecomment-1741733785">Issue 62 workaround</a> on how to fix this</li>
+<li>Sometimes it is needed to clear the vscode workspace userdata at
+  %appdata%\Code\User\workspaceStorage (see https://github.com/tomblind/local-lua-debugger-vscode/issues/57)</li>
+<li>The debugger does <strong>not</strong> support adding/changing breakpoints while the code is running. See https://github.com/tomblind/local-lua-debugger-vscode/pull/67 for a fix.</li>
+<li>A LUA repl seems to be missing, but is actually avaliable - see https://github.com/tomblind/local-lua-debugger-vscode/issues/81 on how to enable it</li>
 </ul>
-<!--
-The following functions are also available, but are not fully implemented at the moment:
-- [ExecJS_sync](#execjs-sync): 
-- [ExecJS_async](#execjs-async):
-- [Show](#show): 
-- [Hide](#hide): 
-- [GetState](#getstate): 
--->
-
-<h3 id="regurl"><a class="toclink" href="#regurl">RegUrl</a></h3>
-<p>The <code>Webserver.RegUrl</code> function registers or unregisters a LUA function to be called whenever the web server receives a request to the given URL prefix.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">fn</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">Webserver</span><span class="p">.</span><span class="n">RegUrl</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">callbackfn</span><span class="p">)</span>
-</code></pre></div>
-<h4 id="parameters"><a class="toclink" href="#parameters">Parameters</a></h4>
-<ul>
-<li>prefix [string]: Path prefix to match against when checking the request URL. Note that this only checks for the path part of the URL (e.g. '/home'). </li>
-<li>
-<p>callbackfn [function]: LUA function to be called when a web request matches the prefix. The callback function has the following signature:</p>
-<div class="highlight"><pre><span></span><code>table = callbackfn(reqpath, reqparams, verb, body)
-</code></pre></div>
-<p>Where reqpath [string] is the full request path, (e.g. '/api/items'), reqparams [string] the request parameters (e.g. '?max=10&amp;class=5'), verb [integer] the request type (GET, PUT, POST, DELETE) and body [string] the body (binaty) string value (only for POST and PUT).</p>
-<p>The callback function should return a response table with the required parameters to build the http response (optional body).</p>
-<p>[Datails tbd.]</p>
-</li>
-</ul>
-<h4 id="return-values"><a class="toclink" href="#return-values">Return values</a></h4>
-<p>If the function was executed successfully, the callbackfn is returned as the first return value. Else nil is returned and the second return value has an error message string (wrong parameters or unknown instance).</p>
-<h4 id="sample-code"><a class="toclink" href="#sample-code">Sample code</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kd">local</span> <span class="kr">function</span> <span class="nf">handlerfn</span><span class="p">(</span><span class="n">reqpath</span><span class="p">,</span> <span class="n">reqparams</span><span class="p">,</span> <span class="n">verb</span><span class="p">,</span> <span class="n">body</span><span class="p">)</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="c1">-- process the request, return the response object (or nil</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="c1">-- if this request is not handled) </span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="kr">return</span> <span class="kc">nil</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="kr">end</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="c1">-- Register a LUA function to be called whenever a web request to /api/lua</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1">-- is made</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="n">Browser</span><span class="p">.</span><span class="n">RegMsgHandler</span><span class="p">(</span><span class="s1">&#39;/api/lua&#39;</span><span class="p">,</span> <span class="n">handlerfn</span><span class="p">)</span>
-</code></pre></div>
+<h2 id="repl"><a class="toclink" href="#repl">REPL</a></h2>
+<p>An interactive REPL is available when <a href="#debugging-with-vscode">debugging with VSCode</a>, see <a href="#known-issues-and-workarounds">Known issues and workarounds above</a>. </p>
+<p>An alternative is to use <a href="https://sourceforge.net/projects/vclua/">vclua</a> and build your own. There is a sample available (<code>debug-repl-vcl.lua</code>).</p>
 
 
 
 
 
 
+
+  
+  
 
 
 
@@ -1200,10 +1163,10 @@ The following functions are also available, but are not fully implemented at the
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.copy", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.c18c5fb9.min.js"></script>
+      <script src="../assets/javascripts/bundle.c18c5fb9.min.js"></script>
       
     
   </body>

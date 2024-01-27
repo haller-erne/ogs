@@ -27,7 +27,8 @@ nav:
         - USB HID Devices (Buttons, Arduino, etc.): libs/lua-hid.md
         - Data Protection API (safe secrets storage): libs/lua-dpapi.md
         - LUA network helpers (REST/OpenAPI): libs/lua-net.md
-
+    - Debugging LUA Scripts: debugging.md
+    
 # sample
 #    – Version 1.x:
 #        – Types:

@@ -88,6 +88,6 @@ Although Tom Blinds [Local LUA debuger](https://marketplace.visualstudio.com/ite
 
 An interactive REPL is available when [debugging with VSCode](#debugging-with-vscode), see [Known issues and workarounds above](#known-issues-and-workarounds). 
 
-An alternative is to use [vclua](https://sourceforge.net/projects/vclua/) and build your own. There is a sample available (`debug-repl-vcl.lua`).
+An alternative is to use [vclua](https://sourceforge.net/projects/vclua/) (see also [vclua on github](https://github.com/hipBali/vclua) and [vclua form designer](https://github.com/hipBali/vclua-tools/tree/initial-v1/vt-form)) and build your own. There is a sample available (`debug-repl-vcl.lua`).
 
 

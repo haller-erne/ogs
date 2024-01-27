@@ -1104,6 +1104,12 @@
 <td>Send a post request to the given endpoint <code>URL</code>, with post <code>data</code> in the request body, optinally adding the <code>auth_bearer_token</code> value to the <code>Authorization</code> header.</td>
 <td>None</td>
 </tr>
+<tr>
+<td><code>put(url: string, body: string = nil, auth_bearer_token: string = nil)</code></td>
+<td><code>status: number, data: string, statustext: string</code></td>
+<td>Send a put request to the given endpoint <code>URL</code>, with put <code>data</code> in the request body, optinally adding the <code>auth_bearer_token</code> value to the <code>Authorization</code> header.</td>
+<td>None</td>
+</tr>
 </tbody>
 </table>
 <p>The following table lists the non-blocking functions:</p>
@@ -1121,6 +1127,12 @@
 <td><code>post_async(url: string, body: string = nil, auth_bearer_token: string = nil)</code></td>
 <td><code>handle: number</code> or <code>nil</code></td>
 <td>Starts an async post request (see the blocking <code>post</code> above for parameter descriptions). On success a <code>handle</code> is returned, which can be used for polling the request status or aborting the request.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>put_async(url: string, body: string = nil, auth_bearer_token: string = nil)</code></td>
+<td><code>handle: number</code> or <code>nil</code></td>
+<td>Starts an async put request (see the blocking <code>put</code> above for parameter descriptions). On success a <code>handle</code> is returned, which can be used for polling the request status or aborting the request.</td>
 <td>None</td>
 </tr>
 <tr>

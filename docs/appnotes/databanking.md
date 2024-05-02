@@ -32,44 +32,46 @@ The SQL server default databanking implementation identifies and stores data by 
 - Job name
 - Task name
 
-<details>
+??? example
 
-<summary>Example</summary>
+    -details-
 
-### Example
+    <summary>Example</summary>
 
-Say `station 1` processes the part with the serial `123456` as follows:
+    ### Example
 
-| Jobs     | Tasks    | Result |
-| -------- | -------- | ------ |
-| S1 Job 1 | Task 1.1 | OK |
-| S1 Job 2 | Task 2.1 | OK |
-|          | Task 2.1 | NOK |
-| S1 Job 3 | Task 3.1 | not completed|
+    Say `station 1` processes the part with the serial `123456` as follows:
 
-Say the rework station `station 5` is configured to rework all jobs as follows:
+    | Jobs     | Tasks    | Result |
+    | -------- | -------- | ------ |
+    | S1 Job 1 | Task 1.1 | OK |
+    | S1 Job 2 | Task 2.1 | OK |
+    |          | Task 2.1 | NOK |
+    | S1 Job 3 | Task 3.1 | not completed|
 
-| Jobs     | Tasks    | 
-| -------- | -------- | 
-| S1 Job 2 | Task 2.1 | 
-|          | Task 2.1 | 
-| S1 Job 3 | Task 3.1 | 
-| S2 Job 1 | Task 4.1 | 
-| S3 Job 1 | Task 5.1 | 
-| S4 Job 1 | Task 6.1 | 
+    Say the rework station `station 5` is configured to rework all jobs as follows:
 
-If the part with the serial `123456` is scanned in `station 5` (assume due to being NOK in `station 1` it is directly routed to the rework station `station 5`), it now shows up as follows in the OGS process screen (current part status was loaded from the databanking SQL server):
+    | Jobs     | Tasks    | 
+    | -------- | -------- | 
+    | S1 Job 2 | Task 2.1 | 
+    |          | Task 2.1 | 
+    | S1 Job 3 | Task 3.1 | 
+    | S2 Job 1 | Task 4.1 | 
+    | S3 Job 1 | Task 5.1 | 
+    | S4 Job 1 | Task 6.1 | 
 
-| Jobs     | Tasks    | Result |
-| -------- | -------- | ------ |
-| S1 Job 2 | Task 2.1 | OK |
-|          | Task 2.1 | NOK |
-| S1 Job 3 | Task 3.1 | not completed |
-| S2 Job 1 | Task 4.1 | not completed |
-| S3 Job 1 | Task 5.1 | not completed |
-| S4 Job 1 | Task 6.1 | not completed |
+    If the part with the serial `123456` is scanned in `station 5` (assume due to being NOK in `station 1` it is directly routed to the rework station `station 5`), it now shows up as follows in the OGS process screen (current part status was loaded from the databanking SQL server):
 
-</details>
+    | Jobs     | Tasks    | Result |
+    | -------- | -------- | ------ |
+    | S1 Job 2 | Task 2.1 | OK |
+    |          | Task 2.1 | NOK |
+    | S1 Job 3 | Task 3.1 | not completed |
+    | S2 Job 1 | Task 4.1 | not completed |
+    | S3 Job 1 | Task 5.1 | not completed |
+    | S4 Job 1 | Task 6.1 | not completed |
+
+-/details-
 
 !!! Info
 
@@ -113,7 +115,7 @@ To integrate databanking into your OGS project, the following changes to the pro
 
 !!! info
 
-    To use an encrypted database connection string, see.
+    To use an encrypted database connection string, see [database connection strings below](#database-connection-strings).
 
 
 ### Database connection strings

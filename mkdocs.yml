@@ -2,6 +2,8 @@ site_name: OGS Documentation
 site_url: https://haller-erne.github.io/ogs/
 nav:
     - Home: index.md
+    - Enterprise functionality:
+        - Databanking and multi-station rework: appnotes/databanking.md
     - Tool configuration:
         - Overview: tools/README.md
         - Remote Tool: tools/remote-tool.md

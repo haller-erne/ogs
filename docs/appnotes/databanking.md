@@ -32,11 +32,7 @@ The SQL server default databanking implementation identifies and stores data by 
 - Job name
 - Task name
 
-??? example
-
-    -details-
-
-    <summary>Example</summary>
+??? example "Sample rework scenario"
 
     ### Example
 
@@ -71,7 +67,7 @@ The SQL server default databanking implementation identifies and stores data by 
     | S3 Job 1 | Task 5.1 | not completed |
     | S4 Job 1 | Task 6.1 | not completed |
 
--/details-
+
 
 !!! Info
 

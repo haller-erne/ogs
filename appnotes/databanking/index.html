@@ -490,16 +490,59 @@
   
   
   
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Remote Tool Gateway
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Remote Tool Gateway
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../tools/remote-tool/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Remote Tool
+    Overview
   </span>
   
 
       </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -644,6 +687,49 @@
   
 
               
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Non-Openprotocol tightening tools
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            Non-Openprotocol tightening tools
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
             
               
                 
@@ -1257,9 +1343,10 @@
 <li>Job name</li>
 <li>Task name</li>
 </ul>
-<details>
+<p>??? example</p>
+<div class="highlight"><pre><span></span><code>-details-
 
-<summary>Example</summary>
+&lt;summary&gt;Example&lt;/summary&gt;
 
 ### Example
 
@@ -1281,7 +1368,7 @@ Say the rework station `station 5` is configured to rework all jobs as follows:
 | S1 Job 3 | Task 3.1 | 
 | S2 Job 1 | Task 4.1 | 
 | S3 Job 1 | Task 5.1 | 
-| S4 Job 1 | Task 6.1 | 
+| S4 Job 1 | Task 6.1 |
 
 If the part with the serial `123456` is scanned in `station 5` (assume due to being NOK in `station 1` it is directly routed to the rework station `station 5`), it now shows up as follows in the OGS process screen (current part status was loaded from the databanking SQL server):
 
@@ -1293,9 +1380,8 @@ If the part with the serial `123456` is scanned in `station 5` (assume due to be
 | S2 Job 1 | Task 4.1 | not completed |
 | S3 Job 1 | Task 5.1 | not completed |
 | S4 Job 1 | Task 6.1 | not completed |
-
-</details>
-
+</code></pre></div>
+<p>-/details-</p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
 <ul>
@@ -1329,7 +1415,7 @@ If the part with the serial `123456` is scanned in `station 5` (assume due to be
 </ol>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
-<p>To use an encrypted database connection string, see.</p>
+<p>To use an encrypted database connection string, see <a href="#database-connection-strings">database connection strings below</a>.</p>
 </div>
 <h3 id="database-connection-strings"><a class="toclink" href="#database-connection-strings">Database connection strings</a></h3>
 <p>The databanking setup in this sample uses Microsoft ADO to connect to the database. It therefore is not limited to Microsoft SQL server, but works with all databases providing ODBC or OleDB database drivers.</p>

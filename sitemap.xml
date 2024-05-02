@@ -11,6 +11,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://haller-erne.github.io/ogs/appnotes/databanking/</loc>
+         <lastmod>2024-05-02</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://haller-erne.github.io/ogs/libs/_template_/</loc>
          <lastmod>2024-05-02</lastmod>
          <changefreq>daily</changefreq>

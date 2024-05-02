@@ -315,6 +315,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#server-requirements" class="md-nav__link">
     <span class="md-ellipsis">
       Server requirements
@@ -1212,6 +1221,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#server-requirements" class="md-nav__link">
     <span class="md-ellipsis">
       Server requirements
@@ -1343,44 +1361,121 @@
 <li>Job name</li>
 <li>Task name</li>
 </ul>
-<p>??? example</p>
-<div class="highlight"><pre><span></span><code>-details-
-
-&lt;summary&gt;Example&lt;/summary&gt;
-
-### Example
-
-Say `station 1` processes the part with the serial `123456` as follows:
-
-| Jobs     | Tasks    | Result |
-| -------- | -------- | ------ |
-| S1 Job 1 | Task 1.1 | OK |
-| S1 Job 2 | Task 2.1 | OK |
-|          | Task 2.1 | NOK |
-| S1 Job 3 | Task 3.1 | not completed|
-
-Say the rework station `station 5` is configured to rework all jobs as follows:
-
-| Jobs     | Tasks    | 
-| -------- | -------- | 
-| S1 Job 2 | Task 2.1 | 
-|          | Task 2.1 | 
-| S1 Job 3 | Task 3.1 | 
-| S2 Job 1 | Task 4.1 | 
-| S3 Job 1 | Task 5.1 | 
-| S4 Job 1 | Task 6.1 |
-
-If the part with the serial `123456` is scanned in `station 5` (assume due to being NOK in `station 1` it is directly routed to the rework station `station 5`), it now shows up as follows in the OGS process screen (current part status was loaded from the databanking SQL server):
-
-| Jobs     | Tasks    | Result |
-| -------- | -------- | ------ |
-| S1 Job 2 | Task 2.1 | OK |
-|          | Task 2.1 | NOK |
-| S1 Job 3 | Task 3.1 | not completed |
-| S2 Job 1 | Task 4.1 | not completed |
-| S3 Job 1 | Task 5.1 | not completed |
-| S4 Job 1 | Task 6.1 | not completed |
-</code></pre></div>
+<details class="example">
+<summary>Example</summary>
+<p>-details-</p>
+<p><summary>Example</summary></p>
+<h3 id="example"><a class="toclink" href="#example">Example</a></h3>
+<p>Say <code>station 1</code> processes the part with the serial <code>123456</code> as follows:</p>
+<table>
+<thead>
+<tr>
+<th>Jobs</th>
+<th>Tasks</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S1 Job 1</td>
+<td>Task 1.1</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>S1 Job 2</td>
+<td>Task 2.1</td>
+<td>OK</td>
+</tr>
+<tr>
+<td></td>
+<td>Task 2.1</td>
+<td>NOK</td>
+</tr>
+<tr>
+<td>S1 Job 3</td>
+<td>Task 3.1</td>
+<td>not completed</td>
+</tr>
+</tbody>
+</table>
+<p>Say the rework station <code>station 5</code> is configured to rework all jobs as follows:</p>
+<table>
+<thead>
+<tr>
+<th>Jobs</th>
+<th>Tasks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S1 Job 2</td>
+<td>Task 2.1</td>
+</tr>
+<tr>
+<td></td>
+<td>Task 2.1</td>
+</tr>
+<tr>
+<td>S1 Job 3</td>
+<td>Task 3.1</td>
+</tr>
+<tr>
+<td>S2 Job 1</td>
+<td>Task 4.1</td>
+</tr>
+<tr>
+<td>S3 Job 1</td>
+<td>Task 5.1</td>
+</tr>
+<tr>
+<td>S4 Job 1</td>
+<td>Task 6.1</td>
+</tr>
+</tbody>
+</table>
+<p>If the part with the serial <code>123456</code> is scanned in <code>station 5</code> (assume due to being NOK in <code>station 1</code> it is directly routed to the rework station <code>station 5</code>), it now shows up as follows in the OGS process screen (current part status was loaded from the databanking SQL server):</p>
+<table>
+<thead>
+<tr>
+<th>Jobs</th>
+<th>Tasks</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S1 Job 2</td>
+<td>Task 2.1</td>
+<td>OK</td>
+</tr>
+<tr>
+<td></td>
+<td>Task 2.1</td>
+<td>NOK</td>
+</tr>
+<tr>
+<td>S1 Job 3</td>
+<td>Task 3.1</td>
+<td>not completed</td>
+</tr>
+<tr>
+<td>S2 Job 1</td>
+<td>Task 4.1</td>
+<td>not completed</td>
+</tr>
+<tr>
+<td>S3 Job 1</td>
+<td>Task 5.1</td>
+<td>not completed</td>
+</tr>
+<tr>
+<td>S4 Job 1</td>
+<td>Task 6.1</td>
+<td>not completed</td>
+</tr>
+</tbody>
+</table>
+</details>
 <p>-/details-</p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>

@@ -17,6 +17,7 @@ Databanking is the general term used by OGS for tracking the parts assembly stat
 Reading and writing the part/job state can be implemented in LUA. Therefore almost any backed system can be used to access and store the parts current build state.
 
 Typical use cases are:
+
 - Rework stations (usually having the workflows of multiple stations combined into a single, large workflow).
 - EOL-Checks (end of line checks): Can be used to selectively check single tasks from the assembly stations and visualize these to the operator and add additional (plausibility) checks.
 

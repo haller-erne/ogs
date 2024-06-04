@@ -8,15 +8,17 @@ nav:
         - Overview: tools/README.md
         - Remote Tool Gateway: 
             - Overview: tools/remote-tool.md
-        - Open Protocol Tools: 
+        - OpenProtocol tools: 
             - Overview: tools/openprotocol/README.md
             - Nexo: tools/openprotocol/nexo.md
             - CS351/KE350: tools/openprotocol/sys350.md
             - GWK Operator+: tools/openprotocol/gwk.md
             - Sturtevant 400mp/TCVe2: tools/openprotocol/sturtevant.md
-        - Non-Openprotocol tightening tools:
-            - HS-Technik NutBee: tools/openprotocol/hstechnik.md
+            - HS-Technik NutBee riveting tool: tools/openprotocol/hstechnik.md
+        - Non-OpenProtocol tightening tools:
             - n-gineric: tools/openprotocol/ngineric.md
+        - Misc tools:
+            - Gesipa riveting tool: tools/misc/gesipa-mqtt.md
     - Scripting:
         - Getting Started: v3/getting-started.md
         - LUA interfaces:

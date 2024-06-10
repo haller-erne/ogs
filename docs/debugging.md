@@ -92,6 +92,7 @@ An alternative is to use [vclua](https://sourceforge.net/projects/vclua/) (see a
 This will then show an additional top level window with a textbox and an edit control. You can enter commands into the edit control and execute them by hitting the enter button.
 
 Here is a sample screenshot:
+
 ![screenshot debug-repl-vcl](debug-repl-vcl.png)
 
 

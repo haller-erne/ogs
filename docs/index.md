@@ -7,7 +7,7 @@ The main purpose is to document the API interfaces (mostly LUA scripting), the a
 This allows advanced users and implementors to unlock the full potential 
 of OGS by modifying and extending the software.
 
-**NOTE:** This documentation is valid for OGS V3. As V3 is not yet released, some of the information might still change before the final release.
+**NOTE:** This documentation is valid for OGS V3. 
 
 ## Overview
 

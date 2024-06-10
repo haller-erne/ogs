@@ -1253,18 +1253,18 @@
 
 
 <h1 id="debugging-lua-scripts"><a class="toclink" href="#debugging-lua-scripts">Debugging LUA scripts</a></h1>
-<p>OGS ships with a debugging helper script (<code>&lt;instdir&gt;/lualib/libdebug</code>), which is intended to be used with <a href="https://code.visualstudio.com/">Visual Studio Code</a> and Tom Blinds <a href="https://marketplace.visualstudio.com/items?itemName=tomblind.local-lua-debugger-vscode">Local LUA debuger</a>.</p>
+<p>OGS ships with a debugging helper script (<code>&lt;instdir&gt;/lualib/libdebug</code>), which is intended to be used with <a href="https://code.visualstudio.com/">Visual Studio Code</a> and Tom Blinds / lsmoths <a href="https://marketplace.visualstudio.com/items?itemName=ismoh-games.second-local-lua-debugger-vscode">Second local LUA debuger</a>.</p>
 <h2 id="debugging-with-vscode"><a class="toclink" href="#debugging-with-vscode">Debugging with VSCode</a></h2>
 <p>To use the LUA debugger, the following steps are required:</p>
 <ol>
-<li>Install  <a href="https://code.visualstudio.com/">Visual Studio Code</a> and Tom Blinds <a href="https://marketplace.visualstudio.com/items?itemName=tomblind.local-lua-debugger-vscode">Local LUA debuger</a> extension (search for <code>local lua debugger</code> in Visual Studio Code extensions or install from the link)</li>
+<li>Install  <a href="https://code.visualstudio.com/">Visual Studio Code</a> and Tom Blinds / lsmoths <a href="https://marketplace.visualstudio.com/items?itemName=ismoh-games.second-local-lua-debugger-vscode">Second local LUA debuger</a> extension (search for <code>local lua debugger</code> in Visual Studio Code extensions or install from the link)</li>
 <li>Add a debugging configuration (see below for a <a href="#sample-vscode-debugging-configuration">sample debugging configuration</a>)</li>
 <li>Load the debugger from one of the LUA scripts executed by OGS (requires adding one line, see below for a <a href="#start-the-debugger-backend-from-your-lua-script">sample</a>).</li>
 </ol>
 <p>To actually start debugging, open your OGS project folder (something like <code>c:\OGS projects\sample configuration</code>), create the debugging configuration there and hit <code>F5</code> to start debugging.</p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
-<p>Currently Tom Blinds <a href="https://marketplace.visualstudio.com/items?itemName=tomblind.local-lua-debugger-vscode">Local LUA debuger</a> does not support changing breakpoints while the code is running. Make sure to set some breakpoints before you start the application therefore...</p>
+<p>Currently Tom Blinds / lsmoths <a href="https://marketplace.visualstudio.com/items?itemName=ismoh-games.second-local-lua-debugger-vscode">Second local LUA debuger</a> does not directly support changing breakpoints while the code is running. Either make sure to set some breakpoints before you start the application therefore or cyclically call <code>lldebugger.pullBreakpoints()</code> from your application code (see <a href="https://github.com/tomblind/local-lua-debugger-vscode/pull/67">pullBreakpointsSupport</a>)</p>
 </div>
 <h3 id="sample-vscode-debugging-configuration"><a class="toclink" href="#sample-vscode-debugging-configuration">Sample VSCode debugging configuration</a></h3>
 <p>Here is a sample debugging (launch) configuration for VSCode (<code>./vscode/launch.json</code>) - replace <code>&lt;instdir&gt;</code> with the full path where OGS is installed (typically <code>C:/Program Files (x86)/Bosch Rexroth AG/OGS/V3.0</code>)</p>
@@ -1286,12 +1286,13 @@
 <a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">                    </span><span class="s2">&quot;&lt;instdir&gt;/lualibs&quot;</span><span class="p">,</span>
 <a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">                </span><span class="p">],</span>
 <a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">                </span><span class="nt">&quot;stopOnEntry&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">                </span><span class="nt">&quot;cwd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;instdir&gt;&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">                </span><span class="nt">&quot;verbose&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">                </span><span class="nt">&quot;integratedTerminal&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
-<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">            </span><span class="p">}</span>
-<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">        </span><span class="p">]</span>
-<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">                </span><span class="nt">&quot;pullBreakpointsSupport&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">                </span><span class="nt">&quot;cwd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;instdir&gt;&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">                </span><span class="nt">&quot;verbose&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">                </span><span class="nt">&quot;integratedTerminal&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">        </span><span class="p">]</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">    </span><span class="p">}</span>
 </code></pre></div>
 <h3 id="start-the-debugger-backend-from-your-lua-script"><a class="toclink" href="#start-the-debugger-backend-from-your-lua-script">Start the debugger backend from your LUA script</a></h3>
 <p>To make the debugger work, it is required to run the debugger backend (VSCode only provides the "frontend" GUI) from your LUA code. </p>
@@ -1305,18 +1306,18 @@
 </div>
 <p>For more details, see https://github.com/tomblind/local-lua-debugger-vscode (lua local debugger) or https://github.com/tarantool/tarantool-lua-debugger-vscode (tarantool lua debugger).</p>
 <h3 id="known-issues-and-workarounds"><a class="toclink" href="#known-issues-and-workarounds">Known issues and workarounds</a></h3>
-<p>Although Tom Blinds <a href="https://marketplace.visualstudio.com/items?itemName=tomblind.local-lua-debugger-vscode">Local LUA debuger</a> is easy to install and configure, it has some known issues:</p>
+<p>Although the debugger is easy to install and configure, it has some known issues:</p>
 <ul>
-<li>On Windows (case sensitive path names), the debugger often misses 
-  breakpoints. See <a href="https://github.com/tomblind/local-lua-debugger-vscode/issues/62#issuecomment-1741733785">Issue 62 workaround</a> on how to fix this</li>
 <li>Sometimes it is needed to clear the vscode workspace userdata at
   %appdata%\Code\User\workspaceStorage (see https://github.com/tomblind/local-lua-debugger-vscode/issues/57)</li>
-<li>The debugger does <strong>not</strong> support adding/changing breakpoints while the code is running. See https://github.com/tomblind/local-lua-debugger-vscode/pull/67 for a fix.</li>
-<li>A LUA repl seems to be missing, but is actually avaliable - see https://github.com/tomblind/local-lua-debugger-vscode/issues/81 on how to enable it</li>
+<li>A working LUA repl seems is not available, even if a console is actually avaliable - see https://github.com/tomblind/local-lua-debugger-vscode/issues/81 on how to enable it.</li>
 </ul>
 <h2 id="repl"><a class="toclink" href="#repl">REPL</a></h2>
 <p>An interactive REPL is available when <a href="#debugging-with-vscode">debugging with VSCode</a>, see <a href="#known-issues-and-workarounds">Known issues and workarounds above</a>. </p>
-<p>An alternative is to use <a href="https://sourceforge.net/projects/vclua/">vclua</a> (see also <a href="https://github.com/hipBali/vclua">vclua on github</a> and <a href="https://github.com/hipBali/vclua-tools/tree/initial-v1/vt-form">vclua form designer</a>) and build your own. There is a sample available (<code>debug-repl-vcl.lua</code>).</p>
+<p>An alternative is to use <a href="https://sourceforge.net/projects/vclua/">vclua</a> (see also <a href="https://github.com/hipBali/vclua">vclua on github</a> and <a href="https://github.com/hipBali/vclua-tools/tree/initial-v1/vt-form">vclua form designer</a>) and build your own. There is a simple sample available for use with OGS (<a href="https://github.com/haller-erne/ogs/blob/main/samples/debugging/debug-repl-vcl.lua">debug-repl-vcl.lua</a>). To use it with OGS, include <code>debug-repl-vcl</code> in the <code>requires</code> list in <code>config.lua</code>. </p>
+<p>This will then show an additional top level window with a textbox and an edit control. You can enter commands into the edit control and execute them by hitting the enter button.</p>
+<p>Here is a sample screenshot:
+<img alt="screenshot debug-repl-vcl" src="../debug-repl-vcl.png" /></p>
 
 
 

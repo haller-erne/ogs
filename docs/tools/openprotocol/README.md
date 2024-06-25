@@ -57,15 +57,16 @@ For more details on the shared parameters, see [Shared parameter reference](#sha
 
 A sample `OpenProtocol` tool configuration (channel 01) would therefore look similar to the following:
 
-    [OPENPROTO]
-    # Shared/default parameters
-    PORT=4545
-    # Channel/Tool 1 parameters
-    CHANNEL_01=10.10.2.163
-    CHANNEL_01_TYPE=NEXO
-    CHANNEL_01_CHECK_TIME_ENABLED=1
-    CHANNEL_01_NEXONAR_CHANNEL=6
-    CHANNEL_01_CURVE_REQUEST=1
+``` ini
+[OPENPROTO]
+# Shared/default parameters
+PORT=4545
+# Channel/Tool 1 parameters
+CHANNEL_01=10.10.2.163
+CHANNEL_01_TYPE=NEXO
+CHANNEL_01_CHECK_TIME_ENABLED=1
+CHANNEL_01_CURVE_REQUEST=1
+```
 
 ## OpenProtocol driver parameters reference
 
@@ -232,6 +233,15 @@ Set to nonzero to log `MID9999` (alive) messages in the OGS ETW logs.
 
 ##### CHANNEL_[tool]_PARAMS
 _(internal, default depending on tool type)_
+
+#### LUA settings
+
+Please note, that other drivers can also access the `[OPENPROTO]` section, so
+additional tool specific parameters might be added here, e.g.
+
+- `CHANNEL_[tool]_NEXONAR_CHANNEL=
+- `CHANNEL_[tool]_POSITIONING=
+
 
 ## Tool mirroring/twins
 

@@ -84,7 +84,7 @@ To iterate the list, call the `next()` instance function - each call to next ret
 The member functions of HidDevice are wrapped functions of the module. The following lines are identical:
 
 ```lua
-local hidapi = require('LuaHID')
+local hidapi = require('luahid')
 -- ...
 -- assume dev is a HidDevice object returned from calling open()
 -- The following are identical:
@@ -111,7 +111,7 @@ dev:write(report_id, report_data)
 This sample lists all connected HID devices and shows some of their properties.
 ```lua
 -- Load the LuaHID module
-local hidapi = require('LuaHID')
+local hidapi = require('luahid')
 print(string.format("Lib VERSION %s build on %s", hid._VERSION, hid._TIMESTAMP))
 
 -- Initialize the library
@@ -155,7 +155,7 @@ end
 This sample tries to connect to a specific device using a given _VID_/_PID_ and writes/reads some data in non-blocking mode. 
 ```lua
 -- Load the LuaHID module
-local hidapi = require('LuaHID')
+local hidapi = require('luahid')
 print(string.format("Lib VERSION %s build on %s", hid._VERSION, hid._TIMESTAMP))
 
 -- Initialize the library

@@ -33,7 +33,9 @@ nav:
         - USB HID Devices (Buttons, Arduino, etc.): libs/lua-hid.md
         - Data Protection API (safe secrets storage): libs/lua-dpapi.md
         - LUA network helpers (REST/OpenAPI): libs/lua-net.md
-    - Debugging LUA Scripts: debugging.md
+    - Application notes:
+        - Debugging LUA Scripts: appnotes/debugging.md
+        - Station IO: appnotes/station_io.md
     
 # sample
 #    – Version 1.x:

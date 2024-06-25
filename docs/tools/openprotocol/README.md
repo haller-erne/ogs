@@ -1,5 +1,7 @@
 # OpenProtocol tools
 
+## Overview
+
 OGS supports connecting tools with `OpenProtocol` interface. As tools differ in functionality and also different tool vendors implement the `OpenProtocol` specification in slightly different ways, OGS has special protocol handlers for the following tools:
 
 - Rexroth Nexo and Nexo 2 wireless tools (for more information, see [Nexo OpenProtocol](/docs/tools/openprotocol/nexo.md))
@@ -9,6 +11,7 @@ OGS supports connecting tools with `OpenProtocol` interface. As tools differ in 
 - Crane TCI torque wrenches (for more information, see [Crane OpenProtocol](/docs/tools/openprotocol/crane.md))
 - Gehmeyr Exact Wifi tools (for more information, see [Gehmeyr OpenProtocol](/docs/tools/openprotocol/gehmeyr.md))
 - Sturtevant Richmont Global 400 MP connected Exacta 2 digital torque wrenches (for more information, see [Sturtevant Richmond OpenProtocol](/docs/tools/openprotocol/sturtevant.md))
+- HS-Technik riveting tool
 
 The overall configuration for these tools is similar and the actual driver has the same set of configuration parameters - described on this page.
 
@@ -21,11 +24,13 @@ The supported tool types and vendor codes are:
 | NEXO | BRC | Bosch Rexroth | Wireless Nexo Tool |
 | CS351 | BRC | Bosch Rexroth | Single channel Compact Box |
 | KE350 | BRC | Bosch Rexroth | Multispindle system |
+| OPEX | (GWK) | Bosch Rexroth | OPEXplus torque wrench |
 | CRANE | CEL | Crane Electronics | TCI Multi, Wrenchstar |
 | GHM | GHM | Gehmeyr | GF-ION-EXACT |
-| GWK | GWK | GWK | Operator+ |
+| GWK | GWK | GWK | Operator+, Operator22 |
 | CET | CET | Sturtevant Richmond | Global 400mt controller |
-
+| BTC | BTC | HS-Technik | NutBee riveting tool |
+| ATG | ATG | Cleco | Cleco wifi battery tool |
 
 ## Installation
 
@@ -50,7 +55,6 @@ In addition to the channel-specific parameters, there are also shared parameters
 
 For more details on the shared parameters, see [Shared parameter reference](#shared-parameter-reference)) below .
 
-
 A sample `OpenProtocol` tool configuration (channel 01) would therefore look similar to the following:
 
     [OPENPROTO]
@@ -63,26 +67,36 @@ A sample `OpenProtocol` tool configuration (channel 01) would therefore look sim
     CHANNEL_01_NEXONAR_CHANNEL=6
     CHANNEL_01_CURVE_REQUEST=1
 
+## OpenProtocol driver parameters reference
 
+### Shared parameter reference
 
-## Shared parameter reference
+The shared parameters are used to change the global defaults for all OpenProtocol tools. If assigned, then these settings will override the built-in defaults. Note, that a channel-specific setting will take priority anyways.
 
-The shared parameters can be used to change the global defaults for all OpenProtocol tools. If assigned, then these settings will override the built-in defaults. Note, that a channel-specific setting will take priority anyways.
-
-### PORT 
+#### PORT 
 _(optional, defaults to 4545)_
 
 Defines the TCP port used for OpenProtocol communication. By default uses the standard OpenProtocol port 4545. If the controller supports multiple tools through a single IP address, then typically this setting must be changed to correctly connect to the individual tool.
 
-### CHECK_TIME_INTERVAL 
+#### CHECK_TIME_INTERVAL 
+_(optional, defaults to 5 [minutes])_
 
-### TIME_TOLERANCE
+Defines the time [in minutes] when OGS shall check the tools clock. This setting is only used, if time synchronization is enabled for the tool (see [CHECK_TIME_ENABLED](#check_time_enabled) below).
+
+#### TIME_TOLERANCE
+_(optional, defaults to 5 [seconds])_
+
+Defines the maximum allowed time difference [in seconds] before OGS corrects
+the tools realtime clock. This setting is only used, if time synchronization is enabled for the tool (see [CHECK_TIME_ENABLED](#check_time_enabled) below).
 
 #### EXTERNAL_IO_OFFSET
+_(optional, defaults to 0)_
 
+This setting enables custom IO access (through LUA) over the OpenProtocol interface. This can be used to read physical inputs and set physical outputs connected to the controller over OpenProtocol.
 
+Depending on the tool, different MIDs are used - to enable this for CS351 and KE350, set it to 2.
 
-## Channel parameter reference
+### Channel parameter reference
 
 For specific information about a tools settings or the tools configuration needed (on the tool side), please see the tool-specific information.
 
@@ -90,55 +104,82 @@ The parameter names are composed of the channel prefix `CHANNEL_` followed by th
 
 In general, the following parameters are available for a `OpenProtocol`-tool:
 
-#### IP 
-
-#### PORT
-
-(optional, defaults to the shared parameter value)
-
-### TYPE
-
+#### CHANNEL_<tool>_IP 
 _(mandatory)_
 
-The allowed tool types and their default parameters are listed in the following table:
+This setting defines the IP address to use for communication with the tool.
+
+#### CHANNEL_<tool>_PORT
+_(optional, defaults to the shared parameter value)_
+
+See [PORT](#port) in the [shared parameter reference](#shared-parameter-reference).
+
+#### CHANNEL_<tool>_TYPE
+_(mandatory)_
+
+The allowed tool types and their default parameters are listed in the following table (see the [overview section](#overview) above for tool details):
 
 | Tool type | Alive send rate | Response Timeout | Comments |
 | ---   | ---- | ---- | ---- |
 | NEXO  | 2 | 5  |  |
 | CS351 | 5 | 15 |  |
+| OPEX  | 2 | 5  | No MID0040 support, use MID0061 tool SN |
 | KE350 | 5 | 15 |  |
 | CRANE | 1 | 5  |  |
 | GHM   | 2 | 5  | MID0060 Rev 999 only, no alarms |
 | GWK   | 2 | 5  | No MID0040 support, use MID0061 tool SN |
 | CET   | 2 | 5  | no alarms, incorrect (+1) result ID sequence |
+| BTC   | 2 | 5  |  |
+| ATG   | 2 | 5  |  |
 
 NOTES:
-- The Alive send rate and Response timeout default parameter values can be overridden by the [ALIVEXMTT](alivexmtt) and [RSPTIMEOUT](rsptimeout) parameters. 
+- The Alive send rate and Response timeout default parameter values can be overridden by the [CHANNEL_<tool>_ALIVEXMTT](#channel__alivexmtt) and [CHANNEL_<tool>_RSPTIMEOUT](#channel__rsptimeout) parameters. 
 - All tools use a slightly different set of MIDs to control operation, e.g. some do support alarms, others don't or allow different revisions of the MID commands.
 - For Nexo with firmware < V1500, a Alive send rate of 1000ms or less is recommended to ensure stable WiFi operation
 - For CS351 and KE350, do not use a Alive send rate less than 5 second, else the controller may become unresponsive 
 
+#### CHANNEL_<tool>_CCW_ACK
+_(optional, default = 0 (disabled))_
 
-#### CCW_ACK
+Defines, if the operator must select a loosen operation on the tool end (for
+tools having a CW/CCW switch which is accessible over OpenProtocol). Currently only Rexroth Nexo, CS351 and KE350 support this feature.
 
-#### PARAMS
+The following settings are available:
 
-#### ALIVEXMTT
+- 0: Disabled. OGS select a CCW program automatically
+- 1: Enabled. Operator must switch to CCW manually 
 
-#### SHOWALIVE
+#### CHANNEL_<tool>_ALIVEXMTT
+_(optional, default defined by tool type (see above))_
 
-#### RSPTIMEOUT
+Defines how often OGS shall send an `ALIVE` data packet (`MID9999`) to the tool to check for connectivity. The value is given in milliseconds.
 
-#### BARCODE_MID0051_REV
+If no answer from the tool is received within 3 times of this time, then the
+connection with the tool is considered disconnected. In this case, OGS shuts
+down the connection and tries to reconnect.
 
-#### CHECK_EXT_COND
 
-#### APPL_START
+#### CHANNEL_<tool>_RSPTIMEOUT
 
-#### CURVE_REQUEST
+#### CHANNEL_<tool>_BARCODE_MID0051_REV
 
-#### CHECK_TIME_ENABLED
+#### CHANNEL_<tool>_CHECK_EXT_COND
 
-#### IGNORE_ID
+#### CHANNEL_<tool>_APPL_START
+
+#### CHANNEL_<tool>_CURVE_REQUEST
+
+#### CHANNEL_<tool>_CHECK_TIME_ENABLED
+
+#### CHANNEL_<tool>_IGNORE_ID
+
+#### Debugging settings
+
+##### CHANNEL_<tool>_SHOWALIVE
+
+##### CHANNEL_<tool>_PARAMS
+_(internal, default depending on tool type)_
+
+## Tool mirroring/twins
 
 

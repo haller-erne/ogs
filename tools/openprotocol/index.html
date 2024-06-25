@@ -719,6 +719,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#lua-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      LUA settings
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1702,6 +1711,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#lua-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      LUA settings
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1839,15 +1857,14 @@
 <p>In addition to the channel-specific parameters, there are also shared parameters. These act as default parameters for the channel-specific settings and can be overridden by the channel specific values.</p>
 <p>For more details on the shared parameters, see <a href="#shared-parameter-reference">Shared parameter reference</a>) below .</p>
 <p>A sample <code>OpenProtocol</code> tool configuration (channel 01) would therefore look similar to the following:</p>
-<div class="highlight"><pre><span></span><code>[OPENPROTO]
-# Shared/default parameters
-PORT=4545
-# Channel/Tool 1 parameters
-CHANNEL_01=10.10.2.163
-CHANNEL_01_TYPE=NEXO
-CHANNEL_01_CHECK_TIME_ENABLED=1
-CHANNEL_01_NEXONAR_CHANNEL=6
-CHANNEL_01_CURVE_REQUEST=1
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">[OPENPROTO]</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1"># Shared/default parameters</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="na">PORT</span><span class="o">=</span><span class="s">4545</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Channel/Tool 1 parameters</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="na">CHANNEL_01</span><span class="o">=</span><span class="s">10.10.2.163</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="na">CHANNEL_01_TYPE</span><span class="o">=</span><span class="s">NEXO</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="na">CHANNEL_01_CHECK_TIME_ENABLED</span><span class="o">=</span><span class="s">1</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="na">CHANNEL_01_CURVE_REQUEST</span><span class="o">=</span><span class="s">1</span>
 </code></pre></div>
 <h2 id="openprotocol-driver-parameters-reference"><a class="toclink" href="#openprotocol-driver-parameters-reference">OpenProtocol driver parameters reference</a></h2>
 <h3 id="shared-parameter-reference"><a class="toclink" href="#shared-parameter-reference">Shared parameter reference</a></h3>
@@ -2025,6 +2042,13 @@ sync tightening results. However, some tools have a flaky implementation so ther
 <p>Set to nonzero to log <code>MID9999</code> (alive) messages in the OGS ETW logs.</p>
 <h5 id="channel_tool_params"><a class="toclink" href="#channel_tool_params">CHANNEL_[tool]_PARAMS</a></h5>
 <p><em>(internal, default depending on tool type)</em></p>
+<h4 id="lua-settings"><a class="toclink" href="#lua-settings">LUA settings</a></h4>
+<p>Please note, that other drivers can also access the <code>[OPENPROTO]</code> section, so
+additional tool specific parameters might be added here, e.g.</p>
+<ul>
+<li>`CHANNEL_[tool]_NEXONAR_CHANNEL=</li>
+<li>`CHANNEL_[tool]_POSITIONING=</li>
+</ul>
 <h2 id="tool-mirroringtwins"><a class="toclink" href="#tool-mirroringtwins">Tool mirroring/twins</a></h2>
 <p>(tbd).</p>
 

@@ -8,13 +8,11 @@
       
       
       
-        <link rel="canonical" href="https://haller-erne.github.io/ogs/libs/lua-net/">
+        <link rel="canonical" href="https://haller-erne.github.io/ogs/appnotes/station_io/">
       
       
-        <link rel="prev" href="../lua-dpapi/">
+        <link rel="prev" href="../debugging/">
       
-      
-        <link rel="next" href="../../appnotes/debugging/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -22,7 +20,7 @@
     
     
       
-        <title>LuaNet - OGS Documentation</title>
+        <title>Station IO - OGS Documentation</title>
       
     
     
@@ -64,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#luanet" class="md-skip">
+        <a href="#station-io" class="md-skip">
           Skip to content
         </a>
       
@@ -100,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              LuaNet
+              Station IO
             
           </span>
         </div>
@@ -248,7 +246,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../appnotes/databanking/" class="md-nav__link">
+      <a href="../databanking/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -887,19 +885,17 @@
       
   
   
-    
   
   
-  
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
         
           
           <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
@@ -913,7 +909,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             LUA helper libraries
@@ -927,7 +923,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../lua-ads/" class="md-nav__link">
+      <a href="../../libs/lua-ads/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -948,7 +944,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../lua-opcua/" class="md-nav__link">
+      <a href="../../libs/lua-opcua/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -969,7 +965,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../lua-modbus/" class="md-nav__link">
+      <a href="../../libs/lua-modbus/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -990,7 +986,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../lua-hid/" class="md-nav__link">
+      <a href="../../libs/lua-hid/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1011,11 +1007,97 @@
   
   
     <li class="md-nav__item">
-      <a href="../lua-dpapi/" class="md-nav__link">
+      <a href="../../libs/lua-dpapi/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
     Data Protection API (safe secrets storage)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libs/lua-net/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LUA network helpers (REST/OpenAPI)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Application notes
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Application notes
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debugging/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debugging LUA Scripts
   </span>
   
 
@@ -1045,7 +1127,7 @@
           
   
   <span class="md-ellipsis">
-    LUA network helpers (REST/OpenAPI)
+    Station IO
   </span>
   
 
@@ -1056,7 +1138,7 @@
         
   
   <span class="md-ellipsis">
-    LUA network helpers (REST/OpenAPI)
+    Station IO
   </span>
   
 
@@ -1078,21 +1160,150 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#module" class="md-nav__link">
+  <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
-      Module
+      Overview
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Module">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#station_io_enip" class="md-nav__link">
+    <span class="md-ellipsis">
+      station_io_enip
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#station_io_modbus" class="md-nav__link">
+    <span class="md-ellipsis">
+      station_io_modbus
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#default-sql-server-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Default SQL Server implementation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Default SQL Server implementation">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#functions" class="md-nav__link">
+  <a href="#overview_1" class="md-nav__link">
     <span class="md-ellipsis">
-      Functions
+      Overview
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Server requirements
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#client-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Client Requirements
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sql-server-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      SQL Server Schema
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integrate-databanking-into-ogs-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      Integrate databanking into OGS Project
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#database-connection-strings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Database connection strings
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Database connection strings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sql-server-oledb-driver-msoledbsql" class="md-nav__link">
+    <span class="md-ellipsis">
+      SQL Server OleDB driver (MSOLEDBSQL)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sql-server-native-client-snacsqlncli" class="md-nav__link">
+    <span class="md-ellipsis">
+      SQL Server native client (SNAC/SQLNCLI)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -1102,35 +1313,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#examples" class="md-nav__link">
+  <a href="#custom-implementations" class="md-nav__link">
     <span class="md-ellipsis">
-      Examples
+      Custom implementations
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#simple-get-request" class="md-nav__link">
-    <span class="md-ellipsis">
-      Simple get request
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#decrypt-base64-encoded-data" class="md-nav__link">
-    <span class="md-ellipsis">
-      Decrypt base64-encoded data
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1138,90 +1325,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
-        
-          
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Application notes
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6">
-            <span class="md-nav__icon md-icon"></span>
-            Application notes
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../appnotes/debugging/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Debugging LUA Scripts
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../appnotes/station_io/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Station IO
-  </span>
-  
-
-      </a>
     </li>
   
 
@@ -1261,21 +1364,150 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#module" class="md-nav__link">
+  <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
-      Module
+      Overview
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Module">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#station_io_enip" class="md-nav__link">
+    <span class="md-ellipsis">
+      station_io_enip
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#station_io_modbus" class="md-nav__link">
+    <span class="md-ellipsis">
+      station_io_modbus
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#default-sql-server-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Default SQL Server implementation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Default SQL Server implementation">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#functions" class="md-nav__link">
+  <a href="#overview_1" class="md-nav__link">
     <span class="md-ellipsis">
-      Functions
+      Overview
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Server requirements
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#client-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Client Requirements
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sql-server-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      SQL Server Schema
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integrate-databanking-into-ogs-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      Integrate databanking into OGS Project
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#database-connection-strings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Database connection strings
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Database connection strings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sql-server-oledb-driver-msoledbsql" class="md-nav__link">
+    <span class="md-ellipsis">
+      SQL Server OleDB driver (MSOLEDBSQL)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sql-server-native-client-snacsqlncli" class="md-nav__link">
+    <span class="md-ellipsis">
+      SQL Server native client (SNAC/SQLNCLI)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -1285,35 +1517,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#examples" class="md-nav__link">
+  <a href="#custom-implementations" class="md-nav__link">
     <span class="md-ellipsis">
-      Examples
+      Custom implementations
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#simple-get-request" class="md-nav__link">
-    <span class="md-ellipsis">
-      Simple get request
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#decrypt-base64-encoded-data" class="md-nav__link">
-    <span class="md-ellipsis">
-      Decrypt base64-encoded data
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1332,143 +1540,218 @@
                   
 
 
-<h1 id="luanet"><a class="toclink" href="#luanet">LuaNet</a></h1>
-<p>LuaNet provides simple to use functions for REST/OpenAPI calls using http and https protocols. Compared to <a href="https://github.com/lunarmodules/luasocket">luasocket</a> and <a href="http://mauriciocarneiro.github.io/software/luassl/index.html">luassl</a>, it uses the the Windows infrastructure and therefore correctly works with system proxies. Feature-wise it is not as flexible as luasocket/luassl at the moment (e.g. no direct access to all headers), but it is good enough for OAuth and SAP endpoints (like the <a href="https://api.sap.com/package/SAPDigitalManufacturingCloud/rest">SAP Digital Manufacturing Cloud</a>).</p>
-<p>The basic functions work in a blocking mode, i.e. the process calling the function is blocked until a response from the endpoint is received. However, there are also asynchronous functions for starting a (post) request and polling for the completion. This is especially useful for long-running OpenAPI calls (like some SAP digital manufacturing cloud endpoints).</p>
+<h1 id="station-io"><a class="toclink" href="#station-io">Station IO</a></h1>
+<h2 id="overview"><a class="toclink" href="#overview">Overview</a></h2>
+<p>Many times, a real world installation of OGS needs to interact with external sensors and actuators. Typical samples are external push buttons (to acknowledge an operation) connected to a remote I/O module or positioning sensors connected over EtherNet/IP.</p>
+<p>To simplify access to external IO, OGS provides two generic LUA modules to interact with Modbus/TCP and EtherNet/IP based remote IO devices.</p>
+<p>These modules provide the following:</p>
+<ul>
+<li>Configuration of the devices (like IP address and register scanlist) in <code>station.ini</code></li>
+<li>Cyclic data exchange in the background (not blocking LUA processing)</li>
+<li>A LUA interface to add application specific code for mapping input/output data and connecting the physical IOs to a logical OGS function </li>
+</ul>
+<p>Currently the following modules are available (see below for more details on using them):</p>
+<ul>
+<li><code>station_io_enip.lua</code>: Handle Ethernet/IP remote IO devices using a class 1 (implicit) connection. IP addresses are configurable through station.ini. A set of 'known' devices is included, but others can be added (by specifying the CIP forward open parameters).</li>
+<li><code>station_io_modbus.lua</code>: Handle Modbus/TCP remote I/O devices. IP addresses and scan list (registers to be scanned cyclically) are configurable through station.ini.</li>
+</ul>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
-<p>All functions in LuaNet work transparently, i. e. use raw text strings (binary) for request and response body texts. For OpenAPI/REST services typically JSON encoded objects are used. From the large number of lua json libraries (e. g. see <a href="https://github.com/LewisJEllis/awesome-lua#parsing-and-serialization">Awesome Lua</a>), we recommend to use <a href="https://github.com/mpx/lua-cjson">Lua CJSON</a>. If you use another library, make sure it support UTF8 correctly! </p>
+<p>Note, that you can also use the OpenProtocol custom IO signals for IO. This is not covered here, see the <a href="/ogs/tools/openprotocol/">OpenProtocol tools</a> section for more information.</p>
 </div>
-<h2 id="module"><a class="toclink" href="#module">Module</a></h2>
-<p>The LuaNet module provides global functions to execute http/https requests.</p>
-<h3 id="functions"><a class="toclink" href="#functions">Functions</a></h3>
-<div class="admonition info">
-<p class="admonition-title">Info</p>
-<p>For authentication, currently two options are supported: basic authentication through username/password (if user/pass parameters are non-empty) or OAuth2 client credentials (use the <code>token</code> parameter to pass data received from the <code>get_oauth_token</code> function). </p>
-</div>
-<p>The following table lists blocking functions: </p>
+<h2 id="usage"><a class="toclink" href="#usage">Usage</a></h2>
+<p>The recommended way to use the station IO modules is to create a station specific <code>station_io.lua</code> file and add this to the <code>config.lua</code> requires list.</p>
+<h2 id="station_io_enip"><a class="toclink" href="#station_io_enip">station_io_enip</a></h2>
+<h2 id="station_io_modbus"><a class="toclink" href="#station_io_modbus">station_io_modbus</a></h2>
+<ol>
+<li>When starting a workflow, read the part/job state </li>
+<li>When finishing a workflow, write the part/job state</li>
+</ol>
+<p>Reading and writing the part/job state can be implemented in LUA. Therefore almost any backed system can be used to access and store the parts current build state.</p>
+<p>Typical use cases are:</p>
+<ul>
+<li>Rework stations (usually having the workflows of multiple stations combined into a single, large workflow).</li>
+<li>EOL-Checks (end of line checks): Can be used to selectively check single tasks from the assembly stations and visualize these to the operator and add additional (plausibility) checks.</li>
+</ul>
+<p>A default implementation using a Microsoft SQL server backend is available and described here.</p>
+<h2 id="default-sql-server-implementation"><a class="toclink" href="#default-sql-server-implementation">Default SQL Server implementation</a></h2>
+<h3 id="overview_1"><a class="toclink" href="#overview_1">Overview</a></h3>
+<p>The SQL server default databanking implementation identifies and stores data by combining then following properties and using it as a key for data retrieval:</p>
+<ul>
+<li>Part serial number</li>
+<li>Job name</li>
+<li>Task name</li>
+</ul>
+<details class="example">
+<summary>Sample rework scenario</summary>
+<h3 id="example"><a class="toclink" href="#example">Example</a></h3>
+<p>Say <code>station 1</code> processes the part with the serial <code>123456</code> as follows:</p>
 <table>
 <thead>
 <tr>
-<th>Function Name</th>
-<th>Return Type</th>
-<th>Description</th>
-<th>Tags</th>
+<th>Jobs</th>
+<th>Tasks</th>
+<th>Result</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>get(url: string, user: string = nil, pass: string = nil)</code></td>
-<td><code>data: string, status: number, statustext: string, data: string</code> or <code>nil, status: number, statustext: number</code></td>
-<td>Executes a blocking get request for the given URL. If the server returns (http) status = 200, then the response is considered valid. In any case, <code>status</code> and <code>statustext</code> will receive the http response header status data. If a response body is available, then this is returned in the <code>data</code> return value (even if status ~= 200).</td>
-<td>None</td>
+<td>S1 Job 1</td>
+<td>Task 1.1</td>
+<td>OK</td>
 </tr>
 <tr>
-<td><code>get_oauth_token(url: string, user: string = nil, pass: string = nil)</code></td>
-<td><code>status: number, data: string</code> or <code>nil, status: number, statustext: string</code></td>
-<td>Requests client credentials from an OAuth2 server (granttype = client_credentials).</td>
-<td>None</td>
+<td>S1 Job 2</td>
+<td>Task 2.1</td>
+<td>OK</td>
 </tr>
 <tr>
-<td><code>post(url: string, body: string = nil, auth_bearer_token: string = nil, user: string = nil, pass: string = nil)</code></td>
-<td><code>status: number, data: string, statustext: string</code></td>
-<td>Send a post request to the given endpoint <code>URL</code>, with post <code>data</code> in the request body, optinally adding the <code>auth_bearer_token</code> value to the <code>Authorization</code> header.</td>
-<td>None</td>
+<td></td>
+<td>Task 2.1</td>
+<td>NOK</td>
 </tr>
 <tr>
-<td><code>put(url: string, body: string = nil, auth_bearer_token: string = nil, user: string = nil, pass: string = nil)</code></td>
-<td><code>status: number, data: string, statustext: string</code></td>
-<td>Send a put request to the given endpoint <code>URL</code>, with put <code>data</code> in the request body, optinally adding the <code>auth_bearer_token</code> value to the <code>Authorization</code> header.</td>
-<td>None</td>
+<td>S1 Job 3</td>
+<td>Task 3.1</td>
+<td>not completed</td>
 </tr>
 </tbody>
 </table>
-<p>The following table lists the non-blocking functions:</p>
+<p>Say the rework station <code>station 5</code> is configured to rework all jobs as follows:</p>
 <table>
 <thead>
 <tr>
-<th>Function Name</th>
-<th>Return Type</th>
-<th>Description</th>
-<th>Tags</th>
+<th>Jobs</th>
+<th>Tasks</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>post_async(url: string, body: string = nil, auth_bearer_token: string = nil, user: string = nil, pass: string = nil)</code></td>
-<td><code>handle: number</code> or <code>nil</code></td>
-<td>Starts an async post request (see the blocking <code>post</code> above for parameter descriptions). On success a <code>handle</code> is returned, which can be used for polling the request status or aborting the request.</td>
-<td>None</td>
+<td>S1 Job 2</td>
+<td>Task 2.1</td>
 </tr>
 <tr>
-<td><code>put_async(url: string, body: string = nil, auth_bearer_token: string = nil, user: string = nil, pass: string = nil)</code></td>
-<td><code>handle: number</code> or <code>nil</code></td>
-<td>Starts an async put request (see the blocking <code>put</code> above for parameter descriptions). On success a <code>handle</code> is returned, which can be used for polling the request status or aborting the request.</td>
-<td>None</td>
+<td></td>
+<td>Task 2.1</td>
 </tr>
 <tr>
-<td><code>abort_async_request(handle: number)</code></td>
-<td>(no return value)</td>
-<td>Tries to abort a currently active request identified by the <code>handle</code> value (as returned from <code>post_async()</code>. If the request is currently active, it might block for a short time - until the request is actually cancelled. If a request was cancelled, then further calls to <code>poll_async_request()</code> will return <code>nil</code>, as the internal request object for the given handle was deleted and does not exist anymore.</td>
-<td>None</td>
+<td>S1 Job 3</td>
+<td>Task 3.1</td>
 </tr>
 <tr>
-<td><code>poll_async_request(handle: number)</code></td>
-<td><code>requeststate: number, status: number, data: string, statustext: string</code>  or <code>nil, errorcode: number, errortext: string</code></td>
-<td>Checks the request state of a pending request and returns the current state in <code>requeststate</code>. If the 'handle' was not found, nil is returned for <code>requeststae</code>, else the current (internal) process step. A value of &gt;= 100 indicates, that the request has completed and the other return values are valid (see the blocking <code>post</code> above for result value descriptions). Note, that the internal request object is automatically deleted after <code>poll_async_request()</code> returns a status of &gt;= 100.</td>
-<td>None</td>
+<td>S2 Job 1</td>
+<td>Task 4.1</td>
+</tr>
+<tr>
+<td>S3 Job 1</td>
+<td>Task 5.1</td>
+</tr>
+<tr>
+<td>S4 Job 1</td>
+<td>Task 6.1</td>
 </tr>
 </tbody>
 </table>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>A request started through <code>post_async()</code> must be completed by either aborting the request through <code>abort_async_request()</code> or by polling the request (by using <code>poll_async_request</code>) until a state of &gt;= 100 is returned. If not, then the internal request object will not get deleted thus consuming more and more resource.</p>
+<p>If the part with the serial <code>123456</code> is scanned in <code>station 5</code> (assume due to being NOK in <code>station 1</code> it is directly routed to the rework station <code>station 5</code>), it now shows up as follows in the OGS process screen (current part status was loaded from the databanking SQL server):</p>
+<table>
+<thead>
+<tr>
+<th>Jobs</th>
+<th>Tasks</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S1 Job 2</td>
+<td>Task 2.1</td>
+<td>OK</td>
+</tr>
+<tr>
+<td></td>
+<td>Task 2.1</td>
+<td>NOK</td>
+</tr>
+<tr>
+<td>S1 Job 3</td>
+<td>Task 3.1</td>
+<td>not completed</td>
+</tr>
+<tr>
+<td>S2 Job 1</td>
+<td>Task 4.1</td>
+<td>not completed</td>
+</tr>
+<tr>
+<td>S3 Job 1</td>
+<td>Task 5.1</td>
+<td>not completed</td>
+</tr>
+<tr>
+<td>S4 Job 1</td>
+<td>Task 6.1</td>
+<td>not completed</td>
+</tr>
+</tbody>
+</table>
+</details>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<ul>
+<li>All data is retrieved by using the key <code>[part serial number]:[Job name]:[Task name]</code>, so the rework station shows the exact part/task status of the previous operations</li>
+<li>The rework station does not need to have all jobs/tasks defined identically to the original stations (e.g. S1 Job 1 is not defined in the example rework config shown above). Setup just what you need!</li>
+</ul>
 </div>
-<h2 id="examples"><a class="toclink" href="#examples">Examples</a></h2>
-<h3 id="simple-get-request"><a class="toclink" href="#simple-get-request">Simple get request</a></h3>
-<p>This sample shows how to execute a simple https get request with basic authentication (e.g. typical surveillance camera).</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kd">local</span> <span class="n">mime</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s1">&#39;mime&#39;</span><span class="p">)</span>       <span class="c1">-- load luasocket/mime (base64)</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1">-- Sample plaintext password (or connection string, etc)</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kd">local</span> <span class="n">plaintext</span> <span class="o">=</span> <span class="s1">&#39;MySuperSecretPassword&#39;</span> 
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1">-- Encrypt the plaintext for the &#39;machine&#39; scope. All users logged </span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1">-- into the same machine will be able to decrypt the data later.</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1">-- encrypt (usually done at the commandline through powershell):</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="kd">local</span> <span class="n">encrypted_data</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">dpapi</span><span class="p">.</span><span class="n">protect</span><span class="p">(</span><span class="n">plaintext</span><span class="p">,</span> <span class="s1">&#39;machine&#39;</span><span class="p">)</span> 
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="kr">if</span> <span class="n">encrypted_data</span> <span class="o">==</span> <span class="kc">nil</span> <span class="kr">then</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ERROR: encrypt failed, err=&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="nb">os.exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="kr">end</span>
-<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
-<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="c1">-- Do a base64 encode of the encrypted data for storing in *.ini file:</span>
-<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="kd">local</span> <span class="n">encrypted_b64</span> <span class="o">=</span> <span class="n">mime</span><span class="p">.</span><span class="n">b64</span><span class="p">(</span><span class="n">encrypted_data</span><span class="p">)</span>     
-<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>
-<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="c1">-- TODO: save to some text file, but for now just print it</span>
-<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;encrypted, base64 encoded data: &quot;</span><span class="p">,</span> <span class="n">encrypted_b64</span><span class="p">)</span>
+<h3 id="server-requirements"><a class="toclink" href="#server-requirements">Server requirements</a></h3>
+<p>A Microsoft SQL server database must be available and accessible from each OGS station using databanking. As OGS accesses the data every time a workflow is started and completed, a reliable and fast network connection to the database server is very important.</p>
+<p>Supported SQL server versions are: 2019, 2022.</p>
+<h3 id="client-requirements"><a class="toclink" href="#client-requirements">Client Requirements</a></h3>
+<p>Databanking is fully supported with OGS &gt;= V3.0.</p>
+<p>Additional software components required:</p>
+<ul>
+<li>SQL Server native client 11 (<a href="https://learn.microsoft.com/en-us/sql/relational-databases/native-client/applications/installing-sql-server-native-client">SNAC/SQLNCLI</a>) or SQL Server OLE DB driver (<a href="https://learn.microsoft.com/en-us/sql/connect/oledb/oledb-driver-for-sql-server">MSOLEDBSQL</a>). <span style="color:red">NOTE: On an x64 operating system, the x64 versions od the database drivers must be used!</span> </li>
+</ul>
+<h3 id="installation"><a class="toclink" href="#installation">Installation</a></h3>
+<p>To install follow the steps outlined in the next sections. All files mentioned are available from the public <a href="https://github.com/haller-erne/ogs/tree/main/samples/databanking">OGS GitHub repository</a>.</p>
+<h4 id="sql-server-schema"><a class="toclink" href="#sql-server-schema">SQL Server Schema</a></h4>
+<p>Use the <a href="https://github.com/haller-erne/ogs/raw/main/samples/databanking/OGS_Databanking.dacpac">OGS_Databanking.dacpac</a> file to install the database schema required by the default databanking implementation. See <a href="https://learn.microsoft.com/en-us/sql/relational-databases/data-tier-applications/data-tier-applications">Microsofts documentation on how to import a dacpac file</a> for more information.</p>
+<h4 id="integrate-databanking-into-ogs-project"><a class="toclink" href="#integrate-databanking-into-ogs-project">Integrate databanking into OGS Project</a></h4>
+<p>To integrate databanking into your OGS project, the following changes to the project are needed:</p>
+<ol>
+<li>Add the <a href="https://github.com/haller-erne/ogs/raw/main/samples/databanking/databanking.lua">databanking.lua</a> file to your project by adding it into the <code>requires</code> table in your projects <code>config.lua</code> file.</li>
+<li>
+<p>Modify your <code>station.ini</code> file to add the database connection information in the <code>[DATABANKING]</code> section to the <code>ConnectionString=</code> parameter. Here is a sample (using SQL server native client, see <a href="#database-connection-strings">Connection strings below</a> for more info):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">[DATABANKING]</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="na">ConnectionString</span><span class="o">=</span><span class="s">Provider=SQLNCLI11.1</span><span class="c1">;User ID=&lt;my-user&gt;;Password=&lt;my-pass&gt;;Initial Catalog=&lt;my-db&gt;;Data Source=&lt;my-server&gt;\&lt;my-instance&gt;[,server-port]</span>
 </code></pre></div>
-<h3 id="decrypt-base64-encoded-data"><a class="toclink" href="#decrypt-base64-encoded-data">Decrypt base64-encoded data</a></h3>
-<p>This sample shows how to decrypt previously encrypted and base64 encoded data. </p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kd">local</span> <span class="n">dpapi</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s1">&#39;luadpapi&#39;</span><span class="p">)</span>   <span class="c1">-- load the DPAPI</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kd">local</span> <span class="n">mime</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s1">&#39;mime&#39;</span><span class="p">)</span>        <span class="c1">-- load luasocket/mime (base64)</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">-- Sample plaintext password (or connection string, etc)</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1">-- !!! Make sure to paste the data generated from the previous sample!</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="kd">local</span> <span class="n">encrypted_b64</span> <span class="o">=</span> <span class="s1">&#39;AQAAANCMnd8BFdERjHoAwE/Cl+&#39;</span><span class="p">...</span><span class="s1">&#39;ylQ=&#39;</span> 
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="c1">-- Convert from base64 to raw data</span>
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="kd">local</span> <span class="n">encrypted</span> <span class="o">=</span> <span class="n">mime</span><span class="p">.</span><span class="n">unb64</span><span class="p">(</span><span class="n">encrypted_b64</span><span class="p">)</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="c1">-- Decrypt the raw data.</span>
-<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="kd">local</span> <span class="n">decrypted_data</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">dpapi</span><span class="p">.</span><span class="n">unprotect</span><span class="p">(</span><span class="n">encrypted</span><span class="p">)</span> 
-<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="kr">if</span> <span class="n">decrypted_data</span> <span class="o">==</span> <span class="kc">nil</span> <span class="kr">then</span>
-<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ERROR: decrypt failed, err=&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
-<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>    <span class="nb">os.exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="kr">end</span>
-<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>
-<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="c1">-- TODO: use the decrypted data - assume this is a string and print it:</span>
-<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;decrypted data: &quot;</span><span class="p">,</span> <span class="n">decrypted_data</span><span class="p">)</span>
+</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>To use an encrypted database connection string, see <a href="#database-connection-strings">database connection strings below</a>.</p>
+</div>
+<h3 id="database-connection-strings"><a class="toclink" href="#database-connection-strings">Database connection strings</a></h3>
+<p>The databanking setup in this sample uses Microsoft ADO to connect to the database. It therefore is not limited to Microsoft SQL server, but works with all databases providing ODBC or OleDB database drivers.</p>
+<p>To prevent information leakage, you can also use encrypted database connection strings. This works by encrypting the plaintext connection string with Microsofts data protection API using the machine key of the current system. As this ties the encrypted string to the physical machine, copies of the configureation file cannot be decrypted on another machine. See <a href="https://haller-erne.github.io/ogs/libs/lua-dpapi/#sample-powershell-commandlet-for-encryption">sample powershell command for encryption</a> on how to encrypt a plaintext string for use with OGS.</p>
+<p>For Microsoft SQL server, there are multiple options for connecting to the database, supported are the (old) SQL server native client and the current SQL server OleDB driver. These are described in more detail in the following section.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>To workaround missing or invalid server certificates, add <code>Encrypt=false;</code> and/or <code>TrustServerCertificate=false;</code> to the connection string.</p>
+</div>
+<h4 id="sql-server-oledb-driver-msoledbsql"><a class="toclink" href="#sql-server-oledb-driver-msoledbsql">SQL Server OleDB driver (MSOLEDBSQL)</a></h4>
+<p>Here is a sample connection string using the SQL server native client 11:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">[DATABANKING]</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="na">ConnectionString</span><span class="o">=</span><span class="s">Provider=MSOLEDBSQL</span><span class="c1">;Data Source=&lt;my-server&gt;\&lt;my-instance&gt;[,server-port];Initial Catalog=&lt;my-db&gt;;User ID=&lt;my-user&gt;;Password=&lt;my-pass&gt;;</span>
 </code></pre></div>
+<p>A quick reference to the parameters can be found at <a href="https://www.connectionstrings.com/ole-db-driver-for-sql-server/">connectionstrings.com</a> or in the <a href="https://learn.microsoft.com/en-us/sql/connect/oledb/oledb-driver-for-sql-server">official Microsoft documentation</a>.</p>
+<h4 id="sql-server-native-client-snacsqlncli"><a class="toclink" href="#sql-server-native-client-snacsqlncli">SQL Server native client (SNAC/SQLNCLI)</a></h4>
+<p>Here is a sample connection string using the SQL server native client 11:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">[DATABANKING]</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="na">ConnectionString</span><span class="o">=</span><span class="s">Provider=SQLNCLI11.1</span><span class="c1">;Data Source=&lt;my-server&gt;\&lt;my-instance&gt;[,server-port];Initial Catalog=&lt;my-db&gt;;User ID=&lt;my-user&gt;;Password=&lt;my-pass&gt;;</span>
+</code></pre></div>
+<p>A quick reference to the parameters can be found at <a href="https://www.connectionstrings.com/sql-server-native-client-11-0-oledb-provider/">connectionstrings.com</a> or in the <a href="https://learn.microsoft.com/en-us/sql/relational-databases/native-client/applications/installing-sql-server-native-client">official Microsoft documentation</a>.</p>
+<h2 id="custom-implementations"><a class="toclink" href="#custom-implementations">Custom implementations</a></h2>
+<p><em>TODO: describe the LUA functions used for databanking.</em></p>
 
 
 

@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.26">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.27">
     
     
       
@@ -1246,8 +1246,43 @@
   
   
   
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Application notes
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Application notes
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../../debugging/" class="md-nav__link">
+      <a href="../../appnotes/debugging/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1256,6 +1291,35 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appnotes/station_io/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Station IO
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -1683,7 +1747,7 @@ To iterate the list, call the <code>next()</code> instance function - each call 
 <h2 id="class-hiddevice"><a class="toclink" href="#class-hiddevice">Class HidDevice</a></h2>
 <h3 id="functions_2"><a class="toclink" href="#functions_2">Functions</a></h3>
 <p>The member functions of HidDevice are wrapped functions of the module. The following lines are identical:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kd">local</span> <span class="n">hidapi</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s1">&#39;LuaHID&#39;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kd">local</span> <span class="n">hidapi</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s1">&#39;luahid&#39;</span><span class="p">)</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1">-- ...</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1">-- assume dev is a HidDevice object returned from calling open()</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1">-- The following are identical:</span>
@@ -1754,7 +1818,7 @@ To iterate the list, call the <code>next()</code> instance function - each call 
 <h3 id="enumerate-connected-devices"><a class="toclink" href="#enumerate-connected-devices">Enumerate connected devices</a></h3>
 <p>This sample lists all connected HID devices and shows some of their properties.
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">-- Load the LuaHID module</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kd">local</span> <span class="n">hidapi</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s1">&#39;LuaHID&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kd">local</span> <span class="n">hidapi</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s1">&#39;luahid&#39;</span><span class="p">)</span>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nb">print</span><span class="p">(</span><span class="nb">string.format</span><span class="p">(</span><span class="s2">&quot;Lib VERSION %s build on %s&quot;</span><span class="p">,</span> <span class="n">hid</span><span class="p">.</span><span class="n">_VERSION</span><span class="p">,</span> <span class="n">hid</span><span class="p">.</span><span class="n">_TIMESTAMP</span><span class="p">))</span>
 <a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
 <a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1">-- Initialize the library</span>
@@ -1794,7 +1858,7 @@ To iterate the list, call the <code>next()</code> instance function - each call 
 <h3 id="readwrite-device-report-data"><a class="toclink" href="#readwrite-device-report-data">Read/write device report data</a></h3>
 <p>This sample tries to connect to a specific device using a given <em>VID</em>/<em>PID</em> and writes/reads some data in non-blocking mode. 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">-- Load the LuaHID module</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kd">local</span> <span class="n">hidapi</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s1">&#39;LuaHID&#39;</span><span class="p">)</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kd">local</span> <span class="n">hidapi</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s1">&#39;luahid&#39;</span><span class="p">)</span>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nb">print</span><span class="p">(</span><span class="nb">string.format</span><span class="p">(</span><span class="s2">&quot;Lib VERSION %s build on %s&quot;</span><span class="p">,</span> <span class="n">hid</span><span class="p">.</span><span class="n">_VERSION</span><span class="p">,</span> <span class="n">hid</span><span class="p">.</span><span class="n">_TIMESTAMP</span><span class="p">))</span>
 <a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
 <a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="c1">-- Initialize the library</span>

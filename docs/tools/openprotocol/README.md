@@ -81,7 +81,7 @@ Defines the TCP port used for OpenProtocol communication. By default uses the st
 #### CHECK_TIME_INTERVAL 
 _(optional, defaults to 5 [minutes])_
 
-Defines the time [in minutes] when OGS shall check the tools clock. This setting is only used, if time synchronization is enabled for the tool (see [CHECK_TIME_ENABLED](#check_time_enabled) below).
+Defines the time [in minutes] when OGS shall check the tools clock. This setting is only used, if time synchronization is enabled for the tool (see [CHANNEL_[TOOL]_CHECK_TIME_ENABLED](#channel_tool_check_time_enabled) below).
 
 #### TIME_TOLERANCE
 _(optional, defaults to 5 [seconds])_
@@ -104,17 +104,17 @@ The parameter names are composed of the channel prefix `CHANNEL_` followed by th
 
 In general, the following parameters are available for a `OpenProtocol`-tool:
 
-#### CHANNEL_<tool>_IP 
+#### CHANNEL_[tool]_IP 
 _(mandatory)_
 
 This setting defines the IP address to use for communication with the tool.
 
-#### CHANNEL_<tool>_PORT
+#### CHANNEL_[tool]_PORT
 _(optional, defaults to the shared parameter value)_
 
 See [PORT](#port) in the [shared parameter reference](#shared-parameter-reference).
 
-#### CHANNEL_<tool>_TYPE
+#### CHANNEL_[tool]_TYPE
 _(mandatory)_
 
 The allowed tool types and their default parameters are listed in the following table (see the [overview section](#overview) above for tool details):
@@ -133,12 +133,12 @@ The allowed tool types and their default parameters are listed in the following 
 | ATG   | 2 | 5  |  |
 
 NOTES:
-- The Alive send rate and Response timeout default parameter values can be overridden by the [CHANNEL_<tool>_ALIVEXMTT](#channel__alivexmtt) and [CHANNEL_<tool>_RSPTIMEOUT](#channel__rsptimeout) parameters. 
+- The Alive send rate and Response timeout default parameter values can be overridden by the [CHANNEL_[tool]_ALIVEXMTT](#channel__alivexmtt) and [CHANNEL_[tool]_RSPTIMEOUT](#channel__rsptimeout) parameters. 
 - All tools use a slightly different set of MIDs to control operation, e.g. some do support alarms, others don't or allow different revisions of the MID commands.
 - For Nexo with firmware < V1500, a Alive send rate of 1000ms or less is recommended to ensure stable WiFi operation
 - For CS351 and KE350, do not use a Alive send rate less than 5 second, else the controller may become unresponsive 
 
-#### CHANNEL_<tool>_CCW_ACK
+#### CHANNEL_[tool]_CCW_ACK
 _(optional, default = 0 (disabled))_
 
 Defines, if the operator must select a loosen operation on the tool end (for
@@ -149,37 +149,90 @@ The following settings are available:
 - 0: Disabled. OGS select a CCW program automatically
 - 1: Enabled. Operator must switch to CCW manually 
 
-#### CHANNEL_<tool>_ALIVEXMTT
+#### CHANNEL_[tool]_ALIVEXMTT
 _(optional, default defined by tool type (see above))_
 
 Defines how often OGS shall send an `ALIVE` data packet (`MID9999`) to the tool to check for connectivity. The value is given in milliseconds.
 
-If no answer from the tool is received within 3 times of this time, then the
-connection with the tool is considered disconnected. In this case, OGS shuts
-down the connection and tries to reconnect.
+If OpenProtocol communication is received from the tool within 3 times of
+this time setting, then the connection with the tool is considered
+disconnected. In this case, OGS shuts down the connection and tries to reconnect. 
 
+#### CHANNEL_[tool]_RSPTIMEOUT
+_(optional, default defined by tool type (see above))_
 
-#### CHANNEL_<tool>_RSPTIMEOUT
+Defines how long OGS shall wait for an OpenProtocol command response from 
+the tool before considering the connection as disconnected. The value is 
+given in milliseconds.
 
-#### CHANNEL_<tool>_BARCODE_MID0051_REV
+If no answer for a command sent by OGS to the tool is received within this time setting, then the connection with the tool is considered disconnected. 
+In this case, OGS shuts down the connection and tries to reconnect.
 
-#### CHANNEL_<tool>_CHECK_EXT_COND
+#### CHANNEL_[tool]_BARCODE_MID0051_REV
+_(optional, default = 0 (disabled))_
 
-#### CHANNEL_<tool>_APPL_START
+If set to a nonzero value, the `MID0051` (ID-Code change) subscription is 
+enabled. This can be used to read ID-Codes through a barcode scanner built into the tool (instead of using a seperate scanner).
 
-#### CHANNEL_<tool>_CURVE_REQUEST
+See the tool-specific documentation about how to enable barcode scanning with
+ID-Code forwarding.
 
-#### CHANNEL_<tool>_CHECK_TIME_ENABLED
+#### CHANNEL_[tool]_CHECK_EXT_COND
+_(optional, default = 0 (disabled))_
 
-#### CHANNEL_<tool>_IGNORE_ID
+Defines, how the tool enable shall follow the OGS enable signal. The following 
+options are available:
+
+- 0: Only check the enable once for each tool operation. 
+- 1: Cyclically check the enable while a tool operation is active. 
+
+#### CHANNEL_[tool]_APPL_START
+_(optional, default = 0 (single channel mode))_
+
+If set to a nonzero value, OGS uses multispindle (fastening application) mode 
+to control the tool. This also changes other behaviour for the communication,
+e.g. uses `MID0100` to subscribe for results instead of `MID0060` (for single
+channel results).
+
+See [System 350 OpenProtocol](/docs/tools/openprotocol/sys350.md) for more info about multi-spindle mode and how to set it up.
+
+#### CHANNEL_[tool]_CURVE_REQUEST
+_(optional, default = 0 (disabled))_
+
+If set to a nonzero value, OGS requests the tightening curve data after a 
+rundown has completed. 
+
+NOTES: 
+
+- Depending on the tool type, this introduces significant delays for the
+tightening operation!
+- If curves are only needed for validation purposes, then [Tool mirroring/twins](#tool-mirroringtwins) can be set up with different parameters for the main and the mirrored tool!
+
+#### CHANNEL_[tool]_CHECK_TIME_ENABLED
+_(optional, default = 0 (disabled))_
+
+If set to a nonzero value, OGS checks the tools realtime clock and adjusts it,
+if the time delta between the OGS system time and the tools system time is tool large.
+
+See the [shared parameter section](#shared-parameter-reference) for more parameters related to time synchronization.
+
+#### CHANNEL_[tool]_IGNORE_ID
+_(optional, default to the tool type)_
+
+Set to a nonzero value to ignore the tightening result ID returned in the tightening results from the tool. OGS expects and validates, that each rundown
+of a tool uses an incrementing tightening result ID to ensure no lost or out of
+sync tightening results. However, some tools have a flaky implementation so there is an option to disable these checks.
 
 #### Debugging settings
 
-##### CHANNEL_<tool>_SHOWALIVE
+##### CHANNEL_[tool]_SHOWALIVE
+_(optional, default = 0 (disabled))_
 
-##### CHANNEL_<tool>_PARAMS
+Set to nonzero to log `MID9999` (alive) messages in the OGS ETW logs.
+
+##### CHANNEL_[tool]_PARAMS
 _(internal, default depending on tool type)_
 
 ## Tool mirroring/twins
 
-
+(tbd).

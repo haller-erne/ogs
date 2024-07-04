@@ -17,7 +17,7 @@ nav:
             - n-gineric: tools/openprotocol/ngineric.md
         - Misc tools:
             - Gesipa riveting tool: tools/misc/gesipa-mqtt.md
-    - Data output: dataoutput/overview.md
+    - Data output:
         - End-of-process file: dataoutput/xmlfile.md
         - Printout and label printing: dataoutput/printout.md
         - Traceability: dataoutput/traceability.md

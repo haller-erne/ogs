@@ -1,16 +1,15 @@
 ---
-id: events
-name: Traceability
-title: Traceability
+id: traceability
+name: Event recording
+title: Event recording
 tags:
     - dataoutput
 ---
 
-# Traceability
+# Event recording
 
 ## Overview
 
 ## Usage
 
 ## Reference
-

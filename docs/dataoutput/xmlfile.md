@@ -126,4 +126,26 @@ function GetFileName(idcode, model)
 end
 ```
 
+To just change the generated file name, you can call the "original" function from your code and just change the filename. Here is a sample:
+
+``` lua
+-- Store the original function in a local variable
+local old_GetFileName = GetFileName
+
+-- Define the new function (override the original one)
+function GetFileName(idcode, model)
+
+	-- Call the "original" function to get the XML data
+	local old_filename, old_filecontent = old_GetFileName(idcode, model)
+
+	-- Create a new filename as "<idcode>-<YYYY><MM><DD>T<HH><mm><ss>.xml"
+	local t = os.date('*t')
+	local t_as_str = string.format('%04d%02d%02dT%02d%02d%02d', t.year,t.month, t.day, t.hour,t.min,t.sec)
+	local new_filename = string.format('%s-%s.xml', idcode, t_as_str)
+
+	-- Return the "new" filename and the "old" file content
+    return new_filename, old_filecontent
+end
+```
+
 To get started quickly, see the default implementation in `<install dir>\lualib\system.lua`. 

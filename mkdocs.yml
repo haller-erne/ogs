@@ -18,7 +18,7 @@ nav:
         - Misc tools:
             - Gesipa riveting tool: tools/misc/gesipa-mqtt.md
     - Data output:
-        - End-of-process file: dataoutput/xmlfile.md
+        - End-of-process (XML) file: dataoutput/xmlfile.md
         - Printout and label printing: dataoutput/printout.md
         - Traceability: dataoutput/traceability.md
     - Scripting:

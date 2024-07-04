@@ -10,120 +10,144 @@ tags:
 
 ## Overview
 
-OGS records all process results and the resulting part state internally in its database, but it also provides interfaces to provide this data to other systems.
+There is actually no direct support for printout in the OGS station runtime (monitor.exe). However, as printing is a pretty common use case (primarily
+Label printouts or end-of-line result report sheets), there is support for
+printing using a report generator.
 
-The End-of-process (XML) file functionality (by default) automatically generates a XML file containing the  part staus at the moment, when OGS finishes a workflow (i.e. the part leaves the station). 
+This is usually used in one of the following ways:
 
-The mechanism used to generate the XML file allows overriding the file name (by default generated as `<model><serial>-<timestamp>.xml`) as well as the file contents by implementing the LUA function `GetXMLFile()`.
+- As a custom LUA tool which prints a label at some step in a workflow.
+- As a pdf file creator (or sheet printout) at the end of the workflow to
+  document al process steps done (station-build report or end-of-line
+  report (with [Databanking](/docs/appnotes/databanking.md))).
 
-By setting the configuration options in `station.ini`, the destination folder to save the result files can be specified, as well as when a file shall be created (e.g. only if the part is completed, i.e. all tasks are finished or everytime, even if there are missing tasks).  
+Both features use either the `heLabelPrinter.exe` or the `locate.exe` helper applications shipped with OGS. `heLabelPrinter.exe` is mainly used, if no
+SQL queries from the OGS `station.fds` database are needed, else `locate.exe`
+is used. Both applications can run in two modes:
 
+- Commandline mode: If called from a LUA file, commands and variables for 
+  the reports are passed over the command line. The application does not show 
+  a GUI window, but creates a file or a printout and exits after everything
+  was completed.
+- Interactive/GUI mode: For `heLabelPrinter.exe`, this allows to interactively
+  edit the printing template. `locate.exe` also supports this, but can also
+  be used to show data stored in the `station.fds` database - and create
+  printing template with complex SQL queries.
+
+Both applications use the [FastReport VCL](https://www.fast-report.com/public_download/docs/FRVCL/online/de/FastReportVCL/UserManual/de-DE/Designer.html) report generator to create and print/save the documents. See the [FastReport Online help](https://www.fast-report.com/public_download/docs/FRVCL/online/de/FastReportVCL/UserManual/de-DE/Designer.html) on how to create and test reports and how to create reusable report templates.
 
 ## Usage
 
-### Enabling the XML data output
+### heLabelPrinter.exe
 
-To enable the XML data output, define the destination directory to use in the `[XML]` section in your projects `station.ini` as follows:
+#### Design a report
 
-``` ini
-[XML]
-; Define the workflow complete data output (save a result data file).
-; NOTES:
-; - If the DIRECTORY parameter is missing or empty, no file is generated.
-; - The [GENERAL] section RESULT_Ok=, RESULT_Nok=, RESULT_incomplete= define when a XML
-;   file is actually generated, e.g. if RESULT_incomplete=SKIP, no XML file will be
-;    generated, if a part is finished with incomplete status (like missing bolts).
-; - The generated file format/contents can be overriden by LUA code (see GetXMLFile())
-;
-; Define the output directory for generated part result reports (by default in XML format)
-DIRECTORY=C:\Daten
+To design a label, run the executable `heLabelPrinter.exe` without parameters. Click the button "Edit label template" to open the [FastReport template designer](https://www.fast-report.com/public_download/docs/FRVCL/online/de/FastReportVCL/UserManual/de-DE/Designer.html). 
+
+The following screenshot shows a typical template with some variables (to be provided by a LUA script from OGS over the command line) and a generated 2D-barcode:
+
+![FastReport designer view with variables](fastreport-simple.png)
+
+To add the report variables (as text) to the design surface, simply drag&drop from the "Variables" tab (on the right hand side). To create new variables, use the main menu `Report --> Variables...`. This will show the variable editor, where you can then add new variables.
+
+To test the newly created report, got to `File --> Preview...`.
+
+#### Execute a report (with variables)
+
+To execute a report from the command line, the following syntax is used:
+
+	heLabelPrinter.exe [key1=value1]...[keyN=valueN]
+
+The following key values are defined:
+
+- `form=`: Defines the report template to use
+- `show=`: If set to `YES` then show the console progress window. 
+- `output=`: Defines the printer name for printing the report or the output
+   file name for saving the report (in pdf format)
+
+All other key values are used as variable values for the report variables. If you specify e.g. `MN=123`, then the report variable `MN` will be set to `123` - this will then replace the template field accordingly.
+
+Typical command lines are:
+
+``` cmd
+@rem Generate a pdf report and show it. Use INT_VAR1=12345 and STR_VAR2=YES
+heLabelPrinter.exe [form=label.fr3][show=YES][INT_VAR1=12345][STR_VAR2=YES][output=C:\\tmp\\mumu.pdf]
+
+@rem Print the same report on printer KYOCERA FS1900. Use INT_VAR1=12345 and STR_VAR2=YES
+heLabelPrinter.exe [form=label.fr3][show=YES][INT_VAR1=12345][STR_VAR2=YES][output=KYOCERA FS1900]
+
 ```
 
-XML data output is disabled, if the `DIRECTORY` parameter is missing or empty.
+### locate.exe
 
-### Define when a file is generated
+Compared with `heLabelPrinter`, `locvate` requires a `station.fds` database with workflow result data. Whereas `heLabelPrinter` can be easily used for simple print jobs (like labels), `locate.exe` is used for build-, tool- and partdata-reports.
 
-In general, the XML file is generated when a workflow is completed (i.e. when OGS switches from the process screen back to the idle screen). However, sometimes - depending on the parts result - one does not want to actually save a result data file (e.g. because the part is only partially completed, set aside and will be finished later).
+#### Design a report
 
-OGS uses the "archive" settings to decide, if the result file shall be generated - as this is conceptionally the same as for the "archiving" setting of the database. The parameters for this are in the `[GENERAL]` section of `station.ini` as follows:
+To design a label, run the executable `locate.exe` without parameters. Choose a database to work with andcheck the "design" checkbox in the top row. To open the [FastReport template designer](https://www.fast-report.com/public_download/docs/FRVCL/online/de/FastReportVCL/UserManual/de-DE/Designer.html), click either the "print" button or the "..." (ellipsis) button next to the "design" checkbox.
 
-``` ini
-;
-; If Operator finishes part processing, should be part result get archived in the Database?
-;  SKIP - (default) do not archive part result (keep it in database as not completed)
-;  SAVE - archive part result ((keep it in database as archived))
-;  ASK  - ask operator if part result shall be archived or not
-; Define the behaviour according to the part state as follows:
-Result_OK=SAVE
-Result_NOK=SAVE
-Result_incomplete=SKIP
+Compared to the `heLabelPrinter` gui, you will see the data tab populated with the OGS station database tables. You can use these to build queries and create
+reports. For more details, please request the database schema documentation.
+
+#### Execute a report
+
+To execute a report from the command line, the following syntax is used:
+
+	locate.exe [key1=value1]...[keyN=valueN]
+
+The following key values are defined:
+
+- `db=`: full path to a database file (station.fds)
+- `sn=`: current serial number (required)
+- `form=`: Defines the report template to use
+- `show=`: If set to `YES` then show the console progress window. 
+- `output=`: Defines the printer name for printing the report or the output
+   file name for saving the report (in pdf format)
+
+All other key values are used as variable values for the report variables. If you specify e.g. `MN=123`, then the report variable `MN` will be set to `123` - this will then replace the template field accordingly.
+
+NOTES:
+- Variables can also be used in SQL queries!
+- the paramete `sn` is mandatory, as `locate.exe` is typically used for reading
+  the current parts data.
+
+Typical command lines are:
+
+``` cmd
+@rem Generate a pdf report and show it. Use INT_VAR1=12345 and STR_VAR2=YES
+locate.exe [db=station.fds][sn=123456][form=label.fr3][show=YES][INT_VAR1=12345][STR_VAR2=YES][output=C:\\tmp\\mumu.pdf]
+
+@rem Print the same report on printer KYOCERA FS1900. Use INT_VAR1=12345 and STR_VAR2=YES
+locate.exe [db=station.fds][sn=123456][form=label.fr3][show=YES][INT_VAR1=12345][STR_VAR2=YES][output=KYOCERA FS1900]
+
 ```
 
-The above sample will create a result file, if the part is completed, i. e. all tasks are either
-finished OK or NOK, but there will no file be created, if any of the tasks is noch completed (or not started).
+## LUA integration
 
-## Reference
+### Typical code to run a report
 
-The default file naming and data format is implementend in `<install dir>\lualib\system.lua`. 
-
-### File Naming conventions
-
-By default, OGS generates the filename of the result data file as follows:
-
-    <idcode>-<timestamp>.xml
-
-where
-
-- `<idcode>` is the concatenation of the model code and serial number
-- `<timestamp>` is the current date/time in format `YYMMDD-HHmmss`
-
-
-### File contents
-
-By default the generated file contains the results in the following XML format:
-
-``` xml
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<prozess  id="M-061231231232" typ="MODEL 06" version="1.0">
-	<station name ="[he-007] ST03" host="nbhei7wx" zeitstempel="04.07.2024 10:24:59" kundeninfo="" werker="red" meister="" ergebnis="NOK">
-		<bauteil name ="Brake Caliper" zeitstempel="04.07.2024 10:24:59" ergebnis="nicht vorhanden">
-			<schrauben>
-				<schraube num="1" name="S1" werkzeug="Nexo" prg="6" moment="30.09" mommin="28.00" mommax="32.00" winkel="782" winmin="500.0" winmax="1200.0" ergebnis="OK" comment=""/>
-				<schraube num="2" name="S2" werkzeug="Nexo" prg="6" moment="30.13" mommin="28.00" mommax="32.00" winkel="815" winmin="500.0" winmax="1200.0" ergebnis="OK" comment=""/>
-				<schraube num="3" name="S3" werkzeug="Nexo" prg="12" moment="10.03" mommin="8.00" mommax="12.00" winkel="43" winmin="30" winmax="60" ergebnis="OK" comment=""/>
-				<schraube num="4" name="S4" werkzeug="Nexo" prg="12" moment="" mommin="" mommax="" winkel="" winmin="" winmax="" ergebnis="nicht vorhanden" comment=""/>
-			</schrauben>
-		</bauteil>
-		<bauteil name ="Oil dipstick" zeitstempel="04.07.2024 10:25:03" ergebnis="NOK">
-			<schrauben>
-				<schraube num="1" name="S1" werkzeug="Ack" prg="0" moment="INF" mommin="0.00" mommax="0.00" winkel="INF" winmin="0.0" winmax="0.0" ergebnis="NOK" comment=""/>
-			</schrauben>
-		</bauteil>
-		<bauteil name ="Oil dipstick popup" zeitstempel="04.07.2024 10:25:04" ergebnis="OK">
-			<schrauben>
-				<schraube num="1" name="S1" werkzeug="Ack" prg="0" moment="INF" mommin="0.00" mommax="0.00" winkel="INF" winmin="0.0" winmax="0.0" ergebnis="OK" comment=""/>
-			</schrauben>
-		</bauteil>
-	</station>
-</prozess>
-```
-
-Note, that all jobs and tasks are listed - those not ran are tagged with the result attribute `ergebnis="nicht vorhanden"`.
-
-### Lua function to override file name and content
-
-To override the file name or file content, implement the LUA function `GetFileName()` in your projects LUA code. The function is called with the `<idcode>` value and the `<model>` code. Before OGS calls the function, the cuttent part state is saved into the `station_results` global variable. The function should use the contents of `station_results` to generate the actual file data and return it along with the file name.
-
-The function has the following signature:
+Typical LUA code to run a report (save pdf or print) is as follows:
 
 ``` lua
-function GetFileName(idcode, model)
+-- prepare the command line
+local fmt = 'heLabelPrinter.exe [form=%s][show=NO][MN=%s][SN=%s][output=%s]'
+local cmd = string.format('label.fr3', 'MNum', 'SNum', 'output.pdf')
 
-    -- Your code to create filename and filecontent
-    -- Use the global variable station_results to generate the file content.
+-- execute the command (with a hidden window)
+local err = CreateProcess(cmd, 134217728) -- CREATE_NO_WINDOW flag 0x8000000
+if err then
+	SetLuaAlarm('PRINTER', 'Print failed! Error='..param_as_str(err))
+end	
 
-    return filename, filecontent
-end
 ```
 
-To get started quickly, see the default implementation in `<install dir>\lualib\system.lua`. 
+### Hints
+
+When working with printers, a lot of errors can happen (paper jam, out of paper, printer shutdown or disconnected). As a lot of them cannot be detected through the Windows API, it is good practice to allow reptinting a label, when the operator notices, that the printout has failed.
+
+A simple way to implement this is to define a LUA tool, which does the actual printout, then use it as a pre-task aktion. Assign an acknowledge action as the final task. This will result in the following behaviour:
+
+- If the tast is executed, it will first execute the print (through the pre-task LUA tool print action). 
+- It will then immediately show the acknowledge button - if the label printout was ok, this can be acknowledged "ok" by the operator. If there is some problem with the printout, then the operator shall use the "nok" acknowledge. 
+- If the "nok" acknowledge is selected, the default retry behavior kicks in - it deletes the current state of the task and restarts it - effectively executing the pre-task action again (and therefore printing another label).
+

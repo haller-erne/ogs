@@ -2,8 +2,6 @@ site_name: OGS Documentation
 site_url: https://haller-erne.github.io/ogs/
 nav:
     - Home: index.md
-    - Enterprise functionality:
-        - Databanking and multi-station rework: appnotes/databanking.md
     - Tool configuration:
         - Overview: tools/README.md
         - Remote Tool Gateway: 
@@ -19,6 +17,10 @@ nav:
             - n-gineric: tools/openprotocol/ngineric.md
         - Misc tools:
             - Gesipa riveting tool: tools/misc/gesipa-mqtt.md
+    - Data output: dataoutput/overview.md
+        - End-of-process file: dataoutput/xmlfile.md
+        - Printout and label printing: dataoutput/printout.md
+        - Traceability: dataoutput/traceability.md
     - Scripting:
         - Getting Started: v3/getting-started.md
         - LUA interfaces:
@@ -33,6 +35,10 @@ nav:
         - USB HID Devices (Buttons, Arduino, etc.): libs/lua-hid.md
         - Data Protection API (safe secrets storage): libs/lua-dpapi.md
         - LUA network helpers (REST/OpenAPI): libs/lua-net.md
+    - Enterprise functionality:
+        - Databanking and multi-station rework: appnotes/databanking.md
+        - Central user administration: appnotes/userdb.md
+        - Traceability: appnotes/traceability.md
     - Application notes:
         - Debugging LUA Scripts: appnotes/debugging.md
         - Station IO: appnotes/station_io.md

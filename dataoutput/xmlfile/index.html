@@ -1640,6 +1640,25 @@ finished OK or NOK, but there will no file be created, if any of the tasks is no
 <a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="kr">return</span> <span class="n">filename</span><span class="p">,</span> <span class="n">filecontent</span>
 <a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="kr">end</span>
 </code></pre></div>
+<p>To just change the generated file name, you can call the "original" function from your code and just change the filename. Here is a sample:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">-- Store the original function in a local variable</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kd">local</span> <span class="n">old_GetFileName</span> <span class="o">=</span> <span class="n">GetFileName</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1">-- Define the new function (override the original one)</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="kr">function</span> <span class="nf">GetFileName</span><span class="p">(</span><span class="n">idcode</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    <span class="c1">-- Call the &quot;original&quot; function to get the XML data</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>    <span class="kd">local</span> <span class="n">old_filename</span><span class="p">,</span> <span class="n">old_filecontent</span> <span class="o">=</span> <span class="n">old_GetFileName</span><span class="p">(</span><span class="n">idcode</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>    <span class="c1">-- Create a new filename as &quot;&lt;idcode&gt;-&lt;YYYY&gt;&lt;MM&gt;&lt;DD&gt;T&lt;HH&gt;&lt;mm&gt;&lt;ss&gt;.xml&quot;</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>    <span class="kd">local</span> <span class="n">t</span> <span class="o">=</span> <span class="nb">os.date</span><span class="p">(</span><span class="s1">&#39;*t&#39;</span><span class="p">)</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>    <span class="kd">local</span> <span class="n">t_as_str</span> <span class="o">=</span> <span class="nb">string.format</span><span class="p">(</span><span class="s1">&#39;%04d%02d%02dT%02d%02d%02d&#39;</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">year</span><span class="p">,</span><span class="n">t</span><span class="p">.</span><span class="n">month</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">day</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">hour</span><span class="p">,</span><span class="n">t</span><span class="p">.</span><span class="n">min</span><span class="p">,</span><span class="n">t</span><span class="p">.</span><span class="n">sec</span><span class="p">)</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>    <span class="kd">local</span> <span class="n">new_filename</span> <span class="o">=</span> <span class="nb">string.format</span><span class="p">(</span><span class="s1">&#39;%s-%s.xml&#39;</span><span class="p">,</span> <span class="n">idcode</span><span class="p">,</span> <span class="n">t_as_str</span><span class="p">)</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>    <span class="c1">-- Return the &quot;new&quot; filename and the &quot;old&quot; file content</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>    <span class="kr">return</span> <span class="n">new_filename</span><span class="p">,</span> <span class="n">old_filecontent</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="kr">end</span>
+</code></pre></div>
 <p>To get started quickly, see the default implementation in <code>&lt;install dir&gt;\lualib\system.lua</code>. </p>
 
 

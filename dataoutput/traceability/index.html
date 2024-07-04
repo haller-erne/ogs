@@ -22,7 +22,7 @@
     
     
       
-        <title>Event recording - OGS Documentation</title>
+        <title>Traceability - OGS Documentation</title>
       
     
     
@@ -64,7 +64,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#event-recording" class="md-skip">
+        <a href="#traceability" class="md-skip">
           Skip to content
         </a>
       
@@ -100,7 +100,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Event recording
+              Traceability
             
           </span>
         </div>
@@ -1440,8 +1440,21 @@
                   
 
 
-<h1 id="event-recording"><a class="toclink" href="#event-recording">Event recording</a></h1>
+<h1 id="traceability"><a class="toclink" href="#traceability">Traceability</a></h1>
 <h2 id="overview"><a class="toclink" href="#overview">Overview</a></h2>
+<p>In OGS, the term <code>Traceability</code> refers to sending out tool results in JSON format, similar to 
+the Rexroth Nexo, CS351 and KE350 tools. This feature allows tools, which do not support
+their own detailed and buffered data output (e. g. most electronic torque wrenches), to 
+connect to common 3rd party data colletion and analysis systems in the same way as the 
+Rexroth tools do (including graph data, if the tool provides this).</p>
+<p>In addition to providing industry standard data output for 3rd party tools, OGS also generates
+traceability data for its inbuilt tools. Data can be generated for barcode scans, acknowledge
+actions and even for user logon/logoff in the same standardized JSON format.  </p>
+<p>The <code>Traceability</code> feature aims to provide all data in near-realtime and in a high data
+quality for 3rd party systems for full process documentation and insight. All data is buffered locally before sending it out over FTP/http to the consuming server to ensure guaranteed
+delivery of all process events.</p>
+<p>Here is an overview of the system setup:</p>
+<p><img alt="Traceability" src="../traceability.drawio.svg" /></p>
 <h2 id="usage"><a class="toclink" href="#usage">Usage</a></h2>
 <h2 id="reference"><a class="toclink" href="#reference">Reference</a></h2>
 

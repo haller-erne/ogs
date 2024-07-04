@@ -21,6 +21,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://haller-erne.github.io/ogs/dataoutput/events/</loc>
+         <lastmod>2024-07-04</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://haller-erne.github.io/ogs/dataoutput/printout/</loc>
          <lastmod>2024-07-04</lastmod>
          <changefreq>daily</changefreq>

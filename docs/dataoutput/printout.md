@@ -1,12 +1,12 @@
 ---
 id: printout
-name: End-of-process (XML) file
-title: End-of-process (XML) file
+name: Printout and label printing
+title: Printout and label printing
 tags:
     - dataoutput
 ---
 
-# End-of-process (XML) file
+# Printout and label printing
 
 ## Overview
 

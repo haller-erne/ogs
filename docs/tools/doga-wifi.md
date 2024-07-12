@@ -19,7 +19,7 @@ OGS provides the `heDogaTool.dll` to implement the Doga communication protocol.
 
 ### Installation
 
-For OGS versions < V3.1, the Doga tool driver is not included in the OGS installer, so the `heDogaTool.dll` must be copied manually into the OGS installation folder (usually `c:\program files(x86)\Bosch Rexroth AG\OGS V3.0`). 
+For OGS versions < V3.0.9, the Doga tool driver is not included in the OGS installer, so the `heDogaTool.dll` must be copied manually into the OGS installation folder (usually `c:\program files(x86)\Bosch Rexroth AG\OGS V3.0`). 
 
 ### OGS project configuration
 

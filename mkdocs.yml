@@ -15,6 +15,7 @@ nav:
             - HS-Technik NutBee riveting tool: tools/openprotocol/hstechnik.md
         - Non-OpenProtocol tightening tools:
             - n-gineric: tools/openprotocol/ngineric.md
+            - Doga BM-series: tools/doga-wifi.md
         - Misc tools:
             - Gesipa riveting tool: tools/misc/gesipa-mqtt.md
     - Data output:

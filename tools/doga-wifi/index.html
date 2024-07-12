@@ -644,6 +644,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#tool-data-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tool data output
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1506,6 +1515,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#tool-data-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tool data output
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1597,6 +1615,24 @@
 <a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="na">CHANNEL_06_PORT</span><span class="o">=</span><span class="s">5000</span>
 <a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="c1">; ... more tools ...</span>
 </code></pre></div>
+<h3 id="tool-data-output"><a class="toclink" href="#tool-data-output">Tool data output</a></h3>
+<p>Like other tools, the Doga tools can use the OGS buit-in connectivity options to send out data and curves (<code>Traceability</code> data) to backend data management systems (like <a href="https://www.atlascopco.com/en-us/itba/products/assembly-solutions/software-solutions/toolsnet-8-sku4531">ToolsNet</a>, <a href="https://www.csp-sw.com/quality-management-software-solutions/error-prevention-with-ipm/">CSP I-P.M.</a>, <a href="https://www.sciemetric.com/data-intelligence/qualityworx-data-collection">Sciemetric QualityWorX</a>, <a href="https://www.haller-erne.de/qualityr-web/">QualityR</a>, etc.). </p>
+<p>To understand the system architecture and details on how to use data output in general, please see <a href="../../dataoutput/traceability/">OGS Traceability</a>. To setup <code>Traceability</code> for Doga tools, enable <code>Traceability</code> and add the Doga tools channel to the list of channels in the <code>[FTP_CLIENT]</code> section.</p>
+<p>Here is a sample setup:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">[FTP_CLIENT]</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="na">Enabled</span><span class="o">=</span><span class="s">1</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1">;... </span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1">; (more settings)</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="c1">;...</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1">; Parameters for each channel:</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="na">CHANNEL_06_INFO</span><span class="o">=</span><span class="s">{ &quot;ChannelName&quot;: &quot;WS010|AC_PF6000&quot;, &quot;location name&quot;: [&quot;Tool&quot;, &quot;Line 2&quot;, &quot;WS010&quot;, &quot;default&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;] }</span>
+</code></pre></div>
+<p>The following parameters are <strong>required</strong> for the Doga tools, as the tool does not provide them through its interface:</p>
+<ul>
+<li><code>ChannelName</code>: Defines the station and channel name seperated by a pipe symbol (<code>&lt;station&gt;|&lt;channel&gt;</code>).</li>
+<li><code>location name</code>: Defines the location name values to use. Note that this setting depends on the Sys3xxGateway settings for processing the tightening results. Make sure to add the relevant information (like data link name, building, line name, etc.), so the tool can be registered in the correct organizational unit.</li>
+</ul>
+<p><strong>NOTE</strong>: <span style="color:red">Currently documentation for curve output of the tool is not available from Doga.</span> Therefore curve/graph output is not available in the traceability output yet.</p>
 <h2 id="tool-configuration"><a class="toclink" href="#tool-configuration">Tool configuration</a></h2>
 <h3 id="prerequisites"><a class="toclink" href="#prerequisites">Prerequisites</a></h3>
 <p>The BM/BMH/BMT-series wireless tools are configured using the <code>ParaMonEx</code> software (available on request from the Doga support).  The firmware version of the tool must be &gt;= V4.00.2. </p>

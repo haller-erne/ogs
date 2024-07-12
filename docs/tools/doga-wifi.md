@@ -65,6 +65,31 @@ CHANNEL_06_PORT=5000
 ; ... more tools ...
 ```
 
+### Tool data output
+
+Like other tools, the Doga tools can use the OGS buit-in connectivity options to send out data and curves (`Traceability` data) to backend data management systems (like [ToolsNet](https://www.atlascopco.com/en-us/itba/products/assembly-solutions/software-solutions/toolsnet-8-sku4531), [CSP I-P.M.](https://www.csp-sw.com/quality-management-software-solutions/error-prevention-with-ipm/), [Sciemetric QualityWorX](https://www.sciemetric.com/data-intelligence/qualityworx-data-collection), [QualityR](https://www.haller-erne.de/qualityr-web/), etc.). 
+
+To understand the system architecture and details on how to use data output in general, please see [OGS Traceability](../dataoutput/traceability.md). To setup `Traceability` for Doga tools, enable `Traceability` and add the Doga tools channel to the list of channels in the `[FTP_CLIENT]` section.
+
+Here is a sample setup:
+
+```ini
+[FTP_CLIENT]
+Enabled=1
+;... 
+; (more settings)
+;...
+; Parameters for each channel:
+CHANNEL_06_INFO={ "ChannelName": "WS010|AC_PF6000", "location name": ["Tool", "Line 2", "WS010", "default", "", "", ""] }
+```
+
+The following parameters are **required** for the Doga tools, as the tool does not provide them through its interface:
+
+- `ChannelName`: Defines the station and channel name seperated by a pipe symbol (`<station>|<channel>`).
+- `location name`: Defines the location name values to use. Note that this setting depends on the Sys3xxGateway settings for processing the tightening results. Make sure to add the relevant information (like data link name, building, line name, etc.), so the tool can be registered in the correct organizational unit.
+
+**NOTE**: <span style="color:red">Currently documentation for curve output of the tool is not available from Doga.</span> Therefore curve/graph output is not available in the traceability output yet.
+
 ## Tool configuration
 
 ### Prerequisites

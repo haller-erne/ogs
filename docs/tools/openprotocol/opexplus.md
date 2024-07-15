@@ -10,7 +10,7 @@ tags:
 
 # Rexroth OPEXplus electronic torque wrench
 
-The [Rexroth OPEXplus electronic torque wrench family](https://www.boschrexroth.com/en/us/products/product-groups/tightening-technology/topics/opex-digital-torque-wrench/) is an electronic torque wrench with builtin WiFi communications. It uses the [OpenProtocol](../README.md) communication protocol to communicate with the heOGS software.
+The [Rexroth OPEXplus electronic torque wrench family](https://www.boschrexroth.com/en/us/products/product-groups/tightening-technology/topics/opex-digital-torque-wrench/) is a family of electronic torque wrenches with builtin WiFi communications. They use the [OpenProtocol](../README.md) communication protocol to communicate with the heOGS software.
 
 ![Rexroth OPEXplus](./resources/opex-600px.png)
 

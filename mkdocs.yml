@@ -10,7 +10,8 @@ nav:
             - Overview: tools/openprotocol/README.md
             - Nexo: tools/openprotocol/nexo.md
             - CS351/KE350: tools/openprotocol/sys350.md
-            - GWK Operator+: tools/openprotocol/gwk.md
+            - OPEXplus:  tools/openprotocol/opexplus.md
+            - GWK OP22/OP+: tools/openprotocol/gwk.md
             - Sturtevant 400mp/TCVe2: tools/openprotocol/sturtevant.md
             - HS-Technik NutBee riveting tool: tools/openprotocol/hstechnik.md
         - Non-OpenProtocol tightening tools:

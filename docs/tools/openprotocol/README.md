@@ -24,7 +24,7 @@ The supported tool types and vendor codes are:
 | NEXO | BRC | Bosch Rexroth | Wireless Nexo Tool |
 | CS351 | BRC | Bosch Rexroth | Single channel Compact Box |
 | KE350 | BRC | Bosch Rexroth | Multispindle system |
-| OPEX | (GWK) | Bosch Rexroth | OPEXplus torque wrench |
+| OPEX | REX | Bosch Rexroth | OPEXplus torque wrench |
 | CRANE | CEL | Crane Electronics | TCI Multi, Wrenchstar |
 | GHM | GHM | Gehmeyr | GF-ION-EXACT |
 | GWK | GWK | GWK | Operator+, Operator22 |

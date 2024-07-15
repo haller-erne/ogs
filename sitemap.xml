@@ -101,6 +101,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://haller-erne.github.io/ogs/tools/openprotocol/gwk.old/</loc>
+         <lastmod>2024-07-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://haller-erne.github.io/ogs/tools/openprotocol/opexplus/</loc>
          <lastmod>2024-07-15</lastmod>
          <changefreq>daily</changefreq>

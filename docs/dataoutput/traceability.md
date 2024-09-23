@@ -35,7 +35,7 @@ Traceability is configured in `station.ini` in the `[FTP_CLIENT]` section.
 A typical setup is as follows:
 
 ``` ini
-[FTP_CLIENT]
+[FTP_CLIENT] ; or [HTTP_CLIENT], see below
 ; Set ENABLED=1 to enable traceability data output
 ENABLED=1
 ; Set ReportSkippedOperations=1, if you want to see operators skip actions
@@ -88,6 +88,62 @@ The `CHANNEL_xx_INFO` parameter values are interpreted as a JSON string with the
 
 If the parameters are not given, they default to whatever the actual tool driver
 provides, the parameters give override the defaults.
+
+## Communication settings (http/FTP)
+
+The `Traceability` feature support sending the data to either a FTP server or posting it to a http server (but not both at the same time). The following sections show how to setup the communication parameters.
+
+### http output
+
+To enable http output, the configuration section must be named `[HTTP_CLIENT]` and the communication settings given as follows:
+
+``` ini
+[HTTP_CLIENT]
+; Set ENABLED=1 to enable traceability data output
+ENABLED=1
+; Set ReportSkippedOperations=1, if you want to see operators skip actions
+; in the traceability data output, else set to =0
+ReportSkippedOperations=1
+
+; Define the targets http (Sys3xxGateway) server URL endpoint
+; Note, that this also supports https!
+HostURL=http://myserver:8888/sys3xxgateway
+
+; Optionally set username/password for http basic authentication
+;Username=sys3xx
+;Password=sys3xx
+```
+
+### FTP output
+
+To enable FTP output, the configuration section must be named `[FTP_CLIENT]` and the communication settings given as follows:
+
+``` ini
+[FTP_CLIENT]
+; Set ENABLED=1 to enable traceability data output
+ENABLED=1
+; Set ReportSkippedOperations=1, if you want to see operators skip actions
+; in the traceability data output, else set to =0
+ReportSkippedOperations=1
+
+; Define the targets FTP (Sys3xxGateway) server IP-Address and port
+HostIP=10.80.59.252
+HostPort=21
+
+; In case of Sys3xxGateway(Qtrans) as FTP server use "Username=sys3xx" and
+; "Password=sys3xx". TargetFolderOnHost is not needed (ignored) then.
+Username=sys3xx
+Password=sys3xx
+
+; In case of standard FTP Server the "TargetFolderOnHost" parameter must 
+; be set and is used as a base folder to store data.
+TargetFolderOnHost=
+```
+
+Note, that the FTP output supports two different server types:
+
+- Standard FTP server: A standard FTP server allows (virtual) file system access. Therefore typically a username and password must be used for authentication and a target folder (`TargetFolderOnHost`) to indicate where the transmitted files are stored must be configured. Note, that due to security reasons nowadays unencrypted data (password) exchange should not be used.
+- `Sys3xxGateway` FTP server: This is a FTP server which only supports a subset of the standard FTP protocol. It does not require authentication (username/password) and also does not allow file system access. It handles all received data in-memory and validates it - only data which validates as a correct result data is accepted and processed. The parameters `Username`, `Password` and `TargetFolderOnHost` are therefore not used - so the security level is on par with the http transport.
 
 ## Reference
 

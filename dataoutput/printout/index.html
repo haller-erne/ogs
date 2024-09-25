@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.36">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.37">
     
     
       
@@ -26,7 +26,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.06209087.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.8c3ca2c6.min.css">
       
       
 
@@ -883,6 +883,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#automatically-execute-a-report-at-the-end-of-a-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Automatically execute a report at the end of a workflow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#typical-code-to-run-a-report" class="md-nav__link">
     <span class="md-ellipsis">
       Typical code to run a report
@@ -1637,6 +1646,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#automatically-execute-a-report-at-the-end-of-a-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Automatically execute a report at the end of a workflow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#typical-code-to-run-a-report" class="md-nav__link">
     <span class="md-ellipsis">
       Typical code to run a report
@@ -1759,17 +1777,40 @@ reports. For more details, please request the database schema documentation.</p>
 <a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>locate.exe [db=station.fds][sn=123456][form=label.fr3][show=YES][INT_VAR1=12345][STR_VAR2=YES][output=KYOCERA FS1900]
 </code></pre></div>
 <h2 id="lua-integration"><a class="toclink" href="#lua-integration">LUA integration</a></h2>
+<h3 id="automatically-execute-a-report-at-the-end-of-a-workflow"><a class="toclink" href="#automatically-execute-a-report-at-the-end-of-a-workflow">Automatically execute a report at the end of a workflow</a></h3>
+<p>To automatically generate a report and save or print it at the end of a workflow, add the <a href="../../samples/printout/print.lua">print.lua</a> module to your projects <code>config.lua</code>. </p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>As the functionality for automatic printing is shared with the XML file output (see <a href="../xmlfile/">End-of-process (XML) file</a>), make sure to add the <code>print</code> module to the end of the <code>requires = {}</code>-list in <code>config.lua</code>!</p>
+</div>
+<p>Then add a <code>[PRINTER]</code> section to the projects <code>station.ini</code> as follows:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">[PRINTER]</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1">; Set ENABLED=1 to automatically generate a report at the end of a workflow</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="na">ENABLED</span><span class="o">=</span><span class="s">1</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1">; Define the *.frx template file to use to generate the report</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="na">FORM</span><span class="o">=</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1">; Set PDF=&lt;pdf output folder&gt; for pdf file generation</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1">;PDF=&lt;pdf output folder&gt;</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="c1">; Set PRINTER=&lt;name of printer&gt; for automatic printout</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="na">PRINTER</span><span class="o">=</span><span class="s">&lt;name of printer&gt;</span>
+</code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Note that you can define when a file/printout is generatesd by setting the 
+parameters <code>Result_OK</code>, <code>Result_Nok</code> and <code>Result_incomplete</code> in the <code>[GLOBAL]</code> section of <code>station.ini</code>. As automatic printout uses the same
+functionality as XML-file creation, see the documentation at <a href="../xmlfile/#define-when-a-file-is-generated">End-of-process (XML) file - Define when a file is generated</a> for more details.</p>
+</div>
 <h3 id="typical-code-to-run-a-report"><a class="toclink" href="#typical-code-to-run-a-report">Typical code to run a report</a></h3>
 <p>Typical LUA code to run a report (save pdf or print) is as follows:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">-- prepare the command line</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kd">local</span> <span class="n">fmt</span> <span class="o">=</span> <span class="s1">&#39;heLabelPrinter.exe [form=%s][show=NO][MN=%s][SN=%s][output=%s]&#39;</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kd">local</span> <span class="n">cmd</span> <span class="o">=</span> <span class="nb">string.format</span><span class="p">(</span><span class="s1">&#39;label.fr3&#39;</span><span class="p">,</span> <span class="s1">&#39;MNum&#39;</span><span class="p">,</span> <span class="s1">&#39;SNum&#39;</span><span class="p">,</span> <span class="s1">&#39;output.pdf&#39;</span><span class="p">)</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="c1">-- execute the command (with a hidden window)</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="kd">local</span> <span class="n">err</span> <span class="o">=</span> <span class="n">CreateProcess</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="mi">134217728</span><span class="p">)</span> <span class="c1">-- CREATE_NO_WINDOW flag 0x8000000</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="kr">if</span> <span class="n">err</span> <span class="kr">then</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    <span class="n">SetLuaAlarm</span><span class="p">(</span><span class="s1">&#39;PRINTER&#39;</span><span class="p">,</span> <span class="s1">&#39;Print failed! Error=&#39;</span><span class="o">..</span><span class="n">param_as_str</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
-<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="kr">end</span> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">-- prepare the command line</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kd">local</span> <span class="n">fmt</span> <span class="o">=</span> <span class="s1">&#39;heLabelPrinter.exe [form=%s][show=NO][MN=%s][SN=%s][output=%s]&#39;</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="kd">local</span> <span class="n">cmd</span> <span class="o">=</span> <span class="nb">string.format</span><span class="p">(</span><span class="s1">&#39;label.fr3&#39;</span><span class="p">,</span> <span class="s1">&#39;MNum&#39;</span><span class="p">,</span> <span class="s1">&#39;SNum&#39;</span><span class="p">,</span> <span class="s1">&#39;output.pdf&#39;</span><span class="p">)</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1">-- execute the command (with a hidden window)</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="kd">local</span> <span class="n">err</span> <span class="o">=</span> <span class="n">CreateProcess</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="mi">134217728</span><span class="p">)</span> <span class="c1">-- CREATE_NO_WINDOW flag 0x8000000</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="kr">if</span> <span class="n">err</span> <span class="kr">then</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="n">SetLuaAlarm</span><span class="p">(</span><span class="s1">&#39;PRINTER&#39;</span><span class="p">,</span> <span class="s1">&#39;Print failed! Error=&#39;</span><span class="o">..</span><span class="n">param_as_str</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="kr">end</span> 
 </code></pre></div>
 <h3 id="hints"><a class="toclink" href="#hints">Hints</a></h3>
 <p>When working with printers, a lot of errors can happen (paper jam, out of paper, printer shutdown or disconnected). As a lot of them cannot be detected through the Windows API, it is good practice to allow reptinting a label, when the operator notices, that the printout has failed.</p>
@@ -1831,7 +1872,7 @@ reports. For more details, please request the database schema documentation.</p>
     <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.56dfad97.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d6f25eb3.min.js"></script>
       
     
   </body>

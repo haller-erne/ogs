@@ -124,6 +124,35 @@ locate.exe [db=station.fds][sn=123456][form=label.fr3][show=YES][INT_VAR1=12345]
 
 ## LUA integration
 
+### Automatically execute a report at the end of a workflow
+
+To automatically generate a report and save or print it at the end of a workflow, add the [print.lua](../../samples/printout/print.lua) module to your projects `config.lua`. 
+
+!!! Info
+
+    As the functionality for automatic printing is shared with the XML file output (see [End-of-process (XML) file](./xmlfile.md)), make sure to add the `print` module to the end of the `requires = {}`-list in `config.lua`!
+
+Then add a `[PRINTER]` section to the projects `station.ini` as follows:
+
+``` ini
+[PRINTER]
+; Set ENABLED=1 to automatically generate a report at the end of a workflow
+ENABLED=1
+; Define the *.frx template file to use to generate the report
+FORM=
+; Set PDF=<pdf output folder> for pdf file generation
+;PDF=<pdf output folder>
+; Set PRINTER=<name of printer> for automatic printout
+PRINTER=<name of printer>
+```
+
+!!! Info
+
+    Note that you can define when a file/printout is generatesd by setting the 
+    parameters `Result_OK`, `Result_Nok` and `Result_incomplete` in the `[GLOBAL]` section of `station.ini`. As automatic printout uses the same
+    functionality as XML-file creation, see the documentation at [End-of-process (XML) file - Define when a file is generated](./xmlfile.md#define-when-a-file-is-generated) for more details.
+
+
 ### Typical code to run a report
 
 Typical LUA code to run a report (save pdf or print) is as follows:

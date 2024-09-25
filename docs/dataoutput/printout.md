@@ -126,7 +126,7 @@ locate.exe [db=station.fds][sn=123456][form=label.fr3][show=YES][INT_VAR1=12345]
 
 ### Automatically execute a report at the end of a workflow
 
-To automatically generate a report and save or print it at the end of a workflow, add the [print.lua](../../samples/printout/print.lua) module to your projects `config.lua`. 
+To automatically generate a report and save or print it at the end of a workflow, add the [print.lua](https://github.com/haller-erne/ogs/raw/refs/heads/main/samples/printout/print.lua) module to your projects `config.lua`. 
 
 !!! Info
 

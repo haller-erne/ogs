@@ -112,12 +112,12 @@ Note, that all jobs and tasks are listed - those not ran are tagged with the res
 
 ### Lua function to override file name and content
 
-To override the file name or file content, implement the LUA function `GetFileName()` in your projects LUA code. The function is called with the `<idcode>` value and the `<model>` code. Before OGS calls the function, the cuttent part state is saved into the `station_results` global variable. The function should use the contents of `station_results` to generate the actual file data and return it along with the file name.
+To override the file name or file content, implement the LUA function `GetXMLFile()` in your projects LUA code. The function is called with the `<idcode>` value and the `<model>` code. Before OGS calls the function, the current part state is saved into the `station_results` global variable. The function should use the contents of `station_results` to generate the actual file data and return it along with the file name.
 
 The function has the following signature:
 
 ``` lua
-function GetFileName(idcode, model)
+function GetXMLFile(idcode, model)
 
     -- Your code to create filename and filecontent
     -- Use the global variable station_results to generate the file content.
@@ -130,13 +130,13 @@ To just change the generated file name, you can call the "original" function fro
 
 ``` lua
 -- Store the original function in a local variable
-local old_GetFileName = GetFileName
+local old_GetXMLFile = GetXMLFile
 
 -- Define the new function (override the original one)
-function GetFileName(idcode, model)
+function GetXMLFile(idcode, model)
 
 	-- Call the "original" function to get the XML data
-	local old_filename, old_filecontent = old_GetFileName(idcode, model)
+	local old_filename, old_filecontent = old_GetXMLFile(idcode, model)
 
 	-- Create a new filename as "<idcode>-<YYYY><MM><DD>T<HH><mm><ss>.xml"
 	local t = os.date('*t')

@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.48">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.50">
     
     
       
@@ -26,7 +26,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.6f8fc17f.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a40c8224.min.css">
       
       
 
@@ -1674,31 +1674,31 @@ finished OK or NOK, but there will no file be created, if any of the tasks is no
 <h3 id="lua-function-to-override-file-name-and-content"><a class="toclink" href="#lua-function-to-override-file-name-and-content">Lua function to override file name and content</a></h3>
 <p>To override the file name or file content, implement the LUA function <code>GetXMLFile()</code> in your projects LUA code. The function is called with the <code>&lt;idcode&gt;</code> value and the <code>&lt;model&gt;</code> code. Before OGS calls the function, the current part state is saved into the <code>station_results</code> global variable. The function should use the contents of <code>station_results</code> to generate the actual file data and return it along with the file name.</p>
 <p>The function has the following signature:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kr">function</span> <span class="nf">GetXMLFile</span><span class="p">(</span><span class="n">idcode</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kr">function</span><span class="w"> </span><span class="nf">GetXMLFile</span><span class="p">(</span><span class="nv">idcode</span><span class="p">,</span><span class="w"> </span><span class="nv">model</span><span class="p">)</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="c1">-- Your code to create filename and filecontent</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="c1">-- Use the global variable station_results to generate the file content.</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="c1">-- Your code to create filename and filecontent</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="c1">-- Use the global variable station_results to generate the file content.</span>
 <a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="kr">return</span> <span class="n">filename</span><span class="p">,</span> <span class="n">filecontent</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="kr">return</span><span class="w"> </span><span class="nv">filename</span><span class="p">,</span><span class="w"> </span><span class="nv">filecontent</span>
 <a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="kr">end</span>
 </code></pre></div>
 <p>To just change the generated file name, you can call the "original" function from your code and just change the filename. Here is a sample:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">-- Store the original function in a local variable</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kd">local</span> <span class="n">old_GetXMLFile</span> <span class="o">=</span> <span class="n">GetXMLFile</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kd">local</span><span class="w"> </span><span class="nv">old_GetXMLFile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">GetXMLFile</span>
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
 <a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1">-- Define the new function (override the original one)</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="kr">function</span> <span class="nf">GetXMLFile</span><span class="p">(</span><span class="n">idcode</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="kr">function</span><span class="w"> </span><span class="nf">GetXMLFile</span><span class="p">(</span><span class="nv">idcode</span><span class="p">,</span><span class="w"> </span><span class="nv">model</span><span class="p">)</span>
 <a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    <span class="c1">-- Call the &quot;original&quot; function to get the XML data</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>    <span class="kd">local</span> <span class="n">old_filename</span><span class="p">,</span> <span class="n">old_filecontent</span> <span class="o">=</span> <span class="n">old_GetXMLFile</span><span class="p">(</span><span class="n">idcode</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="c1">-- Call the &quot;original&quot; function to get the XML data</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">    </span><span class="kd">local</span><span class="w"> </span><span class="nv">old_filename</span><span class="p">,</span><span class="w"> </span><span class="nv">old_filecontent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">old_GetXMLFile</span><span class="p">(</span><span class="nv">idcode</span><span class="p">,</span><span class="w"> </span><span class="nv">model</span><span class="p">)</span>
 <a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
-<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>    <span class="c1">-- Create a new filename as &quot;&lt;idcode&gt;-&lt;YYYY&gt;&lt;MM&gt;&lt;DD&gt;T&lt;HH&gt;&lt;mm&gt;&lt;ss&gt;.xml&quot;</span>
-<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>    <span class="kd">local</span> <span class="n">t</span> <span class="o">=</span> <span class="nb">os.date</span><span class="p">(</span><span class="s1">&#39;*t&#39;</span><span class="p">)</span>
-<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>    <span class="kd">local</span> <span class="n">t_as_str</span> <span class="o">=</span> <span class="nb">string.format</span><span class="p">(</span><span class="s1">&#39;%04d%02d%02dT%02d%02d%02d&#39;</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">year</span><span class="p">,</span><span class="n">t</span><span class="p">.</span><span class="n">month</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">day</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">hour</span><span class="p">,</span><span class="n">t</span><span class="p">.</span><span class="n">min</span><span class="p">,</span><span class="n">t</span><span class="p">.</span><span class="n">sec</span><span class="p">)</span>
-<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>    <span class="kd">local</span> <span class="n">new_filename</span> <span class="o">=</span> <span class="nb">string.format</span><span class="p">(</span><span class="s1">&#39;%s-%s.xml&#39;</span><span class="p">,</span> <span class="n">idcode</span><span class="p">,</span> <span class="n">t_as_str</span><span class="p">)</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">    </span><span class="c1">-- Create a new filename as &quot;&lt;idcode&gt;-&lt;YYYY&gt;&lt;MM&gt;&lt;DD&gt;T&lt;HH&gt;&lt;mm&gt;&lt;ss&gt;.xml&quot;</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">    </span><span class="kd">local</span><span class="w"> </span><span class="nv">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">os.date</span><span class="p">(</span><span class="s1">&#39;*t&#39;</span><span class="p">)</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">    </span><span class="kd">local</span><span class="w"> </span><span class="nv">t_as_str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">string.format</span><span class="p">(</span><span class="s1">&#39;%04d%02d%02dT%02d%02d%02d&#39;</span><span class="p">,</span><span class="w"> </span><span class="nv">t</span><span class="p">.</span><span class="py">year</span><span class="p">,</span><span class="nv">t</span><span class="p">.</span><span class="py">month</span><span class="p">,</span><span class="w"> </span><span class="nv">t</span><span class="p">.</span><span class="py">day</span><span class="p">,</span><span class="w"> </span><span class="nv">t</span><span class="p">.</span><span class="py">hour</span><span class="p">,</span><span class="nv">t</span><span class="p">.</span><span class="py">min</span><span class="p">,</span><span class="nv">t</span><span class="p">.</span><span class="py">sec</span><span class="p">)</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">    </span><span class="kd">local</span><span class="w"> </span><span class="nv">new_filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">string.format</span><span class="p">(</span><span class="s1">&#39;%s-%s.xml&#39;</span><span class="p">,</span><span class="w"> </span><span class="nv">idcode</span><span class="p">,</span><span class="w"> </span><span class="nv">t_as_str</span><span class="p">)</span>
 <a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>
-<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>    <span class="c1">-- Return the &quot;new&quot; filename and the &quot;old&quot; file content</span>
-<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>    <span class="kr">return</span> <span class="n">new_filename</span><span class="p">,</span> <span class="n">old_filecontent</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">    </span><span class="c1">-- Return the &quot;new&quot; filename and the &quot;old&quot; file content</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="w">    </span><span class="kr">return</span><span class="w"> </span><span class="nv">new_filename</span><span class="p">,</span><span class="w"> </span><span class="nv">old_filecontent</span>
 <a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="kr">end</span>
 </code></pre></div>
 <p>To get started quickly, see the default implementation in <code>&lt;install dir&gt;\lualib\system.lua</code>. </p>
@@ -1751,10 +1751,10 @@ finished OK or NOK, but there will no file be created, if any of the tasks is no
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      <script src="../../assets/javascripts/bundle.60a45f97.min.js"></script>
       
     
   </body>

@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.48">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.50">
     
     
       
@@ -26,7 +26,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.6f8fc17f.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a40c8224.min.css">
       
       
 
@@ -1803,14 +1803,14 @@ functionality as XML-file creation, see the documentation at <a href="../xmlfile
 <h3 id="typical-code-to-run-a-report"><a class="toclink" href="#typical-code-to-run-a-report">Typical code to run a report</a></h3>
 <p>Typical LUA code to run a report (save pdf or print) is as follows:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">-- prepare the command line</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kd">local</span> <span class="n">fmt</span> <span class="o">=</span> <span class="s1">&#39;heLabelPrinter.exe [form=%s][show=NO][MN=%s][SN=%s][output=%s]&#39;</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="kd">local</span> <span class="n">cmd</span> <span class="o">=</span> <span class="nb">string.format</span><span class="p">(</span><span class="s1">&#39;label.fr3&#39;</span><span class="p">,</span> <span class="s1">&#39;MNum&#39;</span><span class="p">,</span> <span class="s1">&#39;SNum&#39;</span><span class="p">,</span> <span class="s1">&#39;output.pdf&#39;</span><span class="p">)</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kd">local</span><span class="w"> </span><span class="nv">fmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;heLabelPrinter.exe [form=%s][show=NO][MN=%s][SN=%s][output=%s]&#39;</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="kd">local</span><span class="w"> </span><span class="nv">cmd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">string.format</span><span class="p">(</span><span class="s1">&#39;label.fr3&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;MNum&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;SNum&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;output.pdf&#39;</span><span class="p">)</span>
 <a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
 <a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1">-- execute the command (with a hidden window)</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="kd">local</span> <span class="n">err</span> <span class="o">=</span> <span class="n">CreateProcess</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="mi">134217728</span><span class="p">)</span> <span class="c1">-- CREATE_NO_WINDOW flag 0x8000000</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="kr">if</span> <span class="n">err</span> <span class="kr">then</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="n">SetLuaAlarm</span><span class="p">(</span><span class="s1">&#39;PRINTER&#39;</span><span class="p">,</span> <span class="s1">&#39;Print failed! Error=&#39;</span><span class="o">..</span><span class="n">param_as_str</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="kr">end</span> 
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="kd">local</span><span class="w"> </span><span class="nv">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">CreateProcess</span><span class="p">(</span><span class="nv">cmd</span><span class="p">,</span><span class="w"> </span><span class="mi">134217728</span><span class="p">)</span><span class="w"> </span><span class="c1">-- CREATE_NO_WINDOW flag 0x8000000</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="kr">if</span><span class="w"> </span><span class="nv">err</span><span class="w"> </span><span class="kr">then</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">    </span><span class="nf">SetLuaAlarm</span><span class="p">(</span><span class="s1">&#39;PRINTER&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Print failed! Error=&#39;</span><span class="o">..</span><span class="nf">param_as_str</span><span class="p">(</span><span class="nv">err</span><span class="p">))</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="kr">end</span><span class="w"> </span>
 </code></pre></div>
 <h3 id="hints"><a class="toclink" href="#hints">Hints</a></h3>
 <p>When working with printers, a lot of errors can happen (paper jam, out of paper, printer shutdown or disconnected). As a lot of them cannot be detected through the Windows API, it is good practice to allow reptinting a label, when the operator notices, that the printout has failed.</p>
@@ -1869,10 +1869,10 @@ functionality as XML-file creation, see the documentation at <a href="../xmlfile
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      <script src="../../assets/javascripts/bundle.60a45f97.min.js"></script>
       
     
   </body>

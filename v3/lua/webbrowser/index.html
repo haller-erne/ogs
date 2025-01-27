@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.48">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.50">
     
     
       
@@ -26,7 +26,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.6f8fc17f.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.a40c8224.min.css">
       
       
 
@@ -2036,7 +2036,7 @@ The following functions are also available, but are not fully implemented at the
 
 <h3 id="navigate"><a class="toclink" href="#navigate">Navigate</a></h3>
 <p>The <code>Browser.Navigate</code> function starts loading a new URL into the given browser instance.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">Browser</span><span class="p">.</span><span class="n">Navigate</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nv">Browser</span><span class="p">.</span><span class="nf">Navigate</span><span class="p">(</span><span class="nv">instance</span><span class="p">,</span><span class="w"> </span><span class="nv">url</span><span class="p">)</span>
 </code></pre></div>
 <h4 id="parameters"><a class="toclink" href="#parameters">Parameters</a></h4>
 <ul>
@@ -2045,11 +2045,11 @@ The following functions are also available, but are not fully implemented at the
 </ul>
 <h4 id="sample-code_1"><a class="toclink" href="#sample-code_1">Sample code</a></h4>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">-- Navigate the StartView browser to https://www.my-url.com/mypage</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">Browser</span><span class="p">.</span><span class="n">Navigate</span><span class="p">(</span><span class="s1">&#39;StartView&#39;</span><span class="p">,</span> <span class="s1">&#39;https://www.my-url.com/mypage&#39;</span><span class="p">)</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nv">Browser</span><span class="p">.</span><span class="nf">Navigate</span><span class="p">(</span><span class="s1">&#39;StartView&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;https://www.my-url.com/mypage&#39;</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="show"><a class="toclink" href="#show">Show</a></h3>
 <p>The <code>Browser.Show</code> function is similar to the <code>Browser.Navigate</code> function, but also ensures the webbrowser is actually visible. The actual behaviour depends on the view - e.g. for the <code>SidePanel</code> view, the side panel pops out. For the <code>ProcessView</code> view, this switches from the image-view to the web view.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kd">local</span> <span class="n">oldUrl</span> <span class="o">=</span> <span class="n">Browser</span><span class="p">.</span><span class="n">Show</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kd">local</span><span class="w"> </span><span class="nv">oldUrl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Browser</span><span class="p">.</span><span class="nf">Show</span><span class="p">(</span><span class="nv">instance</span><span class="p">,</span><span class="w"> </span><span class="nv">url</span><span class="p">)</span>
 </code></pre></div>
 <h4 id="parameters_1"><a class="toclink" href="#parameters_1">Parameters</a></h4>
 <ul>
@@ -2061,11 +2061,11 @@ The following functions are also available, but are not fully implemented at the
 <h4 id="sample-code_2"><a class="toclink" href="#sample-code_2">Sample code</a></h4>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">-- Make the SidePanel visible and navigate the</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="c1">-- web browser to https://www.my-url.com/mypage</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="kd">local</span> <span class="n">oldUrl</span> <span class="o">=</span> <span class="n">Browser</span><span class="p">.</span><span class="n">Show</span><span class="p">(</span><span class="s1">&#39;SidePanel&#39;</span><span class="p">,</span> <span class="s1">&#39;https://www.my-url.com/mypage&#39;</span><span class="p">)</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="kd">local</span><span class="w"> </span><span class="nv">oldUrl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Browser</span><span class="p">.</span><span class="nf">Show</span><span class="p">(</span><span class="s1">&#39;SidePanel&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;https://www.my-url.com/mypage&#39;</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="hide"><a class="toclink" href="#hide">Hide</a></h3>
 <p>The <code>Browser.Hide</code> function is complementary to the <code>Browser.Show</code> function - it closes the browser view (only relevant for <code>SidePanel</code> and <code>ProcessView</code>).</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">Browser</span><span class="p">.</span><span class="n">Hide</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nv">Browser</span><span class="p">.</span><span class="nf">Hide</span><span class="p">(</span><span class="nv">instance</span><span class="p">)</span>
 </code></pre></div>
 <h4 id="parameters_2"><a class="toclink" href="#parameters_2">Parameters</a></h4>
 <ul>
@@ -2073,7 +2073,7 @@ The following functions are also available, but are not fully implemented at the
 </ul>
 <h4 id="sample-code_3"><a class="toclink" href="#sample-code_3">Sample code</a></h4>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1">-- Hide the SidePanel</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">Browser</span><span class="p">.</span><span class="n">Hide</span><span class="p">(</span><span class="s1">&#39;SidePanel&#39;</span><span class="p">)</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nv">Browser</span><span class="p">.</span><span class="nf">Hide</span><span class="p">(</span><span class="s1">&#39;SidePanel&#39;</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="regmsghandler"><a class="toclink" href="#regmsghandler">RegMsgHandler</a></h3>
 <p>The <code>Browser.RegMsgHandler</code> function registers or unregisters a LUA function to be called whenever the JavaScript running in the browser writes a message to the hostObject bridge <code>OGS.ObjectMessage</code> property.</p>
@@ -2081,7 +2081,7 @@ The following functions are also available, but are not fully implemented at the
 will replace a previously registered handler for the same url.</p>
 <h4 id="function-signature"><a class="toclink" href="#function-signature">Function signature</a></h4>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1">-- Register the callback function</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">fn</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">Browser</span><span class="p">.</span><span class="n">RegMsgHandler</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">callbackfn</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nv">fn</span><span class="p">,</span><span class="w"> </span><span class="nv">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Browser</span><span class="p">.</span><span class="nf">RegMsgHandler</span><span class="p">(</span><span class="nv">instance</span><span class="p">,</span><span class="w"> </span><span class="nv">callbackfn</span><span class="p">,</span><span class="w"> </span><span class="nv">url</span><span class="p">)</span>
 </code></pre></div>
 <h4 id="parameters_3"><a class="toclink" href="#parameters_3">Parameters</a></h4>
 <ul>
@@ -2101,17 +2101,17 @@ will replace a previously registered handler for the same url.</p>
 <h4 id="return-values"><a class="toclink" href="#return-values">Return values</a></h4>
 <p>If the function was executed successfully, the callbackfn is returned as the first return value. Else nil is returned and the second return value has an error message string (wrong parameters or unknown instance).</p>
 <h4 id="sample-code_4"><a class="toclink" href="#sample-code_4">Sample code</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kd">local</span> <span class="kr">function</span> <span class="nf">callbackfn</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">objectMessage</span><span class="p">)</span>
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    <span class="c1">-- do whatever you want to do here if the javascript </span>
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    <span class="c1">-- code writes the OGS.ObjectMessage property</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kd">local</span><span class="w"> </span><span class="kr">function</span><span class="w"> </span><span class="nf">callbackfn</span><span class="p">(</span><span class="nv">instance</span><span class="p">,</span><span class="w"> </span><span class="nv">objectMessage</span><span class="p">)</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span><span class="c1">-- do whatever you want to do here if the javascript </span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">    </span><span class="c1">-- code writes the OGS.ObjectMessage property</span>
 <a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="kr">end</span>
 <a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>
 <a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="c1">-- Register a LUA function to be called from the JavaScript side</span>
-<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="n">Browser</span><span class="p">.</span><span class="n">RegMsgHandler</span><span class="p">(</span><span class="s1">&#39;StartView&#39;</span><span class="p">,</span> <span class="n">callbackfn</span><span class="p">)</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="nv">Browser</span><span class="p">.</span><span class="nf">RegMsgHandler</span><span class="p">(</span><span class="s1">&#39;StartView&#39;</span><span class="p">,</span><span class="w"> </span><span class="nv">callbackfn</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="execjs_nonblocking"><a class="toclink" href="#execjs_nonblocking">ExecJS_nonblocking</a></h3>
 <p>The <code>Browser.ExecJS_nonblocking</code> executes JavaScript code in the web browser instance.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">Browser</span><span class="p">.</span><span class="n">ExecJS_nonblocking</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">jstext</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nv">Browser</span><span class="p">.</span><span class="nf">ExecJS_nonblocking</span><span class="p">(</span><span class="nv">instance</span><span class="p">,</span><span class="w"> </span><span class="nv">jstext</span><span class="p">)</span>
 </code></pre></div>
 <h4 id="parameters_4"><a class="toclink" href="#parameters_4">Parameters</a></h4>
 <ul>
@@ -2128,22 +2128,22 @@ will replace a previously registered handler for the same url.</p>
 <h4 id="sample-code_5"><a class="toclink" href="#sample-code_5">Sample code</a></h4>
 <p>LUA side:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1">-- define which browser view to use</span>
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="kd">local</span> <span class="n">instance</span> <span class="o">=</span> <span class="s1">&#39;StartView&#39;</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="kd">local</span><span class="w"> </span><span class="nv">instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;StartView&#39;</span>
 <a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
 <a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="c1">-- define a function to be called from JavaScript</span>
-<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="kd">local</span> <span class="n">callbackfn</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
-<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>    <span class="n">XTRACE</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="s2">&quot;I am called from Javascript: msg=&quot;</span> <span class="o">..</span> <span class="n">msg</span><span class="p">)</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="kd">local</span><span class="w"> </span><span class="nv">callbackfn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">(</span><span class="nv">instance</span><span class="p">,</span><span class="w"> </span><span class="nv">msg</span><span class="p">)</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">    </span><span class="nf">XTRACE</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;I am called from Javascript: msg=&quot;</span><span class="w"> </span><span class="o">..</span><span class="w"> </span><span class="nv">msg</span><span class="p">)</span>
 <a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="kr">end</span>
 <a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>
 <a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="c1">-- Register (global) callback for the browser instance</span>
-<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="n">Browser</span><span class="p">.</span><span class="n">RegMsgHandler</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">callbackfn</span><span class="p">)</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="nv">Browser</span><span class="p">.</span><span class="nf">RegMsgHandler</span><span class="p">(</span><span class="nv">instance</span><span class="p">,</span><span class="w"> </span><span class="nv">callbackfn</span><span class="p">)</span>
 <a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>
 <a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="c1">-- Build a JavaScript command, call the function &quot;OGS.myFunction&quot; with</span>
 <a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="c1">-- some JSON text</span>
-<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="kd">local</span> <span class="n">param</span> <span class="o">=</span> <span class="s1">&#39;{ &quot;cmd&quot;: &quot;showmessage&quot; }&#39;</span>
-<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="kd">local</span> <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;OGS.myFunction(&quot;</span><span class="o">..</span><span class="n">param</span><span class="o">..</span><span class="s2">&quot;);&quot;</span>
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="kd">local</span><span class="w"> </span><span class="nv">param</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;{ &quot;cmd&quot;: &quot;showmessage&quot; }&#39;</span>
+<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="kd">local</span><span class="w"> </span><span class="nv">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;OGS.myFunction(&quot;</span><span class="o">..</span><span class="nv">param</span><span class="o">..</span><span class="s2">&quot;);&quot;</span>
 <a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="c1">-- Call the JavaScript function in the browser instance</span>
-<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="n">Browser</span><span class="p">.</span><span class="n">ExecJS_nonblocking</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">command</span><span class="p">)</span>
+<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="nv">Browser</span><span class="p">.</span><span class="nf">ExecJS_nonblocking</span><span class="p">(</span><span class="nv">instance</span><span class="p">,</span><span class="w"> </span><span class="nv">command</span><span class="p">)</span>
 </code></pre></div>
 <p>Javascript side (for the StartView browser window):</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="cp">&lt;!DOCTYPE html&gt;</span>
@@ -2215,10 +2215,10 @@ will replace a previously registered handler for the same url.</p>
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.copy", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.copy", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.60a45f97.min.js"></script>
       
     
   </body>

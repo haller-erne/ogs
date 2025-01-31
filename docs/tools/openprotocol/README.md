@@ -68,6 +68,25 @@ CHANNEL_01_CHECK_TIME_ENABLED=1
 CHANNEL_01_CURVE_REQUEST=1
 ```
 
+## Loosen modes
+
+Typically tightening tools support tightening and loosening processes - often (for most tools except torque wrenches) by having an additional direction selection switch on the tool. The direction switch typically allows selecting between two differen PSets, which are used for running the tool when the start button on the tool is pushed:
+
+- "primary" PSet (used for tightening)
+- "secondary" PSet (used for loosening)
+
+However, OpenProtocol has no support for this functionality bult-in natively - 
+ it only supports selecting an "active" PSet (for the "primary" PSet). Depending on the tool type and vendor, there are different ways how the direction switch can be used with OGS, so OGS can control/prevent loosening:
+
+- Tool reports direction switch position over OpenProtocol I/O signals (using MID500 or MID210MID241)
+- Tool allows blocking the loosening switch "secondary" position over OpenProtocol I/O signals (using MID504 or MID200/240)
+- Tool forcibly selecting a PSet, if the direction switch is set to the "secondary" position
+- Tool automatically selectiong a different PSet after NOK rundowns on the primary PSet
+- ...
+
+Please see the tool specific documentation on the available loosening modes and recommendations on how to setup the tool for use with OGS.
+
+
 ## OpenProtocol driver parameters reference
 
 ### Shared parameter reference

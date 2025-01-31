@@ -459,6 +459,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Loosen modes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wait-for-ccwsel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Wait for CCWSel
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1770,6 +1785,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Loosen modes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wait-for-ccwsel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Wait for CCWSel
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2155,6 +2185,12 @@
 <li>Tool automatically selectiong a different PSet after NOK rundowns on the primary PSet</li>
 <li>...</li>
 </ul>
+<p>By default, OGS selects a specific PSet (using MID0018) for loosen as defined in the tools configuration in the heOpCfg editor:</p>
+<p><img alt="heOpCfg tool loosen PSet number" src="resources/heOpCfg-tool-loosen.png" /></p>
+<p>For tools which support OpenProtocol I/O signals, OGS also provides an additional I/O signal which is set to true while the OGS is in tightening mode (and false while in loosening mode), which allows tailoring the behaviour even more (e.g. allow loosen with the direction switch set to CW, etc.).</p>
+<h3 id="wait-for-ccwsel"><a class="toclink" href="#wait-for-ccwsel">Wait for CCWSel</a></h3>
+<p>If <code>CHANNEL_&lt;tool&gt;_CCW_ACK</code> is set to a non-zero value in the <code>station.ini</code> configuration for the tool, then OGS requires the tools direction switch position to be in the correct position according to the processes currently requested tightening mode (tighten/loosen). If not, an alert message will be shown to indicate that the operator should change the direction switch accordingly and the enable signal for the tool is inactive.</p>
+<p>Note that this behaviour can be overridden by implementing the LUA function <code>GetNokBehaviour(...)</code>.</p>
 <p>Please see the tool specific documentation on the available loosening modes and recommendations on how to setup the tool for use with OGS.</p>
 <h2 id="openprotocol-driver-parameters-reference"><a class="toclink" href="#openprotocol-driver-parameters-reference">OpenProtocol driver parameters reference</a></h2>
 <h3 id="shared-parameter-reference"><a class="toclink" href="#shared-parameter-reference">Shared parameter reference</a></h3>

@@ -84,6 +84,18 @@ However, OpenProtocol has no support for this functionality bult-in natively -
 - Tool automatically selectiong a different PSet after NOK rundowns on the primary PSet
 - ...
 
+By default, OGS selects a specific PSet (using MID0018) for loosen as defined in the tools configuration in the heOpCfg editor:
+
+![heOpCfg tool loosen PSet number](resources/heOpCfg-tool-loosen.png)
+
+For tools which support OpenProtocol I/O signals, OGS also provides an additional I/O signal which is set to true while the OGS is in tightening mode (and false while in loosening mode), which allows tailoring the behaviour even more (e.g. allow loosen with the direction switch set to CW, etc.).
+
+### Wait for CCWSel
+
+If `CHANNEL_<tool>_CCW_ACK` is set to a non-zero value in the `station.ini` configuration for the tool, then OGS requires the tools direction switch position to be in the correct position according to the processes currently requested tightening mode (tighten/loosen). If not, an alert message will be shown to indicate that the operator should change the direction switch accordingly and the enable signal for the tool is inactive.
+
+Note that this behaviour can be overridden by implementing the LUA function `GetNokBehaviour(...)`.
+
 Please see the tool specific documentation on the available loosening modes and recommendations on how to setup the tool for use with OGS.
 
 

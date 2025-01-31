@@ -1556,6 +1556,12 @@
 <li>Check the PSet parameter setting "play with start switch"</li>
 <li>Check the <code>CHANNEL_&lt;tool&gt;_CCW_ACK</code> setting for the tool in <code>station.ini</code></li>
 </ul>
+<p>For the <code>CHANNEL_&lt;tool&gt;_CCW_ACK</code> setting, the following is recommended:</p>
+<ul>
+<li>If you use an ErgoSpon tool, then use <code>CHANNEL_&lt;tool&gt;_CCW_ACK=1</code> to enforce changing the direction switch on the ErgoSpin according to tighten/loosen.</li>
+<li>If you use a spindle tool with seperately wired CW/CCW and start signals, then set <code>CHANNEL_&lt;tool&gt;_CCW_ACK=1</code></li>
+<li>If you use a spindle tool with CW start and CCW start signals, then set <code>CHANNEL_&lt;tool&gt;_CCW_ACK=0</code></li>
+</ul>
 <h3 id="single-channel-tool"><a class="toclink" href="#single-channel-tool">Single channel tool</a></h3>
 <p>The signals used in this scenario are:</p>
 <ul>

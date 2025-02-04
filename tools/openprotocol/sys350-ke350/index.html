@@ -573,9 +573,18 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#workflow-configuration" class="md-nav__link">
+  <a href="#tool-configuration" class="md-nav__link">
     <span class="md-ellipsis">
-      Workflow configuration
+      Tool configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multi-spindle-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Multi-Spindle configuration
     </span>
   </a>
   
@@ -1690,9 +1699,18 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#workflow-configuration" class="md-nav__link">
+  <a href="#tool-configuration" class="md-nav__link">
     <span class="md-ellipsis">
-      Workflow configuration
+      Tool configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multi-spindle-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Multi-Spindle configuration
     </span>
   </a>
   
@@ -1966,7 +1984,17 @@ To work with the <code>Rexroth OP-Ford R1.0</code> protocol in the KE350, the ch
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="na">CHANNEL_01_CHECK_TIME_ENABLED</span><span class="o">=</span><span class="s">1</span>
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="na">CHANNEL_01_CURVE_REQUEST</span><span class="o">=</span><span class="s">1</span>
 </code></pre></div>
-<h3 id="workflow-configuration"><a class="toclink" href="#workflow-configuration">Workflow configuration</a></h3>
+<h3 id="tool-configuration"><a class="toclink" href="#tool-configuration">Tool configuration</a></h3>
+<p>To add a KE350 tool, add it as any other tool to the tool configuration and define the default loosen program:</p>
+<p><a class="glightbox" href="../resources/heOpCfg-tool-loosen-params.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="heOpCFG tool configuration - loosen program" src="../resources/heOpCfg-tool-loosen-params.png" /></a></p>
+<h3 id="multi-spindle-configuration"><a class="toclink" href="#multi-spindle-configuration">Multi-Spindle configuration</a></h3>
+<p>For KE350, OGS uses application start (fastening operations), where a single start command can start a group of spindles.
+If more than a single spindle is started, OGS needs to know which bolt is mapped to which spindle. This is done by assigning 
+a group (this defines which bolts belong to a single application start) and a sequence number (which actually maps the
+bolt to the spindle). The Both parameters are set in the <code>appl_start</code> task parameter.</p>
+<p>The <code>appl_start</code> task parameter can be enabled in the workflow editor in <code>database --&gt; settings</code> as follows (check the "Application start" parameter):
+<a class="glightbox" href="../resources/heOpCfg-settings.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Database settings" src="../resources/heOpCfg-settings.png" /></a></p>
+<p>The <code>appl_start</code> parameter is then found in the task properties:</p>
 <h3 id="loosen-behaviour"><a class="toclink" href="#loosen-behaviour">Loosen behaviour</a></h3>
 <h4 id="ccwsel-used"><a class="toclink" href="#ccwsel-used">CCWSel used</a></h4>
 <p>This is the preferred configuration, as the user-experience is most intuitive. Unfortunately the most often used start grip handles do not provide the neccessary signals.</p>

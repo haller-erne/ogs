@@ -483,6 +483,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#sequence-interlock-between-tightening-and-loosening" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sequence interlock between tightening and loosening
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#wait-for-ccwsel-input" class="md-nav__link">
     <span class="md-ellipsis">
       Wait for CCWSel input
@@ -1858,6 +1867,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#sequence-interlock-between-tightening-and-loosening" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sequence interlock between tightening and loosening
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#wait-for-ccwsel-input" class="md-nav__link">
     <span class="md-ellipsis">
       Wait for CCWSel input
@@ -2311,6 +2329,38 @@ default (if <code>CHANNEL_&lt;tool&gt;_CCW_ACK</code> not set or = 0). </p>
 </li>
 </ul>
 <p>Note that this behaviour can be overridden by implementing the LUA function <code>GetNokBehaviour(...)</code>.</p>
+<h3 id="sequence-interlock-between-tightening-and-loosening"><a class="toclink" href="#sequence-interlock-between-tightening-and-loosening">Sequence interlock between tightening and loosening</a></h3>
+<p>In a typical sequence of operations, there is a risk, that the operator does not recognize a NOK result.
+Typically after a NOK rundown, a loosen operation is required - if the operator does not notice the NOK,
+he might move on to the next bolt and start the tool - then with a loosen operation. This will lead to 
+confusion and possibly corrupt the sequence of operations, even tightening on the wrong bolt.</p>
+<p>To prevent this to happen, the tool is typically blocked after NOK and requires additional interaction
+from the operator, so the NOK will not pass unnoticed. OGS provides the following options:</p>
+<ul>
+<li>Block the tool after a NOK rundown and require a supervisor to continue (four eye witness process)</li>
+<li>Block the tool and wait for the operator to switch to loosen (<code>CHANNEL_&lt;tool&gt;_CCW_ACK</code> set to 1 and
+  CCWSel supported)</li>
+<li>Configure the tool to require a NOK acknowledge (tool configuration). Most tools support this by an 
+  additional acknowledge button, which must be pressed after a NOK rundown to re-enable the tool</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As a general rule for tightening tools, make sure to setup the parameters of the tightening
+programs to detect running the tool on a already fastened bolt and report this as a NOK
+rundown. This ensures OGS can stay in sync with the actual sequence and cannot easily be
+manipulated.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For higher level requirements, OGS suports tool position tracking - this ensures that a bolt
+cannot run twice and the operator cannot work on the "wrong" bolt.</p>
+</div>
+<div class="admonition danger">
+<p class="admonition-title">Danger</p>
+<p>For hand held tools it is very important to enable the <code>CHANNEL_&lt;tool&gt;_CCW_ACK</code> feature and
+require the operator to switch to loosen before running the tool. Otherwise he might get suprised
+by the reaction force and could get injured!</p>
+</div>
 <h3 id="wait-for-ccwsel-input"><a class="toclink" href="#wait-for-ccwsel-input">Wait for CCWSel input</a></h3>
 <p>If <code>CHANNEL_&lt;tool&gt;_CCW_ACK</code> is set to a non-zero value in the <code>station.ini</code> configuration for the tool, then OGS requires the tools direction switch position to be in the correct position according to the processes currently requested tightening mode (tighten/loosen). If not, an alert message will be shown to indicate that the operator should change the direction switch accordingly and the enable signal for the tool is inactive.</p>
 <p>Note that this behaviour can be overridden by implementing the LUA function <code>GetNokBehaviour(...)</code>.</p>

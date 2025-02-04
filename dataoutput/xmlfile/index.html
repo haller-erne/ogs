@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://haller-erne.github.io/ogs/dataoutput/xmlfile/">
       
       
-        <link rel="prev" href="../../tools/doga-wifi/">
+        <link rel="prev" href="../../tools/misc/gesipa-mqtt/">
       
       
         <link rel="next" href="../printout/">
@@ -429,7 +429,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tools/openprotocol/sys350-cs351.md" class="md-nav__link">
+      <a href="../../tools/openprotocol/sys350-cs351/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -539,7 +539,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tools/openprotocol/hstechnik.md" class="md-nav__link">
+      <a href="../../tools/openprotocol/hstechnik/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -605,7 +605,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tools/openprotocol/ngineric.md" class="md-nav__link">
+      <a href="../../tools/openprotocol/ngineric/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -693,7 +693,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tools/misc/gesipa-mqtt.md" class="md-nav__link">
+      <a href="../../tools/misc/gesipa-mqtt/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1418,7 +1418,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../appnotes/userdb.md" class="md-nav__link">
+      <a href="../../appnotes/userdb/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1440,7 +1440,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../appnotes/traceability.md" class="md-nav__link">
+      <a href="../../appnotes/traceability/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1684,17 +1684,24 @@
 <h2 id="usage"><a class="toclink" href="#usage">Usage</a></h2>
 <h3 id="enabling-the-xml-data-output"><a class="toclink" href="#enabling-the-xml-data-output">Enabling the XML data output</a></h3>
 <p>To enable the XML data output, define the destination directory to use in the <code>[XML]</code> section in your projects <code>station.ini</code> as follows:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">[XML]</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1">; Define the workflow complete data output (save a result data file).</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1">; NOTES:</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1">; - If the DIRECTORY parameter is missing or empty, no file is generated.</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1">; - The [GENERAL] section RESULT_Ok=, RESULT_Nok=, RESULT_incomplete= define when a XML</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1">;   file is actually generated, e.g. if RESULT_incomplete=SKIP, no XML file will be</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1">;    generated, if a part is finished with incomplete status (like missing bolts).</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1">; - The generated file format/contents can be overriden by LUA code (see GetXMLFile())</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c1">;</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1">; Define the output directory for generated part result reports (by default in XML format)</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="na">DIRECTORY</span><span class="o">=</span><span class="s">C:\Daten</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">[GENERAL]</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1">; Define if the data output shall have all step results</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1">; or if only the final step results are used (default)</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1">; </span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1">; Set SAVE_ONLY_LAST_STEP = 0 if you want all steps.</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="na">SAVE_ONLY_LAST_STEP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="k">[XML]</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c1">; Define the workflow complete data output (save a result data file).</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1">; NOTES:</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="c1">; - If the DIRECTORY parameter is missing or empty, no file is generated.</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="c1">; - The [GENERAL] section RESULT_Ok=, RESULT_Nok=, RESULT_incomplete= define when a XML</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="c1">;   file is actually generated, e.g. if RESULT_incomplete=SKIP, no XML file will be</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="c1">;    generated, if a part is finished with incomplete status (like missing bolts).</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="c1">; - The generated file format/contents can be overriden by LUA code (see GetXMLFile())</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="c1">;</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="c1">; Define the output directory for generated part result reports (by default in XML format)</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="na">DIRECTORY</span><span class="o">=</span><span class="s">C:\Daten</span>
 </code></pre></div>
 <p>XML data output is disabled, if the <code>DIRECTORY</code> parameter is missing or empty.</p>
 <h3 id="define-when-a-file-is-generated"><a class="toclink" href="#define-when-a-file-is-generated">Define when a file is generated</a></h3>

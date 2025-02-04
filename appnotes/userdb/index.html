@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://haller-erne.github.io/ogs/dataoutput/eventlog/">
+        <link rel="canonical" href="https://haller-erne.github.io/ogs/appnotes/userdb/">
       
       
-        <link rel="prev" href="../traceability/">
+        <link rel="prev" href="../databanking/">
       
       
-        <link rel="next" href="../../v3/getting-started/">
+        <link rel="next" href="../traceability/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Event logging - OGS Documentation</title>
+        <title>Central user administration - OGS Documentation</title>
       
     
     
@@ -74,11 +74,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#event-logging" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -111,7 +106,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Event logging
+              Central user administration
             
           </span>
         </div>
@@ -727,19 +722,17 @@
       
   
   
-    
   
   
-  
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
@@ -754,7 +747,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             Data output
@@ -768,7 +761,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../xmlfile/" class="md-nav__link">
+      <a href="../../dataoutput/xmlfile/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -790,7 +783,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../printout/" class="md-nav__link">
+      <a href="../../dataoutput/printout/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -812,7 +805,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../traceability/" class="md-nav__link">
+      <a href="../../dataoutput/traceability/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -831,31 +824,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Event logging
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../dataoutput/eventlog/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -865,77 +837,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    <span class="md-ellipsis">
-      Overview
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#log-events-to-file" class="md-nav__link">
-    <span class="md-ellipsis">
-      Log events to file
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Log events to file">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#add-heeventloglua-to-your-project" class="md-nav__link">
-    <span class="md-ellipsis">
-      Add heEventlog.lua to your project
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#configuration-stationini" class="md-nav__link">
-    <span class="md-ellipsis">
-      Configuration (station.ini)
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#customizing" class="md-nav__link">
-    <span class="md-ellipsis">
-      Customizing
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1324,17 +1225,19 @@
       
   
   
+    
   
   
+  
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
         
           
           <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
@@ -1349,7 +1252,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             Enterprise functionality
@@ -1363,7 +1266,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../appnotes/databanking/" class="md-nav__link">
+      <a href="../databanking/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1382,10 +1285,17 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../appnotes/userdb/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -1395,6 +1305,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -1407,7 +1318,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../appnotes/traceability/" class="md-nav__link">
+      <a href="../traceability/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1472,7 +1383,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../appnotes/debugging/" class="md-nav__link">
+      <a href="../debugging/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1494,7 +1405,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../appnotes/station_io/" class="md-nav__link">
+      <a href="../station_io/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1533,67 +1444,6 @@
   
   
   
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    <span class="md-ellipsis">
-      Overview
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#log-events-to-file" class="md-nav__link">
-    <span class="md-ellipsis">
-      Log events to file
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Log events to file">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#add-heeventloglua-to-your-project" class="md-nav__link">
-    <span class="md-ellipsis">
-      Add heEventlog.lua to your project
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#configuration-stationini" class="md-nav__link">
-    <span class="md-ellipsis">
-      Configuration (station.ini)
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#customizing" class="md-nav__link">
-    <span class="md-ellipsis">
-      Customizing
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
   
 </nav>
                   </div>
@@ -1609,68 +1459,7 @@
 
 
 
-<h1 id="event-logging"><a class="toclink" href="#event-logging">Event logging</a></h1>
-<h2 id="overview"><a class="toclink" href="#overview">Overview</a></h2>
-<p>In OGS, the term <code>Event logging</code> refers to capturing and processing various events from within the OGS application. Compared with <a href="/docs/dataoutput/traceability.md">OGS Traceability</a>, the focus of event logging is not part-related, but station-related. Instead of e.g. detailed tightening result data and curves, <code>Event logging</code> captures alarms and other station events. It can therefore be used for <a href="https://lean-placement.de/">LEAN</a> purposes, <a href="https://en.wikipedia.org/wiki/Overall_equipment_effectiveness">OEE</a> monitoring and other availability and optimization questions. </p>
-<p>The following event categories are available:</p>
-<ul>
-<li>Barcode scans</li>
-<li>GUI interaction events</li>
-<li>User logon/logoff events</li>
-<li>Alarms</li>
-<li>Workflow events</li>
-<li>Tool result events</li>
-<li>Common events</li>
-<li>Error events</li>
-</ul>
-<p>By default, all these event categories are available, but there is no default handler registered. Therefore, by default, none of these events are logged.</p>
-<h2 id="log-events-to-file"><a class="toclink" href="#log-events-to-file">Log events to file</a></h2>
-<p>As part of the OGS installation, a default implementation for <code>Event logging</code> 
-is provided in <code>&lt;install dir&gt;\lualib\heEventLog.lua</code>. This implementation writes *.csv files (filename includes a timestamp) with event data, so they can easily be uploaded to a database or analyzed by Excel. A file is generated for
-each day, once a day the old file is then uploaded to a server file share.</p>
-<p>The following sections describe how to use it in your project.</p>
-<h3 id="add-heeventloglua-to-your-project"><a class="toclink" href="#add-heeventloglua-to-your-project">Add heEventlog.lua to your project</a></h3>
-<p>To add <code>heEventlog.lua</code> to your project, simply include it into the <code>requires</code> list in your projects <code>config.lua</code>. Here is a sample:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">-- config.lua</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nv">requires</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="s2">&quot;barcode&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="s2">&quot;user_manager&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="s2">&quot;heEventlog&quot;</span><span class="w">        </span><span class="c1">-- load the event logging functions</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="p">}</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="nv">current_project</span><span class="p">.</span><span class="py">logo_file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;logo-rexroth.png&#39;</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="nv">current_project</span><span class="p">.</span><span class="py">billboard</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;http://127.0.0.1:60000/billboard.html&#39;</span>
-</code></pre></div>
-<h3 id="configuration-stationini"><a class="toclink" href="#configuration-stationini">Configuration (station.ini)</a></h3>
-<p>The <code>heEventlog.lua</code> implementation requires some additional parameters in <code>station.ini</code>. These parameters are configured in the <code>[EVENT_LOG]</code> section as follows:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">[EVENT_LOG]</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1">; Set local directory for (temporarily) storing log files</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="na">DIRECTORY</span><span class="o">=</span><span class="s">C:\OGS_Log</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">;; Set target directory for storing the logfiles</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="na">TARGET_DIR</span><span class="o">=</span><span class="s">\\myserver\share$\OGS\LOG-Files\station-01</span>
-</code></pre></div>
-<p>The following parameters are required:</p>
-<ul>
-<li><code>DIRECTORY</code>: Local directory for saving the current days file (and possibly older files, if they can't be transmitted to the server)</li>
-<li><code>TARGET_DIR</code>: Final destination for the event files. Finished files (containing all events from a whole day) will be moved to this folder and deleted locally.</li>
-</ul>
-<h2 id="customizing"><a class="toclink" href="#customizing">Customizing</a></h2>
-<p>To customize the logging (e.g. to send the event in realtime to some logging server or MQTT broker), the OGS global <code>Eventlog</code> and its member functions can be implemented in custom code.</p>
-<p>Note, that you will have to create the global <code>Eventlog</code> LUA table and the needed member functions in your code - see <code>&lt;install dir&gt;\lualib\heEventLog.lua</code>. </p>
-<p>The following member functions of the global LUA table <code>Eventlog</code> mujst be implemented:</p>
-<ul>
-<li><code>Eventlog.Init()</code>: Called once when OGS is loaded, return true on success, /else nil, error.</li>
-<li><code>Eventlog.Stop()</code>: Called when OGS is about to terminate. Last chance to finish any pending task, before the application is shut down.</li>
-<li><code>Eventlog.Write(evt, status, user1, user2, test, p1, p2, p3, p4, p5, p6)</code>: Called by OGS for each event. The event details are passed as parameters as follows:<ul>
-<li>evt: Event type: one of COMMON (0), BARCODE (1), INTERACTION (2),
-  USER_LOGON (3), ALARM (4), WORKFLOW (5), RESULT (6), ERROR (7). See the default implementation in <code>heEventlog.lua</code> for event type specific information.</li>
-<li>status: Event status (like ok, nok, etc.). See the default implementation 
-  in <code>heEventlog.lua</code> for event type specific information.</li>
-<li>user1, user2: Currently logged on user ID when the event was emitted</li>
-<li>p1-p6: Event parameters. The actual meaning of the parameter depends on 
-  the event type, see the default implementation in <code>heEventlog.lua</code> for event type specific information.</li>
-</ul>
-</li>
-</ul>
+  <h1>Central user administration</h1>
 
 
 
@@ -1678,8 +1467,7 @@ each day, once a day the old file is then uploaded to a server file share.</p>
 
 
 
-  
-  
+
 
 
 

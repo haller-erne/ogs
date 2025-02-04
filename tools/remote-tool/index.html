@@ -534,7 +534,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../openprotocol/sys350-cs351.md" class="md-nav__link">
+      <a href="../openprotocol/sys350-cs351/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -644,7 +644,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../openprotocol/hstechnik.md" class="md-nav__link">
+      <a href="../openprotocol/hstechnik/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -710,7 +710,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../openprotocol/ngineric.md" class="md-nav__link">
+      <a href="../openprotocol/ngineric/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -798,7 +798,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../misc/gesipa-mqtt.md" class="md-nav__link">
+      <a href="../misc/gesipa-mqtt/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1396,7 +1396,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../appnotes/userdb.md" class="md-nav__link">
+      <a href="../../appnotes/userdb/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1418,7 +1418,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../appnotes/traceability.md" class="md-nav__link">
+      <a href="../../appnotes/traceability/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1632,9 +1632,9 @@
 <h1 id="remotetool"><a class="toclink" href="#remotetool">RemoteTool</a></h1>
 <p>OGS supports connecting tools over a <code>ToolGateway</code>. This enables advanced  tool management scenarios, e.g. "roaming" tools between multiple stations.</p>
 <p>Using the <code>RemoteTool</code> driver requires a <code>ToolGateway</code> running on a server - the server then actually controls the tool, whereas the OGS stations only communication with the <code>ToolGateway</code>. This allows delegating tool management to the central <code>ToolGateway</code>. </p>
-<p>For each tool managed through the <code>ToolGateway</code>, OGS only uses a generic <code>RemoteTool</code> type channel in its local configuration, the <code>ToolGateway</code> then has the actual tool-specific configuration (like e.g. <a href="/docs/tools/openprotocol/README.md">OpenProtocol tools</a>).</p>
+<p>For each tool managed through the <code>ToolGateway</code>, OGS only uses a generic <code>RemoteTool</code> type channel in its local configuration, the <code>ToolGateway</code> then has the actual tool-specific configuration (like e.g. <a href="../openprotocol/">OpenProtocol tools</a>).</p>
 <h2 id="installation"><a class="toclink" href="#installation">Installation</a></h2>
-<p>The <code>RemoteTool</code> driver is implemented in <code>RemoteTool.dll</code>. To use any <code>RemoteTool</code> tool, the driver must be loaded in the <code>[TOOL_DLL]</code> section of the projects <code>station.ini</code> configuration file (see also <a href="/docs/tools/README.md">Tool configuration</a>).</p>
+<p>The <code>RemoteTool</code> driver is implemented in <code>RemoteTool.dll</code>. To use any <code>RemoteTool</code> tool, the driver must be loaded in the <code>[TOOL_DLL]</code> section of the projects <code>station.ini</code> configuration file (see also <a href="../">Tool configuration</a>).</p>
 <p>To enable the driver in station.ini, set it as follows:</p>
 <div class="highlight"><pre><span></span><code>[TOOL_DLL]
 RemoteTool.dll=1

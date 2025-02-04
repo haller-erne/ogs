@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.2">
     
     
       
@@ -26,7 +26,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.a40c8224.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.d7758b05.min.css">
       
       
 
@@ -476,8 +476,35 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Loosen modes">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openprotocol-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      OpenProtocol configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OpenProtocol configuration">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plc-signal-assinment-for-openprotocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      PLC signal assinment for OpenProtocol
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#single-channel-tool" class="md-nav__link">
@@ -1500,8 +1527,35 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Loosen modes">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openprotocol-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      OpenProtocol configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OpenProtocol configuration">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plc-signal-assinment-for-openprotocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      PLC signal assinment for OpenProtocol
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#single-channel-tool" class="md-nav__link">
@@ -1546,15 +1600,15 @@
 <h2 id="loosen-modes"><a class="toclink" href="#loosen-modes">Loosen modes</a></h2>
 <p>System350 based tools mainly fall into two categories:</p>
 <ul>
-<li>ErgoSpin tools (used in ErgoSpin hand-tool mode)</li>
 <li>Single spindle tools and ErgoSpin tools used in spindle mode</li>
 <li>Multi-spindle tools</li>
+<li>ErgoSpin tools (used in ErgoSpin hand-tool mode) - these are not considered here, as typically a CS351 controller is used in this case.</li>
 </ul>
-<p>Spindle tools (and ErgoSpin in spindle mode) use externally connected start switches (for start CW, start CCW), whereas ErgoSpins in hand-tool mode use the built-in direction selector switch and start switch.</p>
+<p>Spindle tools (and ErgoSpin in spindle mode) use externally connected start switches (for start CW, start CCW), whereas ErgoSpins in hand-tool mode use the built-in direction selector switch and start switch. All tools are controlled over OpenProtocol using the "Ford OpenProtocol" protocol type and are started in application mode (using fasterning operation FO 1).</p>
 <p>Additional notes:</p>
 <ul>
 <li>Check the PSet parameter setting "play with start switch"</li>
-<li>Check the <code>CHANNEL_&lt;tool&gt;_CCW_ACK</code> setting for the tool in <code>station.ini</code></li>
+<li>Check the <code>CHANNEL_&lt;tool&gt;_CCW_ACK</code> setting for the tool in <code>station.ini</code>.</li>
 </ul>
 <p>For the <code>CHANNEL_&lt;tool&gt;_CCW_ACK</code> setting, the following is recommended:</p>
 <ul>
@@ -1562,6 +1616,18 @@
 <li>If you use a spindle tool with seperately wired CW/CCW and start signals, then set <code>CHANNEL_&lt;tool&gt;_CCW_ACK=1</code></li>
 <li>If you use a spindle tool with CW start and CCW start signals, then set <code>CHANNEL_&lt;tool&gt;_CCW_ACK=0</code></li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To reliably prevent loosen it is recommended to use a seperate direction switch connected to the CcwSel signal and a start switch connected to FO 1 Cw.</p>
+</div>
+<h2 id="openprotocol-configuration"><a class="toclink" href="#openprotocol-configuration">OpenProtocol configuration</a></h2>
+<h3 id="overview"><a class="toclink" href="#overview">Overview</a></h3>
+<p>OGS uses the KE350 <code>Rexroth OP-Ford R1.0</code> protocol version. This maps the
+OpenProtool commands to the application start (fastening operation) <code>FO 1</code> signals, so multiple spindles can work in a synchronized way and report the
+spindle groups result status. </p>
+<p><img alt="KE350 OpenProtocol settings" src="../resources/ke350-openprotocol-settings.png" /></p>
+<h3 id="plc-signal-assinment-for-openprotocol"><a class="toclink" href="#plc-signal-assinment-for-openprotocol">PLC signal assinment for OpenProtocol</a></h3>
+<p>For KE350, OGS uses </p>
 <h3 id="single-channel-tool"><a class="toclink" href="#single-channel-tool">Single channel tool</a></h3>
 <p>The signals used in this scenario are:</p>
 <ul>
@@ -1572,6 +1638,9 @@
 <li>CwAnd, CcwAnd</li>
 </ul>
 <h3 id="multi-channel-tool"><a class="toclink" href="#multi-channel-tool">Multi channel tool</a></h3>
+<p>For multi-spindle tools, the following PLC assignment table is used:</p>
+<p><img alt="KE350 PLC assignment table" src="../resources/ke350-openprotocol-plc-table.png" /></p>
+<p>Note that the tool is started through the external start signals <code>FO 1 Cw</code> or <code>FO 1 Ccw</code>. </p>
 
 
 
@@ -1621,7 +1690,7 @@
     <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.copy", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.5090c770.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.f13b1293.min.js"></script>
       
     
   </body>

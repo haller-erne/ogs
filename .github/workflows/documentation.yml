@@ -25,7 +25,7 @@ jobs:
         with:
           fetch-depth: 0
       - uses: actions/setup-python@v2
-      - run: pip install --upgrade pip && pip install mkdocs mkdocs-gen-files mkdocs-material mkdocs-material-extensions pymdown-extensions pygments
+      - run: pip install --upgrade pip && pip install mkdocs mkdocs-gen-files mkdocs-material mkdocs-material-extensions pymdown-extensions pygments mkdocs-glightbox
 #markdown-full-yaml-metadata==2.2.1
 #markdown==3.3.7
 #mkdocs-ezlinks-plugin==0.1.14

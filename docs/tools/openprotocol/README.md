@@ -88,17 +88,77 @@ By default, OGS selects a specific PSet (using MID0018) for loosen as defined in
 
 ![heOpCfg tool loosen PSet number](resources/heOpCfg-tool-loosen.png)
 
-For tools which support OpenProtocol I/O signals, OGS also provides an additional I/O signal which is set to true while the OGS is in tightening mode (and false while in loosening mode), which allows tailoring the behaviour even more (e.g. allow loosen with the direction switch set to CW, etc.).
+For tools which support OpenProtocol I/O signals, OGS also provides an additional I/O signal which is set to true while the OGS is in tightening mode (and false while in loosening mode), which allows tailoring the behaviour even more (e.g. allow loosen with the direction switch set to CW, etc.). Also OGS can read an additional input signal reporting the state of the tools CW/CCW switch, so it can act accordingly and show a warning to the user eventually. See also below [CHANNEL_<tool>_CCW_ACK](#channel_tool_ccw_ack) for enforcing the direction switch setting.
 
-Note, that OGS can also be configured to block loosening in general!
+Note, that OGS can also be configured to block loosening in general (see [user rights for loosen](#user-rights-for-loosen) below)!
 
-### Wait for CCWSel
+### NOK behaviour and rework parameters
+
+To undestand NOK behaviour, it is important to understand that each `Task` (for tightening this is tightening a bolt) configured and executed in OGS consists of (up to) four different operations:
+
+- `main process`: This is the main operation defined in the configuration database. For a tightening task, this is tightening with a given PSet and eventually socket. This is the operation, which is normally executed, if the task state is "new" (untightened).
+- `rework`: This is the operation, if the main operation failed or if the task state was "nok". For tightening this is typically using a loosen PSet to loosen the bolt.
+- `undo`: Only used for special cases, by default the same as rework.
+- `alternative tool`: Only used in alternative tool mode, by default this is not available.
+
+For tightening tools, the `rework` operation is implicitely defined by the tool configuration in the configuration database and the projects `station.ini` file (but can be overridden by defining a seperate `rework` operation in the configuration database) - see the screenshot in the previous section. 
+
+OGS has tree different basic NOK behaviours (set in the `[GENERAL]` section in `station.ini` in the `NOK_STRATEGIE` parameter):
+
+- 0 (default): Stay on the task/bolt and automatically select the `rework` operation after a NOK 
+    rundown. In this case OGS automatically selects the configured loosening program
+    after a NOK rundown. This allows the operator to immediately loosen a bolt after NOK
+    without the need to enable CCW operations (and optionally without the operator switching 
+    the CW/CCW switch to CCW). 
+   
+    Note that the operator still needs to acknowledge the NOK rundown (if enabled in the tools 
+    configuration) before he can start the loosening operation. Note also that the program used
+    for the loosening operation must be defined in the tool configuration section of the 
+    configuration editor
+
+    Note that manual loosen on the tool (by using the CCW switch) is disabled in this mode by
+    default (if `CHANNEL_<tool>_CCW_ACK` not set or = 0). 
+
+- 1: Skip task after a NOK rundown. In this case the current bolt is marked NOK and the job 
+    automatically continues immediately with the next bolt.
+
+- 2: Stay on task after NOK rundown. In this case the job does not execute the `rework`operation,
+    but restarts the `main process`. It therefore re-enables the tool after a NOK rundown, but stays
+    on the current bolt. The next bolt is only selected after a OK rundown. 
+
+Note that this behaviour can be overridden by implementing the LUA function `GetNokBehaviour(...)`.
+
+### Wait for CCWSel input
 
 If `CHANNEL_<tool>_CCW_ACK` is set to a non-zero value in the `station.ini` configuration for the tool, then OGS requires the tools direction switch position to be in the correct position according to the processes currently requested tightening mode (tighten/loosen). If not, an alert message will be shown to indicate that the operator should change the direction switch accordingly and the enable signal for the tool is inactive.
 
 Note that this behaviour can be overridden by implementing the LUA function `GetNokBehaviour(...)`.
 
 Please see the tool specific documentation on the available loosening modes and recommendations on how to setup the tool for use with OGS.
+
+### CCWLock/CCWIgnore output
+
+For tools which support OpenProtocol I/O signals, OGS also provides an additional I/O signal which is set to true while the OGS is in tightening mode (and false while in loosening mode). This signal can be used to block a CCW start while OGS expects tightening by assigning a corresponding controller signal (e.g. CCWLock or CCWIgnore for [KE350](sys350-ke350.md) or [CS351 ](sys350-cs351.md)). 
+
+Note, that the signal is set to high (block loosen) only, if the current logged on user does not have the user right `CCW` assigned (see [OGS user rights](../../v3/lua/userrights.md) for more information).
+
+!!! warning
+
+    Without proper support for CCWLock/CCWIgnore, OGS cannot prevent the tool running a loosen program.
+    In this case, tools which select an internally defined lossen program when the start switch is set
+    to CCW should be configured such that the tool won't start (if the direction switch is set to CCW
+    and the operator presses the start switch)!
+    In addition, a on-tool NOK acknowledge should be configured and OGS must be set to select the loosen
+    program (`CHANNEL_<tool>_CCW_ACK` mujst be set to 0). 
+
+
+### User rights for loosen
+
+OGS has two sepperate user rights related to loosen (see also [OGS user rights](../../v3/lua/userrights.md) and [NOK behaviour](#nok-behaviour-and-rework-parameters)):
+
+- `processNOK`: This right defines, if an operator is allowed to execute the rework operation after a failed primary process operation. If this right is not given, then the operator is not allowed to execute the rework operation - in case of a tightening tool, this means he is not allowed to loosen (by default, a warning message is shown in this case, indicating to call a supervisor).
+- `CCW`:  This right defines, if an operator is allowed to switch to CCW mode on the tool. If this right is given, the operator
+   is allowed to loosen regardless of the OGS current process state. 
 
 
 ## OpenProtocol driver parameters reference
@@ -175,13 +235,16 @@ NOTES:
 #### CHANNEL_[tool]_CCW_ACK
 _(optional, default = 0 (disabled))_
 
-Defines, if the operator must select a loosen operation on the tool end (for
-tools having a CW/CCW switch which is accessible over OpenProtocol). Currently only Rexroth Nexo, CS351 and KE350 support this feature.
+Defines, if the operator must select a loosen operation on the tool to start
+a loosen process (for tools having a CW/CCW switch which is accessible over OpenProtocol).
+Currently only Rexroth Nexo, CS351 and KE350 support this feature, but other tools supporting
+I/O signals over OpenProtocol are possible.
 
 The following settings are available:
 
 - 0: Disabled. OGS select a CCW program automatically
-- 1: Enabled. Operator must switch to CCW manually 
+- 1: Enabled. Operator must switch to CCW manually (possibly selecting the tools builtin loosen program instead of
+    the loosen program defined in the configuration database)
 
 #### CHANNEL_[tool]_ALIVEXMTT
 _(optional, default defined by tool type (see above))_

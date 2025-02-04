@@ -612,7 +612,7 @@
           <li class="md-nav__item">
   <a href="#no-ccwsel-but-nokack" class="md-nav__link">
     <span class="md-ellipsis">
-      No CCWSel, but NOKAck
+      No CCWSel, but NokAck
     </span>
   </a>
   
@@ -621,7 +621,7 @@
           <li class="md-nav__item">
   <a href="#no-ccwsel-no-nokack" class="md-nav__link">
     <span class="md-ellipsis">
-      No CCWSel, no NOKAck
+      No CCWSel, no NokAck
     </span>
   </a>
   
@@ -1738,7 +1738,7 @@
           <li class="md-nav__item">
   <a href="#no-ccwsel-but-nokack" class="md-nav__link">
     <span class="md-ellipsis">
-      No CCWSel, but NOKAck
+      No CCWSel, but NokAck
     </span>
   </a>
   
@@ -1747,7 +1747,7 @@
           <li class="md-nav__item">
   <a href="#no-ccwsel-no-nokack" class="md-nav__link">
     <span class="md-ellipsis">
-      No CCWSel, no NOKAck
+      No CCWSel, no NokAck
     </span>
   </a>
   
@@ -1993,16 +1993,125 @@ If more than a single spindle is started, OGS needs to know which bolt is mapped
 a group (this defines which bolts belong to a single application start) and a sequence number (which actually maps the
 bolt to the spindle). The Both parameters are set in the <code>appl_start</code> task parameter.</p>
 <p>The <code>appl_start</code> task parameter can be enabled in the workflow editor in <code>database --&gt; settings</code> as follows (check the "Application start" parameter):
-<a class="glightbox" href="../resources/heOpCfg-settings.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Database settings" src="../resources/heOpCfg-settings.png" /></a></p>
-<p>The <code>appl_start</code> parameter is then found in the task properties:</p>
+<a class="glightbox" href="../resources/heOpCfg-settings.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Database settings" src="../resources/heOpCfg-settings.png" width="300px" /></a></p>
+<p>The <code>appl_start</code> parameter is then found in the task properties:
+<a class="glightbox" href="../resources/heOpCfg-appl_start.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="heOpCfg - job config appl_start" src="../resources/heOpCfg-appl_start.png" /></a></p>
+<p>The screenshot also shows how the spindles of the fastening operation is mapped: the <code>appl_start</code> property consists of the following two parts:</p>
+<div class="highlight"><pre><span></span><code>appl_start = &lt;group&gt;&lt;sequence&gt;
+</code></pre></div>
+<p>where</p>
+<ul>
+<li><code>&lt;group&gt;</code> is a unique name to group the spindles of a single rundown. All bolts of a spindle group started through a single fastening operation <strong>must</strong> have the same <code>&lt;group&gt;</code> name.</li>
+<li><code>&lt;sequence&gt;</code> is the sequential number of the spindle as configured in the BS350 application. </li>
+</ul>
+<p>The following screenshot shows a sample mapping:</p>
+<p><a class="glightbox" href="../resources/heOpCfg-BS350-App.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="alt text" src="../resources/heOpCfg-BS350-App.png" /></a></p>
+<p>Here application number 11 (fastening operation) is defined in BS350 and selected on OGS (operation "20Nm"). The application consists of two bolts:</p>
+<ul>
+<li>Sequence #1: Name="Pos1", Channel 4.3, Program 5</li>
+<li>Sequence #2: Name="Pos2", Channel 4.4, Program 5</li>
+</ul>
+<p>The fastening operation in OGS is named <code>GRP1_B</code> (the <code>&lt;group&gt;</code> name)</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If a fastening operation is used multiple times in an OGS
+job, then a unique group name must be used for each
+fastening operation.</p>
+</div>
+<p>If e.g. 3 times the dual-spindle application from the screenshot above shall be used, then the following six tasks can be 
+configured:</p>
+<div class="span-table-wrapper">
+<table class="span-table">
+<tr>
+<td>Application start</td>
+<td>OGS Task</td>
+<td>appl_start</td>
+<td>Group</td>
+<td>Sequence</td>
+</tr>
+<tr>
+<td rowspan="2">FO start #1</td>
+<td>S1</td>
+<td>GRP1_A1</td>
+<td>GRP1_A</td>
+<td>1</td>
+</tr>
+<tr>
+<td>S2</td>
+<td>GRP1_A2</td>
+<td></td>
+<td>2</td>
+</tr>
+<tr>
+<td rowspan="2">FO start #2</td>
+<td>S3</td>
+<td>GRP1_B1</td>
+<td>GRP1_B</td>
+<td>1</td>
+</tr>
+<tr>
+<td>S4</td>
+<td>GRP1_B2</td>
+<td></td>
+<td>2</td>
+</tr>
+<tr>
+<td rowspan="2">FO start #3</td>
+<td>S5</td>
+<td>GRP1_C1</td>
+<td>GRP1_C</td>
+<td>1</td>
+</tr>
+<tr>
+<td>S6</td>
+<td>GRP1_C1</td>
+<td></td>
+<td>2</td>
+</tr>
+</table>
+</div>
 <h3 id="loosen-behaviour"><a class="toclink" href="#loosen-behaviour">Loosen behaviour</a></h3>
+<p>Even though there are more option (see the general discussion in <a href="../#loosen-modes">OpenProtocol Tools - Loosen modes</a>), the following section shows the common and recommended configurations.</p>
 <h4 id="ccwsel-used"><a class="toclink" href="#ccwsel-used">CCWSel used</a></h4>
-<p>This is the preferred configuration, as the user-experience is most intuitive. Unfortunately the most often used start grip handles do not provide the neccessary signals.</p>
-<h4 id="no-ccwsel-but-nokack"><a class="toclink" href="#no-ccwsel-but-nokack">No CCWSel, but NOKAck</a></h4>
-<p>Even though there are more option (see the general discussion in <a href="../#loosen-modes">OpenProtocol Tools - Loosen modes</a>), the following section shows the recommended configuration.</p>
-<p>The main reason for this recommendation is that most start handles only provide start CW and start CCW signals (without a signal for indicating the CW/CCW position), so CCWSel cannot be used.</p>
-<h4 id="no-ccwsel-no-nokack"><a class="toclink" href="#no-ccwsel-no-nokack">No CCWSel, no NOKAck</a></h4>
-<p>asd</p>
+<p>This is the preferred configuration, as the user-experience is most intuitive. Unfortunately the most often used start grip handles do not provide the neccessary signals, as a start grip handle with three outputs is needed:</p>
+<ul>
+<li>CW: start signal for tightening</li>
+<li>CCW: start signal for loosening</li>
+<li>CCWSel: state of the direction switch, true, if CCW selected</li>
+</ul>
+<p>With this configuration, the following settings are recommended:</p>
+<ul>
+<li><code>CHANNEL_&lt;tool&gt;_CCW_ACK</code> = 1</li>
+<li>Connect <code>OP1.1 Input</code> to <code>FO 1 CCWLock</code> </li>
+<li>Connect <code>OP1.0 Output</code> to the CCWSel signal of the handle (using AppIn/AppOut signals to bridge to IM24V/fieldbus)</li>
+<li>Usually <code>FO 1 NokAck</code> is not connected</li>
+</ul>
+<p>This forces the operator to switch the CW/CCW selection switch to CCW every time a loosen process is needed. Please note, that 
+no custom loosen program number can be selected, as the CCW start 
+always forces program 99 on the connected channels. However, this
+automatically selects the correct spindles (those defined in the 
+fastening operation), so this is basically a good thing.</p>
+<h4 id="no-ccwsel-but-nokack"><a class="toclink" href="#no-ccwsel-but-nokack">No CCWSel, but NokAck</a></h4>
+<p>As most start handles only provide start CW and start CCW signals (without a signal for indicating the CW/CCW position), CCWSel often cannot be used. </p>
+<p>To ensure sequence interlock between tightening and loosening, 
+the <code>FO 1 NokAck</code> signal is connected to an external pushbutton (typically the start handle provides this).</p>
+<p>With this configuration, the following settings are recommended:</p>
+<ul>
+<li><code>CHANNEL_&lt;tool&gt;_CCW_ACK</code> = 0</li>
+<li>Connect <code>OP1.1 Input</code> to <code>FO 1 CCWLock</code> </li>
+<li>Connect <code>FO 1 NokAck</code> to the external NokAck pushbutton</li>
+</ul>
+<p>This blocks the tool after an NOK until the NokAck button is pressed.
+The <code>FO 1 CCWLock</code> signal ensures that loosen is blocked, if it is
+not allowed. </p>
+<p>Note that loosening now uses the given application number set 
+in the tool configuration and uses the CW start. If applications
+with a different number of spindles are used, then an explicit
+rework operation must be defined, matching the tightening operation
+spindle set.</p>
+<h4 id="no-ccwsel-no-nokack"><a class="toclink" href="#no-ccwsel-no-nokack">No CCWSel, no NokAck</a></h4>
+<p>See above, but interlock is now not possible. After a NOK rundown
+OGS immediately selects the loosen operation, which is started with the next start (CW) signal...</p>
 
 
 

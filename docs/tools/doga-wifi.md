@@ -23,7 +23,7 @@ For OGS versions < V3.0.9, the Doga tool driver is not included in the OGS insta
 
 ### OGS project configuration
 
-The `Doga` driver is implemented in `heDogaTool.dll`. To use it with OGS, the driver must be loaded in the `[TOOL_DLL]` section of the projects `station.ini` configuration file (see also [Tool configuration](/docs/tools/README.md)).
+The `Doga` driver is implemented in `heDogaTool.dll`. To use it with OGS, the driver must be loaded in the `[TOOL_DLL]` section of the projects `station.ini` configuration file (see also [Tool configuration](README.md)).
 
 A typical configuration of the `[TOOL_DLL]` section looks like the following:
 

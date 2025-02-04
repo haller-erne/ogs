@@ -26,6 +26,13 @@ By setting the configuration options in `station.ini`, the destination folder to
 To enable the XML data output, define the destination directory to use in the `[XML]` section in your projects `station.ini` as follows:
 
 ``` ini
+[GENERAL]
+; Define if the data output shall have all step results
+; or if only the final step results are used (default)
+; 
+; Set SAVE_ONLY_LAST_STEP = 0 if you want all steps.
+SAVE_ONLY_LAST_STEP = 1
+
 [XML]
 ; Define the workflow complete data output (save a result data file).
 ; NOTES:

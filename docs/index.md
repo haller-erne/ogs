@@ -13,8 +13,8 @@ of OGS by modifying and extending the software.
 
 The documentation currently has the following information:
 
-- Tool driver and tool configuration information (see [Tool configuration](/docs/tools/README.md))
-- LUA scripting (see [LUA scripting](/docs/v3/getting-started.md))
-- LUA helper libraries (see [LUA libraries](/docs/libs/README.md))
+- Tool driver and tool configuration information (see [Tool configuration](tools/README.md))
+- LUA scripting (see [LUA scripting](v3/getting-started.md))
+- LUA helper libraries (see [LUA libraries](libs/README.md))
 
 

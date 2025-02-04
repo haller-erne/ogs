@@ -65,6 +65,7 @@ theme:
 
 plugins:
     - search
+    - glightbox
     
 markdown_extensions:
   - abbr
@@ -94,5 +95,5 @@ markdown_extensions:
   - md_in_html
   - pymdownx.blocks.caption
   - pymdownx.smartsymbols
-  - glightbox
+
   

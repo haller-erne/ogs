@@ -52,7 +52,16 @@
     
     
     
-  </head>
+   <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../../assets/javascripts/glightbox.min.js"></script></head>
   
   
     <body dir="ltr">
@@ -422,7 +431,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../sys350/" class="md-nav__link">
+      <a href="../sys350.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1440,7 +1449,7 @@
 <h1 id="sturtevant-richmond-global-400mp"><a class="toclink" href="#sturtevant-richmond-global-400mp">Sturtevant Richmond Global 400mp</a></h1>
 <p>The Sturtevant Richmond controller allows </p>
 <p>see <a href="https://www.srtorque.com/error-proofing-tools/radio-equipped-torque-controllers/torque-controllers-for-assembly-error-proofing/global-400mp-torque-controller/">Global 400mp Torque Controller</a></p>
-<p><img alt="test.png" src="/docs/tools/openprotocol/resources/Global400mp.png" /></p>
+<p><a class="glightbox" href="/docs/tools/openprotocol/resources/Global400mp.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="test.png" src="/docs/tools/openprotocol/resources/Global400mp.png" /></a></p>
 
 
 
@@ -1493,5 +1502,7 @@
       <script src="../../../assets/javascripts/bundle.f13b1293.min.js"></script>
       
     
-  </body>
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(() => { lightbox.reload() });
+</script></body>
 </html>

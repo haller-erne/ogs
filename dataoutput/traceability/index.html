@@ -52,7 +52,16 @@
     
     
     
-  </head>
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
   
   
     <body dir="ltr">
@@ -418,7 +427,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tools/openprotocol/sys350/" class="md-nav__link">
+      <a href="../../tools/openprotocol/sys350.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1647,16 +1656,16 @@
 <p>In OGS, the term <code>Traceability</code> refers to sending out tool results in JSON format, similar to 
 the Rexroth Nexo, CS351 and KE350 tools. This feature allows tools, which do not support
 their own detailed and buffered data output (e. g. most electronic torque wrenches), to 
-connect to common 3rd party data colletion and analysis systems in the same way as the 
+connect to common 3<sup>rd</sup> party data colletion and analysis systems in the same way as the 
 Rexroth tools do (including graph data, if the tool provides this).</p>
-<p>In addition to providing industry standard data output for 3rd party tools, OGS also generates
+<p>In addition to providing industry standard data output for 3<sup>rd</sup> party tools, OGS also generates
 traceability data for its inbuilt tools. Data can be generated for barcode scans, acknowledge
 actions and even for user logon/logoff in the same standardized JSON format.  </p>
 <p>The <code>Traceability</code> feature aims to provide all data in near-realtime and in a high data
-quality for 3rd party systems for full process documentation and insight. All data is buffered locally before sending it out over FTP/http to the consuming server to ensure guaranteed
+quality for 3<sup>rd</sup> party systems for full process documentation and insight. All data is buffered locally before sending it out over FTP/http to the consuming server to ensure guaranteed
 delivery of all process events.</p>
 <p>Here is an overview of the system setup:</p>
-<p><img alt="Traceability" src="../traceability.drawio.svg" /></p>
+<p><a class="glightbox" href="../traceability.drawio.svg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Traceability" src="../traceability.drawio.svg" /></a></p>
 <h2 id="usage"><a class="toclink" href="#usage">Usage</a></h2>
 <p>Traceability is configured in <code>station.ini</code> in the <code>[FTP_CLIENT]</code> section.
 A typical setup is as follows:</p>
@@ -1839,5 +1848,7 @@ provides, the parameters give override the defaults.</p>
       <script src="../../assets/javascripts/bundle.f13b1293.min.js"></script>
       
     
-  </body>
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(() => { lightbox.reload() });
+</script></body>
 </html>

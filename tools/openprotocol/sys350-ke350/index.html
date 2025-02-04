@@ -8,13 +8,9 @@
       
       
       
-        <link rel="canonical" href="https://haller-erne.github.io/ogs/tools/openprotocol/sys350/">
+        <link rel="canonical" href="https://haller-erne.github.io/ogs/tools/openprotocol/sys350-ke350/">
       
       
-        <link rel="prev" href="../nexo/">
-      
-      
-        <link rel="next" href="../opexplus/">
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
@@ -22,7 +18,7 @@
     
     
       
-        <title>CS351/KE350 - OGS Documentation</title>
+        <title>(DRAFT) KE350 MultiSpindle controller - OGS Documentation</title>
       
     
     
@@ -52,7 +48,16 @@
     
     
     
-  </head>
+   <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../../assets/javascripts/glightbox.min.js"></script></head>
   
   
     <body dir="ltr">
@@ -64,7 +69,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#draft" class="md-skip">
+        <a href="#draft-ke350-multispindle-controller" class="md-skip">
           Skip to content
         </a>
       
@@ -100,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              CS351/KE350
+              (DRAFT) KE350 MultiSpindle controller
             
           </span>
         </div>
@@ -211,19 +216,17 @@
       
   
   
-    
   
   
-  
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
@@ -238,7 +241,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Tool configuration
@@ -337,19 +340,17 @@
                 
   
   
-    
   
   
-  
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
         
           
           <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
@@ -364,7 +365,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2_3">
             <span class="md-nav__icon md-icon"></span>
             OpenProtocol tools
@@ -419,31 +420,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    CS351/KE350
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../sys350.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -453,86 +433,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#loosen-modes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Loosen modes
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#openprotocol-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      OpenProtocol configuration
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="OpenProtocol configuration">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    <span class="md-ellipsis">
-      Overview
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#plc-signal-assinment-for-openprotocol" class="md-nav__link">
-    <span class="md-ellipsis">
-      PLC signal assinment for OpenProtocol
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#single-channel-tool" class="md-nav__link">
-    <span class="md-ellipsis">
-      Single channel tool
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#multi-channel-tool" class="md-nav__link">
-    <span class="md-ellipsis">
-      Multi channel tool
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1596,7 +1496,7 @@
 
 
 
-<h1 id="draft"><a class="toclink" href="#draft">(DRAFT)</a></h1>
+<h1 id="draft-ke350-multispindle-controller"><a class="toclink" href="#draft-ke350-multispindle-controller">(DRAFT) KE350 MultiSpindle controller</a></h1>
 <h2 id="loosen-modes"><a class="toclink" href="#loosen-modes">Loosen modes</a></h2>
 <p>System350 based tools mainly fall into two categories:</p>
 <ul>
@@ -1616,16 +1516,20 @@
 <li>If you use a spindle tool with seperately wired CW/CCW and start signals, then set <code>CHANNEL_&lt;tool&gt;_CCW_ACK=1</code></li>
 <li>If you use a spindle tool with CW start and CCW start signals, then set <code>CHANNEL_&lt;tool&gt;_CCW_ACK=0</code></li>
 </ul>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>To reliably prevent loosen it is recommended to use a seperate direction switch connected to the CcwSel signal and a start switch connected to FO 1 Cw.</p>
-</div>
+<p>!!!+ note</p>
+<div class="highlight"><pre><span></span><code>To reliably prevent loosen it is recommended to use a seperate direction switch connected to the CcwSel signal and a start switch connected to FO 1 Cw.
+</code></pre></div>
 <h2 id="openprotocol-configuration"><a class="toclink" href="#openprotocol-configuration">OpenProtocol configuration</a></h2>
 <h3 id="overview"><a class="toclink" href="#overview">Overview</a></h3>
 <p>OGS uses the KE350 <code>Rexroth OP-Ford R1.0</code> protocol version. This maps the
 OpenProtool commands to the application start (fastening operation) <code>FO 1</code> signals, so multiple spindles can work in a synchronized way and report the
 spindle groups result status. </p>
-<p><img alt="KE350 OpenProtocol settings" src="../resources/ke350-openprotocol-settings.png" /></p>
+<figure>
+<p><a class="glightbox" href="../resources/ke350-openprotocol-settings.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img align="right;" alt="KE350 OpenProtocol settings" src="../resources/ke350-openprotocol-settings.png" width="300" /></a></p>
+<figcaption>
+<p>KE350 OpenProtocol settings</p>
+</figcaption>
+</figure>
 <h3 id="plc-signal-assinment-for-openprotocol"><a class="toclink" href="#plc-signal-assinment-for-openprotocol">PLC signal assinment for OpenProtocol</a></h3>
 <p>For KE350, OGS uses </p>
 <h3 id="single-channel-tool"><a class="toclink" href="#single-channel-tool">Single channel tool</a></h3>
@@ -1639,7 +1543,7 @@ spindle groups result status. </p>
 </ul>
 <h3 id="multi-channel-tool"><a class="toclink" href="#multi-channel-tool">Multi channel tool</a></h3>
 <p>For multi-spindle tools, the following PLC assignment table is used:</p>
-<p><img alt="KE350 PLC assignment table" src="../resources/ke350-openprotocol-plc-table.png" /></p>
+<p><a class="glightbox" href="../resources/ke350-openprotocol-plc-table.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="KE350 PLC assignment table" src="../resources/ke350-openprotocol-plc-table.png" width="300" /></a></p>
 <p>Note that the tool is started through the external start signals <code>FO 1 Cw</code> or <code>FO 1 Ccw</code>. </p>
 
 
@@ -1693,5 +1597,7 @@ spindle groups result status. </p>
       <script src="../../../assets/javascripts/bundle.f13b1293.min.js"></script>
       
     
-  </body>
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(() => { lightbox.reload() });
+</script></body>
 </html>

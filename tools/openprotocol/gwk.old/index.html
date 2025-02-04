@@ -48,7 +48,16 @@
     
     
     
-  </head>
+   <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../../assets/javascripts/glightbox.min.js"></script></head>
   
   
     <body dir="ltr">
@@ -414,7 +423,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../sys350/" class="md-nav__link">
+      <a href="../sys350.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1422,11 +1431,11 @@
 <h1 id="gwk-operator"><a class="toclink" href="#gwk-operator">GWK Operator+</a></h1>
 <p>The GWK Operator+ OpenProtocol implementation (currently, as of June 2023) has quite some quirks. OGS tries to workaround most of them, but the following parameters needs to be tweaked:</p>
 <ul>
-<li>The GWK tool only supports a single OpenProtocol session (even if multiple TCP connections are allowed). Make sure to disable multiple connections in the GWK xPico Web settings (under the "Tunnel"--&gt;"Accept" category)</li>
+<li>The GWK tool only supports a single OpenProtocol session (even if multiple TCP connections are allowed). Make sure to disable multiple connections in the GWK xPico Web settings (under the "Tunnel"&rarr;"Accept" category)</li>
 <li>The GWK tool seems to never actively disconnect a TCP session and does not close an OpenProtcol session, if the TCP connection gets dropped. According to the GWK development, the internal session is only closed, if no message is received within 15 seconds (the MID9999 alive timeout) - irregardless of the state of the TCP connection. As a workaround, OGS therefore always waits for 30 seconds to reconnect to the tool in case of network communication errors. Faster reconnects are not recommended, as the tool replies with MID0004 (error 96) for the next MID0001 (which makes any OpenProtocol client disconnect). Having a reconnect time of less than 15 seconds therefore will lead to a reconnect loop, where never a good connection to the tool can be established.</li>
 </ul>
 <p>see <a href="https://www.pts-automation.de/handelsprodukte/rexroth-schraubtechnik/drehmomentschluessel-opexplus/">Bosch Rexroth OPEXplus</a> for information about the tool.</p>
-<p><img alt="test.png" src="/docs/tools/openprotocol/resources/Global400mp.png" /></p>
+<p><a class="glightbox" href="/docs/tools/openprotocol/resources/Global400mp.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="test.png" src="/docs/tools/openprotocol/resources/Global400mp.png" /></a></p>
 
 
 
@@ -1479,5 +1488,7 @@
       <script src="../../../assets/javascripts/bundle.f13b1293.min.js"></script>
       
     
-  </body>
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(() => { lightbox.reload() });
+</script></body>
 </html>

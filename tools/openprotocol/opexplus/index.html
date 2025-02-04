@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://haller-erne.github.io/ogs/tools/openprotocol/opexplus/">
       
       
-        <link rel="prev" href="../sys350/">
+        <link rel="prev" href="../nexo/">
       
       
         <link rel="next" href="../gwk/">
@@ -52,7 +52,16 @@
     
     
     
-  </head>
+   <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../../assets/javascripts/glightbox.min.js"></script></head>
   
   
     <body dir="ltr">
@@ -422,7 +431,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../sys350/" class="md-nav__link">
+      <a href="../sys350.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1628,7 +1637,7 @@
 
 <h1 id="rexroth-opexplus-electronic-torque-wrench"><a class="toclink" href="#rexroth-opexplus-electronic-torque-wrench">Rexroth OPEXplus electronic torque wrench</a></h1>
 <p>The <a href="https://www.boschrexroth.com/en/us/products/product-groups/tightening-technology/topics/opex-digital-torque-wrench/">Rexroth OPEXplus electronic torque wrench family</a> is a family of electronic torque wrenches with builtin WiFi communications. They use the <a href="../../">OpenProtocol</a> communication protocol to communicate with the heOGS software.</p>
-<p><img alt="Rexroth OPEXplus" src="../resources/opex-600px.png" /></p>
+<p><a class="glightbox" href="../resources/opex-600px.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Rexroth OPEXplus" src="../resources/opex-600px.png" /></a></p>
 <h2 id="installation-and-configuration"><a class="toclink" href="#installation-and-configuration">Installation and configuration</a></h2>
 <h3 id="ogs-project-configuration"><a class="toclink" href="#ogs-project-configuration">OGS project configuration</a></h3>
 <p>For generic information about how to configure OGS with OpenProtocol tools, see  <a href="../../">OpenProtocol documentation</a>.</p>
@@ -1670,7 +1679,7 @@
 <h2 id="tool-configuration"><a class="toclink" href="#tool-configuration">Tool configuration</a></h2>
 <h3 id="firmware-version"><a class="toclink" href="#firmware-version">Firmware version</a></h3>
 <p>The officially required firmware version to use the <code>OPEXplus</code> tools with OGS is as follows (while the tool is switched off, press and hold the right arrow button until the display lights up, then enter a wrong password to get to the info screen):</p>
-<p><img alt="Opex firmware screenshot" src="../resources/opex-firmware.png" /></p>
+<p><a class="glightbox" href="../resources/opex-firmware.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Opex firmware screenshot" src="../resources/opex-firmware.png" /></a></p>
 <p>Things to check here:</p>
 <ul>
 <li>Controller firmware version &gt;= <code>24.26.00</code></li>
@@ -1678,7 +1687,7 @@
 <li>Operation mode set to <code>OpenProtocol TCP</code> (see the <code>OPEXplus</code> manual on how to change operation mode using the USB cable)</li>
 </ul>
 <p>To check the firmware parameters, open a webbrowser and go to the <code>Status</code> page of the <code>OPEXplus</code> tool (see the tools manual on how to connect it over wifi):</p>
-<p><img alt="Opex wifi screenshot" src="../resources/opex-xpico.png" /></p>
+<p><a class="glightbox" href="../resources/opex-xpico.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Opex wifi screenshot" src="../resources/opex-xpico.png" /></a></p>
 <p>Things to check here:</p>
 <ul>
 <li>Wifi module firmware version &gt;= <code>5.4.0.C102</code> </li>
@@ -1687,7 +1696,7 @@
 <p>Older firmware versions will likely work, but might show issues especially with curve transmission.</p>
 <h3 id="tightening-programs"><a class="toclink" href="#tightening-programs">Tightening programs</a></h3>
 <p>To upload and manage tightening programs, use the <code>EasyWin</code> software. The PSET number to select a tightening program is generated in EasyWin automatically besed on the inserting sequence (first column (labeled "No.") in the tool configuration list). To change the order, use the buttons with the green arrow on the bottom of the pane.</p>
-<p><img alt="EasyWin" src="../resources/opex-easywin.png" /></p>
+<p><a class="glightbox" href="../resources/opex-easywin.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="EasyWin" src="../resources/opex-easywin.png" /></a></p>
 
 
 
@@ -1743,5 +1752,7 @@
       <script src="../../../assets/javascripts/bundle.f13b1293.min.js"></script>
       
     
-  </body>
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(() => { lightbox.reload() });
+</script></body>
 </html>

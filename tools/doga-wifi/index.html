@@ -52,7 +52,16 @@
     
     
     
-  </head>
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
   
   
     <body dir="ltr">
@@ -420,7 +429,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../openprotocol/sys350/" class="md-nav__link">
+      <a href="../openprotocol/sys350.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1646,7 +1655,7 @@
 
 <h1 id="doga-bmbmhbmt-series-wireless-tools"><a class="toclink" href="#doga-bmbmhbmt-series-wireless-tools">Doga BM/BMH/BMT-series wireless tools</a></h1>
 <p>The <a href="https://www.doga.fr/en/assembly-technology/assembly-tools/wireless-dc-tools">Doga BM/BMH/BMT-series wireless tools</a> use Modbus/TCP for controlling tightening operations and reporting events, data and graphs. Also PSet modification are possible over Modbus/TCP.</p>
-<p><img alt="Doga-BMT angle tool" src="../resources/doga-bmt-300px.png" /></p>
+<p><a class="glightbox" href="../resources/doga-bmt-300px.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Doga-BMT angle tool" src="../resources/doga-bmt-300px.png" /></a></p>
 <p>OGS provides the <code>heDogaTool.dll</code> to implement the Doga communication protocol.</p>
 <h2 id="installation-and-configuration"><a class="toclink" href="#installation-and-configuration">Installation and configuration</a></h2>
 <h3 id="installation"><a class="toclink" href="#installation">Installation</a></h3>
@@ -1706,7 +1715,7 @@
 <p><strong>WARNING</strong>: <span style="color:red">Firmware versions &lt; V4.00.2 are not supported by OGS, as they use an incompatible Modbus register mapping! This also applies to the Doga configuration software: DO NOT USE ParaMon or ParaMon III to configure the tools, only use ParaMonEx!</span></p>
 <h3 id="control-parameters"><a class="toclink" href="#control-parameters">Control parameters</a></h3>
 <p>The recommended settings for the tool using ParaMonEx are:</p>
-<p><img alt="Doga controller parameters" src="../resources/doga-parameters.png" /></p>
+<p><a class="glightbox" href="../resources/doga-parameters.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Doga controller parameters" src="../resources/doga-parameters.png" /></a></p>
 <p>The following parameters should be set in the <code>Controller</code> section (please note, that due to translation issues, the term <code>driver</code> is used instead of <code>tool</code>):</p>
 <ul>
 <li>Event data select: Only enable <code>Fastening Ok</code> and <code>Fastening Nok</code> to prevent overwriting the result buffer with other data</li>
@@ -1771,5 +1780,7 @@
       <script src="../../assets/javascripts/bundle.f13b1293.min.js"></script>
       
     
-  </body>
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(() => { lightbox.reload() });
+</script></body>
 </html>

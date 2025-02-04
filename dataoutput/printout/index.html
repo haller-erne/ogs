@@ -52,7 +52,16 @@
     
     
     
-  </head>
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
   
   
     <body dir="ltr">
@@ -418,7 +427,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tools/openprotocol/sys350/" class="md-nav__link">
+      <a href="../../tools/openprotocol/sys350.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1769,7 +1778,7 @@ is used. Both applications can run in two modes:</p>
 <h4 id="design-a-report"><a class="toclink" href="#design-a-report">Design a report</a></h4>
 <p>To design a label, run the executable <code>heLabelPrinter.exe</code> without parameters. Click the button "Edit label template" to open the <a href="https://www.fast-report.com/public_download/docs/FRVCL/online/de/FastReportVCL/UserManual/de-DE/Designer.html">FastReport template designer</a>. </p>
 <p>The following screenshot shows a typical template with some variables (to be provided by a LUA script from OGS over the command line) and a generated 2D-barcode:</p>
-<p><img alt="FastReport designer view with variables" src="../fastreport-simple.png" /></p>
+<p><a class="glightbox" href="../fastreport-simple.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="FastReport designer view with variables" src="../fastreport-simple.png" /></a></p>
 <p>To add the report variables (as text) to the design surface, simply drag&amp;drop from the "Variables" tab (on the right hand side). To create new variables, use the main menu <code>Report --&gt; Variables...</code>. This will show the variable editor, where you can then add new variables.</p>
 <p>To test the newly created report, got to <code>File --&gt; Preview...</code>.</p>
 <h4 id="execute-a-report-with-variables"><a class="toclink" href="#execute-a-report-with-variables">Execute a report (with variables)</a></h4>
@@ -1921,5 +1930,7 @@ functionality as XML-file creation, see the documentation at <a href="../xmlfile
       <script src="../../assets/javascripts/bundle.f13b1293.min.js"></script>
       
     
-  </body>
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(() => { lightbox.reload() });
+</script></body>
 </html>

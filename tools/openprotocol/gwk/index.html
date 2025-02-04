@@ -52,7 +52,16 @@
     
     
     
-  </head>
+   <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../../assets/javascripts/glightbox.min.js"></script></head>
   
   
     <body dir="ltr">
@@ -422,7 +431,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../sys350/" class="md-nav__link">
+      <a href="../sys350.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1646,7 +1655,7 @@
 
 <h1 id="gwk-operator-22-and-operator-electronic-torque-wrench"><a class="toclink" href="#gwk-operator-22-and-operator-electronic-torque-wrench">GWK Operator 22 and Operator+ electronic torque wrench</a></h1>
 <p>The <a href="https://www.gwk-gerlach.com/">GWK electronic torque wrench family</a> is a series of electronic torque wrenches with builtin WiFi communications. They support multiple communication protocols, one of them is <a href="../../">OpenProtocol</a> which is used by OGS to communicate with the tools. </p>
-<p><img alt="GWK Operator" src="../resources/gwk-operator.png" /></p>
+<p><a class="glightbox" href="../resources/gwk-operator.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="GWK Operator" src="../resources/gwk-operator.png" /></a></p>
 <h2 id="installation-and-configuration"><a class="toclink" href="#installation-and-configuration">Installation and configuration</a></h2>
 <h3 id="ogs-project-configuration"><a class="toclink" href="#ogs-project-configuration">OGS project configuration</a></h3>
 <p>For generic information about how to configure OGS with OpenProtocol tools, see  <a href="../../">OpenProtocol documentation</a>.</p>
@@ -1696,7 +1705,7 @@ For <code>Operator 22</code>: while the tool is switched off, press and hold the
 </ul>
 <h3 id="tightening-programs"><a class="toclink" href="#tightening-programs">Tightening programs</a></h3>
 <p>To upload and manage tightening programs, use the <code>EasyWin</code> software. The PSET number to select a tightening program is generated in EasyWin automatically besed on the inserting sequence (first column (labeled "No.") in the tool configuration list). To change the order, use the buttons with the green arrow on the bottom of the pane.</p>
-<p><img alt="EasyWin" src="../resources/opex-easywin.png" /></p>
+<p><a class="glightbox" href="../resources/opex-easywin.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="EasyWin" src="../resources/opex-easywin.png" /></a></p>
 
 
 
@@ -1752,5 +1761,7 @@ For <code>Operator 22</code>: while the tool is switched off, press and hold the
       <script src="../../../assets/javascripts/bundle.f13b1293.min.js"></script>
       
     
-  </body>
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(() => { lightbox.reload() });
+</script></body>
 </html>

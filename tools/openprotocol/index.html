@@ -52,7 +52,16 @@
     
     
     
-  </head>
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
   
   
     <body dir="ltr">
@@ -754,7 +763,7 @@
   
   
     <li class="md-nav__item">
-      <a href="sys350/" class="md-nav__link">
+      <a href="sys350.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2063,7 +2072,7 @@
 <p>OGS supports connecting tools with <code>OpenProtocol</code> interface. As tools differ in functionality and also different tool vendors implement the <code>OpenProtocol</code> specification in slightly different ways, OGS has special protocol handlers for the following tools:</p>
 <ul>
 <li>Rexroth Nexo and Nexo 2 wireless tools (for more information, see <a href="nexo/">Nexo OpenProtocol</a>)</li>
-<li>Rexroth CS351 and KE350 system tools (for more information, see <a href=".sys350.md">System 350 OpenProtocol</a>)</li>
+<li>Rexroth CS351 and KE350 system tools (for more information, see <a href=".sys350-ke350.md">KE350 OpenProtocol</a> and <a href=".sys350-cs351.md">CS351 OpenProtocol</a>)</li>
 <li>Rexroth OPEXplus (for more information, see <a href="opexplus/">OPEXplus OpenProtocol</a>)</li>
 <li>GWK Operator+ torque wrenches (for more information, see <a href="gwk/">GWK Operator+ OpenProtocol</a>)</li>
 <li>Crane TCI torque wrenches (for more information, see <a href="./crane.md">Crane OpenProtocol</a>)</li>
@@ -2186,7 +2195,7 @@
 <li>...</li>
 </ul>
 <p>By default, OGS selects a specific PSet (using MID0018) for loosen as defined in the tools configuration in the heOpCfg editor:</p>
-<p><img alt="heOpCfg tool loosen PSet number" src="resources/heOpCfg-tool-loosen.png" /></p>
+<p><a class="glightbox" href="resources/heOpCfg-tool-loosen.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="heOpCfg tool loosen PSet number" src="resources/heOpCfg-tool-loosen.png" /></a></p>
 <p>For tools which support OpenProtocol I/O signals, OGS also provides an additional I/O signal which is set to true while the OGS is in tightening mode (and false while in loosening mode), which allows tailoring the behaviour even more (e.g. allow loosen with the direction switch set to CW, etc.).</p>
 <p>Note, that OGS can also be configured to block loosening in general!</p>
 <h3 id="wait-for-ccwsel"><a class="toclink" href="#wait-for-ccwsel">Wait for CCWSel</a></h3>
@@ -2430,5 +2439,7 @@ additional tool specific parameters might be added here, e.g.</p>
       <script src="../../assets/javascripts/bundle.f13b1293.min.js"></script>
       
     
-  </body>
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(() => { lightbox.reload() });
+</script></body>
 </html>

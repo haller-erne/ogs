@@ -1697,6 +1697,64 @@ OpenProtool commands to the application start (fastening operation) <code>FO 1</
 </tr>
 </table>
 </div>
+<p>The PLC signals OGS receives from the tool are as follows:</p>
+<div class="span-table-wrapper">
+<table class="span-table">
+<tr>
+<td>Outputs</td>
+<td></td>
+<td>Signal</td>
+<td>Assignment</td>
+<td>Comments</td>
+</tr>
+<tr>
+<td colspan="2">OP0.1-OP0.7</td>
+<td>(unused)</td>
+<td></td>
+<td>Not used for KE application mode</td>
+</tr>
+<tr>
+<td colspan="2">OP1.0-2.7</td>
+<td>Custom I/O</td>
+<td>See below</td>
+<td>Signals sent to OGS</td>
+</tr>
+<tr>
+<td></td>
+<td>OP1.0</td>
+<td>CCWSel</td>
+<td>Optional</td>
+<td>If set, indicates, that the start switch on the tool is set to CCW. Typically connected to the external start switch direction selector on the tool handle (use internal signal routing <code>KE AppOut 1</code> &larr; <code>B1:KE AppIn 1</code> for IM24V output</td>
+</tr>
+<tr>
+<td></td>
+<td>OP1.1-1.4</td>
+<td>(unused)</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>OP1.5</td>
+<td>FC NF</td>
+<td>Mandatory</td>
+<td>If false, OGS shows a KE system error message</td>
+</tr>
+<tr>
+<td></td>
+<td>OP1.6-2.7</td>
+<td>(unused)</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2">OP3.0-5.7</td>
+<td>(unused)</td>
+<td></td>
+<td></td>
+</tr>
+</table>
+</div>
 
 
 

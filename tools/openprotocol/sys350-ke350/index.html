@@ -544,6 +544,48 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#ogs-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      OGS configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OGS configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overview_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stationini-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      station.ini configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loosen-behaviour" class="md-nav__link">
+    <span class="md-ellipsis">
+      Loosen behaviour
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1577,6 +1619,48 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#ogs-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      OGS configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OGS configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overview_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stationini-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      station.ini configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loosen-behaviour" class="md-nav__link">
+    <span class="md-ellipsis">
+      Loosen behaviour
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1755,6 +1839,29 @@ OpenProtool commands to the application start (fastening operation) <code>FO 1</
 </tr>
 </table>
 </div>
+<p>The following screenshot shows a typical PLC assignment table setup for the OpenProtocol signals:</p>
+<p><a class="glightbox" href="../resources/ke350-plc-table-op.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="PLC assignment table OpenProtocol" src="../resources/ke350-plc-table-op.png" /></a></p>
+<p>Please note, that <code>Input OP1.0</code> (FO 1 Enabled) is connected to the <code>KE AppIn 0</code> signal and the <code>Output OP1.0</code> (CCWSel) to the <code>KE AppOut 1</code> signal. These are then bridged (<code>KE AppIn X</code> and <code>KE AppOut X</code> are internally bridged) to the IM24V I/O-Card in slot B1:</p>
+<p><a class="glightbox" href="../resources/ke350-plc-table-im24v.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="alt text" src="../resources/ke350-plc-table-im24v.png" /></a></p>
+<p>This basically then implements the following (Signals <code>FO 1 CW</code> and <code>FO 1 CCW</code> also connected):</p>
+<ul>
+<li>The tool can be started clockwise with im24V digital input 0.0</li>
+<li>The tool can be started counter-clockwise with im24V digital input 0.1</li>
+<li>The direction selection switch is connected to im24V digital input 0.2 &rarr; routed to <code>CCWSel</code> at <code>Output OP1.0</code>, so OGS can read the state of the direction switch (don't get confused with the naming output vs. input)</li>
+<li>The tool enable state is connected to the handles yellow LED at the im24V digital output 0.0</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Make sure to assign and set the <code>FC EN</code> signal (should be fixed to 1), else the tightening cell will not be enabled and thightening will not work (see above, <code>FC EN</code> set to im24V B1 1.7).</p>
+</div>
+<h2 id="ogs-configuration"><a class="toclink" href="#ogs-configuration">OGS configuration</a></h2>
+<p>asd</p>
+<h3 id="overview_2"><a class="toclink" href="#overview_2">Overview</a></h3>
+<p>asd</p>
+<h3 id="stationini-configuration"><a class="toclink" href="#stationini-configuration">station.ini configuration</a></h3>
+<p>asd</p>
+<h3 id="loosen-behaviour"><a class="toclink" href="#loosen-behaviour">Loosen behaviour</a></h3>
+<p>asd</p>
 
 
 

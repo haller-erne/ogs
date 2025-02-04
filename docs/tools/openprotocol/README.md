@@ -128,6 +128,40 @@ OGS has tree different basic NOK behaviours (set in the `[GENERAL]` section in `
 
 Note that this behaviour can be overridden by implementing the LUA function `GetNokBehaviour(...)`.
 
+### Sequence interlock between tightening and loosening
+
+In a typical sequence of operations, there is a risk, that the operator does not recognize a NOK result.
+Typically after a NOK rundown, a loosen operation is required - if the operator does not notice the NOK,
+he might move on to the next bolt and start the tool - then with a loosen operation. This will lead to 
+confusion and possibly corrupt the sequence of operations, even tightening on the wrong bolt.
+
+To prevent this to happen, the tool is typically blocked after NOK and requires additional interaction
+from the operator, so the NOK will not pass unnoticed. OGS provides the following options:
+
+- Block the tool after a NOK rundown and require a supervisor to continue (four eye witness process)
+- Block the tool and wait for the operator to switch to loosen (`CHANNEL_<tool>_CCW_ACK` set to 1 and
+  CCWSel supported)
+- Configure the tool to require a NOK acknowledge (tool configuration). Most tools support this by an 
+  additional acknowledge button, which must be pressed after a NOK rundown to re-enable the tool
+
+!!! note
+
+    As a general rule for tightening tools, make sure to setup the parameters of the tightening
+    programs to detect running the tool on a already fastened bolt and report this as a NOK
+    rundown. This ensures OGS can stay in sync with the actual sequence and cannot easily be
+    manipulated.
+
+!!! note
+
+    For higher level requirements, OGS suports tool position tracking - this ensures that a bolt
+    cannot run twice and the operator cannot work on the "wrong" bolt.
+
+!!! danger
+
+    For hand held tools it is very important to enable the `CHANNEL_<tool>_CCW_ACK` feature and
+    require the operator to switch to loosen before running the tool. Otherwise he might get suprised
+    by the reaction force and could get injured!
+
 ### Wait for CCWSel input
 
 If `CHANNEL_<tool>_CCW_ACK` is set to a non-zero value in the `station.ini` configuration for the tool, then OGS requires the tools direction switch position to be in the correct position according to the processes currently requested tightening mode (tighten/loosen). If not, an alert message will be shown to indicate that the operator should change the direction switch accordingly and the enable signal for the tool is inactive.

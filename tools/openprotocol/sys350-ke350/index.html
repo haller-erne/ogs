@@ -644,6 +644,30 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Hints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#start-grip-handles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Start grip handles
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#possible-combinations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Possible combinations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -1779,6 +1803,30 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Hints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#start-grip-handles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Start grip handles
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#possible-combinations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Possible combinations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -1801,7 +1849,7 @@
 <div class="admonition info">
 <p class="admonition-title">Info</p>
 <p>This page describes the specifics for configuring the Rexroth KE350 multi-spindle tightening
-system with OGS, for general information about the OGS OpenProtocol information, see 
+system with OGS, for general information about the OGS OpenProtocol configuration, see 
 <a href="../">OpenProtocol Tools</a>. </p>
 </div>
 <h2 id="overview"><a class="toclink" href="#overview">Overview</a></h2>
@@ -2138,16 +2186,20 @@ spindle set.</p>
 <p>See above, but interlock is now not possible. After a NOK rundown
 OGS immediately selects the loosen operation, which is started with the next start (CW) signal...</p>
 <h2 id="hints"><a class="toclink" href="#hints">Hints</a></h2>
+<h3 id="start-grip-handles"><a class="toclink" href="#start-grip-handles">Start grip handles</a></h3>
 <p><a href="https://www.jaeger-handling.de">Jäger Handling</a> provides start
 a large range of start grip handles. Most <a href="https://www.jaeger-handling.de/produkte/bedienhandgriffe/e-handle">e-Handle</a>
 models <em>except</em> the <code>SD</code>-series provide a seperate start signal as well as a CWSel signal with the position
 of the direction selection ring. All <a href="https://www.jaeger-handling.de/produkte/bedienhandgriffe/e-handle">e-Handle</a>
 models provide LEDs for enable, ok and nok results, some models also provide additional buttons for custom use 
 (e.g. NOK acknowledge). </p>
-<p><a class="glightbox" href="../resources/e-handle-%C3%9Cbersicht.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Jäger Handling e-Handle" src="../resources/e-handle-%C3%9Cbersicht.png" /></a> { width=400px }</p>
+<p><a class="glightbox" href="../resources/e-handle-%C3%9Cbersicht.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Jäger Handling e-Handle" src="../resources/e-handle-%C3%9Cbersicht.png" width="500px" /></a></p>
 <p>When choosing a handle, check the following:
 - Models <code>EHHRRSD</code> and <code>EHARRSD</code> do not provide the CCWSel signal
 - Models without the <code>SD</code>-extension provide seperate start and CCWSel signals, e.g. <code>EHHRR</code></p>
+<h3 id="possible-combinations"><a class="toclink" href="#possible-combinations">Possible combinations</a></h3>
+<p>Please see the following document for the behaviour of the options depending on the selected configuration: 
+<a href="../resources/Rexroth%20tightening%20KE350-CS351-NEXO.pdf">OGS Rexroth EC tools configuration behaviour for OGS</a>.</p>
 
 
 

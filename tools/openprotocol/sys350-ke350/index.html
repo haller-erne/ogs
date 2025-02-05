@@ -75,7 +75,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#ke350-multispindle-tightening-system" class="md-skip">
+        <a href="#ke350-multi-spindle-tightening-system" class="md-skip">
           Skip to content
         </a>
       
@@ -634,6 +634,15 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hints" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hints
+    </span>
+  </a>
   
 </li>
       
@@ -1763,6 +1772,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#hints" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hints
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1779,7 +1797,13 @@
 
 
 
-<h1 id="ke350-multispindle-tightening-system"><a class="toclink" href="#ke350-multispindle-tightening-system">KE350 MultiSpindle tightening system</a></h1>
+<h1 id="ke350-multi-spindle-tightening-system"><a class="toclink" href="#ke350-multi-spindle-tightening-system">KE350 Multi-spindle tightening system</a></h1>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>This page describes the specifics for configuring the Rexroth KE350 multi-spindle tightening
+system with OGS, for general information about the OGS OpenProtocol information, see 
+<a href="../">OpenProtocol Tools</a>. </p>
+</div>
 <h2 id="overview"><a class="toclink" href="#overview">Overview</a></h2>
 <p>System350 based tools mainly fall into two categories:</p>
 <ul>
@@ -2073,10 +2097,9 @@ configured:</p>
 <h3 id="loosen-behaviour"><a class="toclink" href="#loosen-behaviour">Loosen behaviour</a></h3>
 <p>Even though there are more option (see the general discussion in <a href="../#loosen-modes">OpenProtocol Tools - Loosen modes</a>), the following section shows the common and recommended configurations.</p>
 <h4 id="ccwsel-used"><a class="toclink" href="#ccwsel-used">CCWSel used</a></h4>
-<p>This is the preferred configuration, as the user-experience is most intuitive. Unfortunately the most often used start grip handles do not provide the neccessary signals, as a start grip handle with three outputs is needed:</p>
+<p>This is the preferred configuration, as the user-experience is most intuitive. Unfortunately the most often used start grip handles do not provide the neccessary signals, as a start grip handle with two outputs as follows is needed:</p>
 <ul>
 <li>CW: start signal for tightening</li>
-<li>CCW: start signal for loosening</li>
 <li>CCWSel: state of the direction switch, true, if CCW selected</li>
 </ul>
 <p>With this configuration, the following settings are recommended:</p>
@@ -2086,15 +2109,17 @@ configured:</p>
 <li>Connect <code>OP1.0 Output</code> to the CCWSel signal of the handle (using AppIn/AppOut signals to bridge to IM24V/fieldbus)</li>
 <li>Usually <code>FO 1 NokAck</code> is not connected</li>
 </ul>
-<p>This forces the operator to switch the CW/CCW selection switch to CCW every time a loosen process is needed. Please note, that 
-no custom loosen program number can be selected, as the CCW start 
-always forces program 99 on the connected channels. However, this
-automatically selects the correct spindles (those defined in the 
-fastening operation), so this is basically a good thing.</p>
+<p>This forces the operator to switch the CW/CCW selection switch to CCW every time a loosen process is needed.
+Please note, that only the custom loosen program number can be used for loosen, as the CCW start signal is not
+assigned.</p>
 <h4 id="no-ccwsel-but-nokack"><a class="toclink" href="#no-ccwsel-but-nokack">No CCWSel, but NokAck</a></h4>
-<p>As most start handles only provide start CW and start CCW signals (without a signal for indicating the CW/CCW position), CCWSel often cannot be used. </p>
-<p>To ensure sequence interlock between tightening and loosening, 
-the <code>FO 1 NokAck</code> signal is connected to an external pushbutton (typically the start handle provides this).</p>
+<p>As most start handles only provide seperate start CW and start CCW signals (without a signal for indicating the CW/CCW position), CCWSel often cannot be used. To ensure sequence interlock between tightening and loosening, 
+the <code>FO 1 NokAck</code> signal is connected to an external pushbutton (typically the start handle provides this). In this case, the following signals are typically used:</p>
+<ul>
+<li>CW: start signal for tightening</li>
+<li>CCW: start signal for loosening</li>
+<li>NOKAck: A normally closed (high) signal to acknowledge NOK, re-enable the tool</li>
+</ul>
 <p>With this configuration, the following settings are recommended:</p>
 <ul>
 <li><code>CHANNEL_&lt;tool&gt;_CCW_ACK</code> = 0</li>
@@ -2112,6 +2137,17 @@ spindle set.</p>
 <h4 id="no-ccwsel-no-nokack"><a class="toclink" href="#no-ccwsel-no-nokack">No CCWSel, no NokAck</a></h4>
 <p>See above, but interlock is now not possible. After a NOK rundown
 OGS immediately selects the loosen operation, which is started with the next start (CW) signal...</p>
+<h2 id="hints"><a class="toclink" href="#hints">Hints</a></h2>
+<p><a href="https://www.jaeger-handling.de">Jäger Handling</a> provides start
+a large range of start grip handles. Most <a href="https://www.jaeger-handling.de/produkte/bedienhandgriffe/e-handle">e-Handle</a>
+models <em>except</em> the <code>SD</code>-series provide a seperate start signal as well as a CWSel signal with the position
+of the direction selection ring. All <a href="https://www.jaeger-handling.de/produkte/bedienhandgriffe/e-handle">e-Handle</a>
+models provide LEDs for enable, ok and nok results, some models also provide additional buttons for custom use 
+(e.g. NOK acknowledge). </p>
+<p><a class="glightbox" href="../resources/e-handle-%C3%9Cbersicht.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Jäger Handling e-Handle" src="../resources/e-handle-%C3%9Cbersicht.png" /></a> { width=400px }</p>
+<p>When choosing a handle, check the following:
+- Models <code>EHHRRSD</code> and <code>EHARRSD</code> do not provide the CCWSel signal
+- Models without the <code>SD</code>-extension provide seperate start and CCWSel signals, e.g. <code>EHHRR</code></p>
 
 
 

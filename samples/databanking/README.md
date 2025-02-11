@@ -16,7 +16,7 @@ Databanking is the general term used by OGS for tracking the parts assembly stat
 
 Reading and writing the part/job state can be implemented in LUA. Therefore almost any backed system can be used to access and store the parts current build state.
 
-For more information, see the [Databanking section of the OGS documentation](../../docs/appnotes/databanking.md).
+For more information, see the [Databanking section of the OGS documentation](https://haller-erne.github.io/ogs/appnotes/databanking/).
 
 ## Instructions
 
@@ -43,4 +43,4 @@ This will basically run the `databanking.sql` script file against the given data
 
 ### OGS setup
 
-For information about how to setup OGS for databanking, see the [Databanking section of the OGS documentation](../../docs/appnotes/databanking.md).
+For information about how to setup OGS for databanking, see the [Databanking section of the OGS documentation](https://haller-erne.github.io/ogs/appnotes/databanking/).

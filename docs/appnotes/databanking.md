@@ -92,11 +92,14 @@ Additional software components required:
 
 ### Installation
 
-To install follow the steps outlined in the next sections. All files mentioned are available from the public [OGS GitHub repository](https://github.com/haller-erne/ogs/tree/main/samples/databanking).
+To install follow the steps outlined in the next sections. All files mentioned are available from the public [OGS GitHub repository databanking sample](https://github.com/haller-erne/ogs/tree/main/samples/databanking).
 
-#### SQL Server Schema
+#### SQL Server Schema and seed data
 
-Use the [OGS_Databanking.dacpac](https://github.com/haller-erne/ogs/raw/main/samples/databanking/OGS_Databanking.dacpac) file to install the database schema required by the default databanking implementation. See [Microsofts documentation on how to import a dacpac file](https://learn.microsoft.com/en-us/sql/relational-databases/data-tier-applications/data-tier-applications) for more information.
+Use the [databanking_schema.sql](https://github.com/haller-erne/ogs/raw/main/samples/databanking/databanking_schema.sql) file to install the database schema required by the default databanking implementation. Then initialize the database tables by running the 
+[databanking_seed.sql](https://github.com/haller-erne/ogs/raw/main/samples/databanking/databanking_schema.sql) script. 
+
+For more information, see the [README file](https://github.com/haller-erne/ogs/blob/main/samples/databanking/README.md) in the [OGS GitHub repository databanking sample](https://github.com/haller-erne/ogs/tree/main/samples/databanking) folder.
 
 #### Integrate databanking into OGS Project 
 
@@ -145,7 +148,11 @@ Here is a sample connection string using the SQL server native client 11:
 
 ``` ini
 [DATABANKING]
+; Define the database connection used for databanking
 ConnectionString=Provider=SQLNCLI11.1;Data Source=<my-server>\<my-instance>[,server-port];Initial Catalog=<my-db>;User ID=<my-user>;Password=<my-pass>;
+
+; Define, if data received from databanking should be saved locally (only used for special cases, e.g. for locate.exe, default = 0)
+SaveLocal=0
 ```
 
 A quick reference to the parameters can be found at [connectionstrings.com](https://www.connectionstrings.com/sql-server-native-client-11-0-oledb-provider/) or in the [official Microsoft documentation](https://learn.microsoft.com/en-us/sql/relational-databases/native-client/applications/installing-sql-server-native-client).
@@ -154,3 +161,27 @@ A quick reference to the parameters can be found at [connectionstrings.com](http
 ## Custom implementations
 
 _TODO: describe the LUA functions used for databanking._
+
+``` lua
+function InitOELReport()
+
+function SaveResultEvent(PartID, Root, JobSeq, JobName, OpSeq, OpName, Final)
+
+function GetTaskResultEvent(PartID, Root, JobSeq, JobName, TaskSeq, TaskName, OpSeq, Final)
+
+function SaveStationResultEvent(PartID, StationName, State, Time, Duration, User)
+
+extern SaveJobLocal()
+
+-- Not exactly a databanking function, but it is used in databanking.lua
+-- to track manually deleted data.
+function ClearResultsEvent(PartID, Root, JobSeq, JobName, TaskSeq, TaskName)
+
+```
+
+Note, that the `databanking.lua` also overrides the following events:
+
+- Barcode_StopAssembly
+- Barcode_StartAssembly
+
+Make sure to **not** override these events without calling the old implementation, else databanking will not work.

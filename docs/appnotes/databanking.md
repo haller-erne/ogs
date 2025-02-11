@@ -96,8 +96,7 @@ To install follow the steps outlined in the next sections. All files mentioned a
 
 #### SQL Server Schema and seed data
 
-Use the [databanking_schema.sql](https://github.com/haller-erne/ogs/raw/main/samples/databanking/databanking_schema.sql) file to install the database schema required by the default databanking implementation. Then initialize the database tables by running the 
-[databanking_seed.sql](https://github.com/haller-erne/ogs/raw/main/samples/databanking/databanking_schema.sql) script. 
+Use the [databanking.sql](https://github.com/haller-erne/ogs/raw/main/samples/databanking/databanking_schema.sql) file to install the database schema and lookup data required by the default databanking implementation. 
 
 For more information, see the [README file](https://github.com/haller-erne/ogs/blob/main/samples/databanking/README.md) in the [OGS GitHub repository databanking sample](https://github.com/haller-erne/ogs/tree/main/samples/databanking) folder.
 

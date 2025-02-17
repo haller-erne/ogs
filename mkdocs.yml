@@ -42,6 +42,7 @@ nav:
     - Enterprise functionality:
         - Databanking and multi-station rework: appnotes/databanking.md
         - Central user administration: appnotes/userdb.md
+        - Tool roaming and dynamic parameters: appnotes/toolgateway.md
         - Traceability: appnotes/traceability.md
     - Application notes:
         - Debugging LUA Scripts: appnotes/debugging.md

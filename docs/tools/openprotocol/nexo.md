@@ -72,21 +72,21 @@ The mode must be setup as follows:
 
 === "Nexo 2"
 
-![alt text](resources/nexo2-mode-simple.png)
+    ![alt text](resources/nexo2-mode-simple.png)
 
-The relevant settings are:
+    The relevant settings are:
 
-- `ID code source`: must be set to OpenProtocol, so OGS can send the ID
-- `Operation mode settings`: set operation mode to `auto`
+    - `ID code source`: must be set to OpenProtocol, so OGS can send the ID
+    - `Operation mode settings`: set operation mode to `auto`
 
-Make sure the set the `active column` to `A`!
+    Make sure the set the `active column` to `A`!
 
 === "Nexo"
 
-This is Nexo content.
+    This is Nexo content.
 
-===
 
+This is non-tab content
 
 
 ![alt text](resources/nexo2-mode-scanner.png)

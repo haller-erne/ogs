@@ -83,22 +83,38 @@ The mode must be setup as follows:
 
 === "Nexo"
 
-    This is Nexo content.
+    ![alt text](resources/nexo-mode-simple.png)
+
+    The relevant settings are:
+
+    - `ID code source`: must be set to OpenProtocol, so OGS can send the ID
+    - `Operation mode settings`: set operation mode to `auto`
+
+    Make sure the set the `active column` to `A`!
+
+### OpenProtocol configuration
+
+As OGS needs OpenProtocol to control the tool, the OpenProtocol (Data --> OpenProtocol) must be configured as follows:
+
+=== "Nexo 2"
+
+    ![alt text](resources/nexo2-openprotocol.png)
+
+=== "Nexo"
+
+    ![alt text](resources/nexo-openprotocol.png)
 
 
-This is non-tab content
-
-
-![alt text](resources/nexo2-mode-scanner.png)
-![alt text](resources/nexo2-openprotocol.png)
 ![alt text](resources/nexo2-plc-table-1.png)
 ![alt text](resources/nexo2-plc-table-2.png)
 
+![alt text](resources/nexo2-mode-scanner.png)
 
 ![alt text](resources/nexo2-http-output.png)
 ![alt text](resources/nexo2-http-data.png)
 ![alt text](resources/nexo2-http-storage.png)
 
+Nexo 1: Wifi notes
 
 
 ![GWK Operator](./resources/gwk-operator.png)

@@ -8,7 +8,7 @@ nav:
             - Overview: tools/remote-tool.md
         - OpenProtocol tools: 
             - Overview: tools/openprotocol/README.md
-            - Nexo: tools/openprotocol/nexo.md
+            - Nexo/Nexo2: tools/openprotocol/nexo.md
             - CS351: tools/openprotocol/sys350-cs351.md
             - KE350: tools/openprotocol/sys350-ke350.md
             - OPEXplus:  tools/openprotocol/opexplus.md
@@ -64,6 +64,7 @@ theme:
   features:
     - content.code.copy
     - content.code.annotate 
+    - content.tabs.link
 
 extra_css:
   - css/neoteroi-mkdocs.css
@@ -96,6 +97,8 @@ markdown_extensions:
   - pymdownx.snippets
   - pymdownx.superfences
   - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
   - attr_list
   - md_in_html
   - pymdownx.blocks.caption

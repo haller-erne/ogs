@@ -226,7 +226,7 @@ function GetTaskResultEvent(PartID, Root, JobSeq, JobName, TaskSeq, TaskName, Op
         return nil
     end
     if not LastPartState.AssemblyTime then
-        CheckStationState(PartID)
+        CheckStationState(PartID,DB.StationName)
     end
     if PartID  ~= part_results.part_id then
         XTRACE(16, "[db connection] Get part results request: [".. param_as_str(PartID)..'] '..param_as_str(JobName))

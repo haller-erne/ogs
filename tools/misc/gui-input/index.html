@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://haller-erne.github.io/ogs/tools/misc/aioi-pick2light/">
+        <link rel="canonical" href="https://haller-erne.github.io/ogs/tools/misc/gui-input/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>AIOI Pick2Light tool - OGS Documentation</title>
+        <title>GUI Input - OGS Documentation</title>
       
     
     
@@ -71,7 +71,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#aioi-pick2light-tool" class="md-skip">
+        <a href="#gui-input" class="md-skip">
           Skip to content
         </a>
       
@@ -107,7 +107,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              AIOI Pick2Light tool
+              GUI Input
             
           </span>
         </div>
@@ -1548,52 +1548,38 @@
 
 
 
-<h1 id="aioi-pick2light-tool"><a class="toclink" href="#aioi-pick2light-tool">AIOI Pick2Light tool</a></h1>
-<p>The AIOI Pick2Light tools are interactive communication devices associated with each shelf location, guiding the operator by clearly indicating the exact position and, if necessary, the quantity of units to be picked or placed. The hardware comes in multiple models, each featuring colored LEDs integrated into a single confirmation button. This design allows for various operational configurations, offering more flexible ways to manage tasks. For example, it enables multiple workers to operate simultaneously in the same area, with each worker assigned a unique color. It also supports preparing multiple orders at once by a single operator, with different colors assigned to each order. (links? to aioi H/W setup )</p>
+<h1 id="gui-input"><a class="toclink" href="#gui-input">GUI Input</a></h1>
+<p>The GUI Input tool is a custom interface that allows the operator to input values for a set of predefined parameters. It validates the entered values against their allowed ranges, and once the operator clicks the "Accept" button, the result is displayed, indicating whether the values are within the valid range or not. The GUI can accommodate up to 6 parameters for value entry.</p>
 <h2 id="installation-and-configuration"><a class="toclink" href="#installation-and-configuration">Installation and configuration</a></h2>
 <h3 id="ogs-project-configuration"><a class="toclink" href="#ogs-project-configuration">OGS project configuration</a></h3>
-<p>OGS has an interface to add additional tool drivers by adding Windows-DLLs to the <code>[TOOL_DLL]</code> section in <code>station.ini</code>. To simplify the creation of custom tool drivers, OGS offers the heLuaTool.dll, which enables the development of tool drivers using pure LUA. With this functionality, the AIOI Pick2Light tool is seamlessly integrated into OGS, see <a href="../../../v3/lua/customtools/">Lua custom tools</a>.</p>
+<p>OGS has an interface to add additional tool drivers by adding Windows-DLLs to the <code>[TOOL_DLL]</code> section in <code>station.ini</code>. To simplify the creation of custom tool drivers, OGS offers the heLuaTool.dll, which enables the development of tool drivers using pure LUA. With this functionality, the GUI Input tool is seamlessly integrated into OGS, see <a href="../../../v3/lua/customtools/">Lua custom tools</a>.</p>
 <h3 id="tool-registration-and-configuration"><a class="toclink" href="#tool-registration-and-configuration">Tool registration and configuration</a></h3>
-<p>According to the instructions provided in the <a href="../../../v3/lua/customtools/">Lua custom tools</a>, a standard configuration for the <code>[LuaTool_Pick2Light]</code> section in <code>station.ini</code> is as follows:</p>
+<p>According to the instructions provided in the <a href="../../../v3/lua/customtools/">Lua custom tools</a>, a standard configuration for the <code>[LuaTool_GUI_Input]</code> section in <code>station.ini</code> is as follows:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">[TOOL_DLL]</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="na">heLuaTool.dll</span><span class="o">=</span><span class="s">1</span><span class="w"> </span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">[CHANNELS]</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="na">20</span><span class="o">=</span><span class="s">LuaTool_Pick2Light</span><span class="w"> </span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="na">2</span><span class="o">=</span><span class="s">LuaTool_GUI_Input</span><span class="w"> </span>
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="k">[LuaTool_Pick2Light]</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="k">[LuaTool_GUI_Input]</span>
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="na">DRIVER</span><span class="o">=</span><span class="s">heLuaTool</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="na">TYPE</span><span class="o">=</span><span class="s">LUA_FLOWLIGHT</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="na">IPADDR</span><span class="o">=</span><span class="s">controller_IPADDR</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="na">IPPORT</span><span class="o">=</span><span class="s">controller_IPPORT</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="na">TYPE</span><span class="o">=</span><span class="s">GUI_INP</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="na">Param1 = { &quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;Param 1 m2:&quot;</span><span class="na">, &quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&#39;float&#39;</span><span class="na">, &quot;default&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&#39;250&#39;</span><span class="na">, &quot;min&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&#39;0&#39;</span><span class="na">, &quot;max&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&#39;&#39;</span><span class="w"> </span><span class="na">}</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="na">Param2 = { &quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;Param 2 m2:&quot;</span><span class="na">, &quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&#39;float&#39;</span><span class="na">, &quot;default&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&#39;0&#39;</span><span class="na">, &quot;min&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&#39;-2000&#39;</span><span class="na">, &quot;max&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&#39;2000&#39;</span><span class="w"> </span><span class="na">}</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="na">Param3 = { &quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;Param 3 deg:&quot;</span><span class="na">, &quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&#39;int&#39;</span><span class="na">, &quot;default&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&#39;0&#39;</span><span class="na">, &quot;min&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&#39;0.0&#39;</span><span class="na">, &quot;max&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&#39;&#39;</span><span class="w"> </span><span class="na">}</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="na">Param4 = { &quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;Speed Km/h:&quot;</span><span class="na">, &quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&#39;int&#39;</span><span class="na">, &quot;default&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&#39;0&#39;</span><span class="na">, &quot;min&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&#39;0&#39;</span><span class="na">, &quot;max&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&#39;&#39;</span><span class="w"> </span><span class="na">}</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="na">Param5 = { &quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;Resistence Om:&quot;</span><span class="na">, &quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&#39;float&#39;</span><span class="na">, &quot;default&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&#39;300&#39;</span><span class="na">, &quot;min&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&#39;0.0&#39;</span><span class="na">, &quot;max&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&#39;&#39;</span><span class="w"> </span><span class="na">}</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="na">Param6 = { &quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;Height sm.:&quot;</span><span class="na">, &quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&#39;float&#39;</span><span class="na">, &quot;default&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&#39;0&#39;</span><span class="na">, &quot;min&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&#39;0.0&#39;</span><span class="na">, &quot;max&quot;</span><span class="o">:</span><span class="w"> </span><span class="s">&#39;2000&#39;</span><span class="w"> </span><span class="na">}</span>
 </code></pre></div>
 <p>The typical parameters are:</p>
 <ul>
 <li><code>DRIVER</code>: The name of the windows dll that implements tool drivers.</li>
 <li><code>TYPE</code>: The name of the tool driver specified in your custom LUA tool driver.</li>
-<li><code>IPADDR</code>: Specify the IP address used for communication with the controller.</li>
-<li><code>IPPORT</code>: Specify the port number used for communication with the controller.</li>
+<li><code>Param</code>: When creating parameters, ensure that only <strong>6 parameters</strong> are defined. For each parameter, specify the <strong>type</strong> (e.g., float or int), <strong>min</strong> and <strong>max</strong> values (if applicable), and a <strong>default</strong> value. These defined properties will be displayed on the GUI for the user to input their values accordingly. The <strong>type</strong> will determine the format of the value (e.g., numeric or integer), while the <strong>min</strong> and <strong>max</strong> values define the valid range for the input. The <strong>default</strong> value will be pre-filled if no user input is provided.</li>
 </ul>
 <h2 id="editor-configuration"><a class="toclink" href="#editor-configuration">Editor configuration</a></h2>
 <h3 id="configuring-the-tool"><a class="toclink" href="#configuring-the-tool">Configuring the tool</a></h3>
-<p>In the Tools section of the Editor, add a new tool named Pick2light and assign it to the appropriate channel (ensure the channel number matches the one specified in the <code>station.ini</code> file). Provide a name for the tool and, under the Task &amp; Action properties section, define the following properties:
-- <code>text</code>: The text to be displayed on the display
-- <code>farbe</code>: The color of the confirm button
-- <code>buzzer</code>: The buzzer sound setting, which can be set to 'OFF', 'ON', 'BLINK', or 'FAST_BLINK'
-- <code>segment</code>: The property of the display segment</p>
-<p>Assign a tool number to each property, as shown in the reference image below. You may also indicate the "type" for each property and provide a brief description.</p>
-<p><a class="glightbox" href="../resources/properties.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="properties" src="../resources/properties.png" /></a></p>
 <h3 id="creating-a-job"><a class="toclink" href="#creating-a-job">Creating a job</a></h3>
-<p>To set up a job and task with the appropriate operations and tools, follow the steps below:</p>
-<ol>
-<li>In the Jobs catalog, create a new job and then add a new task. In the operation section below, add an operation by selecting "new operation."</li>
-<li>To assign an existing operation along with its tool, click the three dots next to the operation and select from the window that opens.</li>
-<li>To add a new operation, provide a name for the operation and assign a tool by clicking the three dots next to the tool, which will open the tools window. From there, select the "Pick2Light" tool. It is <strong>crucial</strong> to set the program (Prg) value to the Pick2Light tool address (also known as the bin number). </li>
-<li>Afterward, assign the newly created operation to the task, as shown in the image below. </li>
-<li>Finally, ensure that the correct values are assigned to the properties for each task. The values for each of the properties are discussed in the next section.</li>
-</ol>
-<p><a class="glightbox" href="../resources/prg_specify.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="prg_specify" src="../resources/prg_specify.png" /></a></p>
-<p>AIOI color, buzzer, segment properties</p>
 
 
 

@@ -43,13 +43,16 @@ function InitOELReport()
 	return nil, nil  -- default
 end
 ---------------------------------------------------------------------------------------
-local function GetAFO(Root, JobSeq, JobName, TaskSeq, TaskName)
+-- Implementation for getting the unique key to identify a result
+-- By default, either returns the value of the "afo" task property or
+-- a string generated from (Root:)Jobname+[Taskname]
+function M.GetAFO(Root, JobSeq, JobName, TaskSeq, TaskName)
     local afo_property = get_task_property('afo', JobSeq, TaskSeq)
     if afo_property then return afo_property end
     if #Root > 0 then
         JobName = Root..':'..JobName 
     end
-    return JobName..'['..param_as_str(TaskSeq)..']'
+    return JobName..'['..param_as_str(TaskName)..']'
 end
 ---------------------------------------------------------------------------------------
 local function AddStationState(PartID, StationName, STARTTIME)
@@ -85,7 +88,7 @@ function SaveResultEvent(PartID, Root, JobSeq, JobName, OpSeq, OpName, Final)
 	local TaskName = param_as_str(CurrentOperation.BoltName)
 	local TaskSeq  = tonumber(CurrentOperation.BoltNumber)
 
-    local AFO = GetAFO(Root, JobSeq, JobName, TaskSeq, TaskName)
+    local AFO = M.GetAFO(Root, JobSeq, JobName, TaskSeq, TaskName)
     if #Root > 0 then
         JobName = Root..':'..JobName
     end
@@ -143,7 +146,7 @@ end
 local function GetJobAFOList(job)
     local afo_list = ''
 	for i,task in pairs(job.Tasks) do
-	    local afo = GetAFO(job.Root, job.Seq, job.RawName, task.Seq, task.Name)
+	    local afo = M.GetAFO(job.Root, job.Seq, job.RawName, task.Seq, task.Name)
         if #afo_list == 0 then
             afo_list = afo
         else
@@ -172,7 +175,7 @@ function ClearResultsEvent(PartID, Root, JobSeq, JobName, TaskSeq, TaskName)
 	Params.PartID = param_as_str(PartID)
     if TaskSeq > 0 and #TaskName > 0 then
 	    -- clear single task result
-        Params.afo_list = GetAFO(Root, JobSeq, JobName, TaskSeq, TaskName)
+        Params.afo_list = M.GetAFO(Root, JobSeq, JobName, TaskSeq, TaskName)
 	    local err = luaExecStoredProc(DB.ConnectionString, 'ClearResults',Params)
 	    if err then
 	        SetLuaAlarm('db connection', -2, err);
@@ -245,7 +248,7 @@ function GetTaskResultEvent(PartID, Root, JobSeq, JobName, TaskSeq, TaskName, Op
 
     Root = param_as_str(Root)
     JobName = param_as_str(JobName)
-    local AFO = GetAFO(Root, JobSeq, JobName, TaskSeq, TaskName)
+    local AFO = M.GetAFO(Root, JobSeq, JobName, TaskSeq, TaskName)
     for k,r in pairs(part_results.data) do
         if r.AFO == AFO and r.Final == Final then
             return r

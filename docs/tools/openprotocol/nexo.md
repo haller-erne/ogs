@@ -94,6 +94,8 @@ The mode must be setup as follows:
 
 ### OpenProtocol configuration
 
+#### Enable and configure OpenProtocol
+
 As OGS needs OpenProtocol to control the tool, the OpenProtocol (Data --> OpenProtocol) must be configured as follows:
 
 === "Nexo 2"
@@ -105,60 +107,86 @@ As OGS needs OpenProtocol to control the tool, the OpenProtocol (Data --> OpenPr
     ![alt text](resources/nexo-openprotocol.png)
 
 
-![alt text](resources/nexo2-plc-table-1.png)
-![alt text](resources/nexo2-plc-table-2.png)
+#### Setup PLC signals
+
+To allow controlling the tool correctly, the PLC signals should be set up as follows:
+
+=== "Nexo 2"
+
+    ![alt text](resources/nexo2-plc-table-1.png)
+    ![alt text](resources/nexo2-plc-table-2.png)
+
+=== "Nexo"
+
+    ![alt text](resources/nexo-plc-table-1.png)
+    ![alt text](resources/nexo-plc-table-2.png)
+
+Important:
+- Never assign signal `En` to opctrl input 3.0 – this may enable the tool without
+  control of the heOGS software.
+- Never assign signal `En` to tool input 0.2 – this will enable the tool without
+  control of the heOGS software.
+- Always assign signal `CcwIgnore` or `CcwLock` to opctrl input 0.1. This allows 
+  OGS to reliably block loosening loosening, even if the network connection to the tool gets lost.
+
+### Using the integrated scanner
+
+Some Nexo models provide a built-in barcode scanner. This barcode scanner can be
+used instead of or in combination with any other ID-Code source in OGS. Using the
+Nexo scanner, it is therefore possible to start a workflow, select jobs or do other
+scan operations inside a workflow.
+
+Please see the Nexo system manual for detailed information about how to use and configure the scanner.  The following section shows a simple setup which allows the
+user to trigger the Nexo builtin scanner by pressing a button below the Nexo display.
+
+#### Configure OpenProtocol
+
+To enable ID-code forwarding, the option **Also forward ID-codes from non-selected sources** must be enabled in the OpenProtocol configuration (Home --> Data --> OpenProtocol):
+
+![alt text](resources/nexo2-openprotocol.png)
+
+#### Configure Mode setting
+
+To enable the scanner, add an `ID Input` step to the Mode (Home --> Mode) settings as shown in the following screenshot:
 
 ![alt text](resources/nexo2-mode-scanner.png)
 
-![alt text](resources/nexo2-http-output.png)
-![alt text](resources/nexo2-http-data.png)
-![alt text](resources/nexo2-http-storage.png)
-
-Nexo 1: Wifi notes
-
-
-![GWK Operator](./resources/gwk-operator.png)
-
-
-
-### OpenProtocol operation mode
-
-To check, if the correct operation mode is selected (OpenProtocol), do the following:
-
-- for `Operator+`: while the tool is switched off, press and hold the left and right arrow buttons until the service menu appears. Enter a invalid password to get to the status page. The current protocol is shown in the last line - for use with OGS (OpenProtocol), it should read `BA59_OPP_EXP_STD_OPENPROTOCOL_WLAN_CB_MODE`.
-For `Operator 22`: while the tool is switched off, press and hold the right arrow button until the display lights up, then enter a wrong password to get to the status screen. The current protocol is shown in the fourth line - for use with OGS (OpenProtocol), it should read `Open Protocol TCP`.
-
-### Tightening programs
-
-To upload and manage tightening programs, use the `EasyWin` software. The PSET number to select a tightening program is generated in EasyWin automatically besed on the inserting sequence (first column (labeled "No.") in the tool configuration list). To change the order, use the buttons with the green arrow on the bottom of the pane.
-
-![EasyWin](./resources/opex-easywin.png)
-
-
-
-
-
-
-### Tool data http output
+## Data output configuration
 
 To make Nexo and Nexo 2 to send out data and curves (`Traceability` data) to backend data management systems (like [ToolsNet](https://www.atlascopco.com/en-us/itba/products/assembly-solutions/software-solutions/toolsnet-8-sku4531), [CSP I-P.M.](https://www.csp-sw.com/quality-management-software-solutions/error-prevention-with-ipm/), [Sciemetric QualityWorX](https://www.sciemetric.com/data-intelligence/qualityworx-data-collection), [QualityR](https://www.haller-erne.de/qualityr-web/), etc.), the builtin data output interfaces can be used. 
 
-To understand the system architecture and details on how to use data output in general, please see [OGS Traceability](../dataoutput/traceability.md). To setup `Traceability` for `OPEXplus` tools, enable `Traceability` and add the `OPEXplus` tools channel to the list of channels in the `[FTP_CLIENT]` section.
+To send data out to a central Sys3xxGateway/QualityR server, typically the following options are possible:
 
-Here is a sample setup:
+1. (preferred) Use the “Standard Nexo” data output with the http transfer option. 
+    By default this transmits all step data and tightening curves
+2. Use the “Standard Nexo” data output with the http transfer option. 
+    By default this also transmits all step data and tightening curves, but sometimes causes troubles with the network infrastructure (firewall transversal,
+    transmission of plaintext passwords).
 
-```ini
-[FTP_CLIENT]
-Enabled=1
-;... 
-; (more settings)
-;...
-; Parameters for each channel:
-CHANNEL_06_INFO={ "ChannelName": "WS010|AC_PF6000", "location name": ["Tool", "Line 2", "WS010", "default", "", "", ""] }
-```
+The “Standard Nexo” data output with http transfer is the preferred option, else
+use “Standard Nexo” with FTP.
 
-The following parameters are **required** for the `GWK` tools, as the tool does not provide them through its interface:
+Data reported to Sys3xxGateway will use the following mapping by default:
 
-- `ChannelName`: Defines the station and channel name seperated by a pipe symbol (`<station>|<channel>`).
-- `location name`: Defines the location name values to use. Note that this setting depends on the Sys3xxGateway settings for processing the tightening results. Make sure to add the relevant information (like data link name, building, line name, etc.), so the tool can be registered in the correct organizational unit.
+- Nexo IP address-->Default Sys3xxGateway station name
+- Nexo channel name --> if non-empty is used as Sys3xxGateway station name
+- Nexo channel number --> Sys3xxGateway channel number
+- Tightening program name --> Used as operation name (QWX)
 
+To enable http data output, use Home --> Data --> Standard Nexo and configure as follows:
+
+![alt text](resources/nexo2-http-output.png)
+
+As the Nexo 2 http data output provides incorrect localtion information, make sure to configure the `Data` settings (click the button labeled `Data` in the header row) as follows (disable the location element): 
+
+![alt text](resources/nexo2-http-data.png)
+
+To minimize transmitted file sizes, go to the `Storage`settings (click the button labeled `Storage` in the header row) and set "json formatted output" to `No`: 
+
+![alt text](resources/nexo2-http-storage.png)
+
+
+## Nexo 1: Wifi notes
+
+- Nexo 1 has issues, if roaming is enabled. Make sure to disable the "roaming" setting in the wifi configuration.
+- Nexo 1 by default uses the insecure TKIP encryption for WPA2-PSK, make sure to switch to AES mode instead.

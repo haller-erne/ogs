@@ -1442,6 +1442,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Custom implementations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lookup-identifier-customization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lookup identifier customization
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -1763,6 +1778,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Custom implementations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lookup-identifier-customization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lookup identifier customization
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -1793,7 +1823,7 @@
 <li>Rework stations (usually having the workflows of multiple stations combined into a single, large workflow).</li>
 <li>EOL-Checks (end of line checks): Can be used to selectively check single tasks from the assembly stations and visualize these to the operator and add additional (plausibility) checks.</li>
 </ul>
-<p>A default implementation using a Microsoft SQL server backend is available and described here.</p>
+<p>A default implementation using a Microsoft SQL server backend is available and described in this appnote.</p>
 <h2 id="default-sql-server-implementation"><a class="toclink" href="#default-sql-server-implementation">Default SQL Server implementation</a></h2>
 <h3 id="overview"><a class="toclink" href="#overview">Overview</a></h3>
 <p>The SQL server default databanking implementation identifies and stores data by combining then following properties and using it as a key for data retrieval:</p>
@@ -1802,6 +1832,7 @@
 <li>Job name</li>
 <li>Task name</li>
 </ul>
+<p>(see also <a href="#lookup-identifier-customization">howto customize the datbanking lookup key</a> below)</p>
 <details class="example">
 <summary>Sample rework scenario</summary>
 <h3 id="example"><a class="toclink" href="#example">Example</a></h3>
@@ -1997,6 +2028,27 @@
 <li>Barcode_StartAssembly</li>
 </ul>
 <p>Make sure to <strong>not</strong> override these events without calling the old implementation, else databanking will not work.</p>
+<h3 id="lookup-identifier-customization"><a class="toclink" href="#lookup-identifier-customization">Lookup identifier customization</a></h3>
+<p>In general, databanking uses the unique part id (that's handled internally) plus an identifier named <code>AFO</code> to (uniquely) identify a result in databanking. The sample databanking implementation uses a central function to generate the <code>AFO</code> value in the follwoing function
+:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">-- Generate a result lookup key</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1">-- By default: return string &#39;(Root:)Jobname+[Taskname]&#39;</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="kr">function</span><span class="w"> </span><span class="nc">M</span><span class="p">.</span><span class="nf">GetAFO</span><span class="p">(</span><span class="nv">Root</span><span class="p">,</span><span class="w"> </span><span class="nv">JobSeq</span><span class="p">,</span><span class="w"> </span><span class="nv">JobName</span><span class="p">,</span><span class="w"> </span><span class="nv">TaskSeq</span><span class="p">,</span><span class="w"> </span><span class="nv">TaskName</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+</code></pre></div></p>
+<p>The return value is a string, which is used as the parameter for the SQL stored procedure to read the process state from the databanking database.</p>
+<p>To override the default implementation, you can override the function in you own LUA module as follows:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">-- My module, loaded through the requires table in `config.lua`</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1">-- require the databanking.lua module</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="kd">local</span><span class="w"> </span><span class="nv">databanking</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">require</span><span class="p">(</span><span class="s1">&#39;databanking&#39;</span><span class="p">)</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="c1">-- override the GetAFO function:</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="nv">databanking</span><span class="p">.</span><span class="py">GetAFO</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="w"> </span><span class="p">(</span><span class="nv">Root</span><span class="p">,</span><span class="w"> </span><span class="nv">JobSeq</span><span class="p">,</span><span class="w"> </span><span class="nv">JobName</span><span class="p">,</span><span class="w"> </span><span class="nv">TaskSeq</span><span class="p">,</span><span class="w"> </span><span class="nv">TaskName</span><span class="p">)</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span><span class="c1">-- my implementation</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">    </span><span class="c1">-- generate and return a string with a result lookup key</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span><span class="kr">return</span><span class="w"> </span><span class="nv">afo</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="kr">end</span>
+</code></pre></div>
 
 
 

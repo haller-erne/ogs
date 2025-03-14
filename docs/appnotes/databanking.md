@@ -21,7 +21,7 @@ Typical use cases are:
 - Rework stations (usually having the workflows of multiple stations combined into a single, large workflow).
 - EOL-Checks (end of line checks): Can be used to selectively check single tasks from the assembly stations and visualize these to the operator and add additional (plausibility) checks.
 
-A default implementation using a Microsoft SQL server backend is available and described here.
+A default implementation using a Microsoft SQL server backend is available and described in this appnote.
 
 ## Default SQL Server implementation
 
@@ -32,6 +32,8 @@ The SQL server default databanking implementation identifies and stores data by 
 - Part serial number
 - Job name
 - Task name
+
+(see also [howto customize the datbanking lookup key](#lookup-identifier-customization) below)
 
 ??? example "Sample rework scenario"
 
@@ -184,3 +186,31 @@ Note, that the `databanking.lua` also overrides the following events:
 - Barcode_StartAssembly
 
 Make sure to **not** override these events without calling the old implementation, else databanking will not work.
+
+### Lookup identifier customization
+
+In general, databanking uses the unique part id (that's handled internally) plus an identifier named `AFO` to (uniquely) identify a result in databanking. The sample databanking implementation uses a central function to generate the `AFO` value in the follwoing function
+:
+``` lua
+-- Generate a result lookup key
+-- By default: return string '(Root:)Jobname+[Taskname]'
+function M.GetAFO(Root, JobSeq, JobName, TaskSeq, TaskName) {}
+```
+
+The return value is a string, which is used as the parameter for the SQL stored procedure to read the process state from the databanking database.
+
+To override the default implementation, you can override the function in you own LUA module as follows:
+
+``` lua
+-- My module, loaded through the requires table in `config.lua`
+
+-- require the databanking.lua module
+local databanking = require('databanking')
+
+-- override the GetAFO function:
+databanking.GetAFO = function (Root, JobSeq, JobName, TaskSeq, TaskName)
+    -- my implementation
+    -- generate and return a string with a result lookup key
+    return afo
+end
+```

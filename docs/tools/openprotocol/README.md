@@ -78,8 +78,8 @@ Typically tightening tools support tightening and loosening processes - often (f
 However, OpenProtocol has no support for this functionality bult-in natively - 
  it only supports selecting an "active" PSet (for the "primary" PSet). Depending on the tool type and vendor, there are different ways how the direction switch can be used with OGS, so OGS can control/prevent loosening:
 
-- Tool reports direction switch position over OpenProtocol I/O signals (using MID500 or MID210MID241)
-- Tool allows blocking the loosening switch "secondary" position over OpenProtocol I/O signals (using MID504 or MID200/240)
+- Tool reports direction switch position over OpenProtocol I/O signals (using MID500 or MID210/MID241)
+- Tool allows blocking the loosening switch "secondary" position over OpenProtocol I/O signals (using MID504 or MID200/MID240)
 - Tool forcibly selecting a PSet, if the direction switch is set to the "secondary" position
 - Tool automatically selectiong a different PSet after NOK rundowns on the primary PSet
 - ...
@@ -88,7 +88,7 @@ By default, OGS selects a specific PSet (using MID0018) for loosen as defined in
 
 ![heOpCfg tool loosen PSet number](resources/heOpCfg-tool-loosen.png)
 
-For tools which support OpenProtocol I/O signals, OGS also provides an additional I/O signal which is set to true while the OGS is in tightening mode (and false while in loosening mode), which allows tailoring the behaviour even more (e.g. allow loosen with the direction switch set to CW, etc.). Also OGS can read an additional input signal reporting the state of the tools CW/CCW switch, so it can act accordingly and show a warning to the user eventually. See also below [CHANNEL_<tool>_CCW_ACK](#channel_tool_ccw_ack) for enforcing the direction switch setting.
+For tools which support OpenProtocol I/O signals, OGS also provides an additional I/O signal which is set to true while the OGS is in tightening mode (and false while in loosening mode), which allows tailoring the behaviour even more (e.g. allow loosen with the direction switch set to CW, etc.). Also OGS can read an additional input signal reporting the state of the tools CW/CCW switch, so it can act accordingly and show a warning to the user eventually. See also below [`CHANNEL_<tool>_CCW_ACK`](#channel_tool_ccw_ack) for enforcing the direction switch setting.
 
 Note, that OGS can also be configured to block loosening in general (see [user rights for loosen](#user-rights-for-loosen) below)!
 

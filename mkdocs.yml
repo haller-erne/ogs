@@ -20,6 +20,9 @@ nav:
             - Doga BM-series: tools/doga-wifi.md
         - Misc tools:
             - Gesipa riveting tool: tools/misc/gesipa-mqtt.md
+        - Positioning:
+            - Overview: positioning/README.md
+            - ART SmartTrack/DTrack: positioning/positioning-art.md
     - Data output:
         - End-of-process (XML) file: dataoutput/xmlfile.md
         - Printout and label printing: dataoutput/printout.md

@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.8">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.9">
     
     
       
@@ -26,7 +26,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.8608ea7d.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.4af4bdda.min.css">
       
       
 
@@ -1070,6 +1070,94 @@
   
   <span class="md-ellipsis">
     Gesipa riveting tool
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_6" id="__nav_2_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Positioning
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6">
+            <span class="md-nav__icon md-icon"></span>
+            Positioning
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../positioning/README.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../positioning/positioning-art.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ART SmartTrack/DTrack
     
   </span>
   
@@ -2306,15 +2394,15 @@
 <p>However, OpenProtocol has no support for this functionality bult-in natively - 
  it only supports selecting an "active" PSet (for the "primary" PSet). Depending on the tool type and vendor, there are different ways how the direction switch can be used with OGS, so OGS can control/prevent loosening:</p>
 <ul>
-<li>Tool reports direction switch position over OpenProtocol I/O signals (using MID500 or MID210MID241)</li>
-<li>Tool allows blocking the loosening switch "secondary" position over OpenProtocol I/O signals (using MID504 or MID200/240)</li>
+<li>Tool reports direction switch position over OpenProtocol I/O signals (using MID500 or MID210/MID241)</li>
+<li>Tool allows blocking the loosening switch "secondary" position over OpenProtocol I/O signals (using MID504 or MID200/MID240)</li>
 <li>Tool forcibly selecting a PSet, if the direction switch is set to the "secondary" position</li>
 <li>Tool automatically selectiong a different PSet after NOK rundowns on the primary PSet</li>
 <li>...</li>
 </ul>
 <p>By default, OGS selects a specific PSet (using MID0018) for loosen as defined in the tools configuration in the heOpCfg editor:</p>
 <p><a class="glightbox" href="resources/heOpCfg-tool-loosen.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="heOpCfg tool loosen PSet number" src="resources/heOpCfg-tool-loosen.png" /></a></p>
-<p>For tools which support OpenProtocol I/O signals, OGS also provides an additional I/O signal which is set to true while the OGS is in tightening mode (and false while in loosening mode), which allows tailoring the behaviour even more (e.g. allow loosen with the direction switch set to CW, etc.). Also OGS can read an additional input signal reporting the state of the tools CW/CCW switch, so it can act accordingly and show a warning to the user eventually. See also below <a href="#channel_tool_ccw_ack">CHANNEL_<tool>_CCW_ACK</a> for enforcing the direction switch setting.</p>
+<p>For tools which support OpenProtocol I/O signals, OGS also provides an additional I/O signal which is set to true while the OGS is in tightening mode (and false while in loosening mode), which allows tailoring the behaviour even more (e.g. allow loosen with the direction switch set to CW, etc.). Also OGS can read an additional input signal reporting the state of the tools CW/CCW switch, so it can act accordingly and show a warning to the user eventually. See also below <a href="#channel_tool_ccw_ack"><code>CHANNEL_&lt;tool&gt;_CCW_ACK</code></a> for enforcing the direction switch setting.</p>
 <p>Note, that OGS can also be configured to block loosening in general (see <a href="#user-rights-for-loosen">user rights for loosen</a> below)!</p>
 <h3 id="nok-behaviour-and-rework-parameters"><a class="toclink" href="#nok-behaviour-and-rework-parameters">NOK behaviour and rework parameters</a></h3>
 <p>To undestand NOK behaviour, it is important to understand that each <code>Task</code> (for tightening this is tightening a bolt) configured and executed in OGS consists of (up to) four different operations:</p>

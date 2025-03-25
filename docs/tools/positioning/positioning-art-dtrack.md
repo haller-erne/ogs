@@ -38,7 +38,7 @@ If any of the preconditions fail, then OGS jumps back in the sequence to the fir
 If the position on the part has changed (not set up initially, the camera has been moved (if not using a reference tracker), ...), then the correct position can be teached through the OGS interface. To start teaching, the following prerequisites must be met:
 
 1. The workflow must be in the `stopped` state (click the `stop` button in the righthand action bar)
-2. The current user needs the right to do teach-in (see [OGS user rights](../../v3/lua/userrights.md))
+2. The current user needs the rights to do teach-in (see [OGS user rights](../../v3/lua/userrights.md))
 3. The task must be position controlled (see [workflow configuration](#workflow-configuration) below)
 
 If all preconditions are met, then clicking the tool tile will switch to the teach-in view:
@@ -53,11 +53,13 @@ You can now select the current task (❶) and see/edit its positioning parameter
 !!! info
 
     The typical workflow for teaching in a set of tasks/bolts is to switch to teach-in mode, then 
+
     1. Select the task from the task list (❶)
     2. Modify the tolerance parameters and the tool offset (socket/nut length)
     3. Move the tool into the correct position
     4. Hit the `teach position` button
     5. Repeat with 1. until all tasks are teached.
+
     Finally exit the teachin mode.
 
 ### Workflow configuration
@@ -76,6 +78,9 @@ A task is marked as positioning-enabled by setting the task parameter Position s
 ### Teach-in sidepanel
 
 For information about how to access the teach-in view, see [basic functionality](#basic-functionality) above. 
+
+
+
 
 
 

@@ -14,7 +14,7 @@
         <link rel="prev" href="../misc/gesipa-mqtt/">
       
       
-        <link rel="next" href="positioning-art/">
+        <link rel="next" href="positioning-art-dtrack/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -901,11 +901,33 @@
   
   
     <li class="md-nav__item">
-      <a href="positioning-art/" class="md-nav__link">
+      <a href="positioning-art-dtrack/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
     ART SmartTrack/DTrack
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="positioning-art-verpose/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ART Verpose
     
   </span>
   
@@ -1818,7 +1840,7 @@ directly by adding a <code>require('positioning)</code> somewhere in the code).<
 </code></pre></div>
 1.  Add this line to include the <code>positioning.lua</code> driver in the project.</p>
 <p>The <code>positioning.lua</code> file automatically scans the <code>[OPENPROTO]</code> section for <code>CHANNEL_XX_POSITIONING=&lt;section&gt;</code> parameters. It also scans the <code>[CHANNELS]</code> section and looks for <code>POSITIONING=&lt;section&gt;</code> parameters for custom tools. If found, then the <code>&lt;section&gt;</code> is read. The section is expected to contain the <code>DRIVER=</code> parameter (to select the actual hardware) driver, as well as the driver-specific parameters for this specific tool. Note, that the driver itself might need some parameters (in its own section in <code>station.ini</code>, e.g. the <code>[POSITION_ART]</code> section as shown below).</p>
-<p>Here is a sample fragment on how to configure an OpenProtocol tool with the AR-Tracking driver (see <a href="#available-drivers">available drivers</a> below and <a href="positioning-art/">ART SmartTrack</a> for detailed info):</p>
+<p>Here is a sample fragment on how to configure an OpenProtocol tool with the AR-Tracking driver (see <a href="#available-drivers">available drivers</a> below and <a href="positioning-art-dtrack/">ART SmartTrack</a> for detailed info):</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">[OPENPROTO]</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="na">CHANNEL_01</span><span class="o">=</span><span class="s">192.168.1.42</span>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="na">CHANNEL_01_TYPE</span><span class="o">=</span><span class="s">GWK</span>
@@ -1884,12 +1906,16 @@ directly by adding a <code>require('positioning)</code> somewhere in the code).<
 <h3 id="available-drivers"><a class="toclink" href="#available-drivers">Available drivers</a></h3>
 <p>Currently, the following drivers are shipped with the OGS installer:</p>
 <ul>
-<li><code>ART</code>: Driver for the <a href="https://ar-tracking.com/en/product-program/smarttrack3">AR-Tracking SmartTrack3 realtime tracking system</a>, see <a href="positioning-art/">ART SmartTrack</a> for details.</li>
+<li><code>ART</code>: Driver for the <a href="https://ar-tracking.com/en/product-program/smarttrack3">AR-Tracking SmartTrack3 realtime tracking system</a>, see <a href="positioning-art-dtrack/">ART SmartTrack</a> for details.</li>
 <li><code>IO</code>: Driver for the rotation + distance type systems (like the Jäger HandyFlex)  with optional support for tilt. Note that this driver requires providing some LUA glue code to read the sensors values from e.g. a field bus and forwarding the raw
 sensor values to the driver by calling <code>UpdatePos_RotIncLenInc()</code> or <code>UpdatePos_RotIncLenAbs()</code>. The driver then handles coordinate transforms, teaching and tolerance calculations internally. See <a href="positioning-io/">IO positioning</a> for details.</li>
 <li><code>DIGITAL</code>: Minimal positioning driver, which only uses a single "Inpos" signal. Note that this driver requires providing some LUA glue code to generate the "Inpos" signal (typically by reading I/O values from e.g. a field bus) and thencalling the drivers <code>UpdatePos_InPos()</code> function. This can be used to connect exisiting positioning systems or implement own logic based on digital input combinations. See <a href="positioning-digital/">digital positioning</a> for details.</li>
 </ul>
-<p>Other positioning systems mentioned above (like <a href="https://ar-tracking.com/en/product-program/products-connection-software-verpose">ART Verpose</a>, <a href="https://www.sarissa.de/en/solutions/local-positioning-system">Sarissa local positioning system</a>, <a href="https://www.nexonar.com/en/solutions/real-time-location-system">Nexonar RTLS</a>, ...) are typically implemented using the <code>DIGITAL</code> driver.</p>
+<p>Other positioning systems mentioned above (like <a href="https://ar-tracking.com/en/product-program/products-connection-software-verpose">ART Verpose</a>, <a href="https://www.sarissa.de/en/solutions/local-positioning-system">Sarissa local positioning system</a>, <a href="https://www.nexonar.com/en/solutions/real-time-location-system">Nexonar RTLS</a>, ...) are typically implemented using the <code>DIGITAL</code> driver, see details here:</p>
+<ul>
+<li><a href="positioning-art-verpose/">ART Verpose</a></li>
+<li><a href="./positioning-sarissa-digital.md">Sarissa PositionBox</a></li>
+</ul>
 <h3 id="customization"><a class="toclink" href="#customization">Customization</a></h3>
 <p>To add a custom driver, use one of the existing drivers as a base and override its
 functions.</p>

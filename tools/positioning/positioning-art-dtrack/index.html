@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://haller-erne.github.io/ogs/tools/positioning/positioning-art/">
+        <link rel="canonical" href="https://haller-erne.github.io/ogs/tools/positioning/positioning-art-dtrack/">
       
       
         <link rel="prev" href="../">
       
       
-        <link rel="next" href="../../../dataoutput/xmlfile/">
+        <link rel="next" href="../positioning-art-verpose/">
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
@@ -867,9 +867,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#teach-in" class="md-nav__link">
+  <a href="#teach-in-sidepanel" class="md-nav__link">
     <span class="md-ellipsis">
-      Teach-in
+      Teach-in sidepanel
     </span>
   </a>
   
@@ -913,6 +913,15 @@
   <a href="#custom-bodies-and-tool-mounts" class="md-nav__link">
     <span class="md-ellipsis">
       Custom bodies and tool mounts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sidepanel-teach-in-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sidepanel teach-in setup
     </span>
   </a>
   
@@ -974,6 +983,28 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../positioning-art-verpose/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ART Verpose
+    
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -1770,9 +1801,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#teach-in" class="md-nav__link">
+  <a href="#teach-in-sidepanel" class="md-nav__link">
     <span class="md-ellipsis">
-      Teach-in
+      Teach-in sidepanel
     </span>
   </a>
   
@@ -1816,6 +1847,15 @@
   <a href="#custom-bodies-and-tool-mounts" class="md-nav__link">
     <span class="md-ellipsis">
       Custom bodies and tool mounts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sidepanel-teach-in-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sidepanel teach-in setup
     </span>
   </a>
   
@@ -1897,10 +1937,50 @@
 <p>One of the greatest features of the SmartTrack cameras is that they come factory-calibrated with linear cartesian coordinate system which provides mm-accuracy on all axis. With a few mouse clicks, the origin and orientation can be set using a provided ruler, so absolute measurements in workplace or workpiece-coordinates are possible out of the box! </p>
 </div>
 <h2 id="usage"><a class="toclink" href="#usage">Usage</a></h2>
-<p>If the system is correctly set up (see <a href="#initial-system-setup">Initial system setup</a> below for more details), then ...</p>
+<p>If the system is correctly set up (see <a href="#initial-system-setup">Initial system setup</a> below for more details), then you can specifiy which tasks are position controlled (in the <a href="#workflow-configuration">workflow configuration</a>). On the station, you can then teach-in the positions and tolerances for the task.  </p>
 <h3 id="basic-functionality"><a class="toclink" href="#basic-functionality">Basic functionality</a></h3>
+<p>As the underlying idea for positioning is to enable the tool depending on some external information, this is actually similar to the concept of a socket tray / nut selector (enable the tool only, if the correct socket was used): both only enable the tool, if the correct conditions are met. OGS shows the state of "external enable", "socket tray selection" and "positioning" in the same spot in the OGS runtime GUI - next to the tools tile in the status bar.</p>
+<p>Here is a sample screenshot of the OGS toolbar when the tool is not in the correct position (expected position 5 - yellow background):</p>
+<p><a class="glightbox" href="../resources/monitor-tile-positioning.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="OGS monitor positioning" src="../resources/monitor-tile-positioning.png" /></a></p>
+<p>As all three conditions might be required, OGS processes the information in a sequence:</p>
+<ol>
+<li>Check if the correct socket is used (if any)</li>
+<li>If a correct socket is available (or no check active), check the position</li>
+<li>If the position is ok, check any additional external signals (external enable)</li>
+</ol>
+<p>If any of the preconditions fail, then OGS jumps back in the sequence to the first missing condition - e.g. if the socket is switched while in the correct position, OGS again shows the socket request.</p>
+<p>If the position on the part has changed (not set up initially, the camera has been moved (if not using a reference tracker), ...), then the correct position can be teached through the OGS interface. To start teaching, the following prerequisites must be met:</p>
+<ol>
+<li>The workflow must be in the <code>stopped</code> state (click the <code>stop</code> button in the righthand action bar)</li>
+<li>The current user needs the right to do teach-in (see <a href="../../../v3/lua/userrights/">OGS user rights</a>)</li>
+<li>The task must be position controlled (see <a href="#workflow-configuration">workflow configuration</a> below)</li>
+</ol>
+<p>If all preconditions are met, then clicking the tool tile will switch to the teach-in view:
+<a class="glightbox" href="../resources/monitor-tile-positioning-click.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Tech-in tile" src="../resources/monitor-tile-positioning-click.png" /></a></p>
+<p>The teach-in view changes the bottom status bar (and optionally opens the <a href="#teach-in-sidepanel">teach-in sidepanel</a>, see below):</p>
+<p><a class="glightbox" href="../resources/monitor-positioning-view.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Monitor positioning view" src="../resources/monitor-positioning-view.png" /></a></p>
+<p>You can now select the current task (❶) and see/edit its positioning parameters in the side-panel (❷, see <a href="#teach-in-sidepanel">teach-in sidepanel</a> below for more information). The bottom status bar pane (❸) shows the current position difference (changes to green color if in tolerance for the selected task) and allows to update the recorded position by clicking the <code>teach position</code> button. To exit teach-mode, click the <code>close</code>button. Note, that the sidepanel can be kept open, so you can see the positioning parameters also in automatic/production mode.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>The typical workflow for teaching in a set of tasks/bolts is to switch to teach-in mode, then 
+1. Select the task from the task list (❶)
+2. Modify the tolerance parameters and the tool offset (socket/nut length)
+3. Move the tool into the correct position
+4. Hit the <code>teach position</code> button
+5. Repeat with 1. until all tasks are teached.
+Finally exit the teachin mode.</p>
+</div>
 <h3 id="workflow-configuration"><a class="toclink" href="#workflow-configuration">Workflow configuration</a></h3>
-<h3 id="teach-in"><a class="toclink" href="#teach-in">Teach-in</a></h3>
+<p>Conceptionally, positioning is connected to the bolts position on the part, whereas the socket information belongs to the tightening operation (i.e. likely the same for all bolts with the same tightening parameters). OGS therefore uses different spots in the GUI of the workflow editor to configure these parameters (external enable is scripting only):</p>
+<p><a class="glightbox" href="../resources/heOpCfg-positioning-and-sockets.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="heOpCfg positioning configuration" src="../resources/heOpCfg-positioning-and-sockets.png" /></a></p>
+<p>A task is marked as positioning-enabled by setting the task parameter Position sensor(PS) (column PS in the jobs editor tasks list) to a non-zero value. If a tasks PS-value is set to zero, then the position is not tracked for the task.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you can't see the PS column, then use <code>Database --&gt; Settings</code> and check 
+the"Use Position Encoder" in the Job section or set the <code>POSITION_ENCODER_IN_USE</code> in the GLOBAL-Section of the INI Parameters on the Tools tab to 1 - see the bottom part of the screenshot above)</p>
+</div>
+<h3 id="teach-in-sidepanel"><a class="toclink" href="#teach-in-sidepanel">Teach-in sidepanel</a></h3>
+<p>For information about how to access the teach-in view, see <a href="#basic-functionality">basic functionality</a> above. </p>
 <h2 id="initial-system-setup"><a class="toclink" href="#initial-system-setup">Initial system setup</a></h2>
 <h3 id="ogs-configuration"><a class="toclink" href="#ogs-configuration">OGS configuration</a></h3>
 <p>As described in <a href="../">OGS positioning overview</a>, OGS provides all drivers needed to integrate ART-DTrack positioning into your project. However a few manual steps are still needed to configure the project:</p>
@@ -1909,78 +1989,69 @@
 <li>Configure the tracking parameters and tool, body, etc. mapping in <code>station.ini</code></li>
 <li>Configure the OGS webserver and add the html pages to support the sidepanel teach-in ui to the project</li>
 </ul>
-<!--
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># add the shared folder (..\shared)</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="hll"><span class="n">OGS</span><span class="o">.</span><span class="n">Project</span><span class="o">.</span><span class="n">AddPath</span><span class="p">(</span><span class="s1">&#39;../shared&#39;</span><span class="p">)</span>
-</span><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># some note (1)</span>
-</code></pre></div>
-1.  Add this line to include the `positioning.lua` driver in the project.
--->
-
 <h4 id="configlua-and-stationini"><a class="toclink" href="#configlua-and-stationini">config.lua and station.ini</a></h4>
 <p>To load the tool tracking support, include the <code>positioning.lua</code> file in your project (through the <code>config.lua</code> requires list or directly by adding a 
 <code>require('positioning)</code> somewhere in the code).</p>
 <p>Adding it to the <code>requires</code> table in the projects <code>config.lua</code> will then look as follows:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">-- add the shared folder (..\shared)</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nv">OGS</span><span class="p">.</span><span class="py">Project</span><span class="p">.</span><span class="nf">AddPath</span><span class="p">(</span><span class="s1">&#39;../shared&#39;</span><span class="p">)</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="nv">requires</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="s2">&quot;barcode&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="s2">&quot;user_manager&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="hll"><span class="w">    </span><span class="s2">&quot;positioning&quot;</span><span class="p">,</span><span class="w">      </span><span class="c1">-- (1)</span>
-</span><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span><span class="c1">-- possibly more...</span>
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="p">}</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="nv">current_project</span><span class="p">.</span><span class="py">logo_file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;../shared/logo-rexroth.png&#39;</span>
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="nv">current_project</span><span class="p">.</span><span class="py">billboard</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;http://127.0.0.1:60000/billboard.html&#39;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">-- add the shared folder (..\shared)</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nv">OGS</span><span class="p">.</span><span class="py">Project</span><span class="p">.</span><span class="nf">AddPath</span><span class="p">(</span><span class="s1">&#39;../shared&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nv">requires</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="s2">&quot;barcode&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="s2">&quot;user_manager&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="hll"><span class="w">    </span><span class="s2">&quot;positioning&quot;</span><span class="p">,</span><span class="w">      </span><span class="c1">-- (1)!</span>
+</span><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="c1">-- possibly more...</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="p">}</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="nv">current_project</span><span class="p">.</span><span class="py">logo_file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;../shared/logo-rexroth.png&#39;</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="nv">current_project</span><span class="p">.</span><span class="py">billboard</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;http://127.0.0.1:60000/billboard.html&#39;</span>
 </code></pre></div>
 <ol>
 <li>Add this line to include the <code>positioning.lua</code> driver in the project.</li>
 </ol>
 <p>As described in <a href="../">OGS positioning overview</a>, OGS automatically scans the <code>[OPENPROTO]</code> and <code>[CHANNELS]</code> sections for positioning references. If found, then the assigned section is read to determine the driver to be used and to read the associated parameters.</p>
 <p>To configure the ART DTrack/SmartTrack driver, the following configuration is needed (the sample shown below includes a single linked OpenProtocol tool, but you can link multiple tools to the ART driver, too):</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">[OPENPROTO]</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="na">CHANNEL_01</span><span class="o">=</span><span class="s">192.168.1.42</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="na">CHANNEL_01_TYPE</span><span class="o">=</span><span class="s">GWK</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="na">CHANNEL_01_PORT</span><span class="o">=</span><span class="s">4002</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="c1">; --&gt; this channel shall use ART positioning</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="na">CHANNEL_01_POSITIONING</span><span class="o">=</span><span class="s">POSITIONING_ART_CH1</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="c1">; Define the tracking parameters for CHANNEL_01</span>
-<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="c1">;</span>
-<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="k">[POSITIONING_ART_CH1]</span>
-<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="c1">; Use the AR-Tracking positioning system</span>
-<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="na">DRIVER</span><span class="o">=</span><span class="s">ART</span>
-<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="c1">; Positioning timeout in milliseconds. Defines the grace time before enable</span>
-<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="c1">; is removed for the tool, when leaving a position. If not set, defaults to 0.</span>
-<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="na">TIMEOUT</span><span class="o">=</span><span class="s">1000</span>
-<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="c1">; Define the target tracker and tool adapter for this tool</span>
-<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="c1">; Target-ID: this is the model of the target mounted to the tool. By default,</span>
-<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="c1">; T1-T8 are provided, other targets can be defined in &quot;targets.atti&quot;-file </span>
-<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="na">TARGET_ID</span><span class="o">=</span><span class="s">T5</span>
-<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="c1">; Target-Mount-ID: specify the adapter geometry, so the ART driver can calulate</span>
-<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="c1">; the tool center point depending on where the target is mounted on the tool.</span>
-<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="c1">; By default, &quot;Rexroth ESA030G&quot; and &quot;GWK Operator Plus&quot; are provided, custom</span>
-<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="c1">; mounts may be added in &quot;targetmounts.atti&quot;</span>
-<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="na">TARGET_MOUNT_ID</span><span class="o">=</span><span class="s">Rexroth ESA030G</span>
-<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="c1">; Default-length of the adapter mounted to the tool (tool center point)</span>
-<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a><span class="na">OFFSET_MM</span><span class="o">=</span><span class="s">0</span>
-<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>
-<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a><span class="c1">; Define The ART system setup </span>
-<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a><span class="c1">;</span>
-<a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a><span class="k">[POSITIONING_ART]</span>
-<a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a><span class="c1">; Define the IP-Address of the SmartTrack camera system</span>
-<a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a><span class="na">IP</span><span class="o">=</span><span class="s">10.10.2.108</span>
-<a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a><span class="c1">; If you want to use custom targets or custom target_mounts, then you can</span>
-<a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a><span class="c1">; specify these in &quot;targets.atti&quot; and &quot;targetmounts.atti&quot; in the following</span>
-<a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a><span class="c1">; folder. If the folder is not specified, it defaults to the current projects</span>
-<a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a><span class="c1">; folder.</span>
-<a id="__codelineno-2-37" name="__codelineno-2-37" href="#__codelineno-2-37"></a><span class="c1">;DB_FOLDER=</span>
-<a id="__codelineno-2-38" name="__codelineno-2-38" href="#__codelineno-2-38"></a><span class="c1">; If you want to set the reference tracker, then add the name of the tracker here.</span>
-<a id="__codelineno-2-39" name="__codelineno-2-39" href="#__codelineno-2-39"></a><span class="c1">; NOTE: the reference tracker must be configured through DTrack and *must* have</span>
-<a id="__codelineno-2-40" name="__codelineno-2-40" href="#__codelineno-2-40"></a><span class="c1">;       then name &quot;reference&quot; or &quot;referenz&quot; (case insensitive) as part of the</span>
-<a id="__codelineno-2-41" name="__codelineno-2-41" href="#__codelineno-2-41"></a><span class="c1">;       body name, else it will not be accepted.</span>
-<a id="__codelineno-2-42" name="__codelineno-2-42" href="#__codelineno-2-42"></a><span class="na">REFERENCE_TRACKER</span><span class="o">=</span><span class="s">Claw Target 21 Reference</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">[OPENPROTO]</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="na">CHANNEL_01</span><span class="o">=</span><span class="s">192.168.1.42</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="na">CHANNEL_01_TYPE</span><span class="o">=</span><span class="s">GWK</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="na">CHANNEL_01_PORT</span><span class="o">=</span><span class="s">4002</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1">; --&gt; this channel shall use ART positioning</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="na">CHANNEL_01_POSITIONING</span><span class="o">=</span><span class="s">POSITIONING_ART_CH1</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="c1">; Define the tracking parameters for CHANNEL_01</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="c1">;</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="k">[POSITIONING_ART_CH1]</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="c1">; Use the AR-Tracking positioning system</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="na">DRIVER</span><span class="o">=</span><span class="s">ART</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="c1">; Positioning timeout in milliseconds. Defines the grace time before enable</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="c1">; is removed for the tool, when leaving a position. If not set, defaults to 0.</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="na">TIMEOUT</span><span class="o">=</span><span class="s">1000</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="c1">; Define the target tracker and tool adapter for this tool</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="c1">; Target-ID: this is the model of the target mounted to the tool. By default,</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="c1">; T1-T8 are provided, other targets can be defined in &quot;targets.atti&quot;-file </span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="na">TARGET_ID</span><span class="o">=</span><span class="s">T5</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="c1">; Target-Mount-ID: specify the adapter geometry, so the ART driver can calulate</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="c1">; the tool center point depending on where the target is mounted on the tool.</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="c1">; By default, &quot;Rexroth ESA030G&quot; and &quot;GWK Operator Plus&quot; are provided, custom</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="c1">; mounts may be added in &quot;targetmounts.atti&quot;</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="na">TARGET_MOUNT_ID</span><span class="o">=</span><span class="s">Rexroth ESA030G</span>
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="c1">; Default-length of the adapter mounted to the tool (tool center point)</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="na">OFFSET_MM</span><span class="o">=</span><span class="s">0</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="c1">; Define The ART system setup </span>
+<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="c1">;</span>
+<a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="k">[POSITIONING_ART]</span>
+<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="c1">; Define the IP-Address of the SmartTrack camera system</span>
+<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="na">IP</span><span class="o">=</span><span class="s">10.10.2.108</span>
+<a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a><span class="c1">; If you want to use custom targets or custom target_mounts, then you can</span>
+<a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="c1">; specify these in &quot;targets.atti&quot; and &quot;targetmounts.atti&quot; in the following</span>
+<a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="c1">; folder. If the folder is not specified, it defaults to the current projects</span>
+<a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a><span class="c1">; folder.</span>
+<a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="c1">;DB_FOLDER=</span>
+<a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a><span class="c1">; If you want to set the reference tracker, then add the name of the tracker here.</span>
+<a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a><span class="c1">; NOTE: the reference tracker must be configured through DTrack and *must* have</span>
+<a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a><span class="c1">;       then name &quot;reference&quot; or &quot;referenz&quot; (case insensitive) as part of the</span>
+<a id="__codelineno-1-41" name="__codelineno-1-41" href="#__codelineno-1-41"></a><span class="c1">;       body name, else it will not be accepted.</span>
+<a id="__codelineno-1-42" name="__codelineno-1-42" href="#__codelineno-1-42"></a><span class="na">REFERENCE_TRACKER</span><span class="o">=</span><span class="s">Claw Target 21 Reference</span>
 </code></pre></div>
 <p>The ART system parameters must be set in the <code>[POSITIONING_ART]</code> section in <code>station.ini</code>. The following parameters are available:</p>
 <ul>
@@ -2003,6 +2074,23 @@
 <li><code>targets.atti</code>: Defines additional bodies</li>
 <li><code>targetmounts.atti</code>: Defines additional (tool specific) target mounts/adapters</li>
 </ul>
+<h4 id="sidepanel-teach-in-setup"><a class="toclink" href="#sidepanel-teach-in-setup">Sidepanel teach-in setup</a></h4>
+<p>To enable the side panel with teach-in functionality, the html files must be copied into the projects web root. Note that this also requires enabling the OGS integrated web server.</p>
+<p>Here is the relevant fragment of <code>station.ini</code>:</p>
+<div class="highlight"><span class="filename">station.ini</span><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">[WebServer]</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1">; The integrated web server is enabled, if a non-empty URL is given. Please note, that</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1">; this uses the Microsoft http.sys Windows builtin web server, so you will have to</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1">; register the listening URL with apropriate permissions using the `netsh http add urlacl`</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="c1">; commmand (running elevated) from the windows command line, e.g.:</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1">;   netsh http add urlacl url=http://127.0.0.1:60000/ sddl=D:(A;;GA;;;WD)</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1">;</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="na">URL</span><span class="o">=</span><span class="s">http://127.0.0.1:60000/</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="c1">;SDDL=D:(A;;GX;;;S-1-0-0)(A;;GA;;;S-1-5-11)</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="c1">; Set the document root folder (if not given, defaults to the project base folder),</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="c1">; this might be either a relative path (to the project folder) or an absolute one.</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="na">RootFolder</span><span class="o">=</span><span class="s">../shared/webroot</span>
+</code></pre></div>
+<p>The html files for the positioning system are located in in the OGS installation directory at <code>&lt;installdir&gt;\lualib\libpositioning\webroot</code>. Copy all files into your projects webroot (as specified in the <code>[Webserver]</code> section in <code>station.ini</code>).</p>
 <h3 id="dtrack-configuration"><a class="toclink" href="#dtrack-configuration">DTrack configuration</a></h3>
 <p>Usually, there is no need to use DTrack for SmartTrack camera setups, as OGS configures the relevant parameters needed for data exchange automatically. However it is recommended to install DTrack anyway and run it for the following:</p>
 <ul>

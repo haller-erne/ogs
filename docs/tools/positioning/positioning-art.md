@@ -17,6 +17,10 @@ If the system is correctly set up (see [Initial system setup](#initial-system-se
 
 ### Basic functionality
 
+
+### Workflow configuration
+
+
 ### Teach-in
 
 
@@ -30,6 +34,9 @@ As described in [OGS positioning overview](README.md), OGS provides all drivers 
 - Load the tool tracking support in `config.lua`
 - Configure the tracking parameters and tool, body, etc. mapping in `station.ini`
 - Configure the OGS webserver and add the html pages to support the sidepanel teach-in ui to the project
+
+#### config.lua and station.ini
+
 
 
 

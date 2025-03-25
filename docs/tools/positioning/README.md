@@ -63,7 +63,7 @@ directly by adding a `require('positioning)` somewhere in the code').
 
 Adding it to the `requires` table in the projects `config.lua` will then look as follows:
 
-```  { .lua .annotate }
+```  lua hl_lines="7"
 -- add the shared folder (..\shared)
 OGS.Project.AddPath('../shared')
 

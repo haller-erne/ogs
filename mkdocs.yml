@@ -19,6 +19,9 @@ nav:
             - n-gineric: tools/openprotocol/ngineric.md
             - Doga BM-series: tools/doga-wifi.md
         - Misc tools:
+            - Socket trays: tools/misc/socket-tray.md
+            - OGS GUI input: tools/misc/gui-input.md
+            - AIOI Pick2Light: tools/misc/aioi-pick2light.md
             - Gesipa riveting tool: tools/misc/gesipa-mqtt.md
         - Positioning:
             - Overview: tools/positioning/README.md

@@ -81,7 +81,7 @@ For information about how to access the teach-in view and howto open the sidepan
 
 The side panel consists of four sections:
 
-<div class="mdx-columns" style="display:flex" markdown>
+<div class="mdx-columns" style="display:grid; grid-template-columns: auto 200px;" markdown>
 
 <div markdown>
 1. Information: Shows the currently selected job, task, tool and position number as configured in the workflow editor (see [workflow configuration](#workflow-configuration)).
@@ -90,7 +90,7 @@ The side panel consists of four sections:
 4. Tracking info: Shows the current type of positioning driver active (OGS supports multiple drivers) and the current state. You can find some cleartext error messages, e.g. if the tool is not visible to the system, etc. 
 </div>
 
-<div markdown style="width: 200px">
+<div markdown>
 ![Sidepanel](resources/monitor-sidepanel.png){ align=right, width="200" }
 </div>
 

@@ -54,13 +54,13 @@ You can now select the current task (❶) and see/edit its positioning parameter
 
     The typical workflow for teaching in a set of tasks/bolts is to switch to teach-in mode, then 
 
-    1. Select the task from the task list (❶)
-    2. Modify the tolerance parameters and the tool offset (socket/nut length)
+    1. Select the task from the task list [❶]
+    2. Modify the tolerance parameters and the tool offset (socket/nut length) [❷]
     3. Move the tool into the correct position
-    4. Hit the `teach position` button
-    5. Repeat with 1. until all tasks are teached.
+    4. Hit the `teach position` button [❸]
+    5. Repeat from 1. until all tasks are teached.
 
-    Finally exit the teachin mode.
+    Finally exit the teaching mode.
 
 ### Workflow configuration
 
@@ -77,11 +77,43 @@ A task is marked as positioning-enabled by setting the task parameter Position s
 
 ### Teach-in sidepanel
 
-For information about how to access the teach-in view, see [basic functionality](#basic-functionality) above. 
+For information about how to access the teach-in view and howto open the sidepanel, see [basic functionality](#basic-functionality) above. 
 
+![Sidepanel](resources/monitor-sidepanel.png) { align=right }
+The side panel consists of four sections:
 
+1. Information: Shows the currently selected job, task, tool and position number as configured in the workflow editor (see [workflow configuration](#workflow-configuration)).
+2. Tolerance parameters for the currently selected task. This includes the type of the tolerance body (sphere, cylinder, frustum, frustum+cylinder) and its parameters as well as the offset and the actually recorded 6DOF coordinates. The offset is used to add a linear offset along the tool axis for the actually used socket/bit. The "Vector" values are the coordinates of the normalized vector of the tool axis orientation.
+3. Current position: The current position information received from the ART DTrack/SmartTrack camera system. This also shows the difference values between the recorded position and the current position of the tool. The InPos row shows the calculated state (position within tolerance, angle within tolerance).
+4. Tracking info: Shows the current type of positioning driver active (OGS supports multiple drivers) and the current state. You can find some cleartext error messages, e.g. if the tool is not visible to the system, etc. 
 
+Notes:
+- If the position is not teached, the tolerance parameters default to sphere, radius = 20mm, offset = 0mm or the last teached parameters
+- To teach a number of tasks, ideally set the tolerance parameters on the first task and teach. Subsequently teached tasks will then show the previously defined tolerance parameters by default
+- Fields with white background are editable (rights required!). 
 
+!!! important
+
+    Changes to the parameters in the side panel are only saved, if the 
+    bottom status basr button `teach position` is clicked!
+
+The following tolerance bodys are available:
+
+=== "Sphere"
+
+    ![Sphere](resources/tolerance-sphere.png)
+
+=== "Cylinder"
+
+    ![Cylinder](resources/tolerance-cylinder.png)
+
+=== "Frustum"
+
+    ![Frustum](resources/tolerance-frustum.png)
+
+=== "Frustum+Cylinder"
+
+    ![Frustum+Cylinder](resources/tolerance-frustcyl.png)
 
 
 ## Initial system setup

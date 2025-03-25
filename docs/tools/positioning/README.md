@@ -79,7 +79,7 @@ current_project.billboard = 'http://127.0.0.1:60000/billboard.html'
 
 The `positioning.lua` file automatically scans the `[OPENPROTO]` section for `CHANNEL_XX_POSITIONING=<section>` parameters. It also scans the `[CHANNELS]` section and looks for `POSITIONING=<section>` parameters for custom tools. If found, then the `<section>` is read. The section is expected to contain the `DRIVER=` parameter (to select the actual hardware) driver, as well as the driver-specific parameters for this specific tool. Note, that the driver itself might need some parameters (in its own section in `station.ini`, e.g. the `[POSITION_ART]` section as shown below).
 
-Here is a sample fragment on how to configure an OpenProtocol tool with the AR-Tracking driver (see [available drivers](#available-drivers) below and [ART SmartTrack](./positioning-art.md) for detailed info):
+Here is a sample fragment on how to configure an OpenProtocol tool with the AR-Tracking driver (see [available drivers](#available-drivers) below and [ART SmartTrack](./positioning-art-dtrack.md) for detailed info):
 
 ``` ini
 [OPENPROTO]
@@ -152,12 +152,15 @@ DRIVER=ART
 
 Currently, the following drivers are shipped with the OGS installer:
 
-- `ART`: Driver for the [AR-Tracking SmartTrack3 realtime tracking system](https://ar-tracking.com/en/product-program/smarttrack3), see [ART SmartTrack](./positioning-art.md) for details.
+- `ART`: Driver for the [AR-Tracking SmartTrack3 realtime tracking system](https://ar-tracking.com/en/product-program/smarttrack3), see [ART SmartTrack](./positioning-art-dtrack.md) for details.
 - `IO`: Driver for the rotation + distance type systems (like the Jäger HandyFlex)  with optional support for tilt. Note that this driver requires providing some LUA glue code to read the sensors values from e.g. a field bus and forwarding the raw
 sensor values to the driver by calling `UpdatePos_RotIncLenInc()` or `UpdatePos_RotIncLenAbs()`. The driver then handles coordinate transforms, teaching and tolerance calculations internally. See [IO positioning](./positioning-io.md) for details.
 - `DIGITAL`: Minimal positioning driver, which only uses a single "Inpos" signal. Note that this driver requires providing some LUA glue code to generate the "Inpos" signal (typically by reading I/O values from e.g. a field bus) and thencalling the drivers `UpdatePos_InPos()` function. This can be used to connect exisiting positioning systems or implement own logic based on digital input combinations. See [digital positioning](./positioning-digital.md) for details.
 
-Other positioning systems mentioned above (like [ART Verpose](https://ar-tracking.com/en/product-program/products-connection-software-verpose), [Sarissa local positioning system](https://www.sarissa.de/en/solutions/local-positioning-system), [Nexonar RTLS](https://www.nexonar.com/en/solutions/real-time-location-system), ...) are typically implemented using the `DIGITAL` driver.
+Other positioning systems mentioned above (like [ART Verpose](https://ar-tracking.com/en/product-program/products-connection-software-verpose), [Sarissa local positioning system](https://www.sarissa.de/en/solutions/local-positioning-system), [Nexonar RTLS](https://www.nexonar.com/en/solutions/real-time-location-system), ...) are typically implemented using the `DIGITAL` driver, see details here:
+
+- [ART Verpose](./positioning-art-verpose.md)
+- [Sarissa PositionBox](./positioning-sarissa-digital.md)
 
 ### Customization
 

@@ -22,7 +22,8 @@ nav:
             - Gesipa riveting tool: tools/misc/gesipa-mqtt.md
         - Positioning:
             - Overview: tools/positioning/README.md
-            - ART SmartTrack/DTrack: tools/positioning/positioning-art.md
+            - ART SmartTrack/DTrack: tools/positioning/positioning-art-dtrack.md
+            - ART Verpose: tools/positioning/positioning-art-verpose.md
     - Data output:
         - End-of-process (XML) file: dataoutput/xmlfile.md
         - Printout and label printing: dataoutput/printout.md
@@ -70,7 +71,7 @@ theme:
     - content.tabs.link
   icon:
     annotation: material/help-circle
-    
+
 extra_css:
   - css/neoteroi-mkdocs.css
 

@@ -17,15 +17,65 @@ tags:
 
 ## Usage
 
-If the system is correctly set up (see [Initial system setup](#initial-system-setup) below for more details), then ...
+If the system is correctly set up (see [Initial system setup](#initial-system-setup) below for more details), then you can specifiy which tasks are position controlled (in the [workflow configuration](#workflow-configuration)). On the station, you can then teach-in the positions and tolerances for the task.  
 
 ### Basic functionality
 
+As the underlying idea for positioning is to enable the tool depending on some external information, this is actually similar to the concept of a socket tray / nut selector (enable the tool only, if the correct socket was used): both only enable the tool, if the correct conditions are met. OGS shows the state of "external enable", "socket tray selection" and "positioning" in the same spot in the OGS runtime GUI - next to the tools tile in the status bar.
+
+Here is a sample screenshot of the OGS toolbar when the tool is not in the correct position (expected position 5 - yellow background):
+
+![OGS monitor positioning](resources/monitor-tile-positioning.png)
+
+As all three conditions might be required, OGS processes the information in a sequence:
+
+1. Check if the correct socket is used (if any)
+2. If a correct socket is available (or no check active), check the position
+3. If the position is ok, check any additional external signals (external enable)
+
+If any of the preconditions fail, then OGS jumps back in the sequence to the first missing condition - e.g. if the socket is switched while in the correct position, OGS again shows the socket request.
+
+If the position on the part has changed (not set up initially, the camera has been moved (if not using a reference tracker), ...), then the correct position can be teached through the OGS interface. To start teaching, the following prerequisites must be met:
+
+1. The workflow must be in the `stopped` state (click the `stop` button in the righthand action bar)
+2. The current user needs the right to do teach-in (see [OGS user rights](../../v3/lua/userrights.md))
+3. The task must be position controlled (see [workflow configuration](#workflow-configuration) below)
+
+If all preconditions are met, then clicking the tool tile will switch to the teach-in view:
+![Tech-in tile](resources/monitor-tile-positioning-click.png)
+
+The teach-in view changes the bottom status bar (and optionally opens the [teach-in sidepanel](#teach-in-sidepanel), see below):
+
+![Monitor positioning view](resources/monitor-positioning-view.png)
+
+You can now select the current task (❶) and see/edit its positioning parameters in the side-panel (❷, see [teach-in sidepanel](#teach-in-sidepanel) below for more information). The bottom status bar pane (❸) shows the current position difference (changes to green color if in tolerance for the selected task) and allows to update the recorded position by clicking the `teach position` button. To exit teach-mode, click the `close`button. Note, that the sidepanel can be kept open, so you can see the positioning parameters also in automatic/production mode.
+
+!!! info
+
+    The typical workflow for teaching in a set of tasks/bolts is to switch to teach-in mode, then 
+    1. Select the task from the task list (❶)
+    2. Modify the tolerance parameters and the tool offset (socket/nut length)
+    3. Move the tool into the correct position
+    4. Hit the `teach position` button
+    5. Repeat with 1. until all tasks are teached.
+    Finally exit the teachin mode.
 
 ### Workflow configuration
 
+Conceptionally, positioning is connected to the bolts position on the part, whereas the socket information belongs to the tightening operation (i.e. likely the same for all bolts with the same tightening parameters). OGS therefore uses different spots in the GUI of the workflow editor to configure these parameters (external enable is scripting only):
 
-### Teach-in
+![heOpCfg positioning configuration](resources/heOpCfg-positioning-and-sockets.png)
+
+A task is marked as positioning-enabled by setting the task parameter Position sensor(PS) (column PS in the jobs editor tasks list) to a non-zero value. If a tasks PS-value is set to zero, then the position is not tracked for the task.
+
+!!! note
+
+    If you can't see the PS column, then use `Database --> Settings` and check 
+    the"Use Position Encoder" in the Job section or set the `POSITION_ENCODER_IN_USE` in the GLOBAL-Section of the INI Parameters on the Tools tab to 1 - see the bottom part of the screenshot above)
+
+### Teach-in sidepanel
+
+For information about how to access the teach-in view, see [basic functionality](#basic-functionality) above. 
 
 
 
@@ -39,15 +89,6 @@ As described in [OGS positioning overview](README.md), OGS provides all drivers 
 - Configure the tracking parameters and tool, body, etc. mapping in `station.ini`
 - Configure the OGS webserver and add the html pages to support the sidepanel teach-in ui to the project
 
-<!--
-```  py hl_lines="2"
-# add the shared folder (..\shared)
-OGS.Project.AddPath('../shared')
-
-# some note (1)
-```
-1.  Add this line to include the `positioning.lua` driver in the project.
--->
 
 #### config.lua and station.ini
 
@@ -63,7 +104,7 @@ OGS.Project.AddPath('../shared')
 requires = {
 	"barcode",
 	"user_manager",
-	"positioning",      -- (1)
+	"positioning",      -- (1)!
     -- possibly more...
 }
 current_project.logo_file = '../shared/logo-rexroth.png'
@@ -143,6 +184,30 @@ Custom bodies and tool mounts are defined by adding their geometric data ([pleas
 
 - `targets.atti`: Defines additional bodies
 - `targetmounts.atti`: Defines additional (tool specific) target mounts/adapters
+
+#### Sidepanel teach-in setup
+
+To enable the side panel with teach-in functionality, the html files must be copied into the projects web root. Note that this also requires enabling the OGS integrated web server.
+
+Here is the relevant fragment of `station.ini`:
+
+``` ini title="station.ini"
+[WebServer]
+; The integrated web server is enabled, if a non-empty URL is given. Please note, that
+; this uses the Microsoft http.sys Windows builtin web server, so you will have to
+; register the listening URL with apropriate permissions using the `netsh http add urlacl`
+; commmand (running elevated) from the windows command line, e.g.:
+;   netsh http add urlacl url=http://127.0.0.1:60000/ sddl=D:(A;;GA;;;WD)
+;
+URL=http://127.0.0.1:60000/
+;SDDL=D:(A;;GX;;;S-1-0-0)(A;;GA;;;S-1-5-11)
+; Set the document root folder (if not given, defaults to the project base folder),
+; this might be either a relative path (to the project folder) or an absolute one.
+RootFolder=../shared/webroot
+```
+
+The html files for the positioning system are located in in the OGS installation directory at `<installdir>\lualib\libpositioning\webroot`. Copy all files into your projects webroot (as specified in the `[Webserver]` section in `station.ini`).
+
 
 ### DTrack configuration
 

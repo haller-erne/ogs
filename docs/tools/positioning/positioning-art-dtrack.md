@@ -79,7 +79,7 @@ A task is marked as positioning-enabled by setting the task parameter Position s
 
 For information about how to access the teach-in view and howto open the sidepanel, see [basic functionality](#basic-functionality) above. 
 
-![Sidepanel](resources/monitor-sidepanel.png) { align=right }
+![Sidepanel](resources/monitor-sidepanel.png){ align=right, width="300" }
 The side panel consists of four sections:
 
 1. Information: Shows the currently selected job, task, tool and position number as configured in the workflow editor (see [workflow configuration](#workflow-configuration)).
@@ -95,25 +95,25 @@ Notes:
 !!! important
 
     Changes to the parameters in the side panel are only saved, if the 
-    bottom status basr button `teach position` is clicked!
+    bottom status bar button `teach position` is clicked!
 
 The following tolerance bodys are available:
 
 === "Sphere"
 
-    ![Sphere](resources/tolerance-sphere.png)
+    ![Sphere](resources/tolerance-sphere.png){ width="200" }
 
 === "Cylinder"
 
-    ![Cylinder](resources/tolerance-cylinder.png)
+    ![Cylinder](resources/tolerance-cylinder.png){ width="200" }
 
 === "Frustum"
 
-    ![Frustum](resources/tolerance-frustum.png)
+    ![Frustum](resources/tolerance-frustum.png){ width="200" }
 
 === "Frustum+Cylinder"
 
-    ![Frustum+Cylinder](resources/tolerance-frustcyl.png)
+    ![Frustum+Cylinder](resources/tolerance-frustcyl.png){ width="200" }
 
 
 ## Initial system setup

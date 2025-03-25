@@ -1964,13 +1964,13 @@
 <p class="admonition-title">Info</p>
 <p>The typical workflow for teaching in a set of tasks/bolts is to switch to teach-in mode, then </p>
 <ol>
-<li>Select the task from the task list (❶)</li>
-<li>Modify the tolerance parameters and the tool offset (socket/nut length)</li>
+<li>Select the task from the task list [❶]</li>
+<li>Modify the tolerance parameters and the tool offset (socket/nut length) [❷]</li>
 <li>Move the tool into the correct position</li>
-<li>Hit the <code>teach position</code> button</li>
-<li>Repeat with 1. until all tasks are teached.</li>
+<li>Hit the <code>teach position</code> button [❸]</li>
+<li>Repeat from 1. until all tasks are teached.</li>
 </ol>
-<p>Finally exit the teachin mode.</p>
+<p>Finally exit the teaching mode.</p>
 </div>
 <h3 id="workflow-configuration"><a class="toclink" href="#workflow-configuration">Workflow configuration</a></h3>
 <p>Conceptionally, positioning is connected to the bolts position on the part, whereas the socket information belongs to the tightening operation (i.e. likely the same for all bolts with the same tightening parameters). OGS therefore uses different spots in the GUI of the workflow editor to configure these parameters (external enable is scripting only):</p>
@@ -1982,7 +1982,41 @@
 the"Use Position Encoder" in the Job section or set the <code>POSITION_ENCODER_IN_USE</code> in the GLOBAL-Section of the INI Parameters on the Tools tab to 1 - see the bottom part of the screenshot above)</p>
 </div>
 <h3 id="teach-in-sidepanel"><a class="toclink" href="#teach-in-sidepanel">Teach-in sidepanel</a></h3>
-<p>For information about how to access the teach-in view, see <a href="#basic-functionality">basic functionality</a> above. </p>
+<p>For information about how to access the teach-in view and howto open the sidepanel, see <a href="#basic-functionality">basic functionality</a> above. </p>
+<p><a class="glightbox" href="../resources/monitor-sidepanel.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Sidepanel" src="../resources/monitor-sidepanel.png" /></a> { align=right }
+The side panel consists of four sections:</p>
+<ol>
+<li>Information: Shows the currently selected job, task, tool and position number as configured in the workflow editor (see <a href="#workflow-configuration">workflow configuration</a>).</li>
+<li>Tolerance parameters for the currently selected task. This includes the type of the tolerance body (sphere, cylinder, frustum, frustum+cylinder) and its parameters as well as the offset and the actually recorded 6DOF coordinates. The offset is used to add a linear offset along the tool axis for the actually used socket/bit. The "Vector" values are the coordinates of the normalized vector of the tool axis orientation.</li>
+<li>Current position: The current position information received from the ART DTrack/SmartTrack camera system. This also shows the difference values between the recorded position and the current position of the tool. The InPos row shows the calculated state (position within tolerance, angle within tolerance).</li>
+<li>Tracking info: Shows the current type of positioning driver active (OGS supports multiple drivers) and the current state. You can find some cleartext error messages, e.g. if the tool is not visible to the system, etc. </li>
+</ol>
+<p>Notes:
+- If the position is not teached, the tolerance parameters default to sphere, radius = 20mm, offset = 0mm or the last teached parameters
+- To teach a number of tasks, ideally set the tolerance parameters on the first task and teach. Subsequently teached tasks will then show the previously defined tolerance parameters by default
+- Fields with white background are editable (rights required!). </p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Changes to the parameters in the side panel are only saved, if the 
+bottom status basr button <code>teach position</code> is clicked!</p>
+</div>
+<p>The following tolerance bodys are available:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:4"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Sphere</label><label for="__tabbed_1_2">Cylinder</label><label for="__tabbed_1_3">Frustum</label><label for="__tabbed_1_4">Frustum+Cylinder</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><a class="glightbox" href="../resources/tolerance-sphere.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Sphere" src="../resources/tolerance-sphere.png" /></a></p>
+</div>
+<div class="tabbed-block">
+<p><a class="glightbox" href="../resources/tolerance-cylinder.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Cylinder" src="../resources/tolerance-cylinder.png" /></a></p>
+</div>
+<div class="tabbed-block">
+<p><a class="glightbox" href="../resources/tolerance-frustum.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Frustum" src="../resources/tolerance-frustum.png" /></a></p>
+</div>
+<div class="tabbed-block">
+<p><a class="glightbox" href="../resources/tolerance-frustcyl.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Frustum+Cylinder" src="../resources/tolerance-frustcyl.png" /></a></p>
+</div>
+</div>
+</div>
 <h2 id="initial-system-setup"><a class="toclink" href="#initial-system-setup">Initial system setup</a></h2>
 <h3 id="ogs-configuration"><a class="toclink" href="#ogs-configuration">OGS configuration</a></h3>
 <p>As described in <a href="../">OGS positioning overview</a>, OGS provides all drivers needed to integrate ART-DTrack positioning into your project. However a few manual steps are still needed to configure the project:</p>

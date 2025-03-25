@@ -68,7 +68,9 @@ theme:
     - content.code.copy
     - content.code.annotate 
     - content.tabs.link
-
+  icon:
+    annotation: material/help-circle
+    
 extra_css:
   - css/neoteroi-mkdocs.css
 

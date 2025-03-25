@@ -39,6 +39,7 @@ As described in [OGS positioning overview](README.md), OGS provides all drivers 
 - Configure the tracking parameters and tool, body, etc. mapping in `station.ini`
 - Configure the OGS webserver and add the html pages to support the sidepanel teach-in ui to the project
 
+<!--
 ```  py hl_lines="2"
 # add the shared folder (..\shared)
 OGS.Project.AddPath('../shared')
@@ -46,6 +47,7 @@ OGS.Project.AddPath('../shared')
 # some note (1)
 ```
 1.  Add this line to include the `positioning.lua` driver in the project.
+-->
 
 #### config.lua and station.ini
 

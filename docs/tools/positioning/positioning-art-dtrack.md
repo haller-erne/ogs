@@ -81,18 +81,20 @@ For information about how to access the teach-in view and howto open the sidepan
 
 The side panel consists of four sections:
 
-<div id="he01" class="mdx-columns" markdown>
+<div class="mdx-columns" style="display:flex" markdown>
 
-<div id="he02" markdown>
-![Sidepanel](resources/monitor-sidepanel.png){ align=right, width="200" }
-</div>
-
-<div id="he03" markdown>
+<div markdown>
 1. Information: Shows the currently selected job, task, tool and position number as configured in the workflow editor (see [workflow configuration](#workflow-configuration)).
 2. Tolerance parameters for the currently selected task. This includes the type of the tolerance body (sphere, cylinder, frustum, frustum+cylinder) and its parameters as well as the offset and the actually recorded 6DOF coordinates. The offset is used to add a linear offset along the tool axis for the actually used socket/bit. The "Vector" values are the coordinates of the normalized vector of the tool axis orientation.
 3. Current position: The current position information received from the ART DTrack/SmartTrack camera system. This also shows the difference values between the recorded position and the current position of the tool. The InPos row shows the calculated state (position within tolerance, angle within tolerance).
 4. Tracking info: Shows the current type of positioning driver active (OGS supports multiple drivers) and the current state. You can find some cleartext error messages, e.g. if the tool is not visible to the system, etc. 
 </div>
+
+<div markdown style="width: 200px">
+![Sidepanel](resources/monitor-sidepanel.png){ align=right, width="200" }
+</div>
+
+
 </div>
 
 Notes:

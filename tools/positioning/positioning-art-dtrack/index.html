@@ -1984,13 +1984,15 @@ the"Use Position Encoder" in the Job section or set the <code>POSITION_ENCODER_I
 <h3 id="teach-in-sidepanel"><a class="toclink" href="#teach-in-sidepanel">Teach-in sidepanel</a></h3>
 <p>For information about how to access the teach-in view and howto open the sidepanel, see <a href="#basic-functionality">basic functionality</a> above. </p>
 <p>The side panel consists of four sections:</p>
-<div class="mdx-columns">
+<div class="mdx-columns" id="he01">
 <p><a class="glightbox" href="../resources/monitor-sidepanel.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img align="right," alt="Sidepanel" src="../resources/monitor-sidepanel.png" width="200" /></a></p>
-<div>
-1. Information: Shows the currently selected job, task, tool and position number as configured in the workflow editor (see [workflow configuration](#workflow-configuration)).
-2. Tolerance parameters for the currently selected task. This includes the type of the tolerance body (sphere, cylinder, frustum, frustum+cylinder) and its parameters as well as the offset and the actually recorded 6DOF coordinates. The offset is used to add a linear offset along the tool axis for the actually used socket/bit. The "Vector" values are the coordinates of the normalized vector of the tool axis orientation.
-3. Current position: The current position information received from the ART DTrack/SmartTrack camera system. This also shows the difference values between the recorded position and the current position of the tool. The InPos row shows the calculated state (position within tolerance, angle within tolerance).
-4. Tracking info: Shows the current type of positioning driver active (OGS supports multiple drivers) and the current state. You can find some cleartext error messages, e.g. if the tool is not visible to the system, etc. 
+<div id="he01">
+<ol>
+<li>Information: Shows the currently selected job, task, tool and position number as configured in the workflow editor (see <a href="#workflow-configuration">workflow configuration</a>).</li>
+<li>Tolerance parameters for the currently selected task. This includes the type of the tolerance body (sphere, cylinder, frustum, frustum+cylinder) and its parameters as well as the offset and the actually recorded 6DOF coordinates. The offset is used to add a linear offset along the tool axis for the actually used socket/bit. The "Vector" values are the coordinates of the normalized vector of the tool axis orientation.</li>
+<li>Current position: The current position information received from the ART DTrack/SmartTrack camera system. This also shows the difference values between the recorded position and the current position of the tool. The InPos row shows the calculated state (position within tolerance, angle within tolerance).</li>
+<li>Tracking info: Shows the current type of positioning driver active (OGS supports multiple drivers) and the current state. You can find some cleartext error messages, e.g. if the tool is not visible to the system, etc. </li>
+</ol>
 </div>
 </div>
 <p>Notes:</p>

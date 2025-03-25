@@ -857,6 +857,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#available-drivers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Available drivers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#customization" class="md-nav__link">
     <span class="md-ellipsis">
       Customization
@@ -1710,6 +1719,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#available-drivers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Available drivers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#customization" class="md-nav__link">
     <span class="md-ellipsis">
       Customization
@@ -1779,7 +1797,7 @@ the"Use Position Encoder" in the Job section or set the <code>POSITION_ENCODER_I
 </div>
 <h3 id="project-configuration"><a class="toclink" href="#project-configuration">Project configuration</a></h3>
 <p>Starting with OGS V3.1, the positioning drivers are included in the installation (<code>&lt;installdir&gt;\lualib\libpositioning</code>). To use these drivers, include the <code>positioning.lua</code> file in your project (through the <code>config.lua</code> requires list or 
-directly by adding a <code>require('positioning)</code> somewhere in the code').</p>
+directly by adding a <code>require('positioning)</code> somewhere in the code).</p>
 <p>Adding it to the <code>requires</code> table in the projects <code>config.lua</code> will then look as follows:</p>
 <p><div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">-- add the shared folder (..\shared)</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nv">OGS</span><span class="p">.</span><span class="py">Project</span><span class="p">.</span><span class="nf">AddPath</span><span class="p">(</span><span class="s1">&#39;../shared&#39;</span><span class="p">)</span>
@@ -1793,11 +1811,8 @@ directly by adding a <code>require('positioning)</code> somewhere in the code').
 <a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="nv">current_project</span><span class="p">.</span><span class="py">billboard</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;http://127.0.0.1:60000/billboard.html&#39;</span>
 </code></pre></div>
 1.  Add this line to include the <code>positioning.lua</code> driver in the project.</p>
-<p>The <code>positioning.lua</code> file automatically scans the <code>[OPENPROTO]</code> section for <code>CHANNEL_XX_POSITIONING=&lt;section&gt;</code> parameters. If found, then the <code>&lt;section&gt;</code> is read. The
-section is expected to contain the <code>DRIVER=</code> parameter (to select the actual hardware)
-driver, as well as the driver-specific parameters for this specific tool. Note, that the
-driver itself might need some parameters (in its own section in <code>station.ini</code>).</p>
-<p>Here is a sample fragment on how to configure a tool with the AR-Tracking driver:</p>
+<p>The <code>positioning.lua</code> file automatically scans the <code>[OPENPROTO]</code> section for <code>CHANNEL_XX_POSITIONING=&lt;section&gt;</code> parameters. It also scans the <code>[CHANNELS]</code> section and looks for <code>POSITIONING=&lt;section&gt;</code> parameters for custom tools. If found, then the <code>&lt;section&gt;</code> is read. The section is expected to contain the <code>DRIVER=</code> parameter (to select the actual hardware) driver, as well as the driver-specific parameters for this specific tool. Note, that the driver itself might need some parameters (in its own section in <code>station.ini</code>, e.g. the <code>[POSITION_ART]</code> section as shown below).</p>
+<p>Here is a sample fragment on how to configure an OpenProtocol tool with the AR-Tracking driver (see <a href="#available-drivers">available drivers</a> below and <a href="positioning-art/">ART SmartTrack</a> for detailed info):</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">[OPENPROTO]</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="na">CHANNEL_01</span><span class="o">=</span><span class="s">192.168.1.42</span>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="na">CHANNEL_01_TYPE</span><span class="o">=</span><span class="s">GWK</span>
@@ -1807,17 +1822,60 @@ driver itself might need some parameters (in its own section in <code>station.in
 <a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
 <a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="c1">; --&gt; Connection between the CHANNEL_01 and the ART positioning system</span>
 <a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="k">[POSITIONING_ART_CH1]</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1">; --&gt; use the ART positioning driver for this channel</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1">; Define to use the AR.Tracking positioning system with this channel</span>
 <a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="na">DRIVER</span><span class="o">=</span><span class="s">ART</span>
-<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="c1">; for ART: define the target tracker name/number for this tool as configured in DTrack</span>
-<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="na">TARGET</span><span class="o">=</span><span class="s">1</span>
-<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>
-<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="c1">; --&gt; common parameter required by the ART driver</span>
-<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="k">[POSITIONING_ART]</span>
-<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="c1">; IP address and port number of the SmartTrack camera:</span>
-<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="na">IP</span><span class="o">=</span><span class="s">192.168.1.30</span>
-<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="na">PORT</span><span class="o">=</span><span class="s">5000</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="c1">; Positioning timeout in milliseconds. Defines the grace time before enable</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="c1">; is removed for the tool, when leaving a position. If not set, defaults to 0.</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="na">TIMEOUT</span><span class="o">=</span><span class="s">1000</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="c1">; Define the target tracker and tool adapter for this tool</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="c1">; Target-ID: this is the model of the target mounted to the tool. By default,</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="c1">; T1-T8 are provided, other targets can be defined in &quot;targets.atti&quot;-file </span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="na">TARGET_ID</span><span class="o">=</span><span class="s">T5</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="c1">; Target-Mount-ID: specify the adapter geometry, so the ART driver can calulate</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="c1">; the tool center point depending on where the target is mounted on the tool.</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="c1">; By default, &quot;Rexroth ESA030G&quot; and &quot;GWK Operator Plus&quot; are provided, custom</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="c1">; mounts may be added in &quot;targetmounts.atti&quot;</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="na">TARGET_MOUNT_ID</span><span class="o">=</span><span class="s">Rexroth ESA030G</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="c1">; Default-length of the adapter mounted to the tool (tool center point)</span>
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="na">OFFSET_MM</span><span class="o">=</span><span class="s">0</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="c1">; --&gt; common parameter required by the ART driver</span>
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="k">[POSITIONING_ART]</span>
+<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="c1">; Define the IP-Address of the SmartTrack camera system</span>
+<a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="na">IP</span><span class="o">=</span><span class="s">10.10.2.108</span>
+<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="c1">; If you want to use custom targets or custom target_mounts, then you can</span>
+<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="c1">; specify these in &quot;targets.atti&quot; and &quot;targetmounts.atti&quot; in the following</span>
+<a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a><span class="c1">; folder. If the folder is not specified, it defaults to the current projects</span>
+<a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="c1">; folder.</span>
+<a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="c1">;DB_FOLDER=</span>
+<a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a><span class="c1">; If you want to set the reference tracker, then add the name of the tracker here.</span>
+<a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="c1">; NOTE: the reference tracker must be configured through DTrack and *must* have</span>
+<a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a><span class="c1">;       then name &quot;reference&quot; or &quot;referenz&quot; (case insensitive) as part of the</span>
+<a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a><span class="c1">;       body name, else it will not be accepted.</span>
+<a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a><span class="na">REFERENCE_TRACKER</span><span class="o">=</span><span class="s">Claw Target 21 Reference</span>
 </code></pre></div>
+<p>To add a positioning system to a LUA tool (see <a href="/ogs/v3/lua/customtools/">LUA custom tools</a>), a slightly different syntax is needed. In this case, the <code>POSITIONING=&lt;section&gt;</code> must be added to the tools configuration section. Here is a sample:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">[CHANNELS]</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="na">1</span><span class="o">=</span><span class="s">LuaTool_MyTool</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="k">[LuaTool_MyTool]</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="c1">; standard LUA tool parameters:</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="na">DRIVER</span><span class="o">=</span><span class="s">heLuaTool</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="na">TYPE</span><span class="o">=</span><span class="s">...</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="c1">; add positioning:</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="na">POSITIONING</span><span class="o">=</span><span class="s">MyTool_PosiConfig</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="c1">; --&gt; Connection between the LUA tool and the ART positioning system</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="k">[MyTool_PosiConfig]</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="c1">; Define to use the AR.Tracking positioning system with this channel</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="na">DRIVER</span><span class="o">=</span><span class="s">ART</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="c1">; ... more parameters</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="c1">; --&gt; common parameter required by the ART driver</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="k">[POSITIONING_ART]</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="c1">; ... more parameters</span>
+</code></pre></div>
+<h3 id="available-drivers"><a class="toclink" href="#available-drivers">Available drivers</a></h3>
 <p>Currently, the following drivers are shipped with the OGS installer:</p>
 <ul>
 <li><code>ART</code>: Driver for the <a href="https://ar-tracking.com/en/product-program/smarttrack3">AR-Tracking SmartTrack3 realtime tracking system</a>, see <a href="positioning-art/">ART SmartTrack</a> for details.</li>

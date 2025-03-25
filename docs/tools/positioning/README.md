@@ -59,7 +59,7 @@ A task is marked as positioning-enabled by setting the task parameter Position s
 ### Project configuration
 
 Starting with OGS V3.1, the positioning drivers are included in the installation (`<installdir>\lualib\libpositioning`). To use these drivers, include the `positioning.lua` file in your project (through the `config.lua` requires list or 
-directly by adding a `require('positioning)` somewhere in the code').
+directly by adding a `require('positioning)` somewhere in the code).
 
 Adding it to the `requires` table in the projects `config.lua` will then look as follows:
 
@@ -77,12 +77,9 @@ current_project.billboard = 'http://127.0.0.1:60000/billboard.html'
 ```
 1.  Add this line to include the `positioning.lua` driver in the project.
 
-The `positioning.lua` file automatically scans the `[OPENPROTO]` section for `CHANNEL_XX_POSITIONING=<section>` parameters. If found, then the `<section>` is read. The
-section is expected to contain the `DRIVER=` parameter (to select the actual hardware)
-driver, as well as the driver-specific parameters for this specific tool. Note, that the
-driver itself might need some parameters (in its own section in `station.ini`).
+The `positioning.lua` file automatically scans the `[OPENPROTO]` section for `CHANNEL_XX_POSITIONING=<section>` parameters. It also scans the `[CHANNELS]` section and looks for `POSITIONING=<section>` parameters for custom tools. If found, then the `<section>` is read. The section is expected to contain the `DRIVER=` parameter (to select the actual hardware) driver, as well as the driver-specific parameters for this specific tool. Note, that the driver itself might need some parameters (in its own section in `station.ini`, e.g. the `[POSITION_ART]` section as shown below).
 
-Here is a sample fragment on how to configure a tool with the AR-Tracking driver:
+Here is a sample fragment on how to configure an OpenProtocol tool with the AR-Tracking driver (see [available drivers](#available-drivers) below and [ART SmartTrack](./positioning-art.md) for detailed info):
 
 ``` ini
 [OPENPROTO]
@@ -94,17 +91,64 @@ CHANNEL_01_POSITIONING=POSITIONING_ART_CH1
 
 ; --> Connection between the CHANNEL_01 and the ART positioning system
 [POSITIONING_ART_CH1]
-; --> use the ART positioning driver for this channel
+; Define to use the AR.Tracking positioning system with this channel
 DRIVER=ART
-; for ART: define the target tracker name/number for this tool as configured in DTrack
-TARGET=1
+; Positioning timeout in milliseconds. Defines the grace time before enable
+; is removed for the tool, when leaving a position. If not set, defaults to 0.
+TIMEOUT=1000
+; Define the target tracker and tool adapter for this tool
+; Target-ID: this is the model of the target mounted to the tool. By default,
+; T1-T8 are provided, other targets can be defined in "targets.atti"-file 
+TARGET_ID=T5
+; Target-Mount-ID: specify the adapter geometry, so the ART driver can calulate
+; the tool center point depending on where the target is mounted on the tool.
+; By default, "Rexroth ESA030G" and "GWK Operator Plus" are provided, custom
+; mounts may be added in "targetmounts.atti"
+TARGET_MOUNT_ID=Rexroth ESA030G
+; Default-length of the adapter mounted to the tool (tool center point)
+OFFSET_MM=0
 
 ; --> common parameter required by the ART driver
 [POSITIONING_ART]
-; IP address and port number of the SmartTrack camera:
-IP=192.168.1.30
-PORT=5000
+; Define the IP-Address of the SmartTrack camera system
+IP=10.10.2.108
+; If you want to use custom targets or custom target_mounts, then you can
+; specify these in "targets.atti" and "targetmounts.atti" in the following
+; folder. If the folder is not specified, it defaults to the current projects
+; folder.
+;DB_FOLDER=
+; If you want to set the reference tracker, then add the name of the tracker here.
+; NOTE: the reference tracker must be configured through DTrack and *must* have
+;       then name "reference" or "referenz" (case insensitive) as part of the
+;       body name, else it will not be accepted.
+REFERENCE_TRACKER=Claw Target 21 Reference
 ```
+
+To add a positioning system to a LUA tool (see [LUA custom tools](/ogs/v3/lua/customtools/)), a slightly different syntax is needed. In this case, the `POSITIONING=<section>` must be added to the tools configuration section. Here is a sample:
+
+``` ini
+[CHANNELS]
+1=LuaTool_MyTool
+
+[LuaTool_MyTool]
+; standard LUA tool parameters:
+DRIVER=heLuaTool
+TYPE=...
+; add positioning:
+POSITIONING=MyTool_PosiConfig
+
+; --> Connection between the LUA tool and the ART positioning system
+[MyTool_PosiConfig]
+; Define to use the AR.Tracking positioning system with this channel
+DRIVER=ART
+; ... more parameters
+
+; --> common parameter required by the ART driver
+[POSITIONING_ART]
+; ... more parameters
+```
+
+### Available drivers
 
 Currently, the following drivers are shipped with the OGS installer:
 

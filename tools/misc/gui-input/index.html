@@ -71,7 +71,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#gui-input" class="md-skip">
+        <a href="#gui-input-tool" class="md-skip">
           Skip to content
         </a>
       
@@ -1590,33 +1590,9 @@
         <li class="md-nav__item">
   <a href="#editor-configuration" class="md-nav__link">
     <span class="md-ellipsis">
-      Editor configuration
+      Editor Configuration
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Editor configuration">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#configuring-the-tool" class="md-nav__link">
-    <span class="md-ellipsis">
-      Configuring the tool
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#creating-a-job" class="md-nav__link">
-    <span class="md-ellipsis">
-      Creating a job
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1636,8 +1612,11 @@
 
 
 
-<h1 id="gui-input"><a class="toclink" href="#gui-input">GUI Input</a></h1>
-<p>The GUI Input tool is a custom interface that allows the operator to input values for a set of predefined parameters. It validates the entered values against their allowed ranges, and once the operator clicks the "Accept" button, the result is displayed, indicating whether the values are within the valid range or not. The GUI can accommodate up to 6 parameters for value entry.</p>
+<h1 id="gui-input-tool"><a class="toclink" href="#gui-input-tool">GUI Input Tool</a></h1>
+<p>The GUI Input tool is a custom interface that allows the operator to input values for a set of predefined parameters. It validates the entered values against their allowed ranges, and once the operator clicks the "Accept" button, the result is displayed, indicating whether the values are within the valid range or not. The GUI can accommodate up to 6 parameters for value entry. See the reference image below:</p>
+<!--should I add how result is saved in OGS?-->
+
+<p><a class="glightbox" href="../resources/gui_input_UI.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="properties" src="../resources/gui_input_UI.png" /></a></p>
 <h2 id="installation-and-configuration"><a class="toclink" href="#installation-and-configuration">Installation and configuration</a></h2>
 <h3 id="ogs-project-configuration"><a class="toclink" href="#ogs-project-configuration">OGS project configuration</a></h3>
 <p>OGS has an interface to add additional tool drivers by adding Windows-DLLs to the <code>[TOOL_DLL]</code> section in <code>station.ini</code>. To simplify the creation of custom tool drivers, OGS offers the heLuaTool.dll, which enables the development of tool drivers using pure LUA. With this functionality, the GUI Input tool is seamlessly integrated into OGS, see <a href="../../../v3/lua/customtools/">Lua custom tools</a>.</p>
@@ -1663,11 +1642,32 @@
 <ul>
 <li><code>DRIVER</code>: The name of the windows dll that implements tool drivers.</li>
 <li><code>TYPE</code>: The name of the tool driver specified in your custom LUA tool driver.</li>
-<li><code>Param</code>: When creating parameters, ensure that only <strong>6 parameters</strong> are defined. For each parameter, specify the <strong>type</strong> (e.g., float or int), <strong>min</strong> and <strong>max</strong> values (if applicable), and a <strong>default</strong> value. These defined properties will be displayed on the GUI for the user to input their values accordingly. The <strong>type</strong> will determine the format of the value (e.g., numeric or integer), while the <strong>min</strong> and <strong>max</strong> values define the valid range for the input. The <strong>default</strong> value will be pre-filled if no user input is provided.</li>
+<li><code>Param1 .. Param6</code>: When creating GUI parameters, ensure that <strong>only upto 6 parameters</strong> are defined, though fewer than six is acceptable. For each parameter, specify the <strong>name</strong>, <strong>type</strong> (e.g., float or int), <strong>min</strong> and <strong>max</strong> values (if applicable), and a <strong>default</strong> value. These defined properties will be displayed on the GUI for the user to input their values accordingly. The <strong>type</strong> will determine the format of the value (e.g., numeric or integer), while the <strong>min</strong> and <strong>max</strong> values define the valid range for the input. The <strong>default</strong> value will be pre-filled if no user input is provided.</li>
 </ul>
-<h2 id="editor-configuration"><a class="toclink" href="#editor-configuration">Editor configuration</a></h2>
-<h3 id="configuring-the-tool"><a class="toclink" href="#configuring-the-tool">Configuring the tool</a></h3>
-<h3 id="creating-a-job"><a class="toclink" href="#creating-a-job">Creating a job</a></h3>
+<h2 id="editor-configuration"><a class="toclink" href="#editor-configuration">Editor Configuration</a></h2>
+<ul>
+<li>
+<p><strong>Create a New Tool</strong>: In the Tools section of the Editor, create a new tool with a name of your choice and assign it to the appropriate channel (ensure the channel number matches the one specified in the <code>station.ini</code> file).</p>
+</li>
+<li>
+<p><strong>Create a New Job</strong>: To set up a job and task with the correct operations and tools, follow the steps below:</p>
+</li>
+<li>
+<p>In the Jobs catalog, create a new job and add a new task.</p>
+</li>
+<li>
+<p>In the operation section, add an operation by selecting "new operation".</p>
+<ul>
+<li>To assign an existing operation with its tool, click the three dots next to the operation and select from the window that appears.</li>
+<li>To create a new operation, provide a name for the operation and assign a tool by clicking the three dots next to the tool, which will open the tools window. From there, select the tool created in the previous step. Afterward, assign the newly created operation to the task, as shown in the image below.</li>
+</ul>
+</li>
+<li>
+<p><strong>Create a New Family</strong>: In the Family tab of the Editor, create a new familyFor the family, setup <code>Model</code> and <code>Barcode mask</code> in the section below, then assign the newly created job to the family.</p>
+</li>
+</ul>
+<p><a class="glightbox" href="../resources/gui_input_job.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="gui_input_job" src="../resources/gui_input_job.png" /></a></p>
+<!--Result Display Section?-->
 
 
 

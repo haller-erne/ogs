@@ -1952,7 +1952,7 @@
 <p>If the position on the part has changed (not set up initially, the camera has been moved (if not using a reference tracker), ...), then the correct position can be teached through the OGS interface. To start teaching, the following prerequisites must be met:</p>
 <ol>
 <li>The workflow must be in the <code>stopped</code> state (click the <code>stop</code> button in the righthand action bar)</li>
-<li>The current user needs the right to do teach-in (see <a href="../../../v3/lua/userrights/">OGS user rights</a>)</li>
+<li>The current user needs the rights to do teach-in (see <a href="../../../v3/lua/userrights/">OGS user rights</a>)</li>
 <li>The task must be position controlled (see <a href="#workflow-configuration">workflow configuration</a> below)</li>
 </ol>
 <p>If all preconditions are met, then clicking the tool tile will switch to the teach-in view:
@@ -1962,13 +1962,15 @@
 <p>You can now select the current task (❶) and see/edit its positioning parameters in the side-panel (❷, see <a href="#teach-in-sidepanel">teach-in sidepanel</a> below for more information). The bottom status bar pane (❸) shows the current position difference (changes to green color if in tolerance for the selected task) and allows to update the recorded position by clicking the <code>teach position</code> button. To exit teach-mode, click the <code>close</code>button. Note, that the sidepanel can be kept open, so you can see the positioning parameters also in automatic/production mode.</p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
-<p>The typical workflow for teaching in a set of tasks/bolts is to switch to teach-in mode, then 
-1. Select the task from the task list (❶)
-2. Modify the tolerance parameters and the tool offset (socket/nut length)
-3. Move the tool into the correct position
-4. Hit the <code>teach position</code> button
-5. Repeat with 1. until all tasks are teached.
-Finally exit the teachin mode.</p>
+<p>The typical workflow for teaching in a set of tasks/bolts is to switch to teach-in mode, then </p>
+<ol>
+<li>Select the task from the task list (❶)</li>
+<li>Modify the tolerance parameters and the tool offset (socket/nut length)</li>
+<li>Move the tool into the correct position</li>
+<li>Hit the <code>teach position</code> button</li>
+<li>Repeat with 1. until all tasks are teached.</li>
+</ol>
+<p>Finally exit the teachin mode.</p>
 </div>
 <h3 id="workflow-configuration"><a class="toclink" href="#workflow-configuration">Workflow configuration</a></h3>
 <p>Conceptionally, positioning is connected to the bolts position on the part, whereas the socket information belongs to the tightening operation (i.e. likely the same for all bolts with the same tightening parameters). OGS therefore uses different spots in the GUI of the workflow editor to configure these parameters (external enable is scripting only):</p>

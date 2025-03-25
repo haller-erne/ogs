@@ -1,6 +1,6 @@
 ---
-id: nexo
-name: GUI Input
+id: guiInput
+name: GUIInput
 title: GUI Input
 tags:
     - tool
@@ -14,7 +14,7 @@ The GUI Input tool is a custom interface that allows the operator to input value
 
 ![properties](resources/gui_input_UI.png)
 
-## Installation and configuration
+## Installation and Configuration with OGS
 
 ### OGS project configuration
 
@@ -54,16 +54,16 @@ The typical parameters are:
 
 ## Editor Configuration
 
-- **Create a New Tool**: In the Tools section of the Editor, create a new tool with a name of your choice and assign it to the appropriate channel (ensure the channel number matches the one specified in the `station.ini` file).
+- **Creating a Tool**: In the Tools section of the Editor, create a new tool with a name of your choice and assign it to the appropriate channel (ensure the channel number matches the one specified in the `station.ini` file).
 
-- **Create a New Job**: To set up a job and task with the correct operations and tools, follow the steps below:
+- **Creating a Job**: To set up a job and task with the correct operations and tools, follow the steps below:
 
   1. In the Jobs catalog, create a new job and add a new task.
   2. In the operation section, add an operation by selecting "new operation".
      - To assign an existing operation with its tool, click the three dots next to the operation and select from the window that appears.
      - To create a new operation, provide a name for the operation and assign a tool by clicking the three dots next to the tool, which will open the tools window. From there, select the tool created in the previous step. Afterward, assign the newly created operation to the task, as shown in the image below.
 
-- **Create a New Family**: In the Family tab of the Editor, create a new familyFor the family, setup `Model` and `Barcode mask` in the section below, then assign the newly created job to the family.
+- **Creating a Family**: In the Family tab of the Editor, create a new familyFor the family, setup `Model` and `Barcode mask` in the section below, then assign the newly created job to the family.
 
 
 ![gui_input_job](resources/gui_input_job.png)

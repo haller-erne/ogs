@@ -1,17 +1,17 @@
 ---
-id: nexo
-name: AIOI Pick2Light tool
+id: pick2light
+name: AIOIPick2LightTool
 title: AIOI Pick2Light tool
 tags:
     - tool
     - pick2light
 ---
 
-# AIOI Pick2Light tool
+# AIOI Pick2Light tool 
 
 The AIOI Pick2Light system is an interactive tool that helps operators by clearly indicating the specific shelf location and, when needed, the quantity of items to be picked or placed. Available in several models, each unit features colored LEDs and a single confirmation button, offering versatile configurations to efficiently manage tasks. <!--links? to aioi H/W setup-->
 
-## Installation and configuration
+## Installation and Configuration with OGS
 
 ### OGS project configuration
 

@@ -79,7 +79,9 @@ A task is marked as positioning-enabled by setting the task parameter Position s
 
 For information about how to access the teach-in view and howto open the sidepanel, see [basic functionality](#basic-functionality) above. 
 
-![Sidepanel](resources/monitor-sidepanel.png){ align=right, width="300" }
+<div class="mdx-columns" markdown>
+
+![Sidepanel](resources/monitor-sidepanel.png){ align=right, width="200" }
 The side panel consists of four sections:
 
 1. Information: Shows the currently selected job, task, tool and position number as configured in the workflow editor (see [workflow configuration](#workflow-configuration)).
@@ -91,6 +93,8 @@ Notes:
 - If the position is not teached, the tolerance parameters default to sphere, radius = 20mm, offset = 0mm or the last teached parameters
 - To teach a number of tasks, ideally set the tolerance parameters on the first task and teach. Subsequently teached tasks will then show the previously defined tolerance parameters by default
 - Fields with white background are editable (rights required!). 
+
+</div>
 
 !!! important
 

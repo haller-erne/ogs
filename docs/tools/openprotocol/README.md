@@ -12,6 +12,7 @@ OGS supports connecting tools with `OpenProtocol` interface. As tools differ in 
 - Gehmeyr Exact Wifi tools (for more information, see [Gehmeyr OpenProtocol](./gehmeyr.md))
 - Sturtevant Richmont Global 400 MP connected Exacta 2 digital torque wrenches (for more information, see [Sturtevant Richmond OpenProtocol](./sturtevant.md))
 - HS-Technik riveting tool
+- AMT/EST SX series wifi battery tools (for more information, see [AMT/EST SX wifi battery tools](./amt.md))
 
 The overall configuration for these tools is similar and the actual driver has the same set of configuration parameters - described on this page.
 
@@ -31,6 +32,7 @@ The supported tool types and vendor codes are:
 | CET | CET | Sturtevant Richmond | Global 400mt controller |
 | BTC | BTC | HS-Technik | NutBee riveting tool |
 | ATG | ATG | Cleco | Cleco wifi battery tool |
+| AMT | AMT | AMT/EST | AMT/EST SX series wifi battery tool |
 
 ## Installation
 
@@ -259,6 +261,7 @@ The allowed tool types and their default parameters are listed in the following 
 | CET   | 2 | 5  | no alarms, incorrect (+1) result ID sequence |
 | BTC   | 2 | 5  |  |
 | ATG   | 2 | 5  |  |
+| AMT   | 2 | 5  |  |
 
 NOTES:
 - The Alive send rate and Response timeout default parameter values can be overridden by the [CHANNEL_[tool]_ALIVEXMTT](#channel__alivexmtt) and [CHANNEL_[tool]_RSPTIMEOUT](#channel__rsptimeout) parameters. 

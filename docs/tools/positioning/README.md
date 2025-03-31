@@ -58,8 +58,12 @@ A task is marked as positioning-enabled by setting the task parameter Position s
 
 ### Project configuration
 
-Starting with OGS V3.1, the positioning drivers are included in the installation (`<installdir>\lualib\libpositioning`). To use these drivers, include the `positioning.lua` file in your project (through the `config.lua` requires list or 
-directly by adding a `require('positioning)` somewhere in the code).
+Starting with OGS V3.1, the positioning drivers are included in the installation (`<installdir>\lualib\libpositioning`). To use these drivers, include the `lib.positioning` file in your project (through the `config.lua` requires list or 
+directly by adding a `require('lib.positioning)` somewhere in the code).
+
+!!! note
+
+    OGS provided lua files are referenced from a lib subfolder, to include the positioning.lua file, you must therefore reference it as `lib.positioning`! This allows backwards compatibility with identically named files from the project!
 
 Adding it to the `requires` table in the projects `config.lua` will then look as follows:
 
@@ -70,7 +74,7 @@ OGS.Project.AddPath('../shared')
 requires = {
 	"barcode",
 	"user_manager",
-	"positioning",      -- (1)
+	"lib.positioning",      -- (1)
 }
 current_project.logo_file = '../shared/logo-rexroth.png'
 current_project.billboard = 'http://127.0.0.1:60000/billboard.html'

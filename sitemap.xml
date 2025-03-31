@@ -2,198 +2,198 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://haller-erne.github.io/ogs/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/appnotes/branding/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/appnotes/databanking/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/appnotes/debugging/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/appnotes/station_io/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/appnotes/toolgateway/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/appnotes/traceability/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/appnotes/userdb/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/dataoutput/eventlog/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/dataoutput/printout/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/dataoutput/traceability/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/dataoutput/xmlfile/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/libs/_template_/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/libs/lua-ads/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/libs/lua-dpapi/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/libs/lua-hid/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/libs/lua-modbus/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/libs/lua-net/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/libs/lua-opcua/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/tools/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/tools/doga-wifi/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/tools/remote-tool/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/tools/misc/aioi-pick2light/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/tools/misc/gesipa-mqtt/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/tools/misc/gui-input/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/tools/misc/socket-tray/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/tools/openprotocol/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/tools/openprotocol/crane/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/tools/openprotocol/gehmeyr/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/tools/openprotocol/gwk/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/tools/openprotocol/gwk.old/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/tools/openprotocol/hstechnik/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/tools/openprotocol/nexo/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/tools/openprotocol/ngineric/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/tools/openprotocol/opexplus/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/tools/openprotocol/sturtevant/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/tools/openprotocol/sys350-cs351/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/tools/openprotocol/sys350-ke350/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/tools/positioning/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/tools/positioning/positioning-art-dtrack/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/tools/positioning/positioning-art-verpose/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/tools/positioning/positioning-digital/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/tools/positioning/positioning-io/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/v3/getting-started/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/v3/lua/customtools/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/v3/lua/eventlog/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/v3/lua/userrights/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/v3/lua/webbrowser/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/v3/lua/webserver/</loc>
-         <lastmod>2025-03-25</lastmod>
+         <lastmod>2025-03-31</lastmod>
     </url>
 </urlset>

@@ -15,18 +15,22 @@ nav:
             - GWK OP22/OP+: tools/openprotocol/gwk.md
             - Sturtevant 400mp/TCVe2: tools/openprotocol/sturtevant.md
             - HS-Technik NutBee riveting tool: tools/openprotocol/hstechnik.md
+            - AMT/EST SX Wifi tools: tools/openprotocol/amt.md
         - Non-OpenProtocol tightening tools:
             - n-gineric: tools/openprotocol/ngineric.md
             - Doga BM-series: tools/doga-wifi.md
         - Misc tools:
-            - Socket trays: tools/misc/socket-tray.md
             - OGS GUI input: tools/misc/gui-input.md
             - AIOI Pick2Light: tools/misc/aioi-pick2light.md
             - Gesipa riveting tool: tools/misc/gesipa-mqtt.md
+            - Keyence IV4 Vision sensor: tools/misc/keyence-iv4.md
         - Positioning:
             - Overview: tools/positioning/README.md
             - ART SmartTrack/DTrack: tools/positioning/positioning-art-dtrack.md
             - ART Verpose: tools/positioning/positioning-art-verpose.md
+    - Additional configuration:
+        - Socket trays: tools/misc/socket-tray.md
+        - Projector: tools/misc/projector.md
     - Data output:
         - End-of-process (XML) file: dataoutput/xmlfile.md
         - Printout and label printing: dataoutput/printout.md

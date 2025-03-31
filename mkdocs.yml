@@ -23,7 +23,7 @@ nav:
             - OGS GUI input: tools/misc/gui-input.md
             - AIOI Pick2Light: tools/misc/aioi-pick2light.md
             - Gesipa riveting tool: tools/misc/gesipa-mqtt.md
-            - Keyence IV4 Vision sensor: tools/misc/keyence-iv4.md
+            - Keyence IV4 AI Vision sensor: tools/misc/keyence-iv4.md
         - Positioning:
             - Overview: tools/positioning/README.md
             - ART SmartTrack/DTrack: tools/positioning/positioning-art-dtrack.md

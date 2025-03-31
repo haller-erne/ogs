@@ -49,14 +49,21 @@ The typical parameters are:
 
 In the Tools section of the Editor, create a new tool with a name of your choice (e.g., Pick2light) and assign it to the appropriate channel (ensure the channel number matches the one specified in the `station.ini` file).Next, under the Task & Action properties section, define the following properties:
 - `text`: The text to be shown on the tool's display
-- `farbe`: The color of the confirm button
-- `buzzer`: The buzzer sound setting, which can be set to 'OFF', 'ON', 'BLINK', or 'FAST_BLINK'
+- `farbe`: The color of the confirm button (one of `red`, `green`, `blue`, `white`, `yellow`, `purple`, `torquise` or a 3-character flag combination (see below))
+- `buzzer`: The buzzer sound setting, which can be set to `OFF`, `ON`, `BLINK`, or `FAST_BLINK`
 - `segment`: The property of the display segment
 
 Assign a tool number to each property, as shown in the reference image below. You may also indicate the "type" for each property and provide a brief description.
 
 ![properties](resources/properties.png)
 
+For the `farbe` value, either predefined color variables can be used (`red`, `green`, `blue`, `white`, `yellow`, `purple` or `torquise`) or a 3-character flag combination for the `<r>` (red), `<g>` (green) and `<b>` (blue) color values. The allowed flag values for each color are `0`-`7`and `A`-`F` (the 4 bits as defined in the AIOI documentation).
+
+Here are a few samples:
+
+- `211`: Red = 2 (on), Green = 1 (off), Blue = 1 (off): LED set to steady red color.
+- `311`: Red = 3 (blink), Green = 1 (off), Blue = 1 (off): LED set to red blinking
+- `441`: Red = 4 (fast blink), Green = 4 (fast blink), Blue = 1 (off): LED set for fast yellow (red+green) blinking
 
 
 ### Creating a job

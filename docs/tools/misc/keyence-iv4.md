@@ -98,6 +98,7 @@ requires = {
 current_project.logo_file = '../shared/logo-rexroth.png'
 current_project.billboard = 'http://127.0.0.1:60000/billboard.html'
 ```
+
 1.  Add this line to include the `lua_tool_camera_keyence.lua` driver in the project.
 
 

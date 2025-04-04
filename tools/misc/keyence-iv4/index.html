@@ -2140,16 +2140,35 @@ The IV Series is known for its simplicity to set up and overall good detection r
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="k">[LuaTool_KeyenceIV4]</span>
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="na">DRIVER</span><span class="o">=</span><span class="s">heLuaTool</span>
 <a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="na">TYPE</span><span class="o">=</span><span class="s">camera_keyence</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="na">ENIP_DEVICE</span><span class="o">=</span><span class="s">10.10.2.165</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="c1">;URL=http://10.10.2.165/iv4-wa.html</span>
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="c1">;URL=http://10.10.2.165/iv4-wm.html</span>
-<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="c1">;URL=http://10.10.2.165/iv4-wm-i.html</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1">; IP-Address of the camera</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="na">ENIP_DEVICE</span><span class="o">=</span><span class="s">10.10.2.165</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="c1">;</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="c1">; Define a path to save the image</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="c1">; If not given, then don&#39;t save</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="na">IMAGE_PATH</span><span class="o">=</span><span class="s">c:\monitor\camera</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="c1">;</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="c1">; Define the URL to grab the image from (by default is http://&lt;ENIP_DEVICE&gt;/iliveimage.jpg)</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="c1">; Must be chaned, if you use https for the camera!</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="c1">;IMG_URL=http://10.10.2.165/iliveimage.jpg</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="c1">;</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="c1">; (optional) define an NOK-URL</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="c1">;NOK_URL=http://10.10.2.165/iv4-wm-i.html</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="c1">; Other Keyence URLS:</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="c1">;   http://10.10.2.165/iv4-wa.html</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="c1">;   http://10.10.2.165/iv4-wm.html</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="c1">;   http://10.10.2.165/iv4-wm-i.html</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="c1">; ethernet/ip debug level:</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="na">DEBUG</span><span class="o">=</span><span class="s">3</span>
 </code></pre></div>
 <p>The parameters are:</p>
 <ul>
 <li><code>DRIVER</code> (required): Must be set to <code>heLuaTool</code></li>
 <li><code>TYPE</code> (required): Must be set to <code>camera_keyence</code></li>
-<li><code>ENIP_DEVICE</code>: Specify the IP address of the camera </li>
+<li><code>ENIP_DEVICE</code>: Specify the IP address of the camera</li>
+<li><code>DEBUG</code>: Set the debug level for the EtherNet/IP communication.</li>
+<li><code>IMAGE_PATH</code> (optional): If given, then an image file is written for each camera result taken to the given path. The file name is using the tool ID code (including model, serial and whatever else is defined in <code>BarCode_GetOperationID</code>) and gets an appended timestamp.</li>
+<li><code>IMG_URL</code> (optional): If <code>IMAGE_PATH</code> is given, by default the URL to download the camera image is <code>http://&lt;ENIP_DEVICE&gt;/iliveimage.jpg</code>. By setting <code>IMG_URL</code> you can override this URL and specify your own (e.g. if using <code>https</code>)</li>
+<li><code>NOK_URL</code> (optional): If given, then switches the process view webserver to the given URL, if the camera returns an NOK reading. Note that his can be overriden with the àction_property <code>nok_url</code>. Note also, that the webbrowser must be enabled for the task for this to work (set the <code>url</code> property for the task).</li>
 </ul>
 <p>To load the Keyence camera driver, add <code>lua_tool_camera_keyence</code> to the <code>requires</code> table in the <code>config.lua</code> file in your project folder. Here is a sample <code>config.lua</code> file:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">-- add the shared folder (..\shared)</span>

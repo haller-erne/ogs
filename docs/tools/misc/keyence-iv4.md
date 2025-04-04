@@ -72,17 +72,37 @@ heLuaTool.dll=1
 [LuaTool_KeyenceIV4]
 DRIVER=heLuaTool
 TYPE=camera_keyence
+; IP-Address of the camera
 ENIP_DEVICE=10.10.2.165
-;URL=http://10.10.2.165/iv4-wa.html
-;URL=http://10.10.2.165/iv4-wm.html
-;URL=http://10.10.2.165/iv4-wm-i.html
+;
+; Define a path to save the image
+; If not given, then don't save
+IMAGE_PATH=c:\monitor\camera
+;
+; Define the URL to grab the image from (by default is http://<ENIP_DEVICE>/iliveimage.jpg)
+; Must be chaned, if you use https for the camera!
+;IMG_URL=http://10.10.2.165/iliveimage.jpg
+;
+; (optional) define an NOK-URL
+;NOK_URL=http://10.10.2.165/iv4-wm-i.html
+; Other Keyence URLS:
+;   http://10.10.2.165/iv4-wa.html
+;   http://10.10.2.165/iv4-wm.html
+;   http://10.10.2.165/iv4-wm-i.html
+; ethernet/ip debug level:
+DEBUG=3
 ```
 
 The parameters are:
 
 - `DRIVER` (required): Must be set to `heLuaTool`
 - `TYPE` (required): Must be set to `camera_keyence`
-- `ENIP_DEVICE`: Specify the IP address of the camera 
+- `ENIP_DEVICE`: Specify the IP address of the camera
+- `DEBUG`: Set the debug level for the EtherNet/IP communication.
+- `IMAGE_PATH` (optional): If given, then an image file is written for each camera result taken to the given path. The file name is using the tool ID code (including model, serial and whatever else is defined in `BarCode_GetOperationID`) and gets an appended timestamp.
+- `IMG_URL` (optional): If `IMAGE_PATH` is given, by default the URL to download the camera image is `http://<ENIP_DEVICE>/iliveimage.jpg`. By setting `IMG_URL` you can override this URL and specify your own (e.g. if using `https`)
+- `NOK_URL` (optional): If given, then switches the process view webserver to the given URL, if the camera returns an NOK reading. Note that his can be overriden with the àction_property `nok_url`. Note also, that the webbrowser must be enabled for the task for this to work (set the `url` property for the task).
+
 
 To load the Keyence camera driver, add `lua_tool_camera_keyence` to the `requires` table in the `config.lua` file in your project folder. Here is a sample `config.lua` file:
 

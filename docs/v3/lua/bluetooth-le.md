@@ -34,7 +34,7 @@ The `ble` object provides the following members:
 
 
 | Function Name | Return Type | Description | 
-| -------- | ----------- | ----------- | ---- |
+| -------- | ----------- | ----------- | 
 | `scan_start(callback: function, filter: int)` | - | Can be called to start listening for BLE advertisment frames. If no filter is given (nil), then defaults to `0xFCD2 (BTHome)`. To receive all frames, set to `-1`, else to the 16-bit short UUID of the service. The callback will be called for each frame received and when the scan is stopped. By default, a scan runs for 10 seconds (or until stopped by calling `scan_stop`). | 
 | `scan_stop()` | - | Can be called to stop a currently running scan. If a scan times out, then calling `scan_stop` is not required. | 
 

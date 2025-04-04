@@ -2044,10 +2044,27 @@
 <h3 id="overview_1"><a class="toclink" href="#overview_1">Overview</a></h3>
 <p>If BLE support is enabled in <code>station.ini</code> (see <a href="#configuration">Configuration</a>), then a global <code>ble</code> LUA object is provided.</p>
 <p>The <code>ble</code> object provides the following members:</p>
-<p>| Function Name | Return Type | Description | 
-| -------- | ----------- | ----------- | ---- |
-| <code>scan_start(callback: function, filter: int)</code> | - | Can be called to start listening for BLE advertisment frames. If no filter is given (nil), then defaults to <code>0xFCD2 (BTHome)</code>. To receive all frames, set to <code>-1</code>, else to the 16-bit short UUID of the service. The callback will be called for each frame received and when the scan is stopped. By default, a scan runs for 10 seconds (or until stopped by calling <code>scan_stop</code>). | 
-| <code>scan_stop()</code> | - | Can be called to stop a currently running scan. If a scan times out, then calling <code>scan_stop</code> is not required. | </p>
+<table>
+<thead>
+<tr>
+<th>Function Name</th>
+<th>Return Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>scan_start(callback: function, filter: int)</code></td>
+<td>-</td>
+<td>Can be called to start listening for BLE advertisment frames. If no filter is given (nil), then defaults to <code>0xFCD2 (BTHome)</code>. To receive all frames, set to <code>-1</code>, else to the 16-bit short UUID of the service. The callback will be called for each frame received and when the scan is stopped. By default, a scan runs for 10 seconds (or until stopped by calling <code>scan_stop</code>).</td>
+</tr>
+<tr>
+<td><code>scan_stop()</code></td>
+<td>-</td>
+<td>Can be called to stop a currently running scan. If a scan times out, then calling <code>scan_stop</code> is not required.</td>
+</tr>
+</tbody>
+</table>
 <p>The callback function provided in the <code>scan_start</code> parameter is called with a single table argument:</p>
 <ul>
 <li>The argument will be <code>nil</code>, if the scan stopped (timeout or stopped by calling <code>scan_stop</code>)</li>

@@ -6,14 +6,14 @@
 
 !!! info
 
-    This page describes the specifics for configuring the AMT/EST SX wifi byttery tool to work with OGS, for general information about the OGS OpenProtocol configuration, see [OpenProtocol Tools](README.md).
+    This page describes the specifics for configuring the AMT/EST SX wifi battery tools to work with OGS, for general information about the OGS OpenProtocol configuration, see [OpenProtocol Tools](README.md).
 
 
 ## Overview
 
 AMT SX-Schrauberfamilie von EST
 
-![AMT tightening tools](resources/amt-tools.png) {width="300", aligh=right}
+![AMT tightening tools](resources/amt-tools.png){ width="300", aligh=right }
 
 (default user: admin/admin, amt/amt)
 

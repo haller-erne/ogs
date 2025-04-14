@@ -14,8 +14,9 @@ nav:
             - OPEXplus:  tools/openprotocol/opexplus.md
             - GWK OP22/OP+: tools/openprotocol/gwk.md
             - Sturtevant 400mp/TCVe2: tools/openprotocol/sturtevant.md
-            - HS-Technik NutBee riveting tool: tools/openprotocol/hstechnik.md
             - AMT/EST SX Wifi tools: tools/openprotocol/amt.md
+            - Cleco Wifi tools: tools/openprotocol/cleco.md
+            - HS-Technik NutBee riveting tool: tools/openprotocol/hstechnik.md
         - Non-OpenProtocol tightening tools:
             - n-gineric: tools/openprotocol/ngineric.md
             - Doga BM-series: tools/doga-wifi.md

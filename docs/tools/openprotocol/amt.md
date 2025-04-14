@@ -14,11 +14,11 @@
 ![AMT tightening tools](resources/amt-tools.png){ width="300", align=right }
 The [AMT SX family of tightening tools from EST](https://amt.schmidgruppe.de/de/produkte/amt/schraubtechnik/akku-werkzeuge-hsxb.html) provide optimized ergonomic design and lightweight configuration to reduce operator strain. This leads to an increase in individual productivity and, as a result, a reduction in running production costs. The tools feature a build-in controller with web access for easy integration into a wifi infrastructure and stand-alone operation. The web server provides all functions needed for setting up, configuring, diagnostics and for monitoring the tools operation.
 
-To access the configuration, open a web browser and connect it to the tools IP address (hint: press and hold the acknowledge button right next to the display until the text `Maintainence` is shown, then use the up/down buttons to the left of the display to scroll to the wifi menu to readout the current connection settings). To initially configure the tool (before wifi is correctly configured), remove the battery and connect a PC to the `CPU` port using a Micro-USB cable - this will load a new RNDIS USB network interface and allows connecting to the tool at the predefined IP address 192.168.252.33 (default user: admin/admin, amt/amt).
+To access the configuration, open a web browser and connect it to the tools IP address (hint: press and hold the acknowledge button right next to the display until the text `Maintainence` is shown, then use the up/down buttons to the left of the display to scroll to the wifi menu to readout the current connection settings or to enable the internal wifi access point - the SSID is `xSXSBW_<sn>` with password `schrauber`). To initially configure the tool (before wifi is configured), remove the battery and connect a PC to the `CPU` port using a Micro-USB cable - this will load a new RNDIS USB network interface and allows connecting to the tool at the predefined IP address 192.168.252.33 (default user: admin/admin, amt/amt).
 
 ## OpenProtocol setup
 
-To enable 
+To enable the OpenProtocol interface, connect to the tool using a webbrowser and navigate to `Configuration --> Settings --> Communication`. Then configure as follows:
 
 ![alt text](resources/amt-openprotocol.png)
 
@@ -26,23 +26,47 @@ To enable
 
 ### Nok/acknowledge/retry parameters 
 
-![alt text](resources/amt-programlist.png)
+To ensure, that the operator can not incorrectly loosen, typically a tightening program should be set up to not allow loosen (as this is handled by OGS). The AMT tool generally has three different types of tightening programs:
+
+1. Clockwise tightening (pset > 0): Running with the direction switch set to CW and the direction set to "right turning" in the general section of the program parameters 
+2. Counterclockwise tightening (pset > 0): Running with the direction switch set to CW and the direction set to "left turning" in the general section of the program parameters
+3. Loosening (pset = 0): Running with the direction switch set to CCW
+
+Here is an overview:
+![alt text](resources/amt-prg-types.png)
+
+The tool internally requires an acknowledge after NOK which can be configured to automatically enable the loosening mode (PSet = 0) and requiring the user to switch the direction switch to CCW. 
+
+For use with OGS there are currently (with firmware `LIB-OP V0.0.4.3`) two options to use with rework/loosen:
+
+1. Don't use PSet 0 (let OGS automatically select a loosen PSet > 0 and start with CW direction switch start). In this case, PSet 0 can be be deleted to prevent it from being selected by the operator. Make sure to enable [NOK acknowledge (see below)](#nok-acknowledge) to prevent OGS from switching directions without acknowledge!
+2. Use PSet 0 as loosen. Note, that in this case OGS cannot prevent the operator from (incorrectly) running a loosen operation (e.g. loosen an already good bolt), so the program *must* at least be configured to only run after Nok. OGS will interpret each received rundown result with PSet = 0 as a loosen operation and will reset the state of the current bolt accordingly. However, that this still might allow the operator to falsely run loosen on an already tightened bolt, e.g. if the sequence is changed by manually interacting with the OGS interface! 
+
+Here are the recommended setting for option 1:
 
 ![alt text](resources/amt-programparameters.png)
 
+!!! note
 
-## NOK-Acknowledge
+    Make sure to save and restart (soft restart) the tool after changing a program.
+    Note also, that changing a program is only possible, if the tool is not currently enabled - else saving the program will timeout or throw an error!
 
-Common settings
+### CW/CCW switch settings
+
+With the current firmware version (`LIB-OP V0.0.4.3`), it is neither possible to monitor the start switch direction setting, nor is it possible to block CW or CCW start specifically. 
+
+### NOK-Acknowledge
+
+The tool supports integrated NOK acknowledge through OpenProtocol alarms. To make this work, the NOK-acknowledge mode should be set either globally (see below) and used in the tightening programs or set in each tightening program specifically.
 
 ![alt text](resources/amt-global.png)
 
+The actual flow of events in case of an active NOK-ackowledge is then as follows:
 
-### Loosen program
-
-If PSet 0 does not exist, then create a new one as follows:
-
-![alt text](resources/amt-loosen.png)
+1. NOK rundown sends NOK tightening result to OGS and raises the E356 alarm
+2. OGS blocks enable (wait until alarm is released again, effectively waiting for acknowledge)
+3. Operator must acknowledge the NOK rundown as configured (switch to CCW, hit start button, ...)
+4. The tool releases the alarm after the operator acknowledge, so OGS now can step to the next action (usually select a loosening program) and enable the tool again if needed
 
 ## OGS configuration
 
@@ -72,114 +96,19 @@ CHANNEL_01_CURVE_REQUEST=1
 
 ### Tool configuration
 
-To add a KE350 tool, add it as any other tool to the tool configuration and define the default loosen program:
+To add a tool, add it as any other tool to the tool configuration and define the default loosen program:
 
 ![heOpCFG tool configuration - loosen program](resources/heOpCfg-tool-loosen-params.png)
 
-### Multi-Spindle configuration
-
-For KE350, OGS uses application start (fastening operations), where a single start command can start a group of spindles.
-If more than a single spindle is started, OGS needs to know which bolt is mapped to which spindle. This is done by assigning 
-a group (this defines which bolts belong to a single application start) and a sequence number (which actually maps the
-bolt to the spindle). The Both parameters are set in the `appl_start` task parameter.
-
-The `appl_start` task parameter can be enabled in the workflow editor in `database --> settings` as follows (check the "Application start" parameter):
-![Database settings](resources/heOpCfg-settings.png){ width=300px }
-
-The `appl_start` parameter is then found in the task properties:
-![heOpCfg - job config appl_start](resources/heOpCfg-appl_start.png)
-
-The screenshot also shows how the spindles of the fastening operation is mapped: the `appl_start` property consists of the following two parts:
-
-    appl_start = <group><sequence>
-
-where
-
-- `<group>` is a unique name to group the spindles of a single rundown. All bolts of a spindle group started through a single fastening operation **must** have the same `<group>` name.
-- `<sequence>` is the sequential number of the spindle as configured in the BS350 application. 
-
-The following screenshot shows a sample mapping:
-
-![alt text](resources/heOpCfg-BS350-App.png)
-
-Here application number 11 (fastening operation) is defined in BS350 and selected on OGS (operation "20Nm"). The application consists of two bolts:
-
-- Sequence #1: Name="Pos1", Channel 4.3, Program 5
-- Sequence #2: Name="Pos2", Channel 4.4, Program 5
-
-The fastening operation in OGS is named `GRP1_B` (the `<group>` name)
-
-!!! note
-
-    If a fastening operation is used multiple times in an OGS
-    job, then a unique group name must be used for each
-    fastening operation.
-
-If e.g. 3 times the dual-spindle application from the screenshot above shall be used, then the following six tasks can be 
-configured:
-
-::spantable::
-
-| Application start | OGS Task  | appl_start | Group  | Sequence |
-| ----------------- | --------  | ---------- | ------ | -------- |
-| FO start #1 @span | S1        | GRP1_A1    | GRP1_A | 1        |
-|                   | S2        | GRP1_A2    |        | 2        |
-| FO start #2 @span | S3        | GRP1_B1    | GRP1_B | 1        |
-|                   | S4        | GRP1_B2    |        | 2        |
-| FO start #3 @span | S5        | GRP1_C1    | GRP1_C | 1        |
-|                   | S6        | GRP1_C2    |        | 2        |
-
-::end-spantable::
-
-
 ### Loosen behaviour
 
-Even though there are more option (see the general discussion in [OpenProtocol Tools - Loosen modes](README.md#loosen-modes)), the following section shows the common and recommended configurations.
+Even though there are more options (see the general discussion in [OpenProtocol Tools - Loosen modes](README.md#loosen-modes)), the current firmware of the tools do neither support getting the state of the start switch direction nor do they support selective blocking of CW/CCW starts. So the recommended setting is to use NOK acknowledge and letting OGS select a loosen CW program afterwards (or do a simple retry if that is sufficient).
 
-#### CCWSel used
+#### Simple retry
 
-This is the preferred configuration, as the user-experience is most intuitive. Unfortunately the most often used start grip handles do not provide the neccessary signals, as a start grip handle with two outputs as follows is needed:
+Set the rework strategy to 2 (repeat) in `station.ini` by setting the parameter `NOK_STRATEGIE=2` in the `[GENERAL]` section.
 
-- CW: start signal for tightening
-- CCWSel: state of the direction switch, true, if CCW selected
+#### Loosen after acknowledge
 
-With this configuration, the following settings are recommended:
+Make sure to define a loosen program for the tool in the [tool configuration](#tool-configuration).
 
-- `CHANNEL_<tool>_CCW_ACK` = 1
-- Connect `OP1.1 Input` to `FO 1 CCWLock` 
-- Connect `OP1.0 Output` to the CCWSel signal of the handle (using AppIn/AppOut signals to bridge to IM24V/fieldbus)
-- Usually `FO 1 NokAck` is not connected
-
-This forces the operator to switch the CW/CCW selection switch to CCW every time a loosen process is needed.
-Please note, that only the custom loosen program number can be used for loosen, as the CCW start signal is not
-assigned.
-
-#### No CCWSel, but NokAck
-
-As most start handles only provide seperate start CW and start CCW signals (without a signal for indicating the CW/CCW position), CCWSel often cannot be used. To ensure sequence interlock between tightening and loosening, 
-the `FO 1 NokAck` signal is connected to an external pushbutton (typically the start handle provides this). In this case, the following signals are typically used:
-
-- CW: start signal for tightening
-- CCW: start signal for loosening
-- NOKAck: A normally closed (high) signal to acknowledge NOK, re-enable the tool
-
-With this configuration, the following settings are recommended:
-
-- `CHANNEL_<tool>_CCW_ACK` = 0
-- Connect `OP1.1 Input` to `FO 1 CCWLock` 
-- Connect `FO 1 NokAck` to the external NokAck pushbutton
-
-This blocks the tool after an NOK until the NokAck button is pressed.
-The `FO 1 CCWLock` signal ensures that loosen is blocked, if it is
-not allowed. 
-
-Note that loosening now uses the given application number set 
-in the tool configuration and uses the CW start. If applications
-with a different number of spindles are used, then an explicit
-rework operation must be defined, matching the tightening operation
-spindle set.
-
-#### No CCWSel, no NokAck
-
-See above, but interlock is now not possible. After a NOK rundown
-OGS immediately selects the loosen operation, which is started with the next start (CW) signal...

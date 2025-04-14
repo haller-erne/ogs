@@ -75,7 +75,7 @@ Configuring OGS for use with AMT/EST SX tools requires the following:
 ### station.ini configuration
 
 Station.ini configuration uses the standard parameters of the OpenProtocol driver (see [OpenProtocol Tools](README.md)).
-To work with the `Rexroth OP-Ford R1.0` protocol in the KE350, the channel TYPE parameter must be set to `AMT`.
+To work with the AMT version of `OpenProtocol`, the channel TYPE parameter must be set to `AMT`.
 
 Here is a sample configuration for tool/channel 1:
 

@@ -160,9 +160,10 @@ from the operator, so the NOK will not pass unnoticed. OGS provides the followin
 
 !!! danger
 
-    For hand held tools it is very important to enable the `CHANNEL_<tool>_CCW_ACK` feature and
-    require the operator to switch to loosen before running the tool. Otherwise he might get suprised
-    by the reaction force and could get injured!
+    For hand held tools it is very important to enable the `CHANNEL_<tool>_CCW_ACK` feature and require the operator to switch to loosen before running the tool (this is the most intuitive option). As an alternative, also an explicit acknowledge after NOK can be used instead.
+    
+    Without an operator interaction (switch to loosen or acknowledge) he might get suprised by the reaction force and could get injured!
+
 
 ### Wait for CCWSel input
 

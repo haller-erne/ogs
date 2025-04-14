@@ -2797,9 +2797,8 @@ cannot run twice and the operator cannot work on the "wrong" bolt.</p>
 </div>
 <div class="admonition danger">
 <p class="admonition-title">Danger</p>
-<p>For hand held tools it is very important to enable the <code>CHANNEL_&lt;tool&gt;_CCW_ACK</code> feature and
-require the operator to switch to loosen before running the tool. Otherwise he might get suprised
-by the reaction force and could get injured!</p>
+<p>For hand held tools it is very important to enable the <code>CHANNEL_&lt;tool&gt;_CCW_ACK</code> feature and require the operator to switch to loosen before running the tool (this is the most intuitive option). As an alternative, also an explicit acknowledge after NOK can be used instead.</p>
+<p>Without an operator interaction (switch to loosen or acknowledge) he might get suprised by the reaction force and could get injured!</p>
 </div>
 <h3 id="wait-for-ccwsel-input"><a class="toclink" href="#wait-for-ccwsel-input">Wait for CCWSel input</a></h3>
 <p>If <code>CHANNEL_&lt;tool&gt;_CCW_ACK</code> is set to a non-zero value in the <code>station.ini</code> configuration for the tool, then OGS requires the tools direction switch position to be in the correct position according to the processes currently requested tightening mode (tighten/loosen). If not, an alert message will be shown to indicate that the operator should change the direction switch accordingly and the enable signal for the tool is inactive.</p>

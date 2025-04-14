@@ -11,13 +11,15 @@
 
 ## Overview
 
-AMT SX-Schrauberfamilie von EST
-
-![AMT tightening tools](resources/amt-tools.png){ width="300", aligh=right }
+![AMT tightening tools](resources/amt-tools.png){ width="300", align=right }
+The AMT SX family of tightening tools from EST provide optimized ergonomic design and lightweight configuration to reduce operator strain. This leads to an increase in individual productivity and, as a result, a reduction in running production costs. The tools feature a build-in controller with web access for easy integration into a wifi infrastructure and stand-alone operation. The web server provides all functions needed for setting up, configuring, diagnostics and monitoring the tools operation.
+ 
 
 (default user: admin/admin, amt/amt)
 
 ## OpenProtocol setup
+
+To enable 
 
 ![alt text](resources/amt-openprotocol.png)
 

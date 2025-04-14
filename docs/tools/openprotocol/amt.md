@@ -49,7 +49,7 @@ Here are the recommended setting for option 1:
 
 ### CW/CCW switch settings
 
-With the current firmware version (`LIB-OP V0.0.4.3`), it is neither possible to monitor the start switch direction setting, nor is it possible to block CW or CCW start specifically. 
+With the current firmware version (`LIB-OP V0.0.4.3`), it is neither possible to monitor the start switch direction setting, nor is it possible to block CW or CCW starts specifically. 
 
 ### NOK-Acknowledge
 

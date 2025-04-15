@@ -16,6 +16,7 @@ nav:
             - Sturtevant 400mp/TCVe2: tools/openprotocol/sturtevant.md
             - AMT/EST SX Wifi tools: tools/openprotocol/amt.md
             - Cleco Wifi tools: tools/openprotocol/cleco.md
+            - Makita Wifi tools: tools/openprotocol/makita.md
             - HS-Technik NutBee riveting tool: tools/openprotocol/hstechnik.md
         - Non-OpenProtocol tightening tools:
             - n-gineric: tools/openprotocol/ngineric.md

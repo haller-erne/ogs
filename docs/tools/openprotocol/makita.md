@@ -17,7 +17,7 @@ tags:
 
 ## Overview
 
-![Makita tools](resources/makita.png){ width="300", align=right }
+![Makita tools](resources/makita.png){ width="200", align=right }
 The [Makita](https://www.makita.com) industrial [18V battery clutch tools](https://www.makita.de/data/pam/public/01_kataloge/801425_industrieprospekt_2024_dz_online.pdf) of the `FM4Z` series provide wifi connectivity including OpenProtocol interface support through the [MTC wifi module](https://www.visiondevices.de/seo/produkte/micro-tool-controller/). The clutch tools are available as pistol and angle tools in the range of 0.5-12/40Nm. The speed is programmable to support hard and soft joints, the accuracy is +/- 10% (Cmk > 1.67, VDI/VDE 2647).   
 
 To access the configuration, use the integrated web server of the tool. If the tool is already connected to the wifi, enter its IP address, else connect the USB-C interface of the MTC module. Connecting the tool over USB will load a new RNDIS USB network interface and allows connecting to the tool at the predefined IP address http://192.168.7.1/. After the webbrowser is connected, enter the credentials (default user/password: user/user) to log in:

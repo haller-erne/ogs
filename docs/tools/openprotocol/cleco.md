@@ -1,3 +1,13 @@
+---
+id: cleco
+name: Cleco CellCore Wifi battery tools
+title: Cleco CellCore Wifi battery tools
+tags:
+    - tool
+    - tightening
+    - openprotocol
+---
+
 # Cleco CellCore Wifi battery tools
 
 !!! info

@@ -1,3 +1,13 @@
+---
+id: amt
+name: AMT/EST SX Wifi battery tools
+title: AMT/EST SX Wifi battery tools
+tags:
+    - tool
+    - tightening
+    - openprotocol
+---
+
 # AMT/EST SX Wifi battery tools
 
 !!! info

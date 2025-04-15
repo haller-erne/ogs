@@ -29,9 +29,9 @@ After logging in, the main page is shown - the configuration is accessible throu
 ![alt text](resources/makita-home.png)
 
 To configure the Wifi settings (or read the current settings), select the `Ctrl_Setup` button, else go to `App_Setup` to configure the OpenProtocol settings and the tightening parameters. Here are two sample screenshots from the Wifi configuration:
+
 ![alt text](resources/makita-wifi-info.png){ width="100" }
 ![alt text](resources/makita-wifi.png){ width="100" }
-
 
 ## OpenProtocol setup
 
@@ -50,12 +50,78 @@ The most important settings here are:
 
 ## Program definition
 
-### Nok/acknowledge/retry parameters 
+The following sections provide information about how to setup the tool to ensure smooth operation with OGS. The settings shown here basically do the following:
 
+- After OGS enables the tool, only clockwise start is allowed (no loosen)
+- The tool requires acknowledge after an Nok rundown (by switching the direction switch to CCW).
+- After an NOK a single loosen run is allowed. 
 
-Note: for the login to work, make sure OGS is stopped.
+### PSet configuration
 
-
+Go to `App_Setup --> PSET` and configure as follows:
 
 ![alt text](resources/makita-pset.png)
+
+Make sure to set the following:
+
+- `Batch size`: set to `1` to allow a single run only
+
+### Program settings
+
+Go to `App_Setup --> Program` and configure as follows:
+
 ![alt text](resources/makita-program.png)
+
+Make sure to set the following:
+
+- `Screw Count`: set to `1` to only allow a single run
+- `Fails Per Screw`: set to `1` to only allow a single Nok run
+- `Release Mode`: set to `NOK` to allow loosen after Nok
+- `Quit NOK`: set to `Manual` to require switching the direction switch to CCW to acknowledge a previous Nok rundown
+- `1xNOK -> Cancel`: set to `NO` to not abort a sequence with the first Nok
+- `1xNOK -> Total Nok`: set to `YES` to force an NOK result, if an Nok occurs
+
+## OGS configuration
+
+### Overview
+
+Configuring OGS for use with Makita MTC wifi interface requires the following:
+- Configure the tool connection parameters in `station.ini`
+- Database setup, workflow and tool configuration in the heOpCfg workflow editor
+
+### station.ini configuration
+
+Station.ini configuration uses the standard parameters of the OpenProtocol driver (see [OpenProtocol Tools](README.md)).
+To work with the Makita version of `OpenProtocol`, the channel TYPE parameter must be set to `MTC`.
+
+Here is a sample configuration for tool/channel 1:
+
+``` ini
+[OPENPROTO]
+# Channel/Tool 1 parameters
+CHANNEL_01=10.10.2.163
+CHANNEL_01_PORT=4545
+CHANNEL_01_TYPE=MTC
+CHANNEL_01_CCW_ACK=0
+CHANNEL_01_CHECK_TIME_ENABLED=1
+CHANNEL_01_CURVE_REQUEST=1
+```
+
+### Tool configuration
+
+To add a tool, add it as any other tool to the tool configuration, but don't define a loosen program (leave the loosen column empty):
+
+![heOpCFG tool configuration - loosen program](resources/makita-heOpCfg.png)
+
+### Loosen behaviour
+
+Even though there are more options (see the general discussion in [OpenProtocol Tools - Loosen modes](README.md#loosen-modes)), it is recommended to setup the tool according to what is described above. Ogs then actually only enabled the tool for a single clockwise rundown (loosen is blocked before). If an Nok happens, then the tool does not report it back to OGS before a loosen run is done (by switching the start switch to CCW and starting the tool using the start button).
+
+### Simple retry
+
+Set the rework strategy to 2 (repeat) in `station.ini` by setting the parameter `NOK_STRATEGIE=2` in the `[GENERAL]` section.
+
+#### Loosen after acknowledge
+
+Make sure to define a loosen program for the tool in the [tool configuration](#tool-configuration).
+

@@ -1125,9 +1125,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#mode-2-multi-spindle-tightening-and-led-behavior" class="md-nav__link">
+  <a href="#mode-2-for-multi-spindle-tightening-tool-and-led-behavior" class="md-nav__link">
     <span class="md-ellipsis">
-      Mode 2: Multi-Spindle Tightening and LED Behavior
+      Mode 2: For Multi-Spindle Tightening Tool and LED Behavior
     </span>
   </a>
   
@@ -2033,9 +2033,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#mode-2-multi-spindle-tightening-and-led-behavior" class="md-nav__link">
+  <a href="#mode-2-for-multi-spindle-tightening-tool-and-led-behavior" class="md-nav__link">
     <span class="md-ellipsis">
-      Mode 2: Multi-Spindle Tightening and LED Behavior
+      Mode 2: For Multi-Spindle Tightening Tool and LED Behavior
     </span>
   </a>
   
@@ -2115,11 +2115,12 @@
 4. If the wrong socket is picked, it changes from yellow to red, indicating an error state.</p>
 <p>In <em>Mode 1</em>, any number of sockets can be mapped to each tool, and these mappings can overlap.</p>
 <hr />
-<h3 id="mode-2-multi-spindle-tightening-and-led-behavior"><a class="toclink" href="#mode-2-multi-spindle-tightening-and-led-behavior">Mode 2: Multi-Spindle Tightening and LED Behavior</a></h3>
+<h3 id="mode-2-for-multi-spindle-tightening-tool-and-led-behavior"><a class="toclink" href="#mode-2-for-multi-spindle-tightening-tool-and-led-behavior">Mode 2: For Multi-Spindle Tightening Tool and LED Behavior</a></h3>
 <p><em>Mode 2</em> is designed for multi-spindle tightening tools, where two sockets can be picked at the same time. The sockets to be picked are specified in the <code>station.ini</code> file under the respective application number (discussed in detail later). Here's how the LED behavior works in this mode:</p>
 <ul>
-<li><strong>Active Sockets</strong>: These sockets are blinking green.</li>
-<li><strong>Other Sockets in Tray</strong>: All other sockets in the tray are illuminated in yellow.</li>
+<li><strong>Active Sockets</strong>: These are the sockets that are active for the tool in mode2 and are illuminated in yellow.</li>
+<li><strong>Socket to be Picked</strong>: These sockets are blinking green.</li>
+<li><strong>Other Sockets in Tray</strong>: All other sockets in the tray are turned off.</li>
 </ul>
 <p><strong>Behavior Flow</strong>:
 1. The sockets that should be picked will blink green.
@@ -2127,7 +2128,7 @@
 3. If the wrong socket is picked, it changes from yellow to red, indicating an error state.</p>
 <p>The only restriction, in general, is that channels cannot be in both Mode 1 and Mode 2 at the same time.</p>
 <h2 id="ogs-project-configuration"><a class="toclink" href="#ogs-project-configuration">OGS project configuration</a></h2>
-<p>To enable Lua support for the socket trays, place the Lua script in the project folder and then add the script name under the "required" section in the config.lua file.</p>
+<p>To enable Lua support for the socket trays, place the Lua script in the project folder and then add the script name under the "requires" section in the config.lua file.</p>
 <h3 id="configuring-stationini"><a class="toclink" href="#configuring-stationini">Configuring station.ini</a></h3>
 <div class="highlight"><span class="filename">station.ini</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">[SocketTray]</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="na">ENABLED</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1</span>
@@ -2194,7 +2195,8 @@
 <h2 id="editor-configuration"><a class="toclink" href="#editor-configuration">Editor configuration</a></h2>
 <p>To use the socket tray, enable the "Use socket tray" option in the <strong>Editor</strong> settings. Next, create a job, tasks, and operations in the <strong>Jobs catalog</strong> of the Editor. For each operation, assign the appropriate tool (make sure the tool/channel number matches the number provided in the <strong>station.ini</strong> file). </p>
 <p>For tools in <strong>Mode 1</strong> (as specified in the <strong>ini</strong> file), assign the corresponding socket number. This number indicates which socket should be picked during the operation, and it must be from the list of sockets assigned to that tool/channel in the <strong>ini</strong> file. </p>
-<p>For tools in <strong>Mode 2</strong>, specify the program number, which should match the <strong>application number</strong> listed in the <strong>ini</strong> file. Ensure that the program number aligns with the values in the <strong>ini</strong> file. </p>
+<p>For tools in <strong>Mode 2</strong>, specify the program number, which should match the <strong>application number</strong> listed in the <strong>ini</strong> file. Ensure that the program number aligns with the values in the <strong>ini</strong> file. Provide a socket number, which appears on the OGS during the operation.</p>
+<p>Any discrepancy between the configuration and the <code>station.ini</code> file will trigger the corresponding alarms.</p>
 <p>Finally, create a new family and assign the job to it.</p>
 <!--H/W setup details?-->
 

@@ -33,12 +33,13 @@ In *Mode 1*, any number of sockets can be mapped to each tool, and these mapping
 
 ---
 
-### Mode 2: Multi-Spindle Tightening and LED Behavior
+### Mode 2: For Multi-Spindle Tightening Tool and LED Behavior
 
 *Mode 2* is designed for multi-spindle tightening tools, where two sockets can be picked at the same time. The sockets to be picked are specified in the `station.ini` file under the respective application number (discussed in detail later). Here's how the LED behavior works in this mode:
 
-- **Active Sockets**: These sockets are blinking green.
-- **Other Sockets in Tray**: All other sockets in the tray are illuminated in yellow.
+- **Active Sockets**: These are the sockets that are active for the tool in mode2 and are illuminated in yellow.
+- **Socket to be Picked**: These sockets are blinking green.
+- **Other Sockets in Tray**: All other sockets in the tray are turned off.
 
 **Behavior Flow**:
 1. The sockets that should be picked will blink green.
@@ -51,7 +52,7 @@ The only restriction, in general, is that channels cannot be in both Mode 1 and 
 
 ## OGS project configuration
 
-To enable Lua support for the socket trays, place the Lua script in the project folder and then add the script name under the "required" section in the config.lua file.
+To enable Lua support for the socket trays, place the Lua script in the project folder and then add the script name under the "requires" section in the config.lua file.
 ### Configuring station.ini 
 ``` ini title="station.ini"
 [SocketTray]
@@ -116,7 +117,9 @@ To use the socket tray, enable the "Use socket tray" option in the **Editor** se
 
 For tools in **Mode 1** (as specified in the **ini** file), assign the corresponding socket number. This number indicates which socket should be picked during the operation, and it must be from the list of sockets assigned to that tool/channel in the **ini** file. 
 
-For tools in **Mode 2**, specify the program number, which should match the **application number** listed in the **ini** file. Ensure that the program number aligns with the values in the **ini** file. 
+For tools in **Mode 2**, specify the program number, which should match the **application number** listed in the **ini** file. Ensure that the program number aligns with the values in the **ini** file. Provide a socket number, which appears on the OGS during the operation.
+
+Any discrepancy between the configuration and the `station.ini` file will trigger the corresponding alarms.
 
 Finally, create a new family and assign the job to it.
 

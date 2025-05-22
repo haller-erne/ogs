@@ -55,6 +55,7 @@ nav:
         - Data Protection API (safe secrets storage): libs/lua-dpapi.md
         - LUA network helpers (REST/OpenAPI): libs/lua-net.md
     - Enterprise functionality:
+        - Central/shared configuration database: appnotes/sharedconfig.md
         - Databanking and multi-station rework: appnotes/databanking.md
         - Central user administration: appnotes/userdb.md
         - Tool roaming and dynamic parameters: appnotes/toolgateway.md

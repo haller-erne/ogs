@@ -770,6 +770,51 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#setup-openprotocol-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup OpenProtocol parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup-program-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup program selection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup-batch-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup batch parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-disable-behaviour" class="md-nav__link">
+    <span class="md-ellipsis">
+      Define disable behaviour
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup-backoff-behaviour" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup backoff behaviour
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2260,6 +2305,51 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#setup-openprotocol-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup OpenProtocol parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup-program-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup program selection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup-batch-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup batch parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-disable-behaviour" class="md-nav__link">
+    <span class="md-ellipsis">
+      Define disable behaviour
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup-backoff-behaviour" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup backoff behaviour
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2373,6 +2463,43 @@ Set the rework strategy to 2 (repeat) in `station.ini` by setting the parameter 
 <!--
 Make sure to define a loosen program for the tool in the [tool configuration](#tool-configuration).
  -->
+
+<h3 id="setup-openprotocol-parameters"><a class="toclink" href="#setup-openprotocol-parameters">Setup OpenProtocol parameters</a></h3>
+<p>Enable OpenProtocol in <code>Navigator --&gt; Communications</code> by selecting the <code>Open Protocol</code> Ethernet communication protocol and checking the <code>Activated</code> checkbox:
+<a class="glightbox" href="../resources/cleco-communications.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="alt text" src="../resources/cleco-communications.png" /></a></p>
+<p>Continue to configure the advanced settings by clicking the <code>Advanced</code> button.
+Select the <code>Batch</code> page and configure as follows:
+<a class="glightbox" href="../resources/cleco-openprotocol-batchcounter.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="alt text" src="../resources/cleco-openprotocol-batchcounter.png" /></a></p>
+<p>Then select the <code>General</code> page and make sure to set the behaviour for connection loss:
+<a class="glightbox" href="../resources/cleco-openprotocol-advanced.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="alt text" src="../resources/cleco-openprotocol-advanced.png" /></a></p>
+<h3 id="setup-program-selection"><a class="toclink" href="#setup-program-selection">Setup program selection</a></h3>
+<p>To enable program selection over OpenProtocol, open <code>Navigator --&gt; Advanced</code>, then select the <code>Tool Group</code> tab. Make sure to select the correct tool group (repeat for all tool groups), then select the sub-page <code>I/O</code>. Check the <code>External Application / LG Selection</code> checkbox and set the <code>Mode</code> to <code>FEP / OpenProtocol</code>.</p>
+<p>Here is a sample screenshot:
+<a class="glightbox" href="../resources/cleco-advanced-toolgroup-io.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="alt text" src="../resources/cleco-advanced-toolgroup-io.png" /></a></p>
+<h3 id="setup-batch-parameters"><a class="toclink" href="#setup-batch-parameters">Setup batch parameters</a></h3>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Cleco tools defines the batch paramters for each thightening program. To ensure correct operation, one <strong>must</strong> enable batch counting for all tightening programs!</p>
+</div>
+<p>To configure the batch counter, go to <code>Navigator --&gt; Standard</code> and do the following:</p>
+<ul>
+<li>Select the <code>Tool Group</code> (menu <code>Tool Groups</code>) you want to modify (repeat for all tool groups)</li>
+<li>Select the tightening program (menu <code>Application</code>) you want to edit (repeat for all programs)</li>
+<li>Open <code>Settings --&gt; Batch</code> for each tightening program, then set <code>Batch count mode</code> to <code>Open Protocol</code> and enable <code>Lock at batch done</code>. Here is a sample screenshot:</li>
+</ul>
+<p><a class="glightbox" href="../resources/cleco-standard-batch.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="alt text" src="../resources/cleco-standard-batch.png" /></a></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The setting must be repeated for all groups and all applications!</p>
+</div>
+<h3 id="define-disable-behaviour"><a class="toclink" href="#define-disable-behaviour">Define disable behaviour</a></h3>
+<p>To define the behaviour, if the tool enable signal is removed while the tool is running, open <code>Navigator --&gt; Advanced</code>, then select the <code>Controller</code> tab. Go to the sub-page <code>Miscellaneous</code> and check or uncheck the <code>Finish Current Tightening in The Event Tool Group Becomes Disabled</code> as needed.</p>
+<p>Here is a sample screenshot:
+<a class="glightbox" href="../resources/cleco-advanced-controller-miscellaneous.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="alt text" src="../resources/cleco-advanced-controller-miscellaneous.png" /></a></p>
+<h3 id="setup-backoff-behaviour"><a class="toclink" href="#setup-backoff-behaviour">Setup backoff behaviour</a></h3>
+<p>To define the backoff behaviour, open <code>Navigator --&gt; Advanced</code>, then select the <code>Tool Group</code> tab. Make sure to select the correct tool group (repeat for all tool groups), then select the sub-page <code>Evaluation and backoff</code>. Set the <code>Back-Off Mode for all Applications and Linking Steps</code> as needed.</p>
+<p>Here is a sample screenshot:
+<a class="glightbox" href="../resources/cleco-advanced-toolgroup-backoff.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="alt text" src="../resources/cleco-advanced-toolgroup-backoff.png" /></a></p>
 
 
 

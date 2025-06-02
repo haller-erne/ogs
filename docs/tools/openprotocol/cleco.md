@@ -120,3 +120,55 @@ Set the rework strategy to 2 (repeat) in `station.ini` by setting the parameter 
 Make sure to define a loosen program for the tool in the [tool configuration](#tool-configuration).
  -->
 
+
+### Setup OpenProtocol parameters
+
+Enable OpenProtocol in `Navigator --> Communications` by selecting the `Open Protocol` Ethernet communication protocol and checking the `Activated` checkbox:
+![alt text](resources/cleco-communications.png)
+
+Continue to configure the advanced settings by clicking the `Advanced` button.
+Select the `Batch` page and configure as follows:
+![alt text](resources/cleco-openprotocol-batchcounter.png)
+
+Then select the `General` page and make sure to set the behaviour for connection loss:
+![alt text](resources/cleco-openprotocol-advanced.png)
+
+### Setup program selection
+
+To enable program selection over OpenProtocol, open `Navigator --> Advanced`, then select the `Tool Group` tab. Make sure to select the correct tool group (repeat for all tool groups), then select the sub-page `I/O`. Check the `External Application / LG Selection` checkbox and set the `Mode` to `FEP / OpenProtocol`.
+
+Here is a sample screenshot:
+![alt text](resources/cleco-advanced-toolgroup-io.png)
+
+### Setup batch parameters
+
+!!! Important
+
+    Cleco tools defines the batch paramters for each thightening program. To ensure correct operation, one **must** enable batch counting for all tightening programs!
+
+To configure the batch counter, go to `Navigator --> Standard` and do the following:
+
+- Select the `Tool Group` (menu `Tool Groups`) you want to modify (repeat for all tool groups)
+- Select the tightening program (menu `Application`) you want to edit (repeat for all programs)
+- Open `Settings --> Batch` for each tightening program, then set `Batch count mode` to `Open Protocol` and enable `Lock at batch done`. Here is a sample screenshot:
+
+![alt text](resources/cleco-standard-batch.png)
+
+!!! note
+
+    The setting must be repeated for all groups and all applications!
+
+### Define disable behaviour
+
+To define the behaviour, if the tool enable signal is removed while the tool is running, open `Navigator --> Advanced`, then select the `Controller` tab. Go to the sub-page `Miscellaneous` and check or uncheck the `Finish Current Tightening in The Event Tool Group Becomes Disabled` as needed.
+
+Here is a sample screenshot:
+![alt text](resources/cleco-advanced-controller-miscellaneous.png)
+
+### Setup backoff behaviour
+
+To define the backoff behaviour, open `Navigator --> Advanced`, then select the `Tool Group` tab. Make sure to select the correct tool group (repeat for all tool groups), then select the sub-page `Evaluation and backoff`. Set the `Back-Off Mode for all Applications and Linking Steps` as needed.
+
+Here is a sample screenshot:
+![alt text](resources/cleco-advanced-toolgroup-backoff.png)
+

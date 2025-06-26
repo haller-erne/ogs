@@ -104,22 +104,32 @@ The parameters are:
 - `NOK_URL` (optional): If given, then switches the process view webserver to the given URL, if the camera returns an NOK reading. Note that his can be overriden with the àction_property `nok_url`. Note also, that the webbrowser must be enabled for the task for this to work (set the `url` property for the task).
 
 
-To load the Keyence camera driver, add `lua_tool_camera_keyence` to the `requires` table in the `config.lua` file in your project folder. Here is a sample `config.lua` file:
+To load the Keyence camera driver, see below (OGS >= V3.1.6 ship the driver, so there is no need to load it manually anymore).
 
-```  lua hl_lines="7"
--- add the shared folder (..\shared)
-OGS.Project.AddPath('../shared')
+=== ">= V3.1.6"
 
-requires = {
-	"barcode",
-	"user_manager",
-	"lua_tool_camera_keyence",      -- (1)
-}
-current_project.logo_file = '../shared/logo-rexroth.png'
-current_project.billboard = 'http://127.0.0.1:60000/billboard.html'
-```
+    The driver for the camera is automatically loaded.
+    
 
-1.  Add this line to include the `lua_tool_camera_keyence.lua` driver in the project.
+=== "< V3.1.6"
+
+    To load the Keyence camera driver, add `lua_tool_camera_keyence` to the `requires` table in the `config.lua` file in your project folder. Here is a sample `config.lua` file:
+
+    ```  lua hl_lines="7"
+    -- add the shared folder (..\shared)
+    OGS.Project.AddPath('../shared')
+
+    requires = {
+        "barcode",
+        "user_manager",
+        "lua_tool_camera_keyence",      -- (1)
+    }
+    current_project.logo_file = '../shared/logo-rexroth.png'
+    current_project.billboard = 'http://127.0.0.1:60000/billboard.html'
+    ```
+
+    1.  Add this line to include the `lua_tool_camera_keyence.lua` driver in the project.
+
 
 
 ## Editor configuration

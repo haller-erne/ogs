@@ -2262,6 +2262,13 @@ The IV Series is known for its simplicity to set up and overall good detection r
 <li><code>IMG_URL</code> (optional): If <code>IMAGE_PATH</code> is given, by default the URL to download the camera image is <code>http://&lt;ENIP_DEVICE&gt;/iliveimage.jpg</code>. By setting <code>IMG_URL</code> you can override this URL and specify your own (e.g. if using <code>https</code>)</li>
 <li><code>NOK_URL</code> (optional): If given, then switches the process view webserver to the given URL, if the camera returns an NOK reading. Note that his can be overriden with the àction_property <code>nok_url</code>. Note also, that the webbrowser must be enabled for the task for this to work (set the <code>url</code> property for the task).</li>
 </ul>
+<p>To load the Keyence camera driver, see below (OGS &gt;= V3.1.6 ship the driver, so there is no need to load it manually anymore).</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">&gt;= V3.1.6</label><label for="__tabbed_1_2">&lt; V3.1.6</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>The driver for the camera is automatically loaded.</p>
+</div>
+<div class="tabbed-block">
 <p>To load the Keyence camera driver, add <code>lua_tool_camera_keyence</code> to the <code>requires</code> table in the <code>config.lua</code> file in your project folder. Here is a sample <code>config.lua</code> file:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">-- add the shared folder (..\shared)</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nv">OGS</span><span class="p">.</span><span class="py">Project</span><span class="p">.</span><span class="nf">AddPath</span><span class="p">(</span><span class="s1">&#39;../shared&#39;</span><span class="p">)</span>
@@ -2277,6 +2284,9 @@ The IV Series is known for its simplicity to set up and overall good detection r
 <ol>
 <li>Add this line to include the <code>lua_tool_camera_keyence.lua</code> driver in the project.</li>
 </ol>
+</div>
+</div>
+</div>
 <h2 id="editor-configuration"><a class="toclink" href="#editor-configuration">Editor configuration</a></h2>
 <h3 id="configuring-the-tool"><a class="toclink" href="#configuring-the-tool">Configuring the tool</a></h3>
 <p>In the Tools section of the Editor, create a new tool with a name of your choice (e.g. <code>KeyenceIV4</code>) in the <code>custom tools</code> section and assign it to the appropriate channel (ensure the channel number matches the one specified in the <code>station.ini</code> file). </p>

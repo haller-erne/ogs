@@ -11,6 +11,11 @@ tags:
 
 The AIOI Pick2Light system is an interactive tool that helps operators by clearly indicating the specific shelf location and, when needed, the quantity of items to be picked or placed. Available in several models, each unit features colored LEDs and a single confirmation button, offering versatile configurations to efficiently manage tasks. <!--links? to aioi H/W setup-->
 
+!!! warning
+
+    This driver was added in V3.1.6. It's highly recommended to upgrade to OGS >= V3.1.6 to use the Sylvac tools.  
+
+
 ## Quick setup
 
 To provide Bluetooth connectivity for the Sylvac tools, the Sylvac BLE USB dongle (BLED112) is used. To connect a tool, please follow these steps:

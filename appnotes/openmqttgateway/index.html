@@ -8,25 +8,21 @@
       
       
       
-        <link rel="canonical" href="https://haller-erne.github.io/ogs/tools/openprotocol/ngineric/">
+        <link rel="canonical" href="https://haller-erne.github.io/ogs/appnotes/openmqttgateway/">
       
       
-        <link rel="prev" href="../hstechnik/">
       
       
-        <link rel="next" href="../../doga-wifi/">
-      
-      
-      <link rel="icon" href="../../../assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
     
     
       
-        <title>n-gineric - OGS Documentation</title>
+        <title>Using OpenMQTTGateway for OGS - OGS Documentation</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
       
       
 
@@ -51,16 +47,16 @@
       
     
     
-      <link rel="stylesheet" href="../../../css/neoteroi-mkdocs.css">
+      <link rel="stylesheet" href="../../css/neoteroi-mkdocs.css">
     
-    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
     
     
     
-   <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
     html.glightbox-open { overflow: initial; height: 100%; }
     .gslide-title { margin-top: 0px; user-select: text; }
     .gslide-desc { color: #666; user-select: text; }
@@ -69,7 +65,7 @@
     .gdesc-inner { font-size: 0.75rem; }
     body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
     body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
-    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../../assets/javascripts/glightbox.min.js"></script></head>
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
   
   
     <body dir="ltr">
@@ -79,6 +75,11 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
+      
+        
+        <a href="#using-openmqttgateway-for-ogs" class="md-skip">
+          Skip to content
+        </a>
       
     </div>
     <div data-md-component="announce">
@@ -92,7 +93,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="OGS Documentation" class="md-header__button md-logo" aria-label="OGS Documentation" data-md-component="logo">
+    <a href="../.." title="OGS Documentation" class="md-header__button md-logo" aria-label="OGS Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -112,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              n-gineric
+              Using OpenMQTTGateway for OGS
             
           </span>
         </div>
@@ -190,7 +191,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="OGS Documentation" class="md-nav__button md-logo" aria-label="OGS Documentation" data-md-component="logo">
+    <a href="../.." title="OGS Documentation" class="md-nav__button md-logo" aria-label="OGS Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -208,7 +209,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -227,20 +228,18 @@
       
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
@@ -256,7 +255,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Tool configuration
@@ -270,7 +269,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../" class="md-nav__link">
+      <a href="../../tools/" class="md-nav__link">
         
   
   
@@ -331,7 +330,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../remote-tool/" class="md-nav__link">
+      <a href="../../tools/remote-tool/" class="md-nav__link">
         
   
   
@@ -400,7 +399,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../../tools/openprotocol/" class="md-nav__link">
         
   
   
@@ -423,7 +422,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../nexo/" class="md-nav__link">
+      <a href="../../tools/openprotocol/nexo/" class="md-nav__link">
         
   
   
@@ -446,7 +445,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../sys350-cs351/" class="md-nav__link">
+      <a href="../../tools/openprotocol/sys350-cs351/" class="md-nav__link">
         
   
   
@@ -469,7 +468,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../sys350-ke350/" class="md-nav__link">
+      <a href="../../tools/openprotocol/sys350-ke350/" class="md-nav__link">
         
   
   
@@ -492,7 +491,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../opexplus/" class="md-nav__link">
+      <a href="../../tools/openprotocol/opexplus/" class="md-nav__link">
         
   
   
@@ -515,7 +514,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../gwk/" class="md-nav__link">
+      <a href="../../tools/openprotocol/gwk/" class="md-nav__link">
         
   
   
@@ -538,7 +537,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../sturtevant/" class="md-nav__link">
+      <a href="../../tools/openprotocol/sturtevant/" class="md-nav__link">
         
   
   
@@ -561,7 +560,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../amt/" class="md-nav__link">
+      <a href="../../tools/openprotocol/amt/" class="md-nav__link">
         
   
   
@@ -584,7 +583,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cleco/" class="md-nav__link">
+      <a href="../../tools/openprotocol/cleco/" class="md-nav__link">
         
   
   
@@ -607,7 +606,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../makita/" class="md-nav__link">
+      <a href="../../tools/openprotocol/makita/" class="md-nav__link">
         
   
   
@@ -630,7 +629,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../hstechnik/" class="md-nav__link">
+      <a href="../../tools/openprotocol/hstechnik/" class="md-nav__link">
         
   
   
@@ -658,20 +657,18 @@
                 
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
         
           
           <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
@@ -687,7 +684,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2_4">
             <span class="md-nav__icon md-icon"></span>
             Non-OpenProtocol tightening tools
@@ -698,17 +695,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../tools/openprotocol/ngineric/" class="md-nav__link">
         
   
   
@@ -719,7 +709,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -732,7 +721,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../doga-wifi/" class="md-nav__link">
+      <a href="../../tools/doga-wifi/" class="md-nav__link">
         
   
   
@@ -801,7 +790,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../misc/gui-input/" class="md-nav__link">
+      <a href="../../tools/misc/gui-input/" class="md-nav__link">
         
   
   
@@ -824,7 +813,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../misc/aioi-pick2light/" class="md-nav__link">
+      <a href="../../tools/misc/aioi-pick2light/" class="md-nav__link">
         
   
   
@@ -847,7 +836,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../misc/gesipa-mqtt/" class="md-nav__link">
+      <a href="../../tools/misc/gesipa-mqtt/" class="md-nav__link">
         
   
   
@@ -870,7 +859,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../misc/keyence-iv4/" class="md-nav__link">
+      <a href="../../tools/misc/keyence-iv4/" class="md-nav__link">
         
   
   
@@ -893,7 +882,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../misc/sylvac/" class="md-nav__link">
+      <a href="../../tools/misc/sylvac/" class="md-nav__link">
         
   
   
@@ -962,7 +951,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../positioning/" class="md-nav__link">
+      <a href="../../tools/positioning/" class="md-nav__link">
         
   
   
@@ -985,7 +974,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../positioning/positioning-art-dtrack/" class="md-nav__link">
+      <a href="../../tools/positioning/positioning-art-dtrack/" class="md-nav__link">
         
   
   
@@ -1008,7 +997,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../positioning/positioning-art-verpose/" class="md-nav__link">
+      <a href="../../tools/positioning/positioning-art-verpose/" class="md-nav__link">
         
   
   
@@ -1084,7 +1073,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../misc/socket-tray/" class="md-nav__link">
+      <a href="../../tools/misc/socket-tray/" class="md-nav__link">
         
   
   
@@ -1107,7 +1096,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../misc/projector/" class="md-nav__link">
+      <a href="../../tools/misc/projector/" class="md-nav__link">
         
   
   
@@ -1175,7 +1164,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../dataoutput/xmlfile/" class="md-nav__link">
+      <a href="../../dataoutput/xmlfile/" class="md-nav__link">
         
   
   
@@ -1198,7 +1187,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../dataoutput/printout/" class="md-nav__link">
+      <a href="../../dataoutput/printout/" class="md-nav__link">
         
   
   
@@ -1221,7 +1210,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../dataoutput/traceability/" class="md-nav__link">
+      <a href="../../dataoutput/traceability/" class="md-nav__link">
         
   
   
@@ -1244,7 +1233,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../dataoutput/eventlog/" class="md-nav__link">
+      <a href="../../dataoutput/eventlog/" class="md-nav__link">
         
   
   
@@ -1312,7 +1301,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../v3/getting-started/" class="md-nav__link">
+      <a href="../../v3/getting-started/" class="md-nav__link">
         
   
   
@@ -1373,7 +1362,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../v3/lua/eventlog/" class="md-nav__link">
+      <a href="../../v3/lua/eventlog/" class="md-nav__link">
         
   
   
@@ -1396,7 +1385,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../v3/lua/webbrowser/" class="md-nav__link">
+      <a href="../../v3/lua/webbrowser/" class="md-nav__link">
         
   
   
@@ -1419,7 +1408,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../v3/lua/webserver/" class="md-nav__link">
+      <a href="../../v3/lua/webserver/" class="md-nav__link">
         
   
   
@@ -1442,7 +1431,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../v3/lua/bluetooth-le/" class="md-nav__link">
+      <a href="../../v3/lua/bluetooth-le/" class="md-nav__link">
         
   
   
@@ -1473,7 +1462,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../v3/lua/customtools/" class="md-nav__link">
+      <a href="../../v3/lua/customtools/" class="md-nav__link">
         
   
   
@@ -1541,7 +1530,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../libs/lua-ads/" class="md-nav__link">
+      <a href="../../libs/lua-ads/" class="md-nav__link">
         
   
   
@@ -1564,7 +1553,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../libs/lua-opcua/" class="md-nav__link">
+      <a href="../../libs/lua-opcua/" class="md-nav__link">
         
   
   
@@ -1587,7 +1576,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../libs/lua-modbus/" class="md-nav__link">
+      <a href="../../libs/lua-modbus/" class="md-nav__link">
         
   
   
@@ -1610,7 +1599,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../libs/lua-hid/" class="md-nav__link">
+      <a href="../../libs/lua-hid/" class="md-nav__link">
         
   
   
@@ -1633,7 +1622,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../libs/lua-dpapi/" class="md-nav__link">
+      <a href="../../libs/lua-dpapi/" class="md-nav__link">
         
   
   
@@ -1656,7 +1645,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../libs/lua-net/" class="md-nav__link">
+      <a href="../../libs/lua-net/" class="md-nav__link">
         
   
   
@@ -1724,7 +1713,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../appnotes/sharedconfig.md" class="md-nav__link">
+      <a href="../sharedconfig.md" class="md-nav__link">
         
   
   
@@ -1747,7 +1736,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../appnotes/databanking/" class="md-nav__link">
+      <a href="../databanking/" class="md-nav__link">
         
   
   
@@ -1770,7 +1759,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../appnotes/userdb/" class="md-nav__link">
+      <a href="../userdb/" class="md-nav__link">
         
   
   
@@ -1793,7 +1782,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../appnotes/toolgateway/" class="md-nav__link">
+      <a href="../toolgateway/" class="md-nav__link">
         
   
   
@@ -1816,7 +1805,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../appnotes/traceability/" class="md-nav__link">
+      <a href="../traceability/" class="md-nav__link">
         
   
   
@@ -1884,7 +1873,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../appnotes/debugging/" class="md-nav__link">
+      <a href="../debugging/" class="md-nav__link">
         
   
   
@@ -1907,7 +1896,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../appnotes/station_io/" class="md-nav__link">
+      <a href="../station_io/" class="md-nav__link">
         
   
   
@@ -1930,7 +1919,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Using BLE Gateways (OpenMQTTGateway):appnotes/openmqttgateway.md" class="md-nav__link">
+      <a href="../../Using BLE Gateways (OpenMQTTGateway):appnotes/openmqttgateway.md" class="md-nav__link">
         
   
   
@@ -1970,6 +1959,70 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gateway-hardware-preparation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gateway hardware preparation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#firmware-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Firmware installation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wifilan-and-mqtt-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Wifi/LAN and MQTT configuration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuring-mqtt-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuring MQTT output
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ogs-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      OGS configuration
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1985,9 +2038,56 @@
 
 
 
-  <h1>n-gineric</h1>
-
-
+<h1 id="using-openmqttgateway-for-ogs"><a class="toclink" href="#using-openmqttgateway-for-ogs">Using OpenMQTTGateway for OGS</a></h1>
+<p>Using <a href="https://docs.openmqttgateway.com/">OpenMQTTGateway</a> for OGS (e.g. to connect the <a href="https://us.shelly.com/products/shelly-blu-button1-blue">Shelly BLU Button</a> or other <a href="https://bthome.io/">BTHome devices</a>) has a lot of advantages compared to directly connected bluetooth low energy hardware:</p>
+<ul>
+<li>Deploy multiple OpenMQTTGateways to cover larger areas</li>
+<li>Compared to BLED112 (BlueGiga) USB dongles, no additional hardware needs to be attached to the PC running OGS (especially, if you are running OGS on tablet hardware)</li>
+<li>Compared to using builtin BLE hardware with the Windows BLE stack, it is much more reliable and not dependent on manufacturers Windows driver support.</li>
+</ul>
+<p>The OpenMQTTGateway software uses widely available hardware and not only supports BLE, but also 433MHz, Lora, etc. (see <a href="https://docs.openmqttgateway.com/">OpenMQTTGateway documentation</a>).</p>
+<h2 id="prerequisites"><a class="toclink" href="#prerequisites">Prerequisites</a></h2>
+<p>The OpenMQTTGateway works by sending BLE data to a MQTT broker. Therefore an MQTT broker must be installed somewhere in the network. All OpenMQTTGateway devices and all OGS stations will connect to this central server.</p>
+<p>A commonly used MQTT broker is <a href="https://mosquitto.org">Eclipse Mosquitto</a>, which is available for all major operating systems.</p>
+<h2 id="gateway-hardware-preparation"><a class="toclink" href="#gateway-hardware-preparation">Gateway hardware preparation</a></h2>
+<p>Choose a suitable ESP32 device device from the <a href="https://docs.openmqttgateway.com/prerequisites/board.html">supported devices documentation</a>. As an example, we use an <a href="https://shop.m5stack.com/products/m5stack-tough-esp32-iot-development-board-kit">m5Stack tough ESP32 module</a>:
+<a class="glightbox" href="../openmqttgateway-m5stack-esp32-tough.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="M5Stack ESP32 module" src="../openmqttgateway-m5stack-esp32-tough.png" /></a>
+See the official documentation <a href="https://docs.openmqttgateway.com/setitup/ble.html#compatible-parts">here</a> for a similar device setup.</p>
+<p>Also (depending on your use case) POE devices are available, e.g. <a href="https://www.olimex.com/Products/IoT/ESP32/ESP32-POE2/">ESP32-POE2</a> and the<a href="https://www.olimex.com/Products/IoT/ESP32/BOX-ESP32-POE2/">enclosure BOX-ESP32-POE2</a>:
+<a class="glightbox" href="../openmqttgateway-esp32-poe2.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="alt text" src="../openmqttgateway-esp32-poe2.png" /></a></p>
+<h2 id="firmware-installation"><a class="toclink" href="#firmware-installation">Firmware installation</a></h2>
+<p>To install the OpenMQTTGateway firmware, connect the device to your PC using the USB port. This should install a COM port in the PC as follows:
+<a class="glightbox" href="../openmqttgateway-devicemanager.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="alt text" src="../openmqttgateway-devicemanager.png" /></a>
+If you get an error connecting the device, then install the apropriate COM port device driver (see you hardware manual).</p>
+<p>To install the firmware, go to the <a href="https://docs.openmqttgateway.com/upload/web-install.html">OpenMQTTGateway web installer</a>, select the correct firmware (the "standard" <code>esp32dev-ble</code> is the correct choice for most ESP32 boards with BLE support).</p>
+<p>Click the "Connect" button to select the COM port and start connecting:
+<a class="glightbox" href="../openmqttgateway-fw-connect.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="alt text" src="../openmqttgateway-fw-connect.png" /></a></p>
+<p>If the connection was successfully established, select the "INSTALL OPENMQTTGATEWAY" button to download the firmware:
+<a class="glightbox" href="../openmqttgateway-fw-install.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="alt text" src="../openmqttgateway-fw-install.png" /></a></p>
+<p>If asked to erase the device, do so and acknowledge the firmware update, so the firmware update can start (apporx. 2 minutes):
+<a class="glightbox" href="../openmqttgateway-fw-download.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="alt text" src="../openmqttgateway-fw-download.png" /></a></p>
+<h2 id="wifilan-and-mqtt-configuration"><a class="toclink" href="#wifilan-and-mqtt-configuration">Wifi/LAN and MQTT configuration</a></h2>
+<p>After the firmware was installed, click the <code>LOGS &amp; CONSOLE</code>button to open the device console. Now hit the <code>RESET DEVICE</code> button to reboot.</p>
+<p>The log will now show the bootup messages:
+<a class="glightbox" href="../openmqttgateway-firstboot.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="alt text" src="../openmqttgateway-firstboot.png" /></a></p>
+<p>This indicates, that the device is not connected to your wifi yet (or to the LAN for ethernet devices), so it needs to be configured.</p>
+<p>This is done by connecting to the SSID provided in the logs (by default <code>OMG_ESP32_BLE</code>). So use your phone to connect to the given SSID. The Phone should ask you to "login to wlan" and redirect you to the <code>WIFIManager</code> page (if not, then manually connect to http://192.168.1.4 - or whatever is shown in the console logs above).</p>
+<p>On the webpage, click the "Configure Wifi" button to set the wifi parameters and connecto to your network:</p>
+<p><a class="glightbox" href="../openmqttgateway-wifi.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="alt text" src="../openmqttgateway-wifi.png" /></a></p>
+<p>After connecting to the wifi network, the MQTT configuration can now be set:
+<a class="glightbox" href="../openmqttgateway-mqtt.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="alt text" src="../openmqttgateway-mqtt.png" /></a></p>
+<h2 id="configuring-mqtt-output"><a class="toclink" href="#configuring-mqtt-output">Configuring MQTT output</a></h2>
+<p>By default, the OpenMQTTGateway tries to connect to BLE devices. As we only need the advertisment data (for BTHome), we can configure the MQTT output by publishing the following data </p>
+<div class="highlight"><pre><span></span><code>{&quot;pubadvdata&quot;:true, &quot;onlysensors&quot;:true, &quot;bleconnect&quot;:false}
+</code></pre></div>
+<p>to the configuration topic ()    </p>
+<div class="highlight"><pre><span></span><code>home/OMG_ESP32_BLE/commands/MQTTtoBT/config
+</code></pre></div>
+<p><a class="glightbox" href="../openmqttgateway-publish.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="alt text" src="../openmqttgateway-publish.png" /></a></p>
+<p>The change is reflected in the <code>BTtoMQTT</code> topic of the gateway device and the advertised data is immediately shown (see sample wiht RSSI change/button press for a BTHome device):</p>
+<p><a class="glightbox" href="../openmqttgateway-data.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="alt text" src="../openmqttgateway-data.png" /></a></p>
+<h2 id="ogs-configuration"><a class="toclink" href="#ogs-configuration">OGS configuration</a></h2>
+<p>tbd.</p>
 
 
 
@@ -2038,10 +2138,10 @@
     
     
       
-      <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.56ea9cef.min.js"></script>
+      <script src="../../assets/javascripts/bundle.56ea9cef.min.js"></script>
       
     
   <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});

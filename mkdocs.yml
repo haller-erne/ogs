@@ -63,6 +63,7 @@ nav:
     - Application notes:
         - Debugging LUA Scripts: appnotes/debugging.md
         - Station IO: appnotes/station_io.md
+        - Using BLE Gateways (OpenMQTTGateway):appnotes/openmqttgateway.md
     
 # sample
 #    – Version 1.x:

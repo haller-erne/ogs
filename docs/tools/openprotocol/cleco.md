@@ -142,6 +142,8 @@ Here is a sample screenshot:
 
 ### Setup batch parameters
 
+#### Configuration
+
 !!! Important
 
     Cleco tools defines the batch paramters for each thightening program. To ensure correct operation, one **must** enable batch counting for all tightening programs!
@@ -158,6 +160,16 @@ To configure the batch counter, go to `Navigator --> Standard` and do the follow
 
     The setting must be repeated for all groups and all applications!
 
+#### Hints
+
+The "Run Screen" can be set to show the current batch value and configuration. To enable this feature, go to `Navigator --> Run Screen --> Configure` and enable the batch view:
+
+![alt text](resources/cleco-batch-config.png)
+
+This will then display the current batch counter/values:
+
+![alt text](resources/cleco-batch-monitor.png)
+
 ### Define disable behaviour
 
 To define the behaviour, if the tool enable signal is removed while the tool is running, open `Navigator --> Advanced`, then select the `Controller` tab. Go to the sub-page `Miscellaneous` and check or uncheck the `Finish Current Tightening in The Event Tool Group Becomes Disabled` as needed.
@@ -172,3 +184,4 @@ To define the backoff behaviour, open `Navigator --> Advanced`, then select the 
 Here is a sample screenshot:
 ![alt text](resources/cleco-advanced-toolgroup-backoff.png)
 
+ 

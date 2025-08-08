@@ -19,7 +19,8 @@ Find the full specification at the [Oetiker EPC01 product page](https://www.oeti
 
 ## Requirements
 
-OGS controls the device over its integrated EtherNet/IP interface, so the `PLC` option is required. 
+OGS controls the device over its integrated EtherNet/IP interface, so the `PLC` option is required. Connect OGS and the EPC01 tool over Ethernet by using one of the  the fieldbus interfaces (7):
+![alt text](resources/oetiker-pincer-interface.png)
 
 Depending on your trigger option needs, different licenses may be needed to use the tool in `automatic` or `fully automatic` mode. Please contact Oetiker for more information.
 

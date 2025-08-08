@@ -982,9 +982,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#interface-configuration" class="md-nav__link">
+  <a href="#fieldbus-interface-configuration" class="md-nav__link">
     <span class="md-ellipsis">
-      Interface configuration
+      Fieldbus interface configuration
     </span>
   </a>
   
@@ -2184,9 +2184,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#interface-configuration" class="md-nav__link">
+  <a href="#fieldbus-interface-configuration" class="md-nav__link">
     <span class="md-ellipsis">
-      Interface configuration
+      Fieldbus interface configuration
     </span>
   </a>
   
@@ -2314,8 +2314,11 @@ The EPC 01 is a high quality pincer system developed by Oetiker. It ensures the 
 <p>Depending on your trigger option needs, different licenses may be needed to use the tool in <code>automatic</code> or <code>fully automatic</code> mode. Please contact Oetiker for more information.</p>
 <h2 id="tool-configuration"><a class="toclink" href="#tool-configuration">Tool configuration</a></h2>
 <p>The main configuration for connecting the EPC01 device to OGS is to setup the communication interface.</p>
-<h3 id="interface-configuration"><a class="toclink" href="#interface-configuration">Interface configuration</a></h3>
-<p>tbd.</p>
+<h3 id="fieldbus-interface-configuration"><a class="toclink" href="#fieldbus-interface-configuration">Fieldbus interface configuration</a></h3>
+<p>The fieldbus interface IP address cannot be configured through the Oetiker configuration application - instead use the Hilscher Ethernet Device Configuration tool to setup the IP address of the EtherNet/IP interface:</p>
+<p><a class="glightbox" href="../resources/oetiker-hilscher-settings.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="alt text" src="../resources/oetiker-hilscher-settings.png" /></a></p>
+<p>To enable controlling the tool over the fieldbus, open the Oetiker configuration application. Then got to the <code>Settings control unit --&gt; Closing</code> page and set the <code>Input Control</code> parameter to <code>Industial Network</code>. Here is a sample screenshot:</p>
+<p><a class="glightbox" href="../resources/oetiker-fieldbus-control.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="alt text" src="../resources/oetiker-fieldbus-control.png" /></a></p>
 <h3 id="trigger-configuration"><a class="toclink" href="#trigger-configuration">Trigger configuration</a></h3>
 <p>The EPC01 provides two options for triggering (starting) the clamping process:</p>
 <ol>
@@ -2323,11 +2326,21 @@ The EPC 01 is a high quality pincer system developed by Oetiker. It ensures the 
 <li>Start using an external start switch (like a foot pedal). As the EPC01 device does not support enabling through the fielsbus and starting through a 24V input signal at the saame time, OGS provides both signals through the fieldbus interface. In this mode, OGS  starts the pincing process when it gets an input signal from the external start switch. The operator still needs to push the safety lever for the tool to actually start pincing.</li>
 </ol>
 <h4 id="trigger-settings-for-integrated-start-button-mode"><a class="toclink" href="#trigger-settings-for-integrated-start-button-mode">Trigger settings for integrated start button mode</a></h4>
-<p>The following screenshot shows the configuration setting needed to control the EPC01 device:</p>
-<p>(screenshot tbd.)</p>
+<p>In this mode, OGS only send an enable command to the tool. The tool is only started, if the operator pushes the safety lever and the start button.</p>
+<p>The following screenshot shows the configuration setting needed in this mode - set the <code>Start</code> parameter to <code>Start button and external control</code>:</p>
+<p><a class="glightbox" href="../resources/oetiker-internal-start.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="alt text" src="../resources/oetiker-internal-start.png" /></a></p>
+<p>Note, that you will need the following licenses:</p>
+<p><a class="glightbox" href="../resources/oetiker-internal-licenses.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="alt text" src="../resources/oetiker-internal-licenses.png" /></a></p>
 <h4 id="trigger-settings-in-external-start-mode"><a class="toclink" href="#trigger-settings-in-external-start-mode">Trigger settings in external start mode</a></h4>
-<p>The following screenshot shows the configuration setting needed to control the EPC01 device:</p>
-<p>(screenshot tbd.)</p>
+<p>In this mode, OGS send an enable command to the tool first, then also starts the tool operation. Note, that the tool is started, even if the operator does not push the safety leaver, so make sure safety is ensured otherwise!</p>
+<p>The following screenshot shows the configuration setting needed to control the EPC01 device - set the <code>Start</code> parameter to <code>External control</code>:</p>
+<p><a class="glightbox" href="../resources/oetiker-external-start.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="alt text" src="../resources/oetiker-external-start.png" /></a></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the <code>External control</code> option is not visible, then you will need a larger license (see below, the option <code>safety leaver override</code> is required)!</p>
+</div>
+<p>Note, that you will need the following licenses:</p>
+<p><a class="glightbox" href="../resources/oetiker-external-licenses.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="alt text" src="../resources/oetiker-external-licenses.png" /></a></p>
 <h2 id="installation-and-configuration-with-ogs"><a class="toclink" href="#installation-and-configuration-with-ogs">Installation and Configuration with OGS</a></h2>
 <h3 id="tool-registration-and-configuration"><a class="toclink" href="#tool-registration-and-configuration">Tool registration and configuration</a></h3>
 <p>As the Keyence IV4 AI Smart Sensor driver is implemented as LUA custom tool, the instuction provided in the <a href="../../../v3/lua/customtools/">Lua custom tools documentation</a> applies. A sample configuration for the lua driver <code>camera_keyence</code> in <code>station.ini</code> looks as follows:</p>
@@ -2376,6 +2389,10 @@ The EPC 01 is a high quality pincer system developed by Oetiker. It ensures the 
 </ol>
 </div>
 </div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note, that using the external start mode requires custom LUA code to start the tool. Contact us for sample with e.g. external foot switch or other input devices.</p>
 </div>
 <h2 id="editor-configuration"><a class="toclink" href="#editor-configuration">Editor configuration</a></h2>
 <h3 id="configuring-the-tool"><a class="toclink" href="#configuring-the-tool">Configuring the tool</a></h3>

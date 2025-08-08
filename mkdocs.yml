@@ -27,6 +27,7 @@ nav:
             - Gesipa riveting tool: tools/misc/gesipa-mqtt.md
             - Keyence IV4 AI Vision sensor: tools/misc/keyence-iv4.md
             - Sylvac Meters: tools/misc/sylvac.md
+            - Oetiker EPC01 pincer: tools/misc/oetiker.md
         - Positioning:
             - Overview: tools/positioning/README.md
             - ART SmartTrack/DTrack: tools/positioning/positioning-art-dtrack.md

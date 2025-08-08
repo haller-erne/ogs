@@ -28,9 +28,15 @@ Depending on your trigger option needs, different licenses may be needed to use 
 
 The main configuration for connecting the EPC01 device to OGS is to setup the communication interface.
 
-### Interface configuration
+### Fieldbus interface configuration
 
-tbd.
+The fieldbus interface IP address cannot be configured through the Oetiker configuration application - instead use the Hilscher Ethernet Device Configuration tool to setup the IP address of the EtherNet/IP interface:
+
+![alt text](resources/oetiker-hilscher-settings.png)
+
+To enable controlling the tool over the fieldbus, open the Oetiker configuration application. Then got to the `Settings control unit --> Closing` page and set the `Input Control` parameter to `Industial Network`. Here is a sample screenshot:
+
+![alt text](resources/oetiker-fieldbus-control.png)
 
 ### Trigger configuration
 
@@ -41,16 +47,31 @@ The EPC01 provides two options for triggering (starting) the clamping process:
 
 #### Trigger settings for integrated start button mode
 
-The following screenshot shows the configuration setting needed to control the EPC01 device:
+In this mode, OGS only send an enable command to the tool. The tool is only started, if the operator pushes the safety lever and the start button.
 
-(screenshot tbd.)
+The following screenshot shows the configuration setting needed in this mode - set the `Start` parameter to `Start button and external control`:
 
+![alt text](resources/oetiker-internal-start.png)
+
+Note, that you will need the following licenses:
+
+![alt text](resources/oetiker-internal-licenses.png)
 
 #### Trigger settings in external start mode
 
-The following screenshot shows the configuration setting needed to control the EPC01 device:
+In this mode, OGS send an enable command to the tool first, then also starts the tool operation. Note, that the tool is started, even if the operator does not push the safety leaver, so make sure safety is ensured otherwise!
 
-(screenshot tbd.)
+The following screenshot shows the configuration setting needed to control the EPC01 device - set the `Start` parameter to `External control`:
+
+![alt text](resources/oetiker-external-start.png)
+
+!!! note
+
+    If the `External control` option is not visible, then you will need a larger license (see below, the option `safety leaver override` is required)!
+
+Note, that you will need the following licenses:
+
+![alt text](resources/oetiker-external-licenses.png)
 
 ## Installation and Configuration with OGS
 
@@ -107,7 +128,9 @@ To load the Oetiker EPC01 pincer driver, see below (OGS >= V3.2 ships the driver
 
     1.  Add this line to include the `lua_tool_pincer_oetiker.lua` driver in the project.
 
+!!! note
 
+    Note, that using the external start mode requires custom LUA code to start the tool. Contact us for sample with e.g. external foot switch or other input devices.
 
 ## Editor configuration
 

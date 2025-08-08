@@ -15,7 +15,7 @@ The EPC 01 is a high quality pincer system developed by Oetiker. It ensures the 
 It combines Electro-Pneumatic Controls and Trigger Units for the full range of environment - from test labs to fully automated high-volume production cells. A wide range of pincer body sizes and pincer heads allows for optimal adaption to any requirement.
 
 Find the full specification at the [Oetiker EPC01 product page](https://www.oetiker.com/en-us/products/assembly-tools/electronically-controlled-pneumatic-pincers/electro-pneumatic-controller-epc-01
-)
+) and the YouTube playlist with the [EPC 01 Step by Step guide](https://www.youtube.com/playlist?list=PLzN7Kyf0Yw4r68r-xakjDy8g8OeY74Hpn).
 
 ## Requirements
 

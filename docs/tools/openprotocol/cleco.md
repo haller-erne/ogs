@@ -20,8 +20,6 @@ tags:
 ![Cleco CellCore Tools](resources/cleco-cellcore.png){ width="300", align=right }
 The [Cleco CellCore family of cordless tightening tools](https://www.clecotools.com/) are smart, durable and designed to withstand the toughest environments. The lightweight ergonomic design reduces operator fatigue while delivering state-of-the-art power, weight and balance. By combining the tools with Cleco's mPro200/300/400 controllers, advanced tightening features and realtime data connectivity becomes available. A single controller can handle up to 10 tools for a much more compact footprint.
 
-To access the configuration, ... predefined IP address 192.168.252.33 (default user: admin/admin, amt/amt).
-
 ## OpenProtocol setup
 
 To enable the OpenProtocol interface, connect to the tool using a webbrowser and navigate to `Navigator --> Communication` and look for the `OpenProtocol` parameters. Then configure as follows:

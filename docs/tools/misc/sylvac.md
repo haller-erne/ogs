@@ -9,7 +9,7 @@ tags:
 
 # Sylvac Bluetooth low energy tools
 
-The AIOI Pick2Light system is an interactive tool that helps operators by clearly indicating the specific shelf location and, when needed, the quantity of items to be picked or placed. Available in several models, each unit features colored LEDs and a single confirmation button, offering versatile configurations to efficiently manage tasks. <!--links? to aioi H/W setup-->
+The S_Cal EVO Smart is a high-quality digital caliper made by Sylvac, designed for accurate and easy measurement. It features a large display, durable stainless steel body, and Bluetooth® connectivity for quick data transfer. With smart functions like automatic wake-up and sleep mode, it's a reliable tool for everyday use in workshops and production environments.
 
 !!! warning
 
@@ -18,13 +18,30 @@ The AIOI Pick2Light system is an interactive tool that helps operators by clearl
 
 ## Quick setup
 
-To provide Bluetooth connectivity for the Sylvac tools, the Sylvac BLE USB dongle (BLED112) is used. To connect a tool, please follow these steps:
+To provide Bluetooth connectivity for the Sylvac tools, the Sylvac BLE USB dongle (BLED112) is used. It can operate in two modes:
 
+🔹 Simple Mode
+- This mode allows the caliper to transmit data without pairing.
+- It’s ideal for quick measurements where secure connection isn’t needed.
+- The device advertises its signal and can be picked up by compatible receivers or software.
+- No pairing or encryption is involved, making it fast and easy to use.
+
+🔹 Pair Mode
+- In this mode, the caliper is paired securely with a specific device (like a PC or tablet).
+- It ensures stable and encrypted communication, which is better for continuous or sensitive data logging.
+- Once paired, the caliper will only communicate with the paired device, reducing interference or accidental connections.
+
+![alt text](resources/Sylvac_Modes.png){ align=right; width=200px; }
+
+
+To connect the tool, please follow the steps below:
 1. Reset the tools Bluetooth connection: (short) click the 'MODE' button until the display shows `bt`. Then (short) click the `SET` button until the display shows `reset`. Now click the `DATA` button to actually reset the settings
-2. Set (or check) the BLE communication mode to paired by clicking and holding the `MODE` button until the display shows `unit`. Then (short) click the `MODE` button until the display shows `bt.CFG`. Then (short) click the `SET` button until the display shows `PAIR`. Click the `DATA` button to select the paired mode.
+2. To activate Bluetooth on the caliper: Move the jaws or press any button to turn it on. (Short) press the `MODE` button until the display shows bt. (Short) press the `SET` button until the display shows on. Press the `DATA` button to confirm and switch Bluetooth on. The Bluetooth icon will appear on the display.
+
+<!--Set (or check) the BLE communication mode to paired by clicking and holding the `MODE` button until the display shows `unit`. Then (short) click the `MODE` button until the display shows `bt.CFG`. Then (short) click the `SET` button until the display shows `PAIR`. Click the `DATA` button to select the paired mode.-->
 
 
-## Oeration modes (favorites)
+## Operation modes (favorites)
 
 ![alt text](resources/sylvac-favorites.png){ align=right; width=200px; }
 

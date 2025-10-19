@@ -103,7 +103,7 @@ Notes:
 - To teach a number of tasks, ideally set the tolerance parameters on the first task and teach. Subsequently teached tasks will then show the previously defined tolerance parameters by default
 - Fields with white background are editable (rights required!). 
 
-!!! important
+!!! tip "Important"
 
     Changes to the parameters in the side panel are only saved, if the 
     bottom status bar button `teach position` is clicked!
@@ -129,19 +129,24 @@ The following tolerance bodys are available:
 
 ## Initial system setup
 
+!!! note
+
+    Starting from OGS V3.1.8, the integrated web server now supports loading web pages from the installation folder, so there is no need to copy the positioning html files to the project anymore.
+    Also, the webserver now supports automatic URL prefexing, i.e. wherever an URL is expected, you can also specify a simple files name and a full URL is automatically generated!
+
 ### OGS configuration
 
 As described in [OGS positioning overview](README.md), OGS provides all drivers needed to integrate ART-DTrack positioning into your project. However a few manual steps are still needed to configure the project:
 
 - Load the tool tracking support in `config.lua`
 - Configure the tracking parameters and tool, body, etc. mapping in `station.ini`
-- Configure the OGS webserver and add the html pages to support the sidepanel teach-in ui to the project
+- Configure the OGS webserver (for OGS < V3.1.8 additionally add the html pages to support the sidepanel teach-in ui to the project)
 
 
 #### config.lua and station.ini
 
 To load the tool tracking support, include the `positioning.lua` file in your project (through the `config.lua` requires list or directly by adding a 
-`require('positioning)` somewhere in the code).
+`require('lib.positioning)` somewhere in the code).
 
 Adding it to the `requires` table in the projects `config.lua` will then look as follows:
 
@@ -152,14 +157,14 @@ OGS.Project.AddPath('../shared')
 requires = {
 	"barcode",
 	"user_manager",
-	"positioning",      -- (1)!
+	"lib.positioning",      -- (1)!
     -- possibly more...
 }
 current_project.logo_file = '../shared/logo-rexroth.png'
-current_project.billboard = 'http://127.0.0.1:60000/billboard.html'
+current_project.billboard = 'billboard.html'
 ```
 
-1.  Add this line to include the `positioning.lua` driver in the project.
+1.  Add this line to include the `positioning.lua` driver in the project (see [OGS tool tracking project configuration](README.md#project-configuration)).
 
 As described in [OGS positioning overview](README.md), OGS automatically scans the `[OPENPROTO]` and `[CHANNELS]` sections for positioning references. If found, then the assigned section is read to determine the driver to be used and to read the associated parameters.
 
@@ -235,7 +240,7 @@ Custom bodies and tool mounts are defined by adding their geometric data ([pleas
 
 #### Sidepanel teach-in setup
 
-To enable the side panel with teach-in functionality, the html files must be copied into the projects web root. Note that this also requires enabling the OGS integrated web server.
+To enable the side panel with teach-in functionality, the OGS integrated web server must be enabled.
 
 Here is the relevant fragment of `station.ini`:
 
@@ -254,7 +259,10 @@ URL=http://127.0.0.1:60000/
 RootFolder=../shared/webroot
 ```
 
-The html files for the positioning system are located in in the OGS installation directory at `<installdir>\lualib\libpositioning\webroot`. Copy all files into your projects webroot (as specified in the `[Webserver]` section in `station.ini`).
+!!! note "Note: for OGS < 3.1.8"
+
+    For OGS < 3.1.8, the html files for the positioning system must be copied from the OGS installation directory at `<installdir>\lualib\libpositioning\webroot`. Copy all files into your projects webroot (as specified in the `[Webserver]` section in `station.ini`).
+    For OGS >= V3.1.8 this is not needed.
 
 
 ### DTrack configuration

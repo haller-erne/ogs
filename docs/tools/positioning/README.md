@@ -85,7 +85,7 @@ The `positioning.lua` file automatically scans the `[OPENPROTO]` section for `CH
 
 Here is a sample fragment on how to configure an OpenProtocol tool with the AR-Tracking driver (see [available drivers](#available-drivers) below and [ART SmartTrack](./positioning-art-dtrack.md) for detailed info):
 
-``` ini
+``` ini hl_lines="6"
 [OPENPROTO]
 CHANNEL_01=192.168.1.42
 CHANNEL_01_TYPE=GWK
@@ -130,7 +130,7 @@ REFERENCE_TRACKER=Claw Target 21 Reference
 
 To add a positioning system to a LUA tool (see [LUA custom tools](/ogs/v3/lua/customtools/)), a slightly different syntax is needed. In this case, the `POSITIONING=<section>` must be added to the tools configuration section. Here is a sample:
 
-``` ini
+``` ini hl_lines="9"
 [CHANNELS]
 1=LuaTool_MyTool
 

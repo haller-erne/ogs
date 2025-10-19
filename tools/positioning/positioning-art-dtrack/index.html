@@ -15,7 +15,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.21">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.22">
     
     
       
@@ -23,7 +23,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.2a3383ac.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.84d31ad4.min.css">
       
       
 
@@ -2411,7 +2411,7 @@ the"Use Position Encoder" in the Job section or set the <code>POSITION_ENCODER_I
 <li>To teach a number of tasks, ideally set the tolerance parameters on the first task and teach. Subsequently teached tasks will then show the previously defined tolerance parameters by default</li>
 <li>Fields with white background are editable (rights required!). </li>
 </ul>
-<div class="admonition important">
+<div class="admonition tip">
 <p class="admonition-title">Important</p>
 <p>Changes to the parameters in the side panel are only saved, if the 
 bottom status bar button <code>teach position</code> is clicked!</p>
@@ -2434,16 +2434,21 @@ bottom status bar button <code>teach position</code> is clicked!</p>
 </div>
 </div>
 <h2 id="initial-system-setup"><a class="toclink" href="#initial-system-setup">Initial system setup</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Starting from OGS V3.1.8, the integrated web server now supports loading web pages from the installation folder, so there is no need to copy the positioning html files to the project anymore.
+Also, the webserver now supports automatic URL prefexing, i.e. wherever an URL is expected, you can also specify a simple files name and a full URL is automatically generated!</p>
+</div>
 <h3 id="ogs-configuration"><a class="toclink" href="#ogs-configuration">OGS configuration</a></h3>
 <p>As described in <a href="../">OGS positioning overview</a>, OGS provides all drivers needed to integrate ART-DTrack positioning into your project. However a few manual steps are still needed to configure the project:</p>
 <ul>
 <li>Load the tool tracking support in <code>config.lua</code></li>
 <li>Configure the tracking parameters and tool, body, etc. mapping in <code>station.ini</code></li>
-<li>Configure the OGS webserver and add the html pages to support the sidepanel teach-in ui to the project</li>
+<li>Configure the OGS webserver (for OGS &lt; V3.1.8 additionally add the html pages to support the sidepanel teach-in ui to the project)</li>
 </ul>
 <h4 id="configlua-and-stationini"><a class="toclink" href="#configlua-and-stationini">config.lua and station.ini</a></h4>
 <p>To load the tool tracking support, include the <code>positioning.lua</code> file in your project (through the <code>config.lua</code> requires list or directly by adding a 
-<code>require('positioning)</code> somewhere in the code).</p>
+<code>require('lib.positioning)</code> somewhere in the code).</p>
 <p>Adding it to the <code>requires</code> table in the projects <code>config.lua</code> will then look as follows:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">-- add the shared folder (..\shared)</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nv">OGS</span><span class="p">.</span><span class="py">Project</span><span class="p">.</span><span class="nf">AddPath</span><span class="p">(</span><span class="s1">'../shared'</span><span class="p">)</span>
@@ -2451,14 +2456,14 @@ bottom status bar button <code>teach position</code> is clicked!</p>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nv">requires</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="s2">"barcode"</span><span class="p">,</span>
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="s2">"user_manager"</span><span class="p">,</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="hll"><span class="w">    </span><span class="s2">"positioning"</span><span class="p">,</span><span class="w">      </span><span class="c1">-- (1)!</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="hll"><span class="w">    </span><span class="s2">"lib.positioning"</span><span class="p">,</span><span class="w">      </span><span class="c1">-- (1)!</span>
 </span><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="c1">-- possibly more...</span>
 <a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="p">}</span>
 <a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="nv">current_project</span><span class="p">.</span><span class="py">logo_file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'../shared/logo-rexroth.png'</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="nv">current_project</span><span class="p">.</span><span class="py">billboard</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'http://127.0.0.1:60000/billboard.html'</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="nv">current_project</span><span class="p">.</span><span class="py">billboard</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'billboard.html'</span>
 </code></pre></div>
 <ol>
-<li>Add this line to include the <code>positioning.lua</code> driver in the project.</li>
+<li>Add this line to include the <code>positioning.lua</code> driver in the project (see <a href="../#project-configuration">OGS tool tracking project configuration</a>).</li>
 </ol>
 <p>As described in <a href="../">OGS positioning overview</a>, OGS automatically scans the <code>[OPENPROTO]</code> and <code>[CHANNELS]</code> sections for positioning references. If found, then the assigned section is read to determine the driver to be used and to read the associated parameters.</p>
 <p>To configure the ART DTrack/SmartTrack driver, the following configuration is needed (the sample shown below includes a single linked OpenProtocol tool, but you can link multiple tools to the ART driver, too):</p>
@@ -2527,7 +2532,7 @@ bottom status bar button <code>teach position</code> is clicked!</p>
 <li><code>targetmounts.atti</code>: Defines additional (tool specific) target mounts/adapters</li>
 </ul>
 <h4 id="sidepanel-teach-in-setup"><a class="toclink" href="#sidepanel-teach-in-setup">Sidepanel teach-in setup</a></h4>
-<p>To enable the side panel with teach-in functionality, the html files must be copied into the projects web root. Note that this also requires enabling the OGS integrated web server.</p>
+<p>To enable the side panel with teach-in functionality, the OGS integrated web server must be enabled.</p>
 <p>Here is the relevant fragment of <code>station.ini</code>:</p>
 <div class="highlight"><span class="filename">station.ini</span><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">[WebServer]</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1">; The integrated web server is enabled, if a non-empty URL is given. Please note, that</span>
@@ -2542,7 +2547,11 @@ bottom status bar button <code>teach position</code> is clicked!</p>
 <a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="c1">; this might be either a relative path (to the project folder) or an absolute one.</span>
 <a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="na">RootFolder</span><span class="o">=</span><span class="s">../shared/webroot</span>
 </code></pre></div>
-<p>The html files for the positioning system are located in in the OGS installation directory at <code>&lt;installdir&gt;\lualib\libpositioning\webroot</code>. Copy all files into your projects webroot (as specified in the <code>[Webserver]</code> section in <code>station.ini</code>).</p>
+<div class="admonition note">
+<p class="admonition-title">Note: for OGS &lt; 3.1.8</p>
+<p>For OGS &lt; 3.1.8, the html files for the positioning system must be copied from the OGS installation directory at <code>&lt;installdir&gt;\lualib\libpositioning\webroot</code>. Copy all files into your projects webroot (as specified in the <code>[Webserver]</code> section in <code>station.ini</code>).
+For OGS &gt;= V3.1.8 this is not needed.</p>
+</div>
 <h3 id="dtrack-configuration"><a class="toclink" href="#dtrack-configuration">DTrack configuration</a></h3>
 <p>Usually, there is no need to use DTrack for SmartTrack camera setups, as OGS configures the relevant parameters needed for data exchange automatically. However it is recommended to install DTrack anyway and run it for the following:</p>
 <ul>

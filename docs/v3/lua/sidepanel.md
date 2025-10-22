@@ -48,29 +48,18 @@ Width=20
 
 There is no special Lua interface for accessing the side panel. All features are available through the [web browser interface](./webbrowser.md) of the `SidePanel` instance.
 
-The Lua interface consists of only has a single funtion (`Lean_OnButtonClicked()`). The function must be implemented in the global scope by the user code. The function is called by the OGS core whenever the Lean button is clicked in the user interface.
-
-### Functions
-
-| Function Name | Return Type | Description |
-| -------- | ----------- | ----------- |
-| `Lean_OnButtonClicked()` | (none) | Called by OGS whenever the Lean button is clicked | 
-
-
 ### Sample code
 
-The following sample code (add it to a file and reference it through `config.lua`) opens the side panel whenever the Lean button is clicked.
-
+#### Show the side panel
 ```LUA
--- Register the function in the global scope
--- The function is called everytime a user clicks the Lean button
-Lean_OnButtonClicked = function()
-    -- Process the Lean button click event 
-
-    -- e.g. open the side panel with a custom url
-
-end
+-- Make the SidePanel visible, set the width to 25% and navigate the
+-- web browser to https://www.my-url.com/mypage
+local oldUrl = Browser.Show('SidePanel', 'https://www.my-url.com/mypage', false, '25')
 ```
 
-
+#### Hide the side panel
+```LUA
+-- Hide the SidePanel
+Browser.Hide('SidePanel')
+```
 

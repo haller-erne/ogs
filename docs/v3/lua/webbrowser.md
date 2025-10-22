@@ -234,7 +234,7 @@ The function returns the "current" URL of the webbrowser (the URL before changin
 ```LUA
 -- Make the SidePanel visible, set the width to 25% and navigate the
 -- web browser to https://www.my-url.com/mypage
-local oldUrl = Browser.Show('SidePanel', 'https://www.my-url.com/mypage', 0, 25)
+local oldUrl = Browser.Show('SidePanel', 'https://www.my-url.com/mypage', false, '25')
 ```
 
 ### Hide

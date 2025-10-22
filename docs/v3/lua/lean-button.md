@@ -48,7 +48,9 @@ Lean_OnButtonClicked = function()
     -- Process the Lean button click event 
 
     -- e.g. open the side panel with a custom url
-
+    -- Make the SidePanel visible, set the width to 25% and navigate the
+    -- web browser to https://www.my-url.com/mypage
+    Browser.Show('SidePanel', 'https://www.my-url.com/mypage', false, '25')
 end
 ```
 

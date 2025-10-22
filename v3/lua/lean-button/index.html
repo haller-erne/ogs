@@ -5,25 +5,25 @@
       
       
       
-        <link rel="canonical" href="https://haller-erne.github.io/ogs/tools/remote-tool/">
+        <link rel="canonical" href="https://haller-erne.github.io/ogs/v3/lua/lean-button/">
       
       
-        <link rel="prev" href="../">
+        <link rel="prev" href="../sidepanel/">
       
       
-        <link rel="next" href="../openprotocol/">
+        <link rel="next" href="../customtools/">
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.22">
     
     
       
-        <title>Overview - OGS Documentation</title>
+        <title>Lua lean button interface - OGS Documentation</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.84d31ad4.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.84d31ad4.min.css">
       
       
 
@@ -48,16 +48,16 @@
       
     
     
-      <link rel="stylesheet" href="../../css/neoteroi-mkdocs.css">
+      <link rel="stylesheet" href="../../../css/neoteroi-mkdocs.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
     
     
     
-  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+  <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
             html.glightbox-open { overflow: initial; height: 100%; }
             .gslide-title { margin-top: 0px; user-select: text; }
             .gslide-desc { color: #666; user-select: text; }
@@ -79,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#remotetool" class="md-skip">
+        <a href="#lean-button" class="md-skip">
           Skip to content
         </a>
       
@@ -95,7 +95,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="OGS Documentation" class="md-header__button md-logo" aria-label="OGS Documentation" data-md-component="logo">
+    <a href="../../.." title="OGS Documentation" class="md-header__button md-logo" aria-label="OGS Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Overview
+              Lua lean button interface
             
           </span>
         </div>
@@ -193,7 +193,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="OGS Documentation" class="md-nav__button md-logo" aria-label="OGS Documentation" data-md-component="logo">
+    <a href="../../.." title="OGS Documentation" class="md-nav__button md-logo" aria-label="OGS Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
@@ -211,7 +211,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   
@@ -230,20 +230,18 @@
       
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2">
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
@@ -259,7 +257,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Tool configuration
@@ -273,7 +271,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../../../tools/" class="md-nav__link">
         
   
   
@@ -293,20 +291,18 @@
                 
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2">
         
           
           <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
@@ -322,7 +318,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2_2">
             <span class="md-nav__icon md-icon"></span>
             Remote Tool Gateway
@@ -333,32 +329,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Overview
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../../tools/remote-tool/" class="md-nav__link">
         
   
   
@@ -369,86 +343,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Installation
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#tool-registration-and-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      Tool registration and configuration
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#channeltool-parameter-reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      Channel/tool parameter reference
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#driver-parameter-reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      Driver parameter reference
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Driver parameter reference">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#toolgateway_addr" class="md-nav__link">
-    <span class="md-ellipsis">
-      ToolGateway_Addr
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#toolgateway_port" class="md-nav__link">
-    <span class="md-ellipsis">
-      ToolGateway_Port
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -507,7 +401,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../openprotocol/" class="md-nav__link">
+      <a href="../../../tools/openprotocol/" class="md-nav__link">
         
   
   
@@ -530,7 +424,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../openprotocol/nexo/" class="md-nav__link">
+      <a href="../../../tools/openprotocol/nexo/" class="md-nav__link">
         
   
   
@@ -553,7 +447,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../openprotocol/sys350-cs351/" class="md-nav__link">
+      <a href="../../../tools/openprotocol/sys350-cs351/" class="md-nav__link">
         
   
   
@@ -576,7 +470,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../openprotocol/sys350-ke350/" class="md-nav__link">
+      <a href="../../../tools/openprotocol/sys350-ke350/" class="md-nav__link">
         
   
   
@@ -599,7 +493,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../openprotocol/opexplus/" class="md-nav__link">
+      <a href="../../../tools/openprotocol/opexplus/" class="md-nav__link">
         
   
   
@@ -622,7 +516,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../openprotocol/gwk/" class="md-nav__link">
+      <a href="../../../tools/openprotocol/gwk/" class="md-nav__link">
         
   
   
@@ -645,7 +539,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../openprotocol/sturtevant/" class="md-nav__link">
+      <a href="../../../tools/openprotocol/sturtevant/" class="md-nav__link">
         
   
   
@@ -668,7 +562,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../openprotocol/amt/" class="md-nav__link">
+      <a href="../../../tools/openprotocol/amt/" class="md-nav__link">
         
   
   
@@ -691,7 +585,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../openprotocol/cleco/" class="md-nav__link">
+      <a href="../../../tools/openprotocol/cleco/" class="md-nav__link">
         
   
   
@@ -714,7 +608,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../openprotocol/makita/" class="md-nav__link">
+      <a href="../../../tools/openprotocol/makita/" class="md-nav__link">
         
   
   
@@ -737,7 +631,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../openprotocol/hstechnik/" class="md-nav__link">
+      <a href="../../../tools/openprotocol/hstechnik/" class="md-nav__link">
         
   
   
@@ -806,7 +700,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../openprotocol/ngineric/" class="md-nav__link">
+      <a href="../../../tools/openprotocol/ngineric/" class="md-nav__link">
         
   
   
@@ -829,7 +723,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../doga-wifi/" class="md-nav__link">
+      <a href="../../../tools/doga-wifi/" class="md-nav__link">
         
   
   
@@ -898,7 +792,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../misc/gui-input/" class="md-nav__link">
+      <a href="../../../tools/misc/gui-input/" class="md-nav__link">
         
   
   
@@ -921,7 +815,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../misc/aioi-pick2light/" class="md-nav__link">
+      <a href="../../../tools/misc/aioi-pick2light/" class="md-nav__link">
         
   
   
@@ -944,7 +838,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../misc/gesipa-mqtt/" class="md-nav__link">
+      <a href="../../../tools/misc/gesipa-mqtt/" class="md-nav__link">
         
   
   
@@ -967,7 +861,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../misc/keyence-iv4/" class="md-nav__link">
+      <a href="../../../tools/misc/keyence-iv4/" class="md-nav__link">
         
   
   
@@ -990,7 +884,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../misc/sylvac/" class="md-nav__link">
+      <a href="../../../tools/misc/sylvac/" class="md-nav__link">
         
   
   
@@ -1013,7 +907,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../misc/oetiker/" class="md-nav__link">
+      <a href="../../../tools/misc/oetiker/" class="md-nav__link">
         
   
   
@@ -1082,7 +976,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../positioning/" class="md-nav__link">
+      <a href="../../../tools/positioning/" class="md-nav__link">
         
   
   
@@ -1105,7 +999,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../positioning/positioning-art-dtrack/" class="md-nav__link">
+      <a href="../../../tools/positioning/positioning-art-dtrack/" class="md-nav__link">
         
   
   
@@ -1128,7 +1022,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../positioning/positioning-art-verpose/" class="md-nav__link">
+      <a href="../../../tools/positioning/positioning-art-verpose/" class="md-nav__link">
         
   
   
@@ -1204,7 +1098,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../misc/socket-tray/" class="md-nav__link">
+      <a href="../../../tools/misc/socket-tray/" class="md-nav__link">
         
   
   
@@ -1227,7 +1121,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../misc/projector/" class="md-nav__link">
+      <a href="../../../tools/misc/projector/" class="md-nav__link">
         
   
   
@@ -1295,7 +1189,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../dataoutput/xmlfile/" class="md-nav__link">
+      <a href="../../../dataoutput/xmlfile/" class="md-nav__link">
         
   
   
@@ -1318,7 +1212,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../dataoutput/printout/" class="md-nav__link">
+      <a href="../../../dataoutput/printout/" class="md-nav__link">
         
   
   
@@ -1341,7 +1235,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../dataoutput/traceability/" class="md-nav__link">
+      <a href="../../../dataoutput/traceability/" class="md-nav__link">
         
   
   
@@ -1364,7 +1258,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../dataoutput/eventlog/" class="md-nav__link">
+      <a href="../../../dataoutput/eventlog/" class="md-nav__link">
         
   
   
@@ -1391,18 +1285,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
           <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
@@ -1418,7 +1314,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Scripting
@@ -1432,7 +1328,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../v3/getting-started/" class="md-nav__link">
+      <a href="../../getting-started/" class="md-nav__link">
         
   
   
@@ -1452,18 +1348,20 @@
                 
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" checked>
         
           
           <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
@@ -1479,7 +1377,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5_2">
             <span class="md-nav__icon md-icon"></span>
             LUA interfaces
@@ -1493,7 +1391,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../v3/lua/eventlog/" class="md-nav__link">
+      <a href="../eventlog/" class="md-nav__link">
         
   
   
@@ -1516,7 +1414,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../v3/lua/webbrowser/" class="md-nav__link">
+      <a href="../webbrowser/" class="md-nav__link">
         
   
   
@@ -1539,7 +1437,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../v3/lua/webserver/" class="md-nav__link">
+      <a href="../webserver/" class="md-nav__link">
         
   
   
@@ -1562,7 +1460,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../v3/lua/bluetooth-le/" class="md-nav__link">
+      <a href="../bluetooth-le/" class="md-nav__link">
         
   
   
@@ -1585,7 +1483,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../v3/lua/sidepanel/" class="md-nav__link">
+      <a href="../sidepanel/" class="md-nav__link">
         
   
   
@@ -1605,10 +1503,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../v3/lua/lean-button/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Lean button
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1619,6 +1539,77 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lua-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lua interface
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lua interface">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Functions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sample-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sample code
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1639,7 +1630,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../v3/lua/customtools/" class="md-nav__link">
+      <a href="../customtools/" class="md-nav__link">
         
   
   
@@ -1707,7 +1698,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../libs/lua-ads/" class="md-nav__link">
+      <a href="../../../libs/lua-ads/" class="md-nav__link">
         
   
   
@@ -1730,7 +1721,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../libs/lua-opcua/" class="md-nav__link">
+      <a href="../../../libs/lua-opcua/" class="md-nav__link">
         
   
   
@@ -1753,7 +1744,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../libs/lua-modbus/" class="md-nav__link">
+      <a href="../../../libs/lua-modbus/" class="md-nav__link">
         
   
   
@@ -1776,7 +1767,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../libs/lua-hid/" class="md-nav__link">
+      <a href="../../../libs/lua-hid/" class="md-nav__link">
         
   
   
@@ -1799,7 +1790,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../libs/lua-dpapi/" class="md-nav__link">
+      <a href="../../../libs/lua-dpapi/" class="md-nav__link">
         
   
   
@@ -1822,7 +1813,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../libs/lua-net/" class="md-nav__link">
+      <a href="../../../libs/lua-net/" class="md-nav__link">
         
   
   
@@ -1890,7 +1881,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../appnotes/sharedconfig.md" class="md-nav__link">
+      <a href="../../../appnotes/sharedconfig.md" class="md-nav__link">
         
   
   
@@ -1913,7 +1904,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../appnotes/databanking/" class="md-nav__link">
+      <a href="../../../appnotes/databanking/" class="md-nav__link">
         
   
   
@@ -1936,7 +1927,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../appnotes/userdb/" class="md-nav__link">
+      <a href="../../../appnotes/userdb/" class="md-nav__link">
         
   
   
@@ -1959,7 +1950,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../appnotes/toolgateway/" class="md-nav__link">
+      <a href="../../../appnotes/toolgateway/" class="md-nav__link">
         
   
   
@@ -1982,7 +1973,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../appnotes/traceability/" class="md-nav__link">
+      <a href="../../../appnotes/traceability/" class="md-nav__link">
         
   
   
@@ -2050,7 +2041,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../appnotes/openmqttgateway/" class="md-nav__link">
+      <a href="../../../appnotes/openmqttgateway/" class="md-nav__link">
         
   
   
@@ -2073,7 +2064,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../appnotes/debugging/" class="md-nav__link">
+      <a href="../../../appnotes/debugging/" class="md-nav__link">
         
   
   
@@ -2096,7 +2087,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../appnotes/station_io/" class="md-nav__link">
+      <a href="../../../appnotes/station_io/" class="md-nav__link">
         
   
   
@@ -2146,55 +2137,46 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
+  <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
-      Installation
+      Overview
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#tool-registration-and-configuration" class="md-nav__link">
+  <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
-      Tool registration and configuration
+      Prerequisites
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#channeltool-parameter-reference" class="md-nav__link">
+  <a href="#lua-interface" class="md-nav__link">
     <span class="md-ellipsis">
-      Channel/tool parameter reference
+      Lua interface
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#driver-parameter-reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      Driver parameter reference
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Driver parameter reference">
+    <nav class="md-nav" aria-label="Lua interface">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#toolgateway_addr" class="md-nav__link">
+  <a href="#functions" class="md-nav__link">
     <span class="md-ellipsis">
-      ToolGateway_Addr
+      Functions
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#toolgateway_port" class="md-nav__link">
+  <a href="#sample-code" class="md-nav__link">
     <span class="md-ellipsis">
-      ToolGateway_Port
+      Sample code
     </span>
   </a>
   
@@ -2221,52 +2203,56 @@
 
 
 
-<h1 id="remotetool"><a class="toclink" href="#remotetool">RemoteTool</a></h1>
-<p>OGS supports connecting tools over a <code>ToolGateway</code>. This enables advanced  tool management scenarios, e.g. "roaming" tools between multiple stations.</p>
-<p>Using the <code>RemoteTool</code> driver requires a <code>ToolGateway</code> running on a server - the server then actually controls the tool, whereas the OGS stations only communication with the <code>ToolGateway</code>. This allows delegating tool management to the central <code>ToolGateway</code>. </p>
-<p>For each tool managed through the <code>ToolGateway</code>, OGS only uses a generic <code>RemoteTool</code> type channel in its local configuration, the <code>ToolGateway</code> then has the actual tool-specific configuration (like e.g. <a href="../openprotocol/">OpenProtocol tools</a>).</p>
-<h2 id="installation"><a class="toclink" href="#installation">Installation</a></h2>
-<p>The <code>RemoteTool</code> driver is implemented in <code>RemoteTool.dll</code>. To use any <code>RemoteTool</code> tool, the driver must be loaded in the <code>[TOOL_DLL]</code> section of the projects <code>station.ini</code> configuration file (see also <a href="../">Tool configuration</a>).</p>
-<p>To enable the driver in station.ini, set it as follows:</p>
-<div class="highlight"><pre><span></span><code>[TOOL_DLL]
-RemoteTool.dll=1
+<h1 id="lean-button"><a class="toclink" href="#lean-button">Lean button</a></h1>
+<h2 id="overview"><a class="toclink" href="#overview">Overview</a></h2>
+<p>The OGS runtimes UI provides an optional button to allow the operator to execute some custom actions. This is typically used to open the side panel (see <a href="../sidepanel/">Sidepanel</a>) with a specific web page which allows custom interactions (e.g. reporting some issues or calling for help - typically for lean management purposes - that's where the name comes from).</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/lean-button.png" data-desc-position="bottom"><img alt="lean button on process screen" src="../resources/lean-button.png"></a></p>
+<p>The button must be enabled through <code>station.ini</code> (see <a href="#prerequisites">Prerequisites</a>) and an action must be implemented through Lua code (see sample below). Without custom Lua code, the button does not provide any action.</p>
+<h2 id="prerequisites"><a class="toclink" href="#prerequisites">Prerequisites</a></h2>
+<p>To enable the the Lean button, modify <code>station.ini</code> by adding a <code>[LEAN]</code> section and setting the <code>ENABLED</code> parameter to a non-zero value. Here is a sample:</p>
+<div class="highlight"><span class="filename">station.ini</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">[LEAN]</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1">; Enable the Lean button by setting ENABLED=1</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="na">ENABLED</span><span class="o">=</span><span class="s">1</span>
 </code></pre></div>
-<p>The overall parameters for the <code>RemoteTool</code> driver are configured in the ´[RemoteTool]<code>section. This is basically used to configure the</code>ToolGateway` connection parameters, here is a sample setup:</p>
-<div class="highlight"><pre><span></span><code>[RemoteTool]
-ToolGateway_Addr=mytoolgateway.mycompany.com
-ToolGateway_Port=
+<h2 id="lua-interface"><a class="toclink" href="#lua-interface">Lua interface</a></h2>
+<p>The Lua interface consists of only has a single function (<code>Lean_OnButtonClicked()</code>). The function must be implemented in the global scope by the user code. The function is called by the OGS core whenever the Lean button is clicked in the user interface.</p>
+<h3 id="functions"><a class="toclink" href="#functions">Functions</a></h3>
+<table>
+<thead>
+<tr>
+<th>Function Name</th>
+<th>Return Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Lean_OnButtonClicked()</code></td>
+<td>(none)</td>
+<td>Called by OGS whenever the Lean button is clicked</td>
+</tr>
+</tbody>
+</table>
+<h3 id="sample-code"><a class="toclink" href="#sample-code">Sample code</a></h3>
+<p>The following sample code (add it to a file and reference it through <code>config.lua</code>) opens the side panel whenever the Lean button is clicked.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">-- Register the function in the global scope</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1">-- The function is called everytime a user clicks the Lean button</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nv">Lean_OnButtonClicked</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">()</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="c1">-- Process the Lean button click event </span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="c1">-- e.g. open the side panel with a custom url</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="kr">end</span>
 </code></pre></div>
-<p>For more information about the driver parameters, see <a href="#driver-parameter-reference">Driver Parameters</a> below.</p>
-<h2 id="tool-registration-and-configuration"><a class="toclink" href="#tool-registration-and-configuration">Tool registration and configuration</a></h2>
-<p>All <code>RemoteTool</code>-tools are registered in the <code>[CHANNELS]</code> section of the projects <code>station.ini</code> file.</p>
-<p>The <code>[CHANNELS]</code> section only defines a channel number to channel name mapping - the channel/tool specific settings are then configured in a seperate section defined by the channel name. Inside the section, a reference to the <code>RemoteTool</code> driver then links driver and channel accordingly.</p>
-<p>The overall layout is therefore as follows (sample is for channel 2):</p>
-<div class="highlight"><pre><span></span><code>[CHANNELS]
-# Map the channel/tool 2 to the 'RemoteTool_Nexo1'-section
-2=RemoteTool_Nexo1
-
-[RemoteTool_Nexo1]
-# link to the RemoteTool driver
-DRIVER=RemoteTool
-# more channel/tool specific parameters for this tool/driver
-</code></pre></div>
-<p>Please see <a href="#channeltool-parameter-reference">Channel/tool parameter reference</a> below for more information about the available parameters.</p>
-<h2 id="channeltool-parameter-reference"><a class="toclink" href="#channeltool-parameter-reference">Channel/tool parameter reference</a></h2>
-<p>Currently, there are no channel/tool-specific parameters needed (other than specifying the <code>DRIVER=RemoteTool</code>) to use this driver. All concrete tool communication settings are to be configured on the <code>ToolGateway</code> server side. </p>
-<h2 id="driver-parameter-reference"><a class="toclink" href="#driver-parameter-reference">Driver parameter reference</a></h2>
-<p>The driver parameters are defined in the <code>[RemoteTool]</code> section in the projects <code>station.ini</code>.</p>
-<p>The following parameters are available:</p>
-<h4 id="toolgateway_addr"><a class="toclink" href="#toolgateway_addr">ToolGateway_Addr</a></h4>
-<p>IP address or hostname of the tool gateway.</p>
-<h4 id="toolgateway_port"><a class="toclink" href="#toolgateway_port">ToolGateway_Port</a></h4>
-<p>(optional)</p>
-<p>Port number to use for connecting to the tool gateway. If not given, the driver tries to use the RPC endpoint mapper using the service UUID to resolve the connection endpoint (might require additional firewall settings).</p>
 
 
 
 
 
 
+
+  
+  
 
 
 
@@ -2311,10 +2297,10 @@ DRIVER=RemoteTool
     
     
       
-      <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
     
   

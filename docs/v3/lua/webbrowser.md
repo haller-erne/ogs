@@ -163,7 +163,7 @@ function Browser.Navigate(instance, url, reload) end
 ---Make the webbrowser visible and navigate to the given URL
 ---@param instance WebBrowserInstance Web browser instance
 ---@param url string New URL for the webbrowser
----@param reload boolean (not implemented yet)
+---@param reload integer (not implemented yet)
 ---@param params string Parameter string for the webbrowser (e.g. for the sidepanel the flyout width)
 ---@return nil|string url Returns the current browser URL on success, nil if some error
 function Browser.Show(instance, url, reload, params) end
@@ -223,7 +223,7 @@ local oldUrl = Browser.Show(instance, url)
 
 - instance [string]: Web browser instance name (one of 'StartView', 'ProcessView', 'SidePanel', 'InstructionView') 
 - url [string]: Url to navigate the browser instance to (in the standard URL format, e.g. file://filename or https://server/page)
-- reload [boolean]: currently not used
+- reload [integer]: currently not used
 - params [string]: Instance specific parameters (e.g. width of the side panel)
 
 #### Return value
@@ -234,7 +234,7 @@ The function returns the "current" URL of the webbrowser (the URL before changin
 ```LUA
 -- Make the SidePanel visible, set the width to 25% and navigate the
 -- web browser to https://www.my-url.com/mypage
-local oldUrl = Browser.Show('SidePanel', 'https://www.my-url.com/mypage', false, '25')
+local oldUrl = Browser.Show('SidePanel', 'https://www.my-url.com/mypage', 0, '25')
 ```
 
 ### Hide

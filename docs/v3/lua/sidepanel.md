@@ -54,7 +54,7 @@ There is no special Lua interface for accessing the side panel. All features are
 ```LUA
 -- Make the SidePanel visible, set the width to 25% and navigate the
 -- web browser to https://www.my-url.com/mypage
-local oldUrl = Browser.Show('SidePanel', 'https://www.my-url.com/mypage', false, '25')
+local oldUrl = Browser.Show('SidePanel', 'https://www.my-url.com/mypage', 0, '25')
 ```
 
 #### Hide the side panel

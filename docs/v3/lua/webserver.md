@@ -20,9 +20,26 @@ The web server LUA api works by registering LUA callback functions for specific 
 
 To use the LUA web server API, the web server must be enabled through `station.ini` (in the `[WebServer]` section) and the Microsoft `http.sys` web server must be configured accordingly (a URL reservation must be activated through the `netsh http add urlacl ...` command).
 
-By default the, installer registers a web endpoint at http://localhost:59990, so the endpoint is only accessible from the local machine and only for a locally logged on user.
+By default the, installer registers a web endpoint at http://localhost:60000, so the endpoint is only accessible from the local machine and only for a locally logged on user.
 
 To access the web server from the outside, make sure to change the listen address in the `station.ini` file, the URL reservation through `netsh http ...` and check the firewall settings. 
+
+A typical setup looks as follows:
+``` ini title="station.ini"
+[WebServer]
+; The integrated web server is enabled, if a non-empty URL is given. Please note, that
+; this uses the Microsoft http.sys Windows builtin web server, so you will have to
+; register the listening URL with apropriate permissions using the `netsh http add urlacl`
+; commmand (running elevated) from the windows command line, e.g.:
+;   netsh http add urlacl url=http://127.0.0.1:60000/ sddl=D:(A;;GA;;;WD)
+;
+URL=http://127.0.0.1:60000/
+;SDDL=D:(A;;GX;;;S-1-0-0)(A;;GA;;;S-1-5-11)
+; Set the document root folder (if not given, defaults to the project base folder),
+; this might be either a relative path (to the project folder) or an absolute one.
+RootFolder=./webroot
+
+```
 
 ## Global Webserver table
 

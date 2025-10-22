@@ -114,15 +114,83 @@ OGS exposes the browser instances through the global `Browser` object. The `Brow
 - [Navigate](#navigate): Load a new URL in the web browser
 - [ExecJS_nonblocking](#execjs-nonblocking): Run javascript inside the web browser (asynchronously, not returning a value)
 - [RegMsgHandler](#reg.msg-handler): Register a LUA callback function to be called when the JavaScript side writes to the object message endpoint.
+- [Show](#show): Activate (show) the webbrowser and navigate to the specified url
+- [Hide](#hide): Hide the webbrowser
 
 <!--
-The following functions are also available, but are not fully implemented at the moment:
-- [ExecJS_sync](#execjs-sync): 
-- [ExecJS_async](#execjs-async):
-- [Show](#show): 
-- [Hide](#hide): 
-- [GetState](#getstate): 
+TODO: automatically generate documentation for the LUA code
 -->
+
+### Lua language server definitions
+
+```lua
+---@meta
+-- Lua language server type definitions for the OGS Browser class.
+
+---@class Browser
+Browser = {}
+
+---@alias WebBrowserInstance "StartView"|"ProcessView"|"SidePanel"|"InstructionView"
+
+---Synchronously execute Javascript code and retrieve the result
+---@param instance WebBrowserInstance Web browser instance
+---@param script string Javascript to be executed in the browser
+---@return string result Script result string
+function Browser.ExecJS_sync(instance, script) end
+
+---Execute Javascript code in the webbrowser (asynchronously)
+---@async
+---@param instance WebBrowserInstance Web browser instance
+---@param script string Javascript to be executed in the browser
+---@return boolean success True, if command was successfully started
+function Browser.ExecJS_async(instance, script) end
+
+---Execute Javascript code in the webbrowser (asynchronously running in a background task)
+---@async
+---@param instance WebBrowserInstance Web browser instance
+---@param script string Javascript to be executed in the browser
+---@return boolean success True, if command was successfully started
+function Browser.ExecJS_nonblocking(instance, script) end
+
+---Make the webbrowser navigate to a new URL
+---@async
+---@param instance WebBrowserInstance Web browser instance
+---@param url string New URL for the webbrowser
+---@param reload? boolean if true, then force a webbrowser reload
+---@return nil|boolean success True, if command was successfully executed
+function Browser.Navigate(instance, url, reload) end
+
+---Make the webbrowser visible and navigate to the given URL
+---@param instance WebBrowserInstance Web browser instance
+---@param url string New URL for the webbrowser
+---@param reload boolean (not implemented yet)
+---@param params string Parameter string for the webbrowser (e.g. for the sidepanel the flyout width)
+---@return nil|string url Returns the current browser URL on success, nil if some error
+function Browser.Show(instance, url, reload, params) end
+
+---Hide the webbrowser
+---@param instance WebBrowserInstance Web browser instance
+function Browser.Hide(instance) end
+
+---Get the current state of the webbrowser
+---@param instance WebBrowserInstance Web browser instance
+---@return boolean isVisible Indicates, if the webbrowser is visible or not
+---@return string url the current webbrowser url
+function Browser.GetState(instance) end
+
+---Register a message handler for a given webbrowser and a given url (prefix)
+---This function is used to allow communication between the web pages javascript
+---and the Lua code - the Lua message handler is called from the Javascript
+---and can provide a string (usually json encoded message).
+---If called with nil for the fn parameter, removes the message handler.
+---@param instance WebBrowserInstance Web browser instance
+---@param fn? fun(instance:WebBrowserInstance, data:string) Callback function to be called when Javascript sends a message
+---@param urlprefix? string Prefix to register the message handler
+---@return nil|true|fun(instance:WebBrowserInstance, data:string) On success returns the function handler or true (if unregister), nil on error
+---@return string? error On error, return the error message
+function Browser.RegMsgHandler(instance, fn, urlprefix) end
+
+```
 
 ### Navigate
 
@@ -155,6 +223,8 @@ local oldUrl = Browser.Show(instance, url)
 
 - instance [string]: Web browser instance name (one of 'StartView', 'ProcessView', 'SidePanel', 'InstructionView') 
 - url [string]: Url to navigate the browser instance to (in the standard URL format, e.g. file://filename or https://server/page)
+- reload [boolean]: currently not used
+- params [string]: Instance specific parameters (e.g. width of the side panel)
 
 #### Return value
 
@@ -162,9 +232,9 @@ The function returns the "current" URL of the webbrowser (the URL before changin
 
 #### Sample code
 ```LUA
--- Make the SidePanel visible and navigate the
+-- Make the SidePanel visible, set the width to 25% and navigate the
 -- web browser to https://www.my-url.com/mypage
-local oldUrl = Browser.Show('SidePanel', 'https://www.my-url.com/mypage')
+local oldUrl = Browser.Show('SidePanel', 'https://www.my-url.com/mypage', 0, 25)
 ```
 
 ### Hide

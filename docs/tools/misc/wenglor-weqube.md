@@ -19,14 +19,14 @@ tags:
     the manual indicates that each slot is updated seperately, so not all updates
     happen at the same time!
     
-!!! important 
+!!! warning 
 
-    The weQube camera does not configure the field bus interface globall, it is
+    The weQube camera does not configure the field bus interface globally, it is
     configured as part of the program. This requires **all** programs to have the
     identical IO configuration, else the fieldbus interface will not work correctly
     and switching programs will fail!
         
-!!! important
+!!! warning
 
     Changing the field bus interface or data mapping requires a reboot of the camera.
     Double check, that all program use the identical fieldbus setting and data mapping!

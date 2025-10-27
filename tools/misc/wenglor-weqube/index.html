@@ -2155,8 +2155,7 @@ happen at the same time!</p>
 <p class="admonition-title">Warning</p>
 <p>The weQube camera does not configure the field bus interface globally, it is
 configured as part of the program. This requires <strong>all</strong> programs to have the
-identical IO configuration, else the fieldbus interface will not work correctly
-and switching programs will fail!</p>
+identical IO configuration, else the fieldbus interface will not work correctly and switching programs will fail!</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -2176,17 +2175,36 @@ Double check, that all program use the identical fieldbus setting and data mappi
 </ul>
 </li>
 <li>Slot 6: <code>PLC &lt;- Camera</code> [16 Byte input (4 DINT)] with the following mapping<ul>
-<li>Integer 1 = Toggle Bit</li>
-<li>Integer 2 = Run Counter</li>
-<li>Integer 3 = Result Ok/Nok (1 = ok)</li>
+<li>Integer 1 = Fixed value set to the program number (manually)</li>
+<li>Integer 2 = Toggle Bit</li>
+<li>Integer 3 = Run Counter</li>
+<li>Integer 4 = Result Ok/Nok (1 = ok)</li>
 </ul>
 </li>
 </ul>
+<p>The value of <code>Integer 1</code> <strong>must be manually set to the programs number</strong> (the first three digits of the program name) - as the camera does not have a built-in variable to report the currently active program and there is no handshake which reports the camera is ready again after changing a program (other than doing it manually using the <code>Integer 1</code>) - see the Wenglor weQube fieldbus manual for details.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>To allow selecting programs over fieldbus, the program names must start with the 3-digit program numer and an underscore, i.e. <code>001_MyProgram</code>, <code>002_MyOtherProgram</code>!</p>
+</div>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/wenglor-fixedprgnum.png" data-desc-position="bottom"><img alt="alt text" src="../resources/wenglor-fixedprgnum.png"></a></p>
 <p>The remaining two slots 3 and 4 can be configured for parameter and output (measurement) data. By default they should be configured as follows:</p>
 <ul>
 <li>Slot 3: <code>PLC -&gt; Camera</code> [16 Byte output (4 Real)] </li>
 <li>Slot 4: <code>PLC &lt;- Camera</code> [16 Byte input (4 Real)] </li>
 </ul>
+<p>Overall:
+- <code>PLC -&gt; Camera</code>: 1 + 1 + 16 = 18 bytes
+- <code>PLC &lt;- Camera</code>: 4 + 16 + 16 = 36 bytes</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The Wenglor EtherNet/IP implementation requires you to manually define the module types (again, seems that this is a non-optimized HMS AnyBus implementation). </p>
+</div>
+<p>As outlines above, slots 5 and 6 must be configured as module type 8 and 1 respectively, slots 3 and 4 by default as 7 and 2. Here is a sample screenshot from a CoDeSys controller:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/wenglor-slotsettings.png" data-desc-position="bottom"><img alt="alt text" src="../resources/wenglor-slotsettings.png"></a></p>
+<p>Here is the table from the official manual:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/wenglow-moduletypes.png" data-desc-position="bottom"><img alt="alt text" src="../resources/wenglow-moduletypes.png"></a></p>
+<p>Note, that either data size or module types do not match, the EtherNet/IP connection will not be successful (and there is <strong>no</strong> diagnosics on the cameras web interface) !</p>
 
 
 

@@ -992,6 +992,48 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#result-and-image-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      Result and image access
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Result and image access">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#current-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      Current image
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analysis-result" class="md-nav__link">
+    <span class="md-ellipsis">
+      Analysis result
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#device-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Device settings
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2126,6 +2168,48 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#result-and-image-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      Result and image access
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Result and image access">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#current-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      Current image
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analysis-result" class="md-nav__link">
+    <span class="md-ellipsis">
+      Analysis result
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#device-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Device settings
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2143,7 +2227,7 @@
 
 
 <h1 id="wenglor-weqube-smart-camera"><a class="toclink" href="#wenglor-weqube-smart-camera">Wenglor weQube Smart Camera</a></h1>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/webglor-weqube-IO-Setting.png" data-desc-position="bottom"><img alt="alt text" src="../resources/webglor-weqube-IO-Setting.png"></a></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/wenglor-weqube-IO-Setting.png" data-desc-position="bottom"><img alt="alt text" src="../resources/wenglor-weqube-IO-Setting.png"></a></p>
 <h2 id="io-configuration"><a class="toclink" href="#io-configuration">IO configuration</a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -2203,8 +2287,25 @@ Double check, that all program use the identical fieldbus setting and data mappi
 <p>As outlines above, slots 5 and 6 must be configured as module type 8 and 1 respectively, slots 3 and 4 by default as 7 and 2. Here is a sample screenshot from a CoDeSys controller:</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/wenglor-slotsettings.png" data-desc-position="bottom"><img alt="alt text" src="../resources/wenglor-slotsettings.png"></a></p>
 <p>Here is the table from the official manual:</p>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/wenglow-moduletypes.png" data-desc-position="bottom"><img alt="alt text" src="../resources/wenglow-moduletypes.png"></a></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/wenglor-moduletypes.png" data-desc-position="bottom"><img alt="alt text" src="../resources/wenglor-moduletypes.png"></a></p>
 <p>Note, that either data size or module types do not match, the EtherNet/IP connection will not be successful (and there is <strong>no</strong> diagnosics on the cameras web interface) !</p>
+<h2 id="result-and-image-access"><a class="toclink" href="#result-and-image-access">Result and image access</a></h2>
+<p>The camera provides an integrated webserver which allows access to the current camera image as well as a (configurable) visualization page with the last analysis result.</p>
+<h3 id="current-image"><a class="toclink" href="#current-image">Current image</a></h3>
+<p>The cameras current image can be accessed through the URL <code>http://&lt;camera-ip&gt;/liveimage.htm</code> (or the image as jpg at <code>http://&lt;camera-ip&gt;/live_image.jpg</code>):</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/wenglor-liveimage.png" data-desc-position="bottom"><img alt="alt text" src="../resources/wenglor-liveimage.png"></a></p>
+<h3 id="analysis-result"><a class="toclink" href="#analysis-result">Analysis result</a></h3>
+<p>The latest analysis result can be accessed through the URL <code>http://&lt;camera-ip&gt;/Visualization/</code>:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/wenglor-visualization.png" data-desc-position="bottom"><img alt="alt text" src="../resources/wenglor-visualization.png"></a></p>
+<h2 id="device-settings"><a class="toclink" href="#device-settings">Device settings</a></h2>
+<p>The device settings can be accessed through <code>http://&lt;camera-ip&gt;/device.htm</code>.</p>
+<p>Default username and passwords are:
+- user: admin
+- password: admin</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Chaning the DHCP settings does not work reliably from within the web page device settings, nor does it work through the cameras display/buttons. The only way to reliably change the network settings was using the windows application <code>uniVision 2</code> and selecting the <code>properties</code> button in the start dialog, then changing the parameters there.</p>
+</div>
 
 
 

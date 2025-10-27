@@ -943,19 +943,6 @@
         
       
       
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Wenglor weQube Smart camera
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -967,76 +954,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#io-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      IO configuration
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#result-and-image-access" class="md-nav__link">
-    <span class="md-ellipsis">
-      Result and image access
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Result and image access">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#current-image" class="md-nav__link">
-    <span class="md-ellipsis">
-      Current image
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#analysis-result" class="md-nav__link">
-    <span class="md-ellipsis">
-      Analysis result
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#device-settings" class="md-nav__link">
-    <span class="md-ellipsis">
-      Device settings
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
       
     </li>
   
@@ -2153,65 +2070,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#io-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      IO configuration
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#result-and-image-access" class="md-nav__link">
-    <span class="md-ellipsis">
-      Result and image access
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Result and image access">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#current-image" class="md-nav__link">
-    <span class="md-ellipsis">
-      Current image
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#analysis-result" class="md-nav__link">
-    <span class="md-ellipsis">
-      Analysis result
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#device-settings" class="md-nav__link">
-    <span class="md-ellipsis">
-      Device settings
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -2227,7 +2085,10 @@
 
 
 <h1 id="wenglor-weqube-smart-camera"><a class="toclink" href="#wenglor-weqube-smart-camera">Wenglor weQube Smart Camera</a></h1>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/wenglor-weqube-IO-Setting.png" data-desc-position="bottom"><img alt="alt text" src="../resources/wenglor-weqube-IO-Setting.png"></a></p>
+<h1 id="keyence-iv4-ai-vision-sensor"><a class="toclink" href="#keyence-iv4-ai-vision-sensor">Keyence IV4 AI Vision Sensor</a></h1>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/wenglor-weqube-b50.png" data-desc-position="bottom"><img align="right" alt="IV4 camera" src="../resources/wenglor-weqube-b50.png"></a>
+The Wenglor weQube B50 is available as a smart camera, vision sensor and OCR reader and solves a wide range of industrial image processing tasks in real time. The highly modular hardware platforms in combination with high-performance machine vision software enable tailored adjustment for all machine vision applications. You can find more details on the <a href="https://www.wenglor.com/en/Machine-Vision/Smart-Cameras-and-Vision-Sensors/weQube-B50/c/cxmCID221376">Wenglor weQube B50 product page</a>.</p>
+<p>OGS controls the camera over the integrated EtherNet/IP interface. </p>
 <h2 id="io-configuration"><a class="toclink" href="#io-configuration">IO configuration</a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -2246,7 +2107,7 @@ identical IO configuration, else the fieldbus interface will not work correctly 
 <p>Changing the field bus interface or data mapping requires a reboot of the camera.
 Double check, that all program use the identical fieldbus setting and data mapping!</p>
 </div>
-<p>Wenglor uses slots (like in Profinet) to configure the input and output data, but has some quite severe limitations. </p>
+<p>Wenglor uses slots (like in Profinet) to configure the input and output data, but these cannot be flexibly used due to some internal restrictions of the fieldbus implementation. To make the camera fieldbus interface realiably work, the following mapping and configuration <strong>must</strong> be used: </p>
 <p>Slot 1 and Slot two are fixed as follows:</p>
 <ul>
 <li>Slot 1: <code>PLC -&gt; Camera</code> [1 Byte output] Project number</li>
@@ -2304,7 +2165,7 @@ Double check, that all program use the identical fieldbus setting and data mappi
 - password: admin</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Chaning the DHCP settings does not work reliably from within the web page device settings, nor does it work through the cameras display/buttons. The only way to reliably change the network settings was using the windows application <code>uniVision 2</code> and selecting the <code>properties</code> button in the start dialog, then changing the parameters there.</p>
+<p>Changing the DHCP settings does not work reliably from within the web page device settings, nor does it work through the cameras display/buttons. The only way to reliably change the network settings was using the windows application <code>uniVision 2</code> and selecting the <code>properties</code> button in the start dialog, then changing the parameters there.</p>
 </div>
 
 

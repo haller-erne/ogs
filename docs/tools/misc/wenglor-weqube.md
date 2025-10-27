@@ -9,7 +9,7 @@ tags:
 
 # Wenglor weQube Smart Camera
 
-![alt text](resources/webglor-weqube-IO-Setting.png)
+![alt text](resources/wenglor-weqube-IO-Setting.png)
 
 ## IO configuration
 
@@ -74,7 +74,38 @@ As outlines above, slots 5 and 6 must be configured as module type 8 and 1 respe
 
 Here is the table from the official manual:
 
-![alt text](./resources/wenglow-moduletypes.png)
+![alt text](./resources/wenglor-moduletypes.png)
 
 Note, that either data size or module types do not match, the EtherNet/IP connection will not be successful (and there is **no** diagnosics on the cameras web interface) !
 
+## Result and image access
+
+The camera provides an integrated webserver which allows access to the current camera image as well as a (configurable) visualization page with the last analysis result.
+
+### Current image
+
+The cameras current image can be accessed through the URL `http://<camera-ip>/liveimage.htm` (or the image as jpg at `http://<camera-ip>/live_image.jpg`):
+
+![alt text](./resources/wenglor-liveimage.png)
+
+
+### Analysis result
+
+The latest analysis result can be accessed through the URL `http://<camera-ip>/Visualization/`:
+
+![alt text](./resources/wenglor-visualization.png)
+
+
+## Device settings
+
+The device settings can be accessed through `http://<camera-ip>/device.htm`.
+
+Default username and passwords are:
+- user: admin
+- password: admin
+
+!!! warning
+
+    Chaning the DHCP settings does not work reliably from within the web page device settings, nor does it work through the cameras display/buttons. The only way to reliably change the network settings was using the windows application `uniVision 2` and selecting the `properties` button in the start dialog, then changing the parameters there.
+
+    

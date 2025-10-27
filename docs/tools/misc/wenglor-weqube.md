@@ -9,7 +9,12 @@ tags:
 
 # Wenglor weQube Smart Camera
 
-![alt text](resources/wenglor-weqube-IO-Setting.png)
+# Keyence IV4 AI Vision Sensor
+
+![IV4 camera](resources/wenglor-weqube-b50.png){ align=right }
+The Wenglor weQube B50 is available as a smart camera, vision sensor and OCR reader and solves a wide range of industrial image processing tasks in real time. The highly modular hardware platforms in combination with high-performance machine vision software enable tailored adjustment for all machine vision applications. You can find more details on the [Wenglor weQube B50 product page](https://www.wenglor.com/en/Machine-Vision/Smart-Cameras-and-Vision-Sensors/weQube-B50/c/cxmCID221376).
+
+OGS controls the camera over the integrated EtherNet/IP interface. 
 
 ## IO configuration
 
@@ -30,7 +35,7 @@ tags:
     Changing the field bus interface or data mapping requires a reboot of the camera.
     Double check, that all program use the identical fieldbus setting and data mapping!
 
-Wenglor uses slots (like in Profinet) to configure the input and output data, but has some quite severe limitations. 
+Wenglor uses slots (like in Profinet) to configure the input and output data, but these cannot be flexibly used due to some internal restrictions of the fieldbus implementation. To make the camera fieldbus interface realiably work, the following mapping and configuration **must** be used: 
 
 Slot 1 and Slot two are fixed as follows:
 
@@ -106,6 +111,5 @@ Default username and passwords are:
 
 !!! warning
 
-    Chaning the DHCP settings does not work reliably from within the web page device settings, nor does it work through the cameras display/buttons. The only way to reliably change the network settings was using the windows application `uniVision 2` and selecting the `properties` button in the start dialog, then changing the parameters there.
+    Changing the DHCP settings does not work reliably from within the web page device settings, nor does it work through the cameras display/buttons. The only way to reliably change the network settings was using the windows application `uniVision 2` and selecting the `properties` button in the start dialog, then changing the parameters there.
 
-    

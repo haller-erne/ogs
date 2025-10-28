@@ -24,6 +24,7 @@ DEBUG=2
 ```
 
 The parameters are:
+
 - SERVER_URL: The URL of the OPC-UA server to connect to
 - SERVER_USERNAME: The username to be used for authentication - leave empty for anonymous login. Note, that usually you should also specify a certificate and a key file, so the client can encrtypt the credential (so no plaintext passwords are sent over the wire)
 - SERVER_PASSWORD: The password for the authentication (see the comments above for encryption and anonymous login)

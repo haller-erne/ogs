@@ -2225,16 +2225,18 @@
 <a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="na">TO_OGS_VAR</span><span class="o">=</span><span class="s">""</span><span class="na">DB_OGS_V3"."st01"."line"."plc_to_ogs""</span>
 <a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="na">DEBUG</span><span class="o">=</span><span class="s">2</span>
 </code></pre></div>
-<p>The parameters are:
-- SERVER_URL: The URL of the OPC-UA server to connect to
-- SERVER_USERNAME: The username to be used for authentication - leave empty for anonymous login. Note, that usually you should also specify a certificate and a key file, so the client can encrtypt the credential (so no plaintext passwords are sent over the wire)
-- SERVER_PASSWORD: The password for the authentication (see the comments above for encryption and anonymous login)
-- SERVER_SECURITY: defines the security level: 1 = NONE (default), 2 = SIGN, 3 = SIGN &amp; ENCRYPT
-- SERVER_CERT_FILE: Full path to the x509 binary DER encoded certificate file used for client authentication and/or encryption. Default: empty, no encryption used
-- SERVER_CERT_KEY: Full path to the x509 binary DER encoded key file used for client authentication and/or encryption
-- SERVER_NS: The namespace used for OPC-UA variables access (for TO_PLC_VAR and TO_OGS_VAR)
-- TO_PLC_VAR, TO_OGS_VAR: Full OPC-UA node path of the variables to be used for cyclic data exchange
-- DEBUG: Set the debug verbosity level for ETW trace output (0 = off, 1 = low, 2 = medium, 3 = high)</p>
+<p>The parameters are:</p>
+<ul>
+<li>SERVER_URL: The URL of the OPC-UA server to connect to</li>
+<li>SERVER_USERNAME: The username to be used for authentication - leave empty for anonymous login. Note, that usually you should also specify a certificate and a key file, so the client can encrtypt the credential (so no plaintext passwords are sent over the wire)</li>
+<li>SERVER_PASSWORD: The password for the authentication (see the comments above for encryption and anonymous login)</li>
+<li>SERVER_SECURITY: defines the security level: 1 = NONE (default), 2 = SIGN, 3 = SIGN &amp; ENCRYPT</li>
+<li>SERVER_CERT_FILE: Full path to the x509 binary DER encoded certificate file used for client authentication and/or encryption. Default: empty, no encryption used</li>
+<li>SERVER_CERT_KEY: Full path to the x509 binary DER encoded key file used for client authentication and/or encryption</li>
+<li>SERVER_NS: The namespace used for OPC-UA variables access (for TO_PLC_VAR and TO_OGS_VAR)</li>
+<li>TO_PLC_VAR, TO_OGS_VAR: Full OPC-UA node path of the variables to be used for cyclic data exchange</li>
+<li>DEBUG: Set the debug verbosity level for ETW trace output (0 = off, 1 = low, 2 = medium, 3 = high)</li>
+</ul>
 <h2 id="notes"><a class="toclink" href="#notes">Notes</a></h2>
 <h3 id="usernamepassword-authentication"><a class="toclink" href="#usernamepassword-authentication">Username/Password authentication</a></h3>
 <p>Username/password authentication over an unencrypted channel (security mode = NONE) is usually not allowed by servers (for good reasons) - so a client certificate is almost always needed to use username/password authentication (technically, the enpoints provided by the server does not include any token policy without encryption for the SecurityPolicy#NONE endpoint) </p>

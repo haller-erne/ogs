@@ -12,6 +12,7 @@ Here is a sample configuration for the OPC-UA line interface:
 SERVER_URL=opc.tcp://192.168.0.1:4840
 SERVER_USERNAME=OGSInterfaceUser
 SERVER_PASSWORD=OGSPassword1
+SERVER_SECURITY=1
 SERVER_CERT_FILE=d:/test_cert.der
 SERVER_CERT_KEY=d:/test_key.der
 ; Namespace of variables:
@@ -26,6 +27,7 @@ The parameters are:
 - SERVER_URL: The URL of the OPC-UA server to connect to
 - SERVER_USERNAME: The username to be used for authentication - leave empty for anonymous login. Note, that usually you should also specify a certificate and a key file, so the client can encrtypt the credential (so no plaintext passwords are sent over the wire)
 - SERVER_PASSWORD: The password for the authentication (see the comments above for encryption and anonymous login)
+- SERVER_SECURITY: defines the security level: 1 = NONE (default), 2 = SIGN, 3 = SIGN & ENCRYPT
 - SERVER_CERT_FILE: Full path to the x509 binary DER encoded certificate file used for client authentication and/or encryption. Default: empty, no encryption used
 - SERVER_CERT_KEY: Full path to the x509 binary DER encoded key file used for client authentication and/or encryption
 - SERVER_NS: The namespace used for OPC-UA variables access (for TO_PLC_VAR and TO_OGS_VAR)

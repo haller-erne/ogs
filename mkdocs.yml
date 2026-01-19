@@ -57,6 +57,7 @@ nav:
         - Modbus/TCP/UDP communication: libs/lua-modbus.md
         - USB HID Devices (Buttons, Arduino, etc.): libs/lua-hid.md
         - Data Protection API (safe secrets storage): libs/lua-dpapi.md
+        - LUA Windows OS tools: libs/lua-ostools.md
         - LUA network helpers (REST/OpenAPI): libs/lua-net.md
     - Enterprise functionality:
         - Central/shared configuration database: appnotes/sharedconfig.md

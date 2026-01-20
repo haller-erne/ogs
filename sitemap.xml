@@ -89,15 +89,7 @@
          <lastmod>2026-01-20</lastmod>
     </url>
     <url>
-         <loc>https://haller-erne.github.io/ogs/tools/doga-wifi/</loc>
-         <lastmod>2026-01-20</lastmod>
-    </url>
-    <url>
          <loc>https://haller-erne.github.io/ogs/tools/remote-tool/</loc>
-         <lastmod>2026-01-20</lastmod>
-    </url>
-    <url>
-         <loc>https://haller-erne.github.io/ogs/tools/Stahwille/stahlwille/</loc>
          <lastmod>2026-01-20</lastmod>
     </url>
     <url>
@@ -134,6 +126,18 @@
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/tools/misc/wenglor-weqube/</loc>
+         <lastmod>2026-01-20</lastmod>
+    </url>
+    <url>
+         <loc>https://haller-erne.github.io/ogs/tools/non-openprotocol/doga-wifi/</loc>
+         <lastmod>2026-01-20</lastmod>
+    </url>
+    <url>
+         <loc>https://haller-erne.github.io/ogs/tools/non-openprotocol/ngineric/</loc>
+         <lastmod>2026-01-20</lastmod>
+    </url>
+    <url>
+         <loc>https://haller-erne.github.io/ogs/tools/non-openprotocol/stahlwille/</loc>
          <lastmod>2026-01-20</lastmod>
     </url>
     <url>
@@ -174,10 +178,6 @@
     </url>
     <url>
          <loc>https://haller-erne.github.io/ogs/tools/openprotocol/nexo/</loc>
-         <lastmod>2026-01-20</lastmod>
-    </url>
-    <url>
-         <loc>https://haller-erne.github.io/ogs/tools/openprotocol/ngineric/</loc>
          <lastmod>2026-01-20</lastmod>
     </url>
     <url>

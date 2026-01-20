@@ -39,11 +39,15 @@ IPADDR=10.10.2.166
 IPPORT=4002
 BUTTON_PRG=98
 Debug=1
+BUTTON_MSG={ "text":[ "Please press OK", "", "TO Confirm", "", "" ], "color":[ 6, 7, 1, 7, 7 ] }
+PRG_01={ "name":"WiFi-JNT", "type":"JNT", "mode":"clic", "unit":"Nm", "elen":100.0, "t_min":6.1, "t_tgt":6.5, "t_max":7.5 }
+PRG_02={ "name":"WiFi-JNA", "type":"JNA", "mode":"clic", "unit":"Nm", "elen":100.0, "t_thr":6.0, "a_min":5, "a_tgt":15, "a_max":25 }
+PRG_03={ "name":"WiFi-JTA", "type":"JTA", "mode":"clic", "unit":"Nm", "elen":100.0, "t_min":6.1, "t_tgt":6.5, "t_max":7.5, "t_thr":5.0, "a_min":5, "a_tgt":15, "a_max":25 }
 ```
 
 ### Configuration Parameters
 
-#### Connection Parameters
+#### Tool Parameters
 
 - `DRIVER`: The name of the Windows DLL that implements tool drivers (heLuaTool).
 - `Type`: The name of the tool driver specified in your custom LUA tool driver (`stahlwille_wifi`).
@@ -131,7 +135,7 @@ For operations requiring operator confirmation (using `BUTTON_PRG`), you can con
 BUTTON_MSG={ "text":[ "Please press OK", "", "TO Confirm", "", "" ], "color":[ 6, 7, 1, 7, 7 ] }
 ```
 
-![Text message displayed on tool](Text%20message%20Confirm%20shown%20on%20the%20SW%20Tool.jpg)
+![Text message displayed on tool](resources/sw-button-message.jpg)
 
 **Color Codes:**
 
@@ -169,7 +173,7 @@ During operation, the tool reports the following program states:
 
 In the Tools section of the Editor, create a new tool with a name of your choice (e.g., "Stahlwille WiFi") and assign it to the appropriate channel (ensure the channel number matches the one specified in the `station.ini` file).
 
-![Add new tool](add%20new%20tool.png)
+![Add new tool](resources/sw-add-new-tool.png)
 
 ### Creating a Job
 
@@ -180,13 +184,13 @@ To set up a job and task with the appropriate operations:
 3. Set the **Program (Prg)** value to match the program number defined in `station.ini` (e.g., `1` for PRG_01, `2` for PRG_02, etc.).
 4. For button confirmation operations, use the `BUTTON_PRG` value (e.g., `98`).
 
-![Job editing](Job%20editing.png)
+![Job editing](resources/sw-job-editing.png)
 
 ### Family Configuration
 
 In the Family tab of the Editor, create a new family. Configure the `Model` and `Barcode mask`, then link the newly created job to the family.
 
-![Family configuration](Family%20Page%20edited.PNG)
+![Family configuration](resources/sw-family-configuration.png)
 
 ## Operation
 
@@ -198,8 +202,8 @@ When a job is active, OGS will:
 4. Validate the results against the configured limits
 5. Display success or failure feedback
 
-![Tool working in OGS](The%20Tool%20in%20OSG%20working%20.png)
+![Tool working in OGS](resources/sw-tool-working.png)
 
-![Job completed](the%20tool%20has%20finished%20the%20jobs%20.png)
+![Job completed](resources/sw-job-completed.png)
 
 The tool provides immediate visual and audible feedback during tightening, guiding the operator to achieve the target torque and angle values.

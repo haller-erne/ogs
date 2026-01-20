@@ -19,9 +19,9 @@ nav:
             - Makita Wifi tools: tools/openprotocol/makita.md
             - HS-Technik NutBee riveting tool: tools/openprotocol/hstechnik.md
         - Non-OpenProtocol tightening tools:
-            - n-gineric: tools/openprotocol/ngineric.md
-            - Doga BM-series: tools/doga-wifi.md
-            - Stahlwille Manoskop 766 WiFi: tools/Stahwille/stahlwille.md
+            - n-gineric: tools/non-openprotocol/ngineric.md
+            - Doga BM-series: tools/non-openprotocol/doga-wifi.md
+            - Stahlwille Manoskop 766 WiFi: tools/non-openprotocol/stahlwille.md
         - Misc tools:
             - OGS GUI input: tools/misc/gui-input.md
             - AIOI Pick2Light: tools/misc/aioi-pick2light.md

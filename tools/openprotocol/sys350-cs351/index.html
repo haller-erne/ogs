@@ -571,6 +571,39 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#openprotocol-io-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenProtocol IO access
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lua-toolioexchange-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LUA ToolIoExchange() function
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sample-lua-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sample LUA code
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2574,6 +2607,39 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#openprotocol-io-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenProtocol IO access
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lua-toolioexchange-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LUA ToolIoExchange() function
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sample-lua-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sample LUA code
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2602,6 +2668,96 @@
 <li>CwLock, CcwLock</li>
 <li>CwAnd, CcwAnd</li>
 </ul>
+<h2 id="openprotocol-io-access"><a class="toclink" href="#openprotocol-io-access">OpenProtocol IO access</a></h2>
+<p>Aditional I/O signals (8 in, 8 out) can be accessed through OpenProtocol and mapped to any I/O through the PLC assignment table. </p>
+<p>In CS351, the system actually provides 16 inputs and 16 outputs (see the following screenshot). These are cyclically read/written by OGS:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/cs351-custom-io.png" data-desc-position="bottom"><img alt="alt text" src="../resources/cs351-custom-io.png"></a></p>
+<p>However, only a subset is usable as custom I/O, as parts are required for operating the tool:</p>
+<ul>
+<li>CS351 Inputs OP2.1-2.2: Used by OGS for ActEn and CcwLock/CcwAnd</li>
+<li>CS351 Outputs OP1.0-OP1.7: Used for tool status inputs</li>
+</ul>
+<p>To access the custom IO signals from LUA, the following is required:</p>
+<ol>
+<li>
+<p>Set <code>EXTERNAL_IO_OFFSET=</code> in station.ini in the <code>[OPENPROTO]</code> section to a non-zero value. The value defines the actual offset, where the LUA output signal start - usually this is set to <code>EXTERNAL_IO_OFFSET=2</code>, so all LUA output signals starting from OP2.3 (CS351 inputs) can be controlled.</p>
+</li>
+<li>
+<p>Cyclically call to <code>ToolIoExchange()</code> from LUA.</p>
+</li>
+</ol>
+<p>Note, that the number of available outputs vary according to the <code>EXTERNAL_IO_OFFSET=</code> definition. The offset given moves the process data image for the LUA function accordingly - with offset=2, <code>bit 0</code> of the data returend from the LUA function is then <code>OP 2.3</code> (as shown in the screenshot above).</p>
+<p>The input data (for the LUA function) always reports all available 16 inputs, i.e. the custom signals are usually in the upper 8 bits of the returned data (mapping to <code>OP 2.0 - OP 2.7</code>).</p>
+<h2 id="lua-toolioexchange-function"><a class="toclink" href="#lua-toolioexchange-function">LUA ToolIoExchange() function</a></h2>
+<table>
+<thead>
+<tr>
+<th>Function Name</th>
+<th>Return Type</th>
+<th>Description</th>
+<th>Tags</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ToolIoExchange(tool:integer, output:integer)</code></td>
+<td><code>input:integer, error:string</code></td>
+<td>Writes <code>output</code> data to the <code>tool</code> interface and returns the current <code>input</code> data. If and error occurs, then <code>error</code> is non-nil and provides an error message.</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<h2 id="sample-lua-code"><a class="toclink" href="#sample-lua-code">Sample LUA code</a></h2>
+<p>Here is some sample code, mirroring the custom inputs to the custom outputs:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">-- station_io.lua</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1">-- Requirements:</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1">-- * Define Channel_01 as OpenProtocol tool (CS351/KE350) in station.ini</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1">-- * Set EXTERNAL_IO_OFFSET=2 in [OPENPROTO] section</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1">-- Handle the OpenProtocol IOs</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="kd">local</span><span class="w"> </span><span class="nv">prev_output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">nil</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="kd">local</span><span class="w"> </span><span class="nv">prev_input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">nil</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="kd">local</span><span class="w"> </span><span class="nv">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="kd">local</span><span class="w"> </span><span class="nv">channel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w">           </span><span class="c1">-- use Channel_01 </span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="kd">local</span><span class="w"> </span><span class="nv">tool_error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">nil</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="c1">-- StatePoll is called cyclically</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="kd">local</span><span class="w"> </span><span class="kr">function</span><span class="w"> </span><span class="nf">OnStatePoll</span><span class="p">(</span><span class="nv">info</span><span class="p">)</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">    </span><span class="kd">local</span><span class="w"> </span><span class="nv">wf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">info</span><span class="p">.</span><span class="py">Workflow</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">    </span><span class="c1">-- Cyclically update the OpenProtocol I/O data</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">    </span><span class="kd">local</span><span class="w"> </span><span class="nv">input</span><span class="p">,</span><span class="w"> </span><span class="nv">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">ToolIOExchange</span><span class="p">(</span><span class="nv">channel</span><span class="p">,</span><span class="w"> </span><span class="nv">output</span><span class="p">)</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">    </span><span class="kr">if</span><span class="w"> </span><span class="nv">err</span><span class="w"> </span><span class="kr">then</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">        </span><span class="kr">if</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="nv">tool_error</span><span class="w"> </span><span class="kr">then</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">            </span><span class="nf">SetLuaAlarm</span><span class="p">(</span><span class="s1">'ToolIO'</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="nf">param_as_str</span><span class="p">(</span><span class="nv">err</span><span class="p">))</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">            </span><span class="nf">XTRACE</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nf">param_as_str</span><span class="p">(</span><span class="nv">err</span><span class="p">))</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">            </span><span class="nv">tool_error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">        </span><span class="kr">end</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="w">        </span><span class="kr">return</span><span class="w"> </span><span class="kc">nil</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="w">    </span><span class="kr">else</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="w">        </span><span class="kr">if</span><span class="w"> </span><span class="nv">tool_error</span><span class="w"> </span><span class="kr">then</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="w">            </span><span class="nf">ResetLuaAlarm</span><span class="p">(</span><span class="s1">'ToolIO'</span><span class="p">)</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="w">            </span><span class="nf">XTRACE</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="s1">'Tool3 IO running!'</span><span class="p">)</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="w">            </span><span class="nv">tool_error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">nil</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a><span class="w">        </span><span class="kr">end</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="w">        </span><span class="kr">if</span><span class="w"> </span><span class="nv">output</span><span class="w"> </span><span class="o">~=</span><span class="w"> </span><span class="nv">prev_output</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="nv">input</span><span class="w"> </span><span class="o">~=</span><span class="w"> </span><span class="nv">prev_input</span><span class="w"> </span><span class="kr">then</span>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a><span class="w">            </span><span class="nf">XTRACE</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="w"> </span><span class="nb">string.format</span><span class="p">(</span><span class="s1">'IO changed. Input: %02Xh, Output: %02Xh'</span><span class="p">,</span><span class="w"> </span><span class="nv">input</span><span class="p">,</span><span class="w"> </span><span class="nv">output</span><span class="p">))</span>
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a><span class="w">            </span><span class="nv">prev_output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">output</span>
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a><span class="w">            </span><span class="nv">prev_input</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="nv">input</span>
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a><span class="w">        </span><span class="kr">end</span>
+<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a><span class="w">    </span><span class="kr">end</span>
+<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>
+<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a><span class="w">    </span><span class="c1">-- mirror input to output - note: custom inputs are the high byte!</span>
+<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a><span class="w">    </span><span class="nv">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">input</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">256</span>
+<a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>
+<a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a><span class="kr">end</span>
+<a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a>
+<a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a><span class="kr">if</span><span class="w"> </span><span class="nv">StatePollFunctions</span><span class="w"> </span><span class="o">~=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="kr">then</span>
+<a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a><span class="w">    </span><span class="nv">StatePollFunctions</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="nv">OnStatePoll</span><span class="p">)</span>
+<a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a><span class="kr">end</span>
+</code></pre></div>
 
 
 

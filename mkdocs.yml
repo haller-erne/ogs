@@ -67,6 +67,7 @@ nav:
         - Tool roaming and dynamic parameters: appnotes/toolgateway.md
         - Traceability: appnotes/traceability.md
     - Application notes:
+        - OGS runtime screen layout: appnotes/gui-layout-runtime.md
         - Using BLE Gateways: appnotes/openmqttgateway.md
         - Debugging LUA Scripts: appnotes/debugging.md
         - Station IO: appnotes/station_io.md

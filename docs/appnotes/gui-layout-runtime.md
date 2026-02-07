@@ -40,16 +40,16 @@ The layout of the start page is as follows:
 
 ![text](startpage.drawio.svg)
 
-The layout uses a fixed height for the top bar (for the logos) and the bottom bar (status bar). Also the width of the barcode entry fields and the project startpage logo is fixed. All other panes will adjust dynamically to changed display sizes.
+The layout uses a fixed height for the top bar (for the logos) and the bottom bar (status bar). Also the width of the barcode entry fields and the project startpage logo is fixed. All other panes will adjust dynamically to varying display sizes.
 
 ### Logos
 
 The logos are configurable as follows:
 
-- Software developer logo: The default size is 1328x132 pixels (for 1920 screen with, top-left aligned if smaller: not scaled). If the display text scale is not 100%, then the logo file should be scaled accordingly. The logo is read in the following priority:
+- Software developer logo: The default size is 1328x132 pixels (for 1920 screen width, top-left aligned, not scaled, only clipped). If the display text scale is not 100%, then the logo file should be scaled accordingly. The logo is read in the following priority:
 
     - Read from the (*.png) file set in the projects `station.ini` (in the `[GENERAL]` section, parameter `SoftwareDeveloperLogo=` - note that the path is relative to the OGS installation folder)
-    - Read from `monitor.png` (if not set in the project file) 
+    - Read from `monitor.png` from the OGS installation folder (if not already set in the project file) 
     - Uses the default logo from the installed `monitor.exe`
 
 - Project startpage logo: The logo is 592x143 pixels and is read from the file defined in the `current_project.logo_file` in the projects `config.lua` file (as a `*.png` or `*.gif` file). The logo is automatically scaled to fill the available space. A `*.gif` file can also be used for an animated logo (if an animated gif file is provided).

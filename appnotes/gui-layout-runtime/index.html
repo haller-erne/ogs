@@ -2950,15 +2950,15 @@
 <h3 id="layout"><a class="toclink" href="#layout">Layout</a></h3>
 <p>The layout of the start page is as follows:</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../startpage.drawio.svg" data-desc-position="bottom"><img alt="text" src="../startpage.drawio.svg"></a></p>
-<p>The layout uses a fixed height for the top bar (for the logos) and the bottom bar (status bar). Also the width of the barcode entry fields and the project startpage logo is fixed. All other panes will adjust dynamically to changed display sizes.</p>
+<p>The layout uses a fixed height for the top bar (for the logos) and the bottom bar (status bar). Also the width of the barcode entry fields and the project startpage logo is fixed. All other panes will adjust dynamically to varying display sizes.</p>
 <h3 id="logos"><a class="toclink" href="#logos">Logos</a></h3>
 <p>The logos are configurable as follows:</p>
 <ul>
 <li>
-<p>Software developer logo: The default size is 1328x132 pixels (for 1920 screen with, top-left aligned if smaller: not scaled). If the display text scale is not 100%, then the logo file should be scaled accordingly. The logo is read in the following priority:</p>
+<p>Software developer logo: The default size is 1328x132 pixels (for 1920 screen width, top-left aligned, not scaled, only clipped). If the display text scale is not 100%, then the logo file should be scaled accordingly. The logo is read in the following priority:</p>
 <ul>
 <li>Read from the (*.png) file set in the projects <code>station.ini</code> (in the <code>[GENERAL]</code> section, parameter <code>SoftwareDeveloperLogo=</code> - note that the path is relative to the OGS installation folder)</li>
-<li>Read from <code>monitor.png</code> (if not set in the project file) </li>
+<li>Read from <code>monitor.png</code> from the OGS installation folder (if not already set in the project file) </li>
 <li>Uses the default logo from the installed <code>monitor.exe</code></li>
 </ul>
 </li>

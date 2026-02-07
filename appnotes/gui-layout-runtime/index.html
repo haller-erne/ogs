@@ -5,24 +5,28 @@
       
       
       
-        <link rel="canonical" href="https://haller-erne.github.io/ogs/v3/lua/userrights/">
+        <link rel="canonical" href="https://haller-erne.github.io/ogs/appnotes/gui-layout-runtime/">
       
       
+        <link rel="prev" href="../traceability/">
+      
+      
+        <link rel="next" href="../openmqttgateway/">
       
       
         
       
       
-      <link rel="icon" href="../../../assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
     
       
-        <title>Userrights - OGS Documentation</title>
+        <title>OGS runtime screen layout - OGS Documentation</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
       
       
 
@@ -47,15 +51,15 @@
       
     
     
-      <link rel="stylesheet" href="../../../css/neoteroi-mkdocs.css">
+      <link rel="stylesheet" href="../../css/neoteroi-mkdocs.css">
     
-    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
     
     
-  <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
             html.glightbox-open { overflow: initial; height: 100%; }
             .gslide-title { margin-top: 0px; user-select: text; }
             .gslide-desc { color: #666; user-select: text; }
@@ -76,6 +80,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#runtime-gui-layout" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -88,7 +97,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="OGS Documentation" class="md-header__button md-logo" aria-label="OGS Documentation" data-md-component="logo">
+    <a href="../.." title="OGS Documentation" class="md-header__button md-logo" aria-label="OGS Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
@@ -108,7 +117,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Userrights
+              OGS runtime screen layout
             
           </span>
         </div>
@@ -186,7 +195,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="OGS Documentation" class="md-nav__button md-logo" aria-label="OGS Documentation" data-md-component="logo">
+    <a href="../.." title="OGS Documentation" class="md-nav__button md-logo" aria-label="OGS Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
@@ -204,7 +213,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -278,7 +287,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/" class="md-nav__link">
+      <a href="../../tools/" class="md-nav__link">
         
   
   
@@ -353,7 +362,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/remote-tool/" class="md-nav__link">
+      <a href="../../tools/remote-tool/" class="md-nav__link">
         
   
   
@@ -436,7 +445,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/openprotocol/" class="md-nav__link">
+      <a href="../../tools/openprotocol/" class="md-nav__link">
         
   
   
@@ -464,7 +473,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/openprotocol/nexo/" class="md-nav__link">
+      <a href="../../tools/openprotocol/nexo/" class="md-nav__link">
         
   
   
@@ -492,7 +501,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/openprotocol/sys350-cs351/" class="md-nav__link">
+      <a href="../../tools/openprotocol/sys350-cs351/" class="md-nav__link">
         
   
   
@@ -520,7 +529,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/openprotocol/sys350-ke350/" class="md-nav__link">
+      <a href="../../tools/openprotocol/sys350-ke350/" class="md-nav__link">
         
   
   
@@ -548,7 +557,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/openprotocol/opexplus/" class="md-nav__link">
+      <a href="../../tools/openprotocol/opexplus/" class="md-nav__link">
         
   
   
@@ -576,7 +585,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/openprotocol/gwk/" class="md-nav__link">
+      <a href="../../tools/openprotocol/gwk/" class="md-nav__link">
         
   
   
@@ -604,7 +613,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/openprotocol/sturtevant/" class="md-nav__link">
+      <a href="../../tools/openprotocol/sturtevant/" class="md-nav__link">
         
   
   
@@ -632,7 +641,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/openprotocol/amt/" class="md-nav__link">
+      <a href="../../tools/openprotocol/amt/" class="md-nav__link">
         
   
   
@@ -660,7 +669,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/openprotocol/cleco/" class="md-nav__link">
+      <a href="../../tools/openprotocol/cleco/" class="md-nav__link">
         
   
   
@@ -688,7 +697,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/openprotocol/makita/" class="md-nav__link">
+      <a href="../../tools/openprotocol/makita/" class="md-nav__link">
         
   
   
@@ -716,7 +725,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/openprotocol/hstechnik/" class="md-nav__link">
+      <a href="../../tools/openprotocol/hstechnik/" class="md-nav__link">
         
   
   
@@ -799,7 +808,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/non-openprotocol/ngineric/" class="md-nav__link">
+      <a href="../../tools/non-openprotocol/ngineric/" class="md-nav__link">
         
   
   
@@ -827,7 +836,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/non-openprotocol/doga-wifi/" class="md-nav__link">
+      <a href="../../tools/non-openprotocol/doga-wifi/" class="md-nav__link">
         
   
   
@@ -855,7 +864,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/non-openprotocol/stahlwille/" class="md-nav__link">
+      <a href="../../tools/non-openprotocol/stahlwille/" class="md-nav__link">
         
   
   
@@ -938,7 +947,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/misc/gui-input/" class="md-nav__link">
+      <a href="../../tools/misc/gui-input/" class="md-nav__link">
         
   
   
@@ -966,7 +975,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/misc/aioi-pick2light/" class="md-nav__link">
+      <a href="../../tools/misc/aioi-pick2light/" class="md-nav__link">
         
   
   
@@ -994,7 +1003,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/misc/gesipa-mqtt/" class="md-nav__link">
+      <a href="../../tools/misc/gesipa-mqtt/" class="md-nav__link">
         
   
   
@@ -1022,7 +1031,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/misc/keyence-iv4/" class="md-nav__link">
+      <a href="../../tools/misc/keyence-iv4/" class="md-nav__link">
         
   
   
@@ -1050,7 +1059,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/misc/sylvac/" class="md-nav__link">
+      <a href="../../tools/misc/sylvac/" class="md-nav__link">
         
   
   
@@ -1078,7 +1087,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/misc/oetiker/" class="md-nav__link">
+      <a href="../../tools/misc/oetiker/" class="md-nav__link">
         
   
   
@@ -1106,7 +1115,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/misc/wenglor-weqube/" class="md-nav__link">
+      <a href="../../tools/misc/wenglor-weqube/" class="md-nav__link">
         
   
   
@@ -1189,7 +1198,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/positioning/" class="md-nav__link">
+      <a href="../../tools/positioning/" class="md-nav__link">
         
   
   
@@ -1217,7 +1226,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/positioning/positioning-art-dtrack/" class="md-nav__link">
+      <a href="../../tools/positioning/positioning-art-dtrack/" class="md-nav__link">
         
   
   
@@ -1245,7 +1254,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/positioning/positioning-art-verpose/" class="md-nav__link">
+      <a href="../../tools/positioning/positioning-art-verpose/" class="md-nav__link">
         
   
   
@@ -1335,7 +1344,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/misc/socket-tray/" class="md-nav__link">
+      <a href="../../tools/misc/socket-tray/" class="md-nav__link">
         
   
   
@@ -1363,7 +1372,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/misc/projector/" class="md-nav__link">
+      <a href="../../tools/misc/projector/" class="md-nav__link">
         
   
   
@@ -1445,7 +1454,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../dataoutput/xmlfile/" class="md-nav__link">
+      <a href="../../dataoutput/xmlfile/" class="md-nav__link">
         
   
   
@@ -1473,7 +1482,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../dataoutput/printout/" class="md-nav__link">
+      <a href="../../dataoutput/printout/" class="md-nav__link">
         
   
   
@@ -1501,7 +1510,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../dataoutput/traceability/" class="md-nav__link">
+      <a href="../../dataoutput/traceability/" class="md-nav__link">
         
   
   
@@ -1529,7 +1538,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../dataoutput/eventlog/" class="md-nav__link">
+      <a href="../../dataoutput/eventlog/" class="md-nav__link">
         
   
   
@@ -1611,7 +1620,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../getting-started/" class="md-nav__link">
+      <a href="../../v3/getting-started/" class="md-nav__link">
         
   
   
@@ -1686,7 +1695,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../eventlog/" class="md-nav__link">
+      <a href="../../v3/lua/eventlog/" class="md-nav__link">
         
   
   
@@ -1714,7 +1723,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../webbrowser/" class="md-nav__link">
+      <a href="../../v3/lua/webbrowser/" class="md-nav__link">
         
   
   
@@ -1742,7 +1751,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../webserver/" class="md-nav__link">
+      <a href="../../v3/lua/webserver/" class="md-nav__link">
         
   
   
@@ -1770,7 +1779,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../bluetooth-le/" class="md-nav__link">
+      <a href="../../v3/lua/bluetooth-le/" class="md-nav__link">
         
   
   
@@ -1798,7 +1807,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../sidepanel/" class="md-nav__link">
+      <a href="../../v3/lua/sidepanel/" class="md-nav__link">
         
   
   
@@ -1826,7 +1835,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../lean-button/" class="md-nav__link">
+      <a href="../../v3/lua/lean-button/" class="md-nav__link">
         
   
   
@@ -1862,7 +1871,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../customtools/" class="md-nav__link">
+      <a href="../../v3/lua/customtools/" class="md-nav__link">
         
   
   
@@ -1944,7 +1953,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../libs/lua-ads/" class="md-nav__link">
+      <a href="../../libs/lua-ads/" class="md-nav__link">
         
   
   
@@ -1972,7 +1981,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../libs/lua-opcua/" class="md-nav__link">
+      <a href="../../libs/lua-opcua/" class="md-nav__link">
         
   
   
@@ -2000,7 +2009,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../libs/lua-modbus/" class="md-nav__link">
+      <a href="../../libs/lua-modbus/" class="md-nav__link">
         
   
   
@@ -2028,7 +2037,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../libs/lua-hid/" class="md-nav__link">
+      <a href="../../libs/lua-hid/" class="md-nav__link">
         
   
   
@@ -2056,7 +2065,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../libs/lua-dpapi/" class="md-nav__link">
+      <a href="../../libs/lua-dpapi/" class="md-nav__link">
         
   
   
@@ -2084,7 +2093,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../libs/lua-ostools/" class="md-nav__link">
+      <a href="../../libs/lua-ostools/" class="md-nav__link">
         
   
   
@@ -2112,7 +2121,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../libs/lua-net/" class="md-nav__link">
+      <a href="../../libs/lua-net/" class="md-nav__link">
         
   
   
@@ -2194,7 +2203,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../appnotes/sharedconfig.md" class="md-nav__link">
+      <a href="../sharedconfig.md" class="md-nav__link">
         
   
   
@@ -2222,7 +2231,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../appnotes/databanking/" class="md-nav__link">
+      <a href="../databanking/" class="md-nav__link">
         
   
   
@@ -2250,7 +2259,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../appnotes/userdb/" class="md-nav__link">
+      <a href="../userdb/" class="md-nav__link">
         
   
   
@@ -2278,7 +2287,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../appnotes/toolgateway/" class="md-nav__link">
+      <a href="../toolgateway/" class="md-nav__link">
         
   
   
@@ -2306,7 +2315,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../appnotes/traceability/" class="md-nav__link">
+      <a href="../traceability/" class="md-nav__link">
         
   
   
@@ -2338,18 +2347,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
         
           
           <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
@@ -2370,7 +2381,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_8">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2385,10 +2396,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../../appnotes/gui-layout-runtime/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OGS runtime screen layout
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -2404,6 +2442,187 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#screen-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Screen selection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#screen-resolution-konfiguration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Screen resolution konfiguration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#start-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Start page
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Start page">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layout
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Logos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#billboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Billboard
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#appbar-and-sidepanel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appbar and Sidepanel
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#process-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Process page
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Process page">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#layout_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layout
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Logo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sidepanel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sidepanel
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#more-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        More options
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2416,7 +2635,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../appnotes/openmqttgateway/" class="md-nav__link">
+      <a href="../openmqttgateway/" class="md-nav__link">
         
   
   
@@ -2444,7 +2663,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../appnotes/debugging/" class="md-nav__link">
+      <a href="../debugging/" class="md-nav__link">
         
   
   
@@ -2472,7 +2691,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../appnotes/station_io/" class="md-nav__link">
+      <a href="../station_io/" class="md-nav__link">
         
   
   
@@ -2517,6 +2736,177 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#screen-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Screen selection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#screen-resolution-konfiguration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Screen resolution konfiguration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#start-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Start page
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Start page">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layout
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Logos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#billboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Billboard
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#appbar-and-sidepanel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appbar and Sidepanel
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#process-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Process page
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Process page">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#layout_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layout
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Logo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sidepanel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sidepanel
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#more-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        More options
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -2533,30 +2923,76 @@
 
 
 
-  <h1>Userrights</h1>
-
-<div class="highlight"><pre><span></span><code>finishProcess   = 0x0001 ,  // finish assembly processing (without waiting)
-clearProcess    = 0x0002,   // clear all tightening results on assembly go to first Job
-
-startJob        = 0x0004,   // start current Job (is available only in WorkflowState::WaitJobStart)
-finishJob       = 0x0008,   // finish current Job processing and set WorkflowState::WaitJobStart
-skipJob         = 0x0010,   // finish current Job processing and go to next Job
-clearJob        = 0x0020,   // clear all tightening results on current Job and set WorkflowState::WaitJobStart
-
-skipRundown     = 0x0040,   // set current operation to NOK and go to next operation
-clearBolt       = 0x0080,   // set current Bolt to NOT_PROCESSED
-startDiag       = 0x0100,   // enable start diagnostic job
-selectRundown   = 0x0200,   // select Job / Bolt in view or on image
-userLogon       = 0x0400,   // user logon
-pauseJob        = 0x0800,   // pause Job
-processNOK      = 0x1000,   //continue processing after NOK result
-CCW             = 0x2000,   // CCW
-manualInput     = 0x4000,   // manual input in start view (added for LUA trace log only)
-unmountJob      = 0x8000,   // unmount Job
-switchTool      = 0x10000,  // switch between alternative and standard tool
-teachToolPos    = 0x20000,  // teach Tool position
-waitFinishProcess = 0x40000,  // finish assembly processing normally (wait for completion)
-</code></pre></div>
+<h1 id="runtime-gui-layout"><a class="toclink" href="#runtime-gui-layout">Runtime GUI layout</a></h1>
+<p>The following sections describes the screen layout in general, the customization options and the recommended screen resolutions for using the runtime.</p>
+<h2 id="overview"><a class="toclink" href="#overview">Overview</a></h2>
+<p>The OGS runtime (monitor.exe) uses two main screens:</p>
+<ul>
+<li>a start page (displayed while no process is active)</li>
+<li>a process page (displayed while a process is running)</li>
+</ul>
+<p>The screen layout is generally optimized for a Full-HD screen (1920x1080) and touch input. Readability and text sizes are optimized for this resolution and aspect ratio (16:9). It also works for 16:10 screens and larger resolutions (expecially if the text scale is set accordingly), but does not work well with lower resolutions.</p>
+<p>As the OGS runtime is intended to run in a kiosk-style environment, the OGS display uses a maximized application window and hides the default Windows controls (for minimize, etc.). Also closing the application while a process is running, is prohibited. Only users having the neccessary rights are allowed to abort and close the application.</p>
+<p>See the section below for more details about the interface interactions.</p>
+<h3 id="screen-selection"><a class="toclink" href="#screen-selection">Screen selection</a></h3>
+<p>On a multi-monitor system, OGS can be configured to show its screens on a specific monitor. This can be set in the projects <code>station.ini</code> file in the <code>[SCREEN]</code> section.</p>
+<p>The following options are available:</p>
+<ul>
+<li>InitialDisplay: defines the screen number where the main OGS screen should be displayed. If not set, uses the "current" screen to display the main application window.</li>
+<li>InstructionView: defines the screen number where the instruction or projection view should be displayed (mainly used for projecting on a secondary screen). If not given, defaults to the same display, the main application runs on (see <code>InitialDisplay</code> above).</li>
+<li>IgnoreWarning: The OGS runtime checks the display resolution and scale during start of the application for the recommended values. If not, a popup is shown to indicate possible display issues and provide configuration hints. To skip this warning, set this parameter to a non-zero value (by default the warning is enabled).</li>
+<li>InitialPosition: This is similar to the <code>InitialDisplay</code> parameter and allows positioning the main application window at a specific screen position. Compared to the <code>InitialDisplay</code>, it allows to specify exact screen pixel coordinates for the main window, so the main window can be set to e.g. occupy only parts of a screen. The values given should be a comma seperated string in the form x0,y0,x1,y1 with (x0/y0) the top left and (x1/y1) the bottom right coordinates of the main window. If set, this overrides and <code>InitialDisplay</code> settings.</li>
+</ul>
+<h3 id="screen-resolution-konfiguration"><a class="toclink" href="#screen-resolution-konfiguration">Screen resolution konfiguration</a></h3>
+<p>For an optimized experience, the virtual resolution of the application should be 1920x1080 or 1920x1200 pixels after applying the windows display text scaling (<code>Windows Settings --&gt; Display --&gt; Scaling and Layout --&gt; Scale</code>).</p>
+<p>If e.g. running on a 3K 16:9 screen (2880x1620 pixel), it is recommended to set the display text scale to 150%. This will then map to 1920x1080 pixel virtual (scaled) display size - which is a perfect setting for OGS.</p>
+<h2 id="start-page"><a class="toclink" href="#start-page">Start page</a></h2>
+<h3 id="layout"><a class="toclink" href="#layout">Layout</a></h3>
+<p>The layout of the start page is as follows:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../startpage.drawio.svg" data-desc-position="bottom"><img alt="text" src="../startpage.drawio.svg"></a></p>
+<p>The layout uses a fixed height for the top bar (for the logos) and the bottom bar (status bar). Also the width of the barcode entry fields and the project startpage logo is fixed. All other panes will adjust dynamically to changed display sizes.</p>
+<h3 id="logos"><a class="toclink" href="#logos">Logos</a></h3>
+<p>The logos are configurable as follows:</p>
+<ul>
+<li>
+<p>Software developer logo: The default size is 1328x132 pixels (for 1920 screen with, top-left aligned if smaller: not scaled). If the display text scale is not 100%, then the logo file should be scaled accordingly. The logo is read in the following priority:</p>
+<ul>
+<li>Read from the (*.png) file set in the projects <code>station.ini</code> (in the <code>[GENERAL]</code> section, parameter <code>SoftwareDeveloperLogo=</code> - note that the path is relative to the OGS installation folder)</li>
+<li>Read from <code>monitor.png</code> (if not set in the project file) </li>
+<li>Uses the default logo from the installed <code>monitor.exe</code></li>
+</ul>
+</li>
+<li>
+<p>Project startpage logo: The logo is 592x143 pixels and is read from the file defined in the <code>current_project.logo_file</code> in the projects <code>config.lua</code> file (as a <code>*.png</code> or <code>*.gif</code> file). The logo is automatically scaled to fill the available space. A <code>*.gif</code> file can also be used for an animated logo (if an animated gif file is provided).</p>
+</li>
+</ul>
+<h3 id="billboard"><a class="toclink" href="#billboard">Billboard</a></h3>
+<p>The main element in the start page is the start page web view. 
+The web view shows a custom web page served through the <a href="../../v3/lua/webserver/">OGS integrated webserver</a> but can also show any other web page.</p>
+<p>The url for the webpage is defined in the <code>current_project.billboard</code> value in the projects <code>config.lua</code> file. If the value is a full URL (including the protocol prefix), then the URL is used verbatim. If only a file name is given and the <a href="../../v3/lua/webserver/">OGS integrated webserver</a> is enabled, the file is served from the default webroot.</p>
+<h3 id="appbar-and-sidepanel"><a class="toclink" href="#appbar-and-sidepanel">Appbar and Sidepanel</a></h3>
+<p>As the application is running in kiosk mode (covering the full screen and hiding the default Windows UI elements), interaction is done through the slide-in appbar or the slide-in sidepanel (touch friendly).</p>
+<ul>
+<li>
+<p>Appbar: The appbar is shown by right clicking the project startpage logo (at top-right). It can also be shown by hitting the <code>&lt;ESC&gt;</code> key (if a keyboard is attached). The appbar shows some buttons, especially the close button to close the application.</p>
+</li>
+<li>
+<p>Sidepanel: If enabled, the sidepanel opens by double-clicking the project startpage logo (at top-right). It can also be shown by the hotkey key (defined in <code>station.ini</code>). The sidepanel shows some buttons in the header row, especially to hide the panel and to minimize the application.</p>
+</li>
+</ul>
+<h2 id="process-page"><a class="toclink" href="#process-page">Process page</a></h2>
+<h3 id="layout_1"><a class="toclink" href="#layout_1">Layout</a></h3>
+<p>The layout of the process page is as follows:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../processpage.drawio.svg" data-desc-position="bottom"><img alt="text" src="../processpage.drawio.svg"></a></p>
+<p>The layout uses a fixed height for the process page logo and the bottom bar (status bar). Also the width of the process list and buttons (and the process page logo) is fixed. All other panes will adjust dynamically to changed display sizes.</p>
+<h3 id="logo"><a class="toclink" href="#logo">Logo</a></h3>
+<p>The project process page logo is 710x143 pixels and defaults to the same logo as the start page logo. It is autoscaled to fill the size (so if using the same logo as on the startpage will have black borders on the left and right side due to the 710 vs. 592 pixel with). </p>
+<p>A seperate logo for the process view can be read from the file defined in the <code>current_project.process_view_logo</code> in the projects <code>config.lua</code> file (as a png file).</p>
+<h3 id="sidepanel"><a class="toclink" href="#sidepanel">Sidepanel</a></h3>
+<p>As the application is running in kiosk mode (covering the full screen and hiding the default Windows UI elements), interaction is done through the slide-in sidepanel (touch friendly). Generally, if the process page is visible (i.e. a process is running), the application cannot be stopped/closed. To close the application, one has to stop the process first and return to the start screen (which only a user who has the neccessary right can do). If a process is running, the user has to hit the <code>stop</code> button, then the <code>done</code> button (both requires rights), then the appbar can be used to close the application (see above).</p>
+<p>If the side panel is enabled, the sidepanel can also be opened on the process page by double-clicking the project process page logo (at top-right). It can also be shown by the hotkey key (defined in <code>station.ini</code>). The sidepanel shows some buttons in the header row, especially to hide the panel and to minimize the application.</p>
+<h2 id="more-options"><a class="toclink" href="#more-options">More options</a></h2>
+<p>For generic branding, see <a href="../branding/">branding</a>.</p>
 
 
 
@@ -2608,10 +3044,10 @@ waitFinishProcess = 0x40000,  // finish assembly processing normally (wait for c
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   

@@ -17,10 +17,10 @@ A commonly used MQTT broker is [Eclipse Mosquitto](https://mosquitto.org), which
 ## Gateway hardware preparation
 
 Choose a suitable ESP32 device device from the [supported devices documentation](https://docs.openmqttgateway.com/prerequisites/board.html). As an example, we use an [m5Stack tough ESP32 module](https://shop.m5stack.com/products/m5stack-tough-esp32-iot-development-board-kit):
-![M5Stack ESP32 module](openmqttgateway-m5stack-esp32-tough.png)
+![M5Stack ESP32 module](resources/openmqttgateway-m5stack-esp32-tough.png)
 See the official documentation [here](https://docs.openmqttgateway.com/setitup/ble.html#compatible-parts) for a similar device setup.
 
-Also (depending on your use case) POE devices are available, e.g. [ESP32-POE2](https://www.olimex.com/Products/IoT/ESP32/ESP32-POE2/) and the[enclosure BOX-ESP32-POE2](https://www.olimex.com/Products/IoT/ESP32/BOX-ESP32-POE2/):
+Also (depending on your use case) POE devices are available, e.g. [ESP32-POE2](https://www.olimex.com/Products/IoT/ESP32/ESP32-POE2/) and the [enclosure BOX-ESP32-POE2](https://www.olimex.com/Products/IoT/ESP32/BOX-ESP32-POE2/):
 ![alt text](resources/openmqttgateway-esp32-poe2.png)
 
 

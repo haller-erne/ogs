@@ -5,13 +5,13 @@
       
       
       
-        <link rel="canonical" href="https://haller-erne.github.io/ogs/appnotes/openmqttgateway/">
+        <link rel="canonical" href="https://haller-erne.github.io/ogs/appnotes/blegateway-openmqttgateway/">
       
       
-        <link rel="prev" href="../gui-layout-runtime/">
+        <link rel="prev" href="../station_io/">
       
       
-        <link rel="next" href="../debugging/">
+        <link rel="next" href="../blegateway-minew-mg6/">
       
       
         
@@ -22,7 +22,7 @@
     
     
       
-        <title>Using BLE Gateways - OGS Documentation</title>
+        <title>OpenMQTT-Gateway - OGS Documentation</title>
       
     
     
@@ -117,7 +117,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Using BLE Gateways
+              OpenMQTT-Gateway
             
           </span>
         </div>
@@ -2424,6 +2424,111 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../debugging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Debugging LUA Scripts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../station_io/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Station IO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_4" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_8_4" id="__nav_8_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using BLE Gateways
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Using BLE Gateways
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
     
   
   
@@ -2443,7 +2548,7 @@
   <span class="md-ellipsis">
     
   
-    Using BLE Gateways
+    OpenMQTT-Gateway
   
 
     
@@ -2461,7 +2566,7 @@
   <span class="md-ellipsis">
     
   
-    Using BLE Gateways
+    OpenMQTT-Gateway
   
 
     
@@ -2568,14 +2673,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../debugging/" class="md-nav__link">
+      <a href="../blegateway-minew-mg6/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Debugging LUA Scripts
+    Minew MG6 Gateway
   
 
     
@@ -2589,29 +2694,9 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../station_io/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Station IO
-  
-
-    
-  </span>
-  
-  
-
-      </a>
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -2746,31 +2831,31 @@
 <p>A commonly used MQTT broker is <a href="https://mosquitto.org">Eclipse Mosquitto</a>, which is available for all major operating systems.</p>
 <h2 id="gateway-hardware-preparation"><a class="toclink" href="#gateway-hardware-preparation">Gateway hardware preparation</a></h2>
 <p>Choose a suitable ESP32 device device from the <a href="https://docs.openmqttgateway.com/prerequisites/board.html">supported devices documentation</a>. As an example, we use an <a href="https://shop.m5stack.com/products/m5stack-tough-esp32-iot-development-board-kit">m5Stack tough ESP32 module</a>:
-<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../openmqttgateway-m5stack-esp32-tough.png" data-desc-position="bottom"><img alt="M5Stack ESP32 module" src="../openmqttgateway-m5stack-esp32-tough.png"></a>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="openmqttgateway-m5stack-esp32-tough.png" data-desc-position="bottom"><img alt="M5Stack ESP32 module" src="openmqttgateway-m5stack-esp32-tough.png"></a>
 See the official documentation <a href="https://docs.openmqttgateway.com/setitup/ble.html#compatible-parts">here</a> for a similar device setup.</p>
 <p>Also (depending on your use case) POE devices are available, e.g. <a href="https://www.olimex.com/Products/IoT/ESP32/ESP32-POE2/">ESP32-POE2</a> and the<a href="https://www.olimex.com/Products/IoT/ESP32/BOX-ESP32-POE2/">enclosure BOX-ESP32-POE2</a>:
-<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../openmqttgateway-esp32-poe2.png" data-desc-position="bottom"><img alt="alt text" src="../openmqttgateway-esp32-poe2.png"></a></p>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/openmqttgateway-esp32-poe2.png" data-desc-position="bottom"><img alt="alt text" src="../resources/openmqttgateway-esp32-poe2.png"></a></p>
 <h2 id="firmware-installation"><a class="toclink" href="#firmware-installation">Firmware installation</a></h2>
 <p>To install the OpenMQTTGateway firmware, connect the device to your PC using the USB port. This should install a COM port in the PC as follows:
-<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../openmqttgateway-devicemanager.png" data-desc-position="bottom"><img alt="alt text" src="../openmqttgateway-devicemanager.png"></a>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/openmqttgateway-devicemanager.png" data-desc-position="bottom"><img alt="alt text" src="../resources/openmqttgateway-devicemanager.png"></a>
 If you get an error connecting the device, then install the apropriate COM port device driver (see you hardware manual).</p>
 <p>To install the firmware, go to the <a href="https://docs.openmqttgateway.com/upload/web-install.html">OpenMQTTGateway web installer</a>, select the correct firmware (the "standard" <code>esp32dev-ble</code> is the correct choice for most ESP32 boards with BLE support).</p>
 <p>Click the "Connect" button to select the COM port and start connecting:
-<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../openmqttgateway-fw-connect.png" data-desc-position="bottom"><img alt="alt text" src="../openmqttgateway-fw-connect.png"></a></p>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/openmqttgateway-fw-connect.png" data-desc-position="bottom"><img alt="alt text" src="../resources/openmqttgateway-fw-connect.png"></a></p>
 <p>If the connection was successfully established, select the "INSTALL OPENMQTTGATEWAY" button to download the firmware:
-<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../openmqttgateway-fw-install.png" data-desc-position="bottom"><img alt="alt text" src="../openmqttgateway-fw-install.png"></a></p>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/openmqttgateway-fw-install.png" data-desc-position="bottom"><img alt="alt text" src="../resources/openmqttgateway-fw-install.png"></a></p>
 <p>If asked to erase the device, do so and acknowledge the firmware update, so the firmware update can start (apporx. 2 minutes):
-<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../openmqttgateway-fw-download.png" data-desc-position="bottom"><img alt="alt text" src="../openmqttgateway-fw-download.png"></a></p>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/openmqttgateway-fw-download.png" data-desc-position="bottom"><img alt="alt text" src="../resources/openmqttgateway-fw-download.png"></a></p>
 <h2 id="wifilan-and-mqtt-configuration"><a class="toclink" href="#wifilan-and-mqtt-configuration">Wifi/LAN and MQTT configuration</a></h2>
 <p>After the firmware was installed, click the <code>LOGS &amp; CONSOLE</code>button to open the device console. Now hit the <code>RESET DEVICE</code> button to reboot.</p>
 <p>The log will now show the bootup messages:
-<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../openmqttgateway-firstboot.png" data-desc-position="bottom"><img alt="alt text" src="../openmqttgateway-firstboot.png"></a></p>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/openmqttgateway-firstboot.png" data-desc-position="bottom"><img alt="alt text" src="../resources/openmqttgateway-firstboot.png"></a></p>
 <p>This indicates, that the device is not connected to your wifi yet (or to the LAN for ethernet devices), so it needs to be configured.</p>
 <p>This is done by connecting to the SSID provided in the logs (by default <code>OMG_ESP32_BLE</code>). So use your phone to connect to the given SSID. The Phone should ask you to "login to wlan" and redirect you to the <code>WIFIManager</code> page (if not, then manually connect to http://192.168.1.4 - or whatever is shown in the console logs above).</p>
 <p>On the webpage, click the "Configure Wifi" button to set the wifi parameters and connecto to your network:</p>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../openmqttgateway-wifi.png" data-desc-position="bottom"><img alt="alt text" src="../openmqttgateway-wifi.png"></a></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/openmqttgateway-wifi.png" data-desc-position="bottom"><img alt="alt text" src="../resources/openmqttgateway-wifi.png"></a></p>
 <p>After connecting to the wifi network, the MQTT configuration can now be set:
-<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../openmqttgateway-mqtt.png" data-desc-position="bottom"><img alt="alt text" src="../openmqttgateway-mqtt.png"></a></p>
+<a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/openmqttgateway-mqtt.png" data-desc-position="bottom"><img alt="alt text" src="../resources/openmqttgateway-mqtt.png"></a></p>
 <h2 id="configuring-mqtt-output"><a class="toclink" href="#configuring-mqtt-output">Configuring MQTT output</a></h2>
 <p>By default, the OpenMQTTGateway tries to connect to BLE devices. As we only need the advertisment data (for BTHome), we can configure the MQTT output by publishing the following data </p>
 <div class="highlight"><pre><span></span><code>{"pubadvdata":true, "onlysensors":true, "bleconnect":false}
@@ -2778,9 +2863,9 @@ If you get an error connecting the device, then install the apropriate COM port 
 <p>to the configuration topic ()    </p>
 <div class="highlight"><pre><span></span><code>home/OMG_ESP32_BLE/commands/MQTTtoBT/config
 </code></pre></div>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../openmqttgateway-publish.png" data-desc-position="bottom"><img alt="alt text" src="../openmqttgateway-publish.png"></a></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/openmqttgateway-publish.png" data-desc-position="bottom"><img alt="alt text" src="../resources/openmqttgateway-publish.png"></a></p>
 <p>The change is reflected in the <code>BTtoMQTT</code> topic of the gateway device and the advertised data is immediately shown (see sample wiht RSSI change/button press for a BTHome device):</p>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../openmqttgateway-data.png" data-desc-position="bottom"><img alt="alt text" src="../openmqttgateway-data.png"></a></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/openmqttgateway-data.png" data-desc-position="bottom"><img alt="alt text" src="../resources/openmqttgateway-data.png"></a></p>
 <h2 id="ogs-configuration"><a class="toclink" href="#ogs-configuration">OGS configuration</a></h2>
 <p>tbd.</p>
 

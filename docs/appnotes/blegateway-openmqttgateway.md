@@ -21,32 +21,32 @@ Choose a suitable ESP32 device device from the [supported devices documentation]
 See the official documentation [here](https://docs.openmqttgateway.com/setitup/ble.html#compatible-parts) for a similar device setup.
 
 Also (depending on your use case) POE devices are available, e.g. [ESP32-POE2](https://www.olimex.com/Products/IoT/ESP32/ESP32-POE2/) and the[enclosure BOX-ESP32-POE2](https://www.olimex.com/Products/IoT/ESP32/BOX-ESP32-POE2/):
-![alt text](openmqttgateway-esp32-poe2.png)
+![alt text](resources/openmqttgateway-esp32-poe2.png)
 
 
 ## Firmware installation
 
 To install the OpenMQTTGateway firmware, connect the device to your PC using the USB port. This should install a COM port in the PC as follows:
-![alt text](openmqttgateway-devicemanager.png)
+![alt text](resources/openmqttgateway-devicemanager.png)
 If you get an error connecting the device, then install the apropriate COM port device driver (see you hardware manual).
 
 To install the firmware, go to the [OpenMQTTGateway web installer](https://docs.openmqttgateway.com/upload/web-install.html), select the correct firmware (the "standard" `esp32dev-ble` is the correct choice for most ESP32 boards with BLE support).
 
 Click the "Connect" button to select the COM port and start connecting:
-![alt text](openmqttgateway-fw-connect.png)
+![alt text](resources/openmqttgateway-fw-connect.png)
 
 If the connection was successfully established, select the "INSTALL OPENMQTTGATEWAY" button to download the firmware:
-![alt text](openmqttgateway-fw-install.png)
+![alt text](resources/openmqttgateway-fw-install.png)
 
 If asked to erase the device, do so and acknowledge the firmware update, so the firmware update can start (apporx. 2 minutes):
-![alt text](openmqttgateway-fw-download.png)
+![alt text](resources/openmqttgateway-fw-download.png)
 
 ## Wifi/LAN and MQTT configuration
 
 After the firmware was installed, click the `LOGS & CONSOLE`button to open the device console. Now hit the `RESET DEVICE` button to reboot.
 
 The log will now show the bootup messages:
-![alt text](openmqttgateway-firstboot.png)
+![alt text](resources/openmqttgateway-firstboot.png)
 
 This indicates, that the device is not connected to your wifi yet (or to the LAN for ethernet devices), so it needs to be configured.
 
@@ -54,10 +54,10 @@ This is done by connecting to the SSID provided in the logs (by default `OMG_ESP
 
 On the webpage, click the "Configure Wifi" button to set the wifi parameters and connecto to your network:
 
-![alt text](openmqttgateway-wifi.png)
+![alt text](resources/openmqttgateway-wifi.png)
 
 After connecting to the wifi network, the MQTT configuration can now be set:
-![alt text](openmqttgateway-mqtt.png)
+![alt text](resources/openmqttgateway-mqtt.png)
 
 ## Configuring MQTT output
 
@@ -69,11 +69,11 @@ to the configuration topic ()
 
     home/OMG_ESP32_BLE/commands/MQTTtoBT/config
 
-![alt text](openmqttgateway-publish.png)
+![alt text](resources/openmqttgateway-publish.png)
 
 The change is reflected in the `BTtoMQTT` topic of the gateway device and the advertised data is immediately shown (see sample wiht RSSI change/button press for a BTHome device):
 
-![alt text](openmqttgateway-data.png)
+![alt text](resources/openmqttgateway-data.png)
 
 ## OGS configuration
 

@@ -68,9 +68,11 @@ nav:
         - Traceability: appnotes/traceability.md
     - Application notes:
         - OGS runtime screen layout: appnotes/gui-layout-runtime.md
-        - Using BLE Gateways: appnotes/openmqttgateway.md
         - Debugging LUA Scripts: appnotes/debugging.md
         - Station IO: appnotes/station_io.md
+        - Using BLE Gateways:
+            - OpenMQTT-Gateway: appnotes/blegateway-openmqttgateway.md
+            - Minew MG6 Gateway: appnotes/blegateway-minew-mg6.md
     
 # sample
 #    – Version 1.x:

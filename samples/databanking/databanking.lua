@@ -146,7 +146,7 @@ end
 local function GetJobAFOList(job)
     local afo_list = ''
 	for i,task in pairs(job.Tasks) do
-	    local afo = M.GetAFO(job.Root, job.Seq, job.RawName, task.Seq, task.Name)
+	    local afo = M.GetAFO(job.Root, job.Seq, job.AnsiRawName, task.Seq, task.AnsiName)
         if #afo_list == 0 then
             afo_list = afo
         else

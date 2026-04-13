@@ -2662,6 +2662,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Test">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup-mosquitto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup Mosquitto
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-using-mqtt-explorer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test using MQTT-Explorer
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#ogs-configuration" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2767,6 +2806,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Test">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup-mosquitto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup Mosquitto
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-using-mqtt-explorer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test using MQTT-Explorer
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#ogs-configuration" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2819,8 +2897,39 @@
 <p>The tabs <code>Filter</code> and <code>Scan</code> allow setting the relevant parameters.</p>
 <p>The <code>Filter</code> page must use the regular expresson <code>^.*d2fc.*</code> to filter the raw advertisment data for the <code>BTHome</code> device class. Also duplicate events should be discarded - here is a working configuration:</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/minew-mg6-ble-filter.jpeg" data-desc-position="bottom"><img alt="alt text" src="../resources/minew-mg6-ble-filter.jpeg"></a></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For a more strict filter use the following:</p>
+<div class="highlight"><pre><span></span><code>^..........d2fc.*
+</code></pre></div>
+<p>This will filter all advertisment packets not having the BTHome class id in the bytes 6-7.</p>
+</div>
 <p>Finally, the <code>Scan</code> page defines the type of BLE scan the device is using - for BTHome, only passive scans are needed. Here is a working configuration:</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/minew-mg6-ble-scan.jpeg" data-desc-position="bottom"><img alt="alt text" src="../resources/minew-mg6-ble-scan.jpeg"></a></p>
+<h2 id="test"><a class="toclink" href="#test">Test</a></h2>
+<p>For a simple test setup, <a href="https://mosquitto.org/">Eclipse Mosquitto</a> can be used for the MQTT Broker and <a href="https://github.com/thomasnordquist/MQTT-Explorer/releases">MQTT-Explorer</a> for a nice GUI client.</p>
+<h3 id="setup-mosquitto"><a class="toclink" href="#setup-mosquitto">Setup Mosquitto</a></h3>
+<p>After downloading and installing Mosquitto, the following steps are needed to get it working:</p>
+<ul>
+<li>Edit mosquitto.conf (to enable listening on 0.0.0.0 instead of the default 127.0.0.0)</li>
+<li>Add a firewall rule to allow incoming TCP-Connections on TCP port 1883</li>
+<li>Run the mosquitto broker in verbose mode from the command line</li>
+</ul>
+<p>The edits needed in <code>mosquitto.conf</code> are simple: add the following two lines to mosquitto.conf (preferrable in the listeners section):</p>
+<div class="highlight"><pre><span></span><code># ============================================
+# Listeners
+# ============================================
+
+allow_anonymous true
+listener 1883
+</code></pre></div>
+<p>Then run mosquitto from the command line as follows:</p>
+<div class="highlight"><pre><span></span><code>mosquitto.exe -v -c mosquitto.conf
+</code></pre></div>
+<p>This should then show something like the following:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/mosquitto-cmd.png" data-desc-position="bottom"><img alt="alt text" src="../resources/mosquitto-cmd.png"></a></p>
+<h3 id="test-using-mqtt-explorer"><a class="toclink" href="#test-using-mqtt-explorer">Test using MQTT-Explorer</a></h3>
+<p>Run MQTT-Explorer and connect to the broker. When clicking a button on the BLE button, you should see messages appearing in /gw/<mac>/status topic.</mac></p>
 <h2 id="ogs-configuration"><a class="toclink" href="#ogs-configuration">OGS configuration</a></h2>
 <p>tbd.</p>
 

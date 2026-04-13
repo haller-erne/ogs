@@ -90,5 +90,34 @@ Run MQTT-Explorer and connect to the broker. When clicking a button on the BLE b
 
 ## OGS configuration
 
-tbd.
+To use the Minew-BLE Gateway with BTHome bluetooth buttons, add the `button_minew_mg6` to the `requires` in your projects `config.lua`.
 
+Note, that the `button_minew_mg6.lua` file depends on the `mqtt.lua` and the `ble_helpers.lua` modules, so make sure to copy them into your project folder, too.
+
+Then set the parameters in your projects `station.ini` as follows:
+
+``` ini
+[MINEW_MG6]
+; Set ENABLED = 1 to enable the LUA Bluetooth LE interface
+ENABLED=1
+; Define MQTT broker URL
+Broker=tcp://mybroker.mydomain.com:1883
+; Define the base topic for listening to BLE status events. Use '+' for a single level wildcard, '#' for multiple levels (note: minew uses a leading /)
+Topic=/gw/+/status
+; Assign the MAC address of the BLE buttons to the function set and define which
+; OK is single click, nok is double-click, sidepanel is long-click
+3c2ef5ba05ca=OK,NOK,SidePanel
+A93A65B6C67C=OK,NOK
+CA05BAF52E3C=SidePanel
+7CC6B6653AA9=ALL
+; Define the MQTT client ID
+ClientId=OGS_IDCode
+; Additional (optional) MQTT params:
+Debug=1
+User=
+Pass=
+LastWillTopic=
+LastWillData=
+```
+
+Then add a simple acknowledge button to your configuration and run a test. A single click on your BLE button will now send an "Ok button click" event to OGS.

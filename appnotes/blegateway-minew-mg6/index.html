@@ -2931,7 +2931,32 @@ listener 1883
 <h3 id="test-using-mqtt-explorer"><a class="toclink" href="#test-using-mqtt-explorer">Test using MQTT-Explorer</a></h3>
 <p>Run MQTT-Explorer and connect to the broker. When clicking a button on the BLE button, you should see messages appearing in /gw/<mac>/status topic.</mac></p>
 <h2 id="ogs-configuration"><a class="toclink" href="#ogs-configuration">OGS configuration</a></h2>
-<p>tbd.</p>
+<p>To use the Minew-BLE Gateway with BTHome bluetooth buttons, add the <code>button_minew_mg6</code> to the <code>requires</code> in your projects <code>config.lua</code>.</p>
+<p>Note, that the <code>button_minew_mg6.lua</code> file depends on the <code>mqtt.lua</code> and the <code>ble_helpers.lua</code> modules, so make sure to copy them into your project folder, too.</p>
+<p>Then set the parameters in your projects <code>station.ini</code> as follows:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">[MINEW_MG6]</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1">; Set ENABLED = 1 to enable the LUA Bluetooth LE interface</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="na">ENABLED</span><span class="o">=</span><span class="s">1</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1">; Define MQTT broker URL</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="na">Broker</span><span class="o">=</span><span class="s">tcp://mybroker.mydomain.com:1883</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1">; Define the base topic for listening to BLE status events. Use '+' for a single level wildcard, '#' for multiple levels (note: minew uses a leading /)</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="na">Topic</span><span class="o">=</span><span class="s">/gw/+/status</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1">; Assign the MAC address of the BLE buttons to the function set and define which</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c1">; OK is single click, nok is double-click, sidepanel is long-click</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="na">3c2ef5ba05ca</span><span class="o">=</span><span class="s">OK,NOK,SidePanel</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="na">A93A65B6C67C</span><span class="o">=</span><span class="s">OK,NOK</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="na">CA05BAF52E3C</span><span class="o">=</span><span class="s">SidePanel</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="na">7CC6B6653AA9</span><span class="o">=</span><span class="s">ALL</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="c1">; Define the MQTT client ID</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="na">ClientId</span><span class="o">=</span><span class="s">OGS_IDCode</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="c1">; Additional (optional) MQTT params:</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="na">Debug</span><span class="o">=</span><span class="s">1</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="na">User</span><span class="o">=</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="na">Pass</span><span class="o">=</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="na">LastWillTopic</span><span class="o">=</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="na">LastWillData</span><span class="o">=</span>
+</code></pre></div>
+<p>Then add a simple acknowledge button to your configuration and run a test. A single click on your BLE button will now send an "Ok button click" event to OGS.</p>
 
 
 

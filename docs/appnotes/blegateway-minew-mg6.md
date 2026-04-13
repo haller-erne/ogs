@@ -42,9 +42,51 @@ The `Filter` page must use the regular expresson `^.*d2fc.*` to filter the raw a
 
 ![alt text](resources/minew-mg6-ble-filter.jpeg)
 
+!!! note
+
+    For a more strict filter use the following:
+
+        ^..........d2fc.*
+
+    This will filter all advertisment packets not having the BTHome class id in the bytes 6-7.
+
+
 Finally, the `Scan` page defines the type of BLE scan the device is using - for BTHome, only passive scans are needed. Here is a working configuration:
 
 ![alt text](resources/minew-mg6-ble-scan.jpeg)
+
+## Test
+
+For a simple test setup, [Eclipse Mosquitto](https://mosquitto.org/) can be used for the MQTT Broker and [MQTT-Explorer](https://github.com/thomasnordquist/MQTT-Explorer/releases) for a nice GUI client.
+
+### Setup Mosquitto
+
+After downloading and installing Mosquitto, the following steps are needed to get it working:
+
+- Edit mosquitto.conf (to enable listening on 0.0.0.0 instead of the default 127.0.0.0)
+- Add a firewall rule to allow incoming TCP-Connections on TCP port 1883
+- Run the mosquitto broker in verbose mode from the command line
+
+The edits needed in `mosquitto.conf` are simple: add the following two lines to mosquitto.conf (preferrable in the listeners section):
+
+    # ============================================
+    # Listeners
+    # ============================================
+
+    allow_anonymous true
+    listener 1883
+
+Then run mosquitto from the command line as follows:
+
+    mosquitto.exe -v -c mosquitto.conf
+
+This should then show something like the following:
+
+![alt text](resources/mosquitto-cmd.png)
+
+### Test using MQTT-Explorer
+
+Run MQTT-Explorer and connect to the broker. When clicking a button on the BLE button, you should see messages appearing in /gw/<mac>/status topic.
 
 ## OGS configuration
 

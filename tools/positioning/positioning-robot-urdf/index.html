@@ -1,0 +1,4000 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://haller-erne.github.io/ogs/tools/positioning/positioning-robot-urdf/">
+      
+      
+        <link rel="prev" href="../positioning-art-verpose/">
+      
+      
+        <link rel="next" href="../../misc/socket-tray/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>URDF Robot FK Positioning - OGS Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+  
+  
+  
+  
+  <style>:root{--md-annotation-icon:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22m15.07%2011.25-.9.92C13.45%2012.89%2013%2013.5%2013%2015h-2v-.5c0-1.11.45-2.11%201.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41a2%202%200%200%200-2-2%202%202%200%200%200-2%202H8a4%204%200%200%201%204-4%204%204%200%200%201%204%204%203.2%203.2%200%200%201-.93%202.25M13%2019h-2v-2h2M12%202A10%2010%200%200%200%202%2012a10%2010%200%200%200%2010%2010%2010%2010%200%200%200%2010-10c0-5.53-4.5-10-10-10%22/%3E%3C/svg%3E');}</style>
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../css/neoteroi-mkdocs.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#urdf-robot-fk-positioning" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="OGS Documentation" class="md-header__button md-logo" aria-label="OGS Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OGS Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              URDF Robot FK Positioning
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="OGS Documentation" class="md-nav__button md-logo" aria-label="OGS Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    OGS Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tool configuration
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tool configuration
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2">
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Remote Tool Gateway
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Remote Tool Gateway
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../remote-tool/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3">
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpenProtocol tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    OpenProtocol tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../openprotocol/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../openprotocol/nexo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nexo/Nexo2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../openprotocol/sys350-cs351/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CS351
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../openprotocol/sys350-ke350/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KE350
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../openprotocol/opexplus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OPEXplus
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../openprotocol/gwk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GWK OP22/OP+
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../openprotocol/sturtevant/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sturtevant 400mp/TCVe2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../openprotocol/amt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AMT/EST SX Wifi tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../openprotocol/cleco/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cleco Wifi tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../openprotocol/makita/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Makita Wifi tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../openprotocol/hstechnik/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HS-Technik NutBee riveting tool
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4">
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Non-OpenProtocol tightening tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Non-OpenProtocol tightening tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../non-openprotocol/ngineric/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    n-gineric
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../non-openprotocol/doga-wifi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Doga BM-series
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../non-openprotocol/stahlwille/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Stahlwille Manoskop 766 WiFi
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5">
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Misc tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Misc tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../misc/gui-input/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OGS GUI input
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../misc/aioi-pick2light/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AIOI Pick2Light
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../misc/gesipa-mqtt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gesipa riveting tool
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../misc/keyence-iv4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Keyence IV4 AI Vision sensor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../misc/sylvac/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sylvac Meters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../misc/oetiker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Oetiker EPC01 pincer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../misc/wenglor-weqube/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wenglor weQube Smart camera
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_2_6" id="__nav_2_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Positioning
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Positioning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../positioning-art-dtrack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ART SmartTrack/DTrack
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../positioning-art-verpose/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ART Verpose
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    URDF Robot FK Positioning
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    URDF Robot FK Positioning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-the-robot-driver-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How the ROBOT driver works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tool-tip-offset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tool-tip offset
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#urdf-3d-viewer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        URDF 3D viewer
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#initial-system-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Initial system setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Initial system setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#project-folder-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project folder structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ogs-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OGS configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OGS configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configlua" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        config.lua
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stationini--driver-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        station.ini — Driver parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#camera-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Camera configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#joint-to-sensor-mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Joint-to-sensor mapping
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ethernetip-and-io-link-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ethernet/IP and IO-Link setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Ethernet/IP and IO-Link setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#io-link-master" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IO-Link master
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#io-link-port-assignments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IO-Link port assignments
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#supported-sensors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported sensors
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#urdf-model-preparation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        URDF model preparation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="URDF model preparation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-urdf-fragment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example URDF fragment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-placement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File placement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sidepanel-teach-in-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sidepanel teach-in setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complete-configuration-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complete configuration example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sensor-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sensor issues
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#urdf--fk-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        URDF / FK issues
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration errors
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Additional configuration
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Additional configuration
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../misc/socket-tray/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Socket trays
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../misc/projector/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projector
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data output
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Data output
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../dataoutput/xmlfile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    End-of-process (XML) file
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../dataoutput/printout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Printout and label printing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../dataoutput/traceability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Traceability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../dataoutput/eventlog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Event logging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scripting
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Scripting
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../v3/getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2">
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LUA interfaces
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    LUA interfaces
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../v3/lua/eventlog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Eventlog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../v3/lua/webbrowser/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web browsers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../v3/lua/webserver/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Webserver (and REST API)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../v3/lua/bluetooth-le/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bluetooth LE
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../v3/lua/sidepanel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sidepanel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../v3/lua/lean-button/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lean button
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../v3/lua/customtools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LUA custom tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6">
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LUA helper libraries
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    LUA helper libraries
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../libs/lua-ads/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADS communication (TwinCat, Nexeed, Beckhoff)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../libs/lua-opcua/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpcUA communication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../libs/lua-modbus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modbus/TCP/UDP communication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../libs/lua-hid/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    USB HID Devices (Buttons, Arduino, etc.)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../libs/lua-dpapi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Protection API (safe secrets storage)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../libs/lua-ostools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LUA Windows OS tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../libs/lua-net/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LUA network helpers (REST/OpenAPI)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7">
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Enterprise functionality
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Enterprise functionality
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../appnotes/sharedconfig.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Central/shared configuration database
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../appnotes/databanking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Databanking and multi-station rework
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../appnotes/userdb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Central user administration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../appnotes/toolgateway/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tool roaming and dynamic parameters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../appnotes/traceability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Traceability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8">
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Application notes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Application notes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../appnotes/gui-layout-runtime/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OGS runtime screen layout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../appnotes/debugging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Debugging LUA Scripts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../appnotes/station_io/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Station IO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_4">
+        
+          
+          <label class="md-nav__link" for="__nav_8_4" id="__nav_8_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using BLE Gateways
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Using BLE Gateways
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../appnotes/blegateway-openmqttgateway/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpenMQTT-Gateway
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../appnotes/blegateway-minew-mg6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Minew MG6 Gateway
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-the-robot-driver-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How the ROBOT driver works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tool-tip-offset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tool-tip offset
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#urdf-3d-viewer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        URDF 3D viewer
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#initial-system-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Initial system setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Initial system setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#project-folder-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project folder structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ogs-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OGS configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OGS configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configlua" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        config.lua
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stationini--driver-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        station.ini — Driver parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#camera-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Camera configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#joint-to-sensor-mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Joint-to-sensor mapping
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ethernetip-and-io-link-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ethernet/IP and IO-Link setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Ethernet/IP and IO-Link setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#io-link-master" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IO-Link master
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#io-link-port-assignments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IO-Link port assignments
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#supported-sensors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported sensors
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#urdf-model-preparation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        URDF model preparation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="URDF model preparation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-urdf-fragment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example URDF fragment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-placement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File placement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sidepanel-teach-in-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sidepanel teach-in setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complete-configuration-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complete configuration example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sensor-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sensor issues
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#urdf--fk-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        URDF / FK issues
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration errors
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="urdf-robot-fk-positioning"><a class="toclink" href="#urdf-robot-fk-positioning">URDF Robot FK Positioning</a></h1>
+<p>The ROBOT positioning driver uses <strong>forward kinematics</strong> (FK) computed from standard <a href="https://wiki.ros.org/urdf">URDF</a> (Unified Robot Description Format) files to determine the real-time tool-tip position. Instead of tracking an optical marker, the system reads joint sensor values (rotary encoders and linear distance sensors) over an <strong>Ethernet/IP</strong> fieldbus, feeds them through the kinematic chain defined in the URDF model, and outputs the 3D Cartesian position and orientation of the end-effector. OGS then checks whether the tool is within the configured tolerance body and enables/disables the tightening tool accordingly.</p>
+<!-- TODO: screenshot — photo of a typical handling arm (crane/column-boom) with mounted tightening tool -->
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/robot-handling-arm-overview.png" data-desc-position="bottom"><img alt="Handling arm overview" src="../resources/robot-handling-arm-overview.png"></a></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The ROBOT driver is well suited for <strong>mechanically constrained handling systems</strong> (crane arms, column-boom manipulators, linear units) where every movable joint has a physical sensor. For free-space tracking of hand-held tools, see the <a href="../positioning-art-dtrack/">ART-DTrack driver</a>.</p>
+</div>
+<h2 id="usage"><a class="toclink" href="#usage">Usage</a></h2>
+<p>If the system is correctly set up (see <a href="#initial-system-setup">Initial system setup</a> below), you can specify which tasks are position-controlled in the workflow editor and teach-in positions and tolerances on the station. For details on the general positioning workflow (basic functionality, workflow configuration, teach-in, sidepanel, tolerance bodies), see the <a href="../">OGS positioning overview</a>.</p>
+<h3 id="how-the-robot-driver-works"><a class="toclink" href="#how-the-robot-driver-works">How the ROBOT driver works</a></h3>
+<p>The ROBOT driver operates entirely through computation — no external camera or optical system is needed:</p>
+<pre class="mermaid"><code>flowchart LR
+    A["IO-Link Sensors&lt;br/&gt;(encoders, distance)"] --&gt;|Raw bytes| B["IO-Link Master&lt;br/&gt;(Ethernet/IP)"]
+    B --&gt;|Cyclic I/O| C["EtherNet/IP Scanner"]
+    C --&gt;|Port data| D["IO-Link Decoding&lt;br/&gt;(rad / m)"]
+    D --&gt;|Scale + Offset| E["Joint Mapping"]
+    E --&gt;|Joint values| F["FK Solver&lt;br/&gt;(URDF chain)"]
+    F --&gt;|XYZ + direction| G["Tolerance Check"]</code></pre>
+<ol>
+<li><strong>IO-Link sensors</strong> on each joint continuously report raw measurements (encoder increments or millimeters) over Ethernet/IP.</li>
+<li>The I/O layer reads sensor data, decodes it to engineering units (radians or meters), and applies per-joint <strong>scale</strong> and <strong>offset</strong> corrections.</li>
+<li>The <strong>FK solver</strong> walks the URDF kinematic chain and computes the 4×4 homogeneous transform for the end-effector link.</li>
+<li>The resulting <strong>XYZ position</strong> (converted from meters to millimeters) and <strong>direction vector</strong> (Z-column of the rotation matrix) are stored in the channel's position record.</li>
+<li>The positioning system computes the distance to the expected bolt position and determines whether the tool is within the configured tolerance body.</li>
+</ol>
+<h3 id="tool-tip-offset"><a class="toclink" href="#tool-tip-offset">Tool-tip offset</a></h3>
+<p>The tool-tip position is computed by projecting a distance along the tool's Z-axis from the end-effector origin. The total offset is the sum of:</p>
+<ul>
+<li><strong>Station offset</strong> (<code>OFFSET_MM</code> in <code>station.ini</code>) — compensates for fixed adapters or quick-change couplings mounted on the tool</li>
+<li><strong>Per-bolt offset</strong> — set in the tolerance parameters during teach-in (socket/bit length)</li>
+</ul>
+<p>This matches the same offset concept used by the <a href="../positioning-art-dtrack/">ART driver</a> — the difference is that the ROBOT driver computes the tool center point via FK instead of receiving it from an optical tracker.</p>
+<h3 id="urdf-3d-viewer"><a class="toclink" href="#urdf-3d-viewer">URDF 3D viewer</a></h3>
+<p>The OGS start page can display an interactive 3D visualization of the URDF robot model in the browser. The viewer renders the robot meshes and shows joint positions updating in real-time as sensor values change.</p>
+<p>To enable the viewer, include <code>startpage_urdf</code> in <code>config.lua</code> and set the billboard:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nv">requires</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="s2">"lib.positioning"</span><span class="p">,</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="s2">"startpage_urdf"</span><span class="p">,</span><span class="w">           </span><span class="c1">-- 3D URDF robot viewer</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="s2">"station_io"</span><span class="p">,</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="c1">-- ...</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="p">}</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="nv">current_project</span><span class="p">.</span><span class="py">billboard</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'startpage_urdf.html'</span>
+</code></pre></div>
+<p>The viewer reads <code>KINEMATIC_FILE</code> from the positioning section in <code>station.ini</code> and loads the corresponding URDF model and mesh files. The initial camera view can be configured in the same section (see <a href="#camera-configuration">camera configuration</a>).</p>
+<!-- TODO: screenshot — OGS start page showing the 3D URDF viewer with a loaded robot model -->
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/robot-urdf-viewer.png" data-desc-position="bottom"><img alt="URDF 3D viewer" src="../resources/robot-urdf-viewer.png"></a></p>
+<h2 id="initial-system-setup"><a class="toclink" href="#initial-system-setup">Initial system setup</a></h2>
+<h3 id="prerequisites"><a class="toclink" href="#prerequisites">Prerequisites</a></h3>
+<ul>
+<li><strong>OGS V3.1.10 or later</strong></li>
+<li><strong>Network access</strong> to the IO-Link master(s) connected to the joint sensors</li>
+<li>A <strong>URDF robot model</strong> describing the handling system's kinematics (generated from CAD)</li>
+<li>IO-Link sensors mounted on each movable joint</li>
+</ul>
+<h3 id="project-folder-structure"><a class="toclink" href="#project-folder-structure">Project folder structure</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>MyProject/
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>├── ST-MyStation/
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>│   ├── config.lua           # Module loading
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>│   ├── station.ini          # Hardware and positioning configuration
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>│   ├── station_io.lua       # Station I/O (uses station_io_robot_enip)
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>│   ├── custom.lua           # Station-specific code (optional)
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>│   └── model/
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>│       ├── my_robot.urdf    # URDF kinematic model
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>│       └── meshes/          # STL mesh files for visualization
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>│           ├── base_link.stl
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>│           ├── arm_link.stl
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>│           └── ...
+</code></pre></div>
+<h3 id="ogs-configuration"><a class="toclink" href="#ogs-configuration">OGS configuration</a></h3>
+<h4 id="configlua"><a class="toclink" href="#configlua">config.lua</a></h4>
+<p>As described in <a href="../#project-configuration">OGS positioning overview</a>, include <code>lib.positioning</code> in your <code>config.lua</code>. The ROBOT driver additionally needs the station I/O module for reading sensors, and optionally the URDF viewer:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nv">OGS</span><span class="p">.</span><span class="py">Project</span><span class="p">.</span><span class="nf">AddPath</span><span class="p">(</span><span class="s1">'../shared'</span><span class="p">)</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nv">requires</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="hll"><span class="w">    </span><span class="s2">"lib.positioning"</span><span class="p">,</span><span class="w">              </span><span class="c1">-- (1)!</span>
+</span><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="hll"><span class="w">    </span><span class="s2">"startpage_urdf"</span><span class="p">,</span><span class="w">               </span><span class="c1">-- (2)!</span>
+</span><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="hll"><span class="w">    </span><span class="s2">"station_io"</span><span class="p">,</span><span class="w">                   </span><span class="c1">-- (3)!</span>
+</span><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="s2">"custom"</span><span class="p">,</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="p">}</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="nv">current_project</span><span class="p">.</span><span class="py">billboard</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'startpage_urdf.html'</span>
+</code></pre></div>
+<ol>
+<li>Core positioning — automatically loads <code>positioning_ROBOT</code> based on <code>DRIVER=ROBOT</code> in <code>station.ini</code></li>
+<li>Optional: browser-based 3D URDF robot viewer</li>
+<li>Station I/O — reads sensor data via Ethernet/IP and maps to FK joints</li>
+</ol>
+<h4 id="stationini--driver-parameters"><a class="toclink" href="#stationini--driver-parameters">station.ini — Driver parameters</a></h4>
+<p>As described in <a href="../#project-configuration">OGS positioning overview</a>, link a tool channel to the positioning section. Then configure the ROBOT-specific parameters:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">[OPENPROTO]</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="na">CHANNEL_01</span><span class="o">=</span><span class="s">10.10.2.164</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="na">CHANNEL_01_TYPE</span><span class="o">=</span><span class="s">Nexo</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="na">CHANNEL_01_PORT</span><span class="o">=</span><span class="s">4545</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1">; --&gt; Enable positioning for this channel</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="na">CHANNEL_01_POSITIONING</span><span class="o">=</span><span class="s">POSITIONING_ENIP_CH1</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c1">; IMPORTANT: cyclic external condition checking must be enabled</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="na">CHANNEL_01_CHECK_EXT_COND</span><span class="o">=</span><span class="s">1</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="k">[POSITIONING_ENIP_CH1]</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="c1">; Use the ROBOT (forward kinematics) positioning driver</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="na">DRIVER</span><span class="o">=</span><span class="s">ROBOT</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="c1">; Grace period (ms) before disabling tool after leaving position (default: 0)</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="na">TIMEOUT</span><span class="o">=</span><span class="s">1000</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="c1">; Station-level tool-tip offset in mm (adapter/quick-change length, NOT socket)</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="na">OFFSET_MM</span><span class="o">=</span><span class="s">0</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="c1">; Path to URDF kinematic model (relative to project folder)</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="na">KINEMATIC_FILE</span><span class="o">=</span><span class="s">model/my_robot.urdf</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="c1">; End-effector link name in the URDF. If omitted, auto-detected as the</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="c1">; terminal link of the kinematic chain.</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="na">KINEMATIC_END_EFFECTOR</span><span class="o">=</span><span class="s">my_tool_link</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="c1">; Debug trace level (0=off, ≥1=log TCP position, ≥2=verbose FK)</span>
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="na">DEBUG</span><span class="o">=</span><span class="s">0</span>
+</code></pre></div>
+<p><strong>Parameter reference:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DRIVER</code></td>
+<td><strong>Yes</strong></td>
+<td>—</td>
+<td>Must be <code>ROBOT</code></td>
+</tr>
+<tr>
+<td><code>TIMEOUT</code></td>
+<td>No</td>
+<td><code>0</code></td>
+<td>Grace period (ms) before disabling tool after leaving position. Set to <code>-1</code> for one-shot enable.</td>
+</tr>
+<tr>
+<td><code>OFFSET_MM</code></td>
+<td>No</td>
+<td><code>0</code></td>
+<td>Station-level tool-tip offset in mm. Added to per-bolt offset from teach-in. Use for fixed adapters.</td>
+</tr>
+<tr>
+<td><code>KINEMATIC_FILE</code></td>
+<td><strong>Yes</strong></td>
+<td>—</td>
+<td>Relative path to the URDF file</td>
+</tr>
+<tr>
+<td><code>KINEMATIC_END_EFFECTOR</code></td>
+<td>No</td>
+<td><em>(auto)</em></td>
+<td>End-effector link name. If omitted, the terminal link in the chain is used.</td>
+</tr>
+<tr>
+<td><code>DEBUG</code></td>
+<td>No</td>
+<td><code>0</code></td>
+<td>XTRACE debug level. <code>0</code>=off, <code>≥1</code>=log offsets and TCP, <code>≥2</code>=verbose FK.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="camera-configuration"><a class="toclink" href="#camera-configuration">Camera configuration</a></h4>
+<p>Optional parameters in the same positioning section control the initial view of the 3D URDF viewer:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">; Camera position (XYZ in meters, in URDF base-frame coordinates)</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="na">CAMERA_POSITION_X</span><span class="o">=</span><span class="s">1.11</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="na">CAMERA_POSITION_Y</span><span class="o">=</span><span class="s">2.42</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="na">CAMERA_POSITION_Z</span><span class="o">=</span><span class="s">2.25</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="c1">; Camera look-at target (XYZ in meters)</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="na">CAMERA_TARGET_X</span><span class="o">=</span><span class="s">0.96</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="na">CAMERA_TARGET_Y</span><span class="o">=</span><span class="s">2.40</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="na">CAMERA_TARGET_Z</span><span class="o">=</span><span class="s">1.86</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="c1">; Zoom level (1 = default)</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="na">CAMERA_ZOOM</span><span class="o">=</span><span class="s">1</span>
+</code></pre></div>
+<p>You can adjust the camera interactively in the 3D viewer and then copy the values back to <code>station.ini</code>.</p>
+<!-- TODO: screenshot — 3D viewer showing camera position controls or the camera gizmo -->
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/robot-urdf-camera-config.png" data-desc-position="bottom"><img alt="Camera configuration in 3D viewer" src="../resources/robot-urdf-camera-config.png"></a></p>
+<h4 id="joint-to-sensor-mapping"><a class="toclink" href="#joint-to-sensor-mapping">Joint-to-sensor mapping</a></h4>
+<p>Each movable URDF joint that has a physical sensor requires a mapping section. The section name follows the pattern <code>[&lt;POSITIONING_SECTION&gt;:&lt;URDF_JOINT_NAME&gt;]</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">; Rotary encoder on IO-Link port 1</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">[POSITIONING_ENIP_CH1:base_rotation]</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="na">DEVICE</span><span class="o">=</span><span class="s">IOLINK_MASTER</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="na">PORT</span><span class="o">=</span><span class="s">1</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="c1">; Distance sensor on port 2, inverted direction</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="k">[POSITIONING_ENIP_CH1:arm_extension]</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="na">DEVICE</span><span class="o">=</span><span class="s">IOLINK_MASTER</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="na">PORT</span><span class="o">=</span><span class="s">2</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="na">SCALE</span><span class="o">=</span><span class="s">-1</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="na">OFFSET</span><span class="o">=</span><span class="s">0</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DEVICE</code></td>
+<td><strong>Yes</strong></td>
+<td>—</td>
+<td>Logical name of the IO-Link master (as defined in <code>[STATION_IO_ENIP]</code>)</td>
+</tr>
+<tr>
+<td><code>PORT</code></td>
+<td><strong>Yes</strong></td>
+<td>—</td>
+<td>IO-Link port number (1–8) on the master</td>
+</tr>
+<tr>
+<td><code>SCALE</code></td>
+<td>No</td>
+<td><code>1.0</code></td>
+<td>Multiplier applied to the decoded sensor value. Use <code>-1</code> to invert direction if sensor mounting is reversed.</td>
+</tr>
+<tr>
+<td><code>OFFSET</code></td>
+<td>No</td>
+<td><code>0.0</code></td>
+<td>Value added after scaling (radians for rotary, meters for linear sensors)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Only joints with a physical sensor need a mapping section. URDF <code>fixed</code> joints are automatically skipped. If a movable joint has no mapping, a warning is logged but the system continues — that joint will stay at its URDF default value (clamped to joint limits).</p>
+</div>
+<h3 id="ethernetip-and-io-link-setup"><a class="toclink" href="#ethernetip-and-io-link-setup">Ethernet/IP and IO-Link setup</a></h3>
+<!-- TODO: screenshot — IO-Link master device (e.g. Murr Impact67) with connected sensor cables -->
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/robot-iolink-master.png" data-desc-position="bottom"><img alt="IO-Link master" src="../resources/robot-iolink-master.png" width="400"></a></p>
+<h4 id="io-link-master"><a class="toclink" href="#io-link-master">IO-Link master</a></h4>
+<p>Define Ethernet/IP devices in the <code>[STATION_IO_ENIP]</code> section:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">[STATION_IO_ENIP]</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="c1">; Format: &lt;logical_name&gt;=&lt;ip_address&gt;,&lt;device_model&gt;</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="na">IOLINK_MASTER</span><span class="o">=</span><span class="s">192.168.100.150,MURR_IMPACT67_PROE</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1">; Debug level: 0=off, 1=errors, 2=warnings, 3=verbose</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="na">DEBUG</span><span class="o">=</span><span class="s">0</span>
+</code></pre></div>
+<p><strong>Supported IO-Link masters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Manufacturer</th>
+<th>Ports</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MURR_IMPACT67_PROE</code></td>
+<td>Murrelektronik</td>
+<td>8</td>
+<td>Impact67 Pro-E, 40 bytes per port</td>
+</tr>
+<tr>
+<td><code>BalluffBNI006A</code></td>
+<td>Balluff</td>
+<td>8</td>
+<td>BNI006A, full EDS connection</td>
+</tr>
+</tbody>
+</table>
+<h4 id="io-link-port-assignments"><a class="toclink" href="#io-link-port-assignments">IO-Link port assignments</a></h4>
+<p>Map ports to sensor models in a section named after the logical master name:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">[IOLINK_MASTER]</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="na">PORT1</span><span class="o">=</span><span class="s">TR_CMV582M-00028</span><span class="w">        </span><span class="c1">; Rotary encoder</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="na">PORT2</span><span class="o">=</span><span class="s">Wenglor_P1PY101</span><span class="w">         </span><span class="c1">; Linear distance sensor</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="na">PORT3</span><span class="o">=</span><span class="s">TR_CMV582M-00028</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="na">PORT4</span><span class="o">=</span><span class="s">Wenglor_P1PY101</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="c1">; Ports 5-8 unused</span>
+</code></pre></div>
+<h4 id="supported-sensors"><a class="toclink" href="#supported-sensors">Supported sensors</a></h4>
+<p><strong>TR Electronic CMV582M — Rotary encoder</strong></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model</td>
+<td><code>TR_CMV582M-00028</code></td>
+</tr>
+<tr>
+<td>Type</td>
+<td>Absolute rotary encoder (IO-Link)</td>
+</tr>
+<tr>
+<td>Output unit</td>
+<td>Radians</td>
+</tr>
+<tr>
+<td>Resolution</td>
+<td>4096 increments/revolution</td>
+</tr>
+<tr>
+<td>Conversion</td>
+<td>$\theta = 2\pi \times \frac{\text{increments}}{4096}$</td>
+</tr>
+</tbody>
+</table>
+<p>Supports writing a preset value for homing/referencing.</p>
+<p><strong>Wenglor P1PY101 — Laser distance sensor</strong></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model</td>
+<td><code>Wenglor_P1PY101</code></td>
+</tr>
+<tr>
+<td>Type</td>
+<td>Laser distance sensor (IO-Link)</td>
+</tr>
+<tr>
+<td>Output unit</td>
+<td>Meters</td>
+</tr>
+<tr>
+<td>Conversion</td>
+<td>$d = \frac{\text{raw}}{1000}$ (raw is in mm)</td>
+</tr>
+</tbody>
+</table>
+<p>Special status values (returned as sensor error, no numeric value):</p>
+<table>
+<thead>
+<tr>
+<th>Raw value</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0x7FF8</code></td>
+<td>Object too far</td>
+</tr>
+<tr>
+<td><code>0x8008</code> (signed)</td>
+<td>Object too near</td>
+</tr>
+<tr>
+<td><code>0x7FFC</code></td>
+<td>No signal</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Adding new sensor types</p>
+<p>New IO-Link sensor types can be added by defining their decode/encode functions in <code>iolink_devices.lua</code>. Each entry provides <code>fnDecodeInput(raw)</code> returning the engineering-unit value and an optional status string.</p>
+</div>
+<h3 id="urdf-model-preparation"><a class="toclink" href="#urdf-model-preparation">URDF model preparation</a></h3>
+<p>The URDF file defines the kinematic chain of the handling system. It uses standard <a href="https://wiki.ros.org/urdf/XML">ROS URDF format</a>.</p>
+<p><strong>Requirements:</strong></p>
+<ul>
+<li><strong>Joint types:</strong> <code>revolute</code>, <code>prismatic</code>, and <code>fixed</code> are supported. Fixed joints define static geometry and require no sensor.</li>
+<li><strong>Units:</strong> Positions in meters, angles in radians (standard URDF convention).</li>
+<li><strong>Mesh files:</strong> STL format, referenced as <code>&lt;mesh filename="meshes/link_name.stl" scale="0.001 0.001 0.001" /&gt;</code>. The <code>scale</code> converts from CAD units (typically mm) to meters.</li>
+<li><strong>Joint limits:</strong> Define <code>&lt;limit lower="..." upper="..." /&gt;</code> for all movable joints. The FK solver clamps initial joint values to these limits.</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Joint default clamping</p>
+<p>A prismatic joint with <code>lower="0.5"</code> will <strong>not</strong> start at zero — the FK solver clamps the initial default into <code>[lower, upper]</code>. This is intentional to prevent physically impossible starting positions.</p>
+</div>
+<h4 id="example-urdf-fragment"><a class="toclink" href="#example-urdf-fragment">Example URDF fragment</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nt">&lt;robot</span><span class="w"> </span><span class="na">name=</span><span class="s">"my_arm"</span><span class="nt">&gt;</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span><span class="nt">&lt;link</span><span class="w"> </span><span class="na">name=</span><span class="s">"base_link"</span><span class="nt">&gt;</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">        </span><span class="nt">&lt;visual&gt;</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">            </span><span class="nt">&lt;geometry&gt;</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">                </span><span class="nt">&lt;mesh</span><span class="w"> </span><span class="na">filename=</span><span class="s">"meshes/base_link.stl"</span><span class="w"> </span><span class="na">scale=</span><span class="s">"0.001 0.001 0.001"</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">            </span><span class="nt">&lt;/geometry&gt;</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">        </span><span class="nt">&lt;/visual&gt;</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">    </span><span class="nt">&lt;/link&gt;</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">    </span><span class="nt">&lt;joint</span><span class="w"> </span><span class="na">name=</span><span class="s">"base_rotation"</span><span class="w"> </span><span class="na">type=</span><span class="s">"revolute"</span><span class="nt">&gt;</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">        </span><span class="nt">&lt;parent</span><span class="w"> </span><span class="na">link=</span><span class="s">"base_link"</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">        </span><span class="nt">&lt;child</span><span class="w"> </span><span class="na">link=</span><span class="s">"arm_link"</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">        </span><span class="nt">&lt;origin</span><span class="w"> </span><span class="na">xyz=</span><span class="s">"0 0 1.5"</span><span class="w"> </span><span class="na">rpy=</span><span class="s">"0 0 0"</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="w">        </span><span class="nt">&lt;axis</span><span class="w"> </span><span class="na">xyz=</span><span class="s">"0 0 1"</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="w">        </span><span class="nt">&lt;limit</span><span class="w"> </span><span class="na">lower=</span><span class="s">"-3.14"</span><span class="w"> </span><span class="na">upper=</span><span class="s">"3.14"</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="w">    </span><span class="nt">&lt;/joint&gt;</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="w">    </span><span class="nt">&lt;link</span><span class="w"> </span><span class="na">name=</span><span class="s">"arm_link"</span><span class="nt">&gt;</span>
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="w">        </span><span class="nt">&lt;visual&gt;</span>
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="w">            </span><span class="nt">&lt;geometry&gt;</span>
+<a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="w">                </span><span class="nt">&lt;mesh</span><span class="w"> </span><span class="na">filename=</span><span class="s">"meshes/arm_link.stl"</span><span class="w"> </span><span class="na">scale=</span><span class="s">"0.001 0.001 0.001"</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a><span class="w">            </span><span class="nt">&lt;/geometry&gt;</span>
+<a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a><span class="w">        </span><span class="nt">&lt;/visual&gt;</span>
+<a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a><span class="w">    </span><span class="nt">&lt;/link&gt;</span>
+<a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a>
+<a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a><span class="w">    </span><span class="cm">&lt;!-- Fixed joint to tool (no sensor needed) --&gt;</span>
+<a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a><span class="w">    </span><span class="nt">&lt;joint</span><span class="w"> </span><span class="na">name=</span><span class="s">"tool_mount"</span><span class="w"> </span><span class="na">type=</span><span class="s">"fixed"</span><span class="nt">&gt;</span>
+<a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a><span class="w">        </span><span class="nt">&lt;parent</span><span class="w"> </span><span class="na">link=</span><span class="s">"arm_link"</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-8-29" name="__codelineno-8-29" href="#__codelineno-8-29"></a><span class="w">        </span><span class="nt">&lt;child</span><span class="w"> </span><span class="na">link=</span><span class="s">"tool_link"</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-8-30" name="__codelineno-8-30" href="#__codelineno-8-30"></a><span class="w">        </span><span class="nt">&lt;origin</span><span class="w"> </span><span class="na">xyz=</span><span class="s">"0 0 -0.3"</span><span class="w"> </span><span class="na">rpy=</span><span class="s">"0 0 0"</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-8-31" name="__codelineno-8-31" href="#__codelineno-8-31"></a><span class="w">    </span><span class="nt">&lt;/joint&gt;</span>
+<a id="__codelineno-8-32" name="__codelineno-8-32" href="#__codelineno-8-32"></a>
+<a id="__codelineno-8-33" name="__codelineno-8-33" href="#__codelineno-8-33"></a><span class="w">    </span><span class="nt">&lt;link</span><span class="w"> </span><span class="na">name=</span><span class="s">"tool_link"</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-8-34" name="__codelineno-8-34" href="#__codelineno-8-34"></a><span class="nt">&lt;/robot&gt;</span>
+</code></pre></div>
+<h4 id="file-placement"><a class="toclink" href="#file-placement">File placement</a></h4>
+<p>Place the URDF and mesh files in the station's <code>model/</code> directory:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>ST-MyStation/
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>└── model/
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    ├── my_robot.urdf
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>    └── meshes/
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>        ├── base_link.stl
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>        ├── arm_link.stl
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>        └── tool_link.stl
+</code></pre></div>
+<p>The web server maps the <code>/model</code> URL to this directory automatically, so the 3D viewer can load the mesh files.</p>
+<!-- TODO: screenshot — tool offset diagram showing station offset + bolt offset along the Z-axis -->
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="resources/robot-tool-offset.png" data-desc-position="bottom"><img alt="Tool offset" src="resources/robot-tool-offset.png" width="300"></a></p>
+<div class="admonition tip">
+<p class="admonition-title">Generating URDF from CAD</p>
+<p>URDF files are typically exported from CAD assemblies. The STL meshes should be placed in a <code>meshes/</code> subfolder. URDF <code>&lt;mesh&gt;</code> references use paths relative to the URDF file location.</p>
+</div>
+<h3 id="sidepanel-teach-in-setup"><a class="toclink" href="#sidepanel-teach-in-setup">Sidepanel teach-in setup</a></h3>
+<p>The webserver configuration for the side panel is identical to the general OGS positioning setup — see <a href="../">OGS positioning overview</a> and <a href="../positioning-art-dtrack/#sidepanel-teach-in-setup">ART sidepanel setup</a> for the <code>[WebServer]</code> and <code>[SidePanel]</code> configuration.</p>
+<p>The sidepanel shows <code>ROBOT</code> in the "Tracking info" section (section ❹) instead of <code>ART</code>. All other functionality (tolerance body selection, offset, teach position) works identically.</p>
+<!-- TODO: screenshot — sidepanel with ROBOT driver showing "Driver: ROBOT" in section ❹ -->
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/robot-sidepanel.png" data-desc-position="bottom"><img alt="Sidepanel with ROBOT driver" src="../resources/robot-sidepanel.png" width="250"></a></p>
+<h2 id="complete-configuration-example"><a class="toclink" href="#complete-configuration-example">Complete configuration example</a></h2>
+<p>A full working <code>station.ini</code> for a station with a Nexo tool and a 4-joint handling arm (2 rotary encoders + 2 linear sensors):</p>
+<div class="highlight"><span class="filename">station.ini</span><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">[OPENPROTO]</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="na">CHANNEL_01</span><span class="o">=</span><span class="s">10.10.2.164</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="na">CHANNEL_01_TYPE</span><span class="o">=</span><span class="s">Nexo</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="na">CHANNEL_01_PORT</span><span class="o">=</span><span class="s">4545</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="na">CHANNEL_01_CHECK_TIME_ENABLED</span><span class="o">=</span><span class="s">1</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="na">CHANNEL_01_CCW_ACK</span><span class="o">=</span><span class="s">1</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="na">CHANNEL_01_POSITIONING</span><span class="o">=</span><span class="s">POSITIONING_ENIP_CH1</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="na">CHANNEL_01_CHECK_EXT_COND</span><span class="o">=</span><span class="s">1</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="k">[POSITIONING_ENIP_CH1]</span>
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="na">DRIVER</span><span class="o">=</span><span class="s">ROBOT</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="na">TIMEOUT</span><span class="o">=</span><span class="s">1000</span>
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="na">OFFSET_MM</span><span class="o">=</span><span class="s">0</span>
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="na">KINEMATIC_FILE</span><span class="o">=</span><span class="s">model/141497_C91_heat_exchanger.urdf</span>
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="na">KINEMATIC_END_EFFECTOR</span><span class="o">=</span><span class="s">141497_Schraubwerkzeug-v1</span>
+<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>
+<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="na">CAMERA_POSITION_X</span><span class="o">=</span><span class="s">1.11</span>
+<a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a><span class="na">CAMERA_POSITION_Y</span><span class="o">=</span><span class="s">2.42</span>
+<a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a><span class="na">CAMERA_POSITION_Z</span><span class="o">=</span><span class="s">2.25</span>
+<a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a><span class="na">CAMERA_TARGET_X</span><span class="o">=</span><span class="s">0.96</span>
+<a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a><span class="na">CAMERA_TARGET_Y</span><span class="o">=</span><span class="s">2.40</span>
+<a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a><span class="na">CAMERA_TARGET_Z</span><span class="o">=</span><span class="s">1.86</span>
+<a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a><span class="na">CAMERA_ZOOM</span><span class="o">=</span><span class="s">1</span>
+<a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a>
+<a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a><span class="c1">; Joint-to-sensor mapping (section name = POSITIONING_SECTION:URDF_JOINT_NAME)</span>
+<a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a><span class="k">[POSITIONING_ENIP_CH1:141497_Saeule-v1_Schwenken-Ausleger]</span>
+<a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a><span class="na">DEVICE</span><span class="o">=</span><span class="s">IOLINK_MASTER</span>
+<a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a><span class="na">PORT</span><span class="o">=</span><span class="s">1</span>
+<a id="__codelineno-10-29" name="__codelineno-10-29" href="#__codelineno-10-29"></a>
+<a id="__codelineno-10-30" name="__codelineno-10-30" href="#__codelineno-10-30"></a><span class="k">[POSITIONING_ENIP_CH1:141497_Schwenkarm-v1_Y-Hub-Ausleger]</span>
+<a id="__codelineno-10-31" name="__codelineno-10-31" href="#__codelineno-10-31"></a><span class="na">DEVICE</span><span class="o">=</span><span class="s">IOLINK_MASTER</span>
+<a id="__codelineno-10-32" name="__codelineno-10-32" href="#__codelineno-10-32"></a><span class="na">PORT</span><span class="o">=</span><span class="s">2</span>
+<a id="__codelineno-10-33" name="__codelineno-10-33" href="#__codelineno-10-33"></a><span class="na">SCALE</span><span class="o">=</span><span class="s">-1</span>
+<a id="__codelineno-10-34" name="__codelineno-10-34" href="#__codelineno-10-34"></a>
+<a id="__codelineno-10-35" name="__codelineno-10-35" href="#__codelineno-10-35"></a><span class="k">[POSITIONING_ENIP_CH1:141497_Hubachse-v1_schwenken_Adaption]</span>
+<a id="__codelineno-10-36" name="__codelineno-10-36" href="#__codelineno-10-36"></a><span class="na">DEVICE</span><span class="o">=</span><span class="s">IOLINK_MASTER</span>
+<a id="__codelineno-10-37" name="__codelineno-10-37" href="#__codelineno-10-37"></a><span class="na">PORT</span><span class="o">=</span><span class="s">3</span>
+<a id="__codelineno-10-38" name="__codelineno-10-38" href="#__codelineno-10-38"></a><span class="na">SCALE</span><span class="o">=</span><span class="s">-1</span>
+<a id="__codelineno-10-39" name="__codelineno-10-39" href="#__codelineno-10-39"></a>
+<a id="__codelineno-10-40" name="__codelineno-10-40" href="#__codelineno-10-40"></a><span class="k">[POSITIONING_ENIP_CH1:141497_hl-v1_Z-Hub-Geraet]</span>
+<a id="__codelineno-10-41" name="__codelineno-10-41" href="#__codelineno-10-41"></a><span class="na">DEVICE</span><span class="o">=</span><span class="s">IOLINK_MASTER</span>
+<a id="__codelineno-10-42" name="__codelineno-10-42" href="#__codelineno-10-42"></a><span class="na">PORT</span><span class="o">=</span><span class="s">4</span>
+<a id="__codelineno-10-43" name="__codelineno-10-43" href="#__codelineno-10-43"></a>
+<a id="__codelineno-10-44" name="__codelineno-10-44" href="#__codelineno-10-44"></a><span class="c1">; Ethernet/IP fieldbus</span>
+<a id="__codelineno-10-45" name="__codelineno-10-45" href="#__codelineno-10-45"></a><span class="k">[STATION_IO_ENIP]</span>
+<a id="__codelineno-10-46" name="__codelineno-10-46" href="#__codelineno-10-46"></a><span class="na">IOLINK_MASTER</span><span class="o">=</span><span class="s">192.168.100.150,MURR_IMPACT67_PROE</span>
+<a id="__codelineno-10-47" name="__codelineno-10-47" href="#__codelineno-10-47"></a><span class="na">DEBUG</span><span class="o">=</span><span class="s">0</span>
+<a id="__codelineno-10-48" name="__codelineno-10-48" href="#__codelineno-10-48"></a>
+<a id="__codelineno-10-49" name="__codelineno-10-49" href="#__codelineno-10-49"></a><span class="k">[IOLINK_MASTER]</span>
+<a id="__codelineno-10-50" name="__codelineno-10-50" href="#__codelineno-10-50"></a><span class="na">PORT1</span><span class="o">=</span><span class="s">TR_CMV582M-00028</span>
+<a id="__codelineno-10-51" name="__codelineno-10-51" href="#__codelineno-10-51"></a><span class="na">PORT2</span><span class="o">=</span><span class="s">Wenglor_P1PY101</span>
+<a id="__codelineno-10-52" name="__codelineno-10-52" href="#__codelineno-10-52"></a><span class="na">PORT3</span><span class="o">=</span><span class="s">TR_CMV582M-00028</span>
+<a id="__codelineno-10-53" name="__codelineno-10-53" href="#__codelineno-10-53"></a><span class="na">PORT4</span><span class="o">=</span><span class="s">Wenglor_P1PY101</span>
+<a id="__codelineno-10-54" name="__codelineno-10-54" href="#__codelineno-10-54"></a>
+<a id="__codelineno-10-55" name="__codelineno-10-55" href="#__codelineno-10-55"></a><span class="c1">; Webserver (required for sidepanel and URDF viewer)</span>
+<a id="__codelineno-10-56" name="__codelineno-10-56" href="#__codelineno-10-56"></a><span class="k">[WebServer]</span>
+<a id="__codelineno-10-57" name="__codelineno-10-57" href="#__codelineno-10-57"></a><span class="na">URL</span><span class="o">=</span><span class="s">http://127.0.0.1:60000/</span>
+<a id="__codelineno-10-58" name="__codelineno-10-58" href="#__codelineno-10-58"></a><span class="na">RootFolder</span><span class="o">=</span><span class="s">../shared/webroot</span>
+<a id="__codelineno-10-59" name="__codelineno-10-59" href="#__codelineno-10-59"></a>
+<a id="__codelineno-10-60" name="__codelineno-10-60" href="#__codelineno-10-60"></a><span class="k">[SidePanel]</span>
+<a id="__codelineno-10-61" name="__codelineno-10-61" href="#__codelineno-10-61"></a><span class="na">URL</span><span class="o">=</span><span class="s">local://sidepanel.html</span>
+<a id="__codelineno-10-62" name="__codelineno-10-62" href="#__codelineno-10-62"></a><span class="na">Key</span><span class="o">=</span><span class="s">112</span>
+<a id="__codelineno-10-63" name="__codelineno-10-63" href="#__codelineno-10-63"></a><span class="na">Width</span><span class="o">=</span><span class="s">24</span>
+</code></pre></div>
+<h2 id="troubleshooting"><a class="toclink" href="#troubleshooting">Troubleshooting</a></h2>
+<h3 id="sensor-issues"><a class="toclink" href="#sensor-issues">Sensor issues</a></h3>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Cause</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"No position info available"</td>
+<td>IO-Link master not connected</td>
+<td>Check Ethernet cable and IP in <code>[STATION_IO_ENIP]</code></td>
+</tr>
+<tr>
+<td>Joint stuck at default value</td>
+<td>Missing joint mapping section</td>
+<td>Add <code>[POSITIONING_SECTION:joint_name]</code> to <code>station.ini</code></td>
+</tr>
+<tr>
+<td>Position jumps or oscillates</td>
+<td>Incorrect <code>SCALE</code></td>
+<td>Verify sensor mounting direction; use <code>SCALE=-1</code> to invert</td>
+</tr>
+<tr>
+<td>Constant position offset</td>
+<td>Wrong <code>OFFSET</code> value</td>
+<td>Measure at a known reference point and adjust <code>OFFSET</code></td>
+</tr>
+<tr>
+<td>Sensor returns no data</td>
+<td>Object out of range (Wenglor)</td>
+<td>Check that workpiece is within sensor measurement range</td>
+</tr>
+</tbody>
+</table>
+<h3 id="urdf--fk-issues"><a class="toclink" href="#urdf--fk-issues">URDF / FK issues</a></h3>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Cause</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"Error loading URDF file"</td>
+<td>File not found or invalid XML</td>
+<td>Verify <code>KINEMATIC_FILE</code> path is relative to the project folder</td>
+</tr>
+<tr>
+<td>"Could not determine end-effector"</td>
+<td>No terminal link in URDF</td>
+<td>Set <code>KINEMATIC_END_EFFECTOR</code> explicitly</td>
+</tr>
+<tr>
+<td>Position scaled incorrectly</td>
+<td>Wrong mesh <code>scale</code> in URDF</td>
+<td>Ensure <code>scale="0.001 0.001 0.001"</code> if CAD is in mm</td>
+</tr>
+<tr>
+<td>Joint starts at unexpected value</td>
+<td>Default clamped to URDF limits</td>
+<td>Expected for joints where <code>lower &gt; 0</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="configuration-errors"><a class="toclink" href="#configuration-errors">Configuration errors</a></h3>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Cause</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"Positioning without cyclic enable check"</td>
+<td><code>CHECK_EXT_COND</code> not set</td>
+<td>Add <code>CHANNEL_xx_CHECK_EXT_COND=1</code> to <code>[OPENPROTO]</code></td>
+</tr>
+<tr>
+<td>"unknown/missing DRIVER"</td>
+<td>Typo in <code>DRIVER=</code> value</td>
+<td>Must be exactly <code>ROBOT</code></td>
+</tr>
+<tr>
+<td>"No IO-Link joints mapped"</td>
+<td>No sensor sections defined</td>
+<td>Add at least one <code>[POSITIONING_SECTION:joint_name]</code> section</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

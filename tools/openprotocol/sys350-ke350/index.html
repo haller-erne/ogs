@@ -1526,6 +1526,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../positioning/positioning-robot-urdf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    URDF Robot FK Positioning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3128,29 +3156,35 @@ system with OGS, for general information about the OGS OpenProtocol configuratio
 </figure>
 <h3 id="plc-signal-assignment-for-openprotocol"><a class="toclink" href="#plc-signal-assignment-for-openprotocol">PLC signal assignment for OpenProtocol</a></h3>
 <p>The PLC signals OGS uses to control the tool are as follows:</p>
-<div class="span-table-wrapper">
-<table class="span-table">
-<tbody><tr>
-<td>Inputs</td>
-<td></td>
-<td>Signal</td>
-<td>Assignment</td>
-<td>Comments</td>
-</tr>
+<p>::spantable::</p>
+<table>
+<thead>
 <tr>
-<td colspan="2">OP0.1-OP0.7</td>
+<th>Inputs</th>
+<th></th>
+<th>Signal</th>
+<th>Assignment</th>
+<th>Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OP0.1-OP0.7 @span</td>
+<td></td>
 <td>FO 1 Seq0-7</td>
 <td>Mandatory</td>
 <td>Application number, <em>must</em> be assigned</td>
 </tr>
 <tr>
-<td colspan="2">OP1.0</td>
+<td>OP1.0 @span</td>
+<td></td>
 <td>FO 1 Enabled</td>
 <td>Optional</td>
 <td>True, if the application was enabled by OGS, typically connected to the yellow LED on the tool handle (use internal signal routing <code>KE AppIn 0</code> → <code>B1:KE AppOut 0</code> for IM24V output)</td>
 </tr>
 <tr>
-<td colspan="2">OP1.1-3.0</td>
+<td>OP1.1-3.0 @span</td>
+<td></td>
 <td>Custom I/O</td>
 <td>See below</td>
 <td>Signals controlled by OGS</td>
@@ -3177,43 +3211,52 @@ system with OGS, for general information about the OGS OpenProtocol configuratio
 <td></td>
 </tr>
 <tr>
-<td colspan="2">OP3.1-5.0</td>
+<td>OP3.1-5.0 @span</td>
+<td></td>
 <td>(unused)</td>
 <td></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2">OP5.1</td>
+<td>OP5.1 @span</td>
+<td></td>
 <td>FO 1 Disable</td>
 <td>Mandatory</td>
 <td>This signal enables/disables the tool</td>
 </tr>
 <tr>
-<td colspan="2">OP5.2-5.7</td>
+<td>OP5.2-5.7 @span</td>
+<td></td>
 <td>(unused)</td>
 <td></td>
 <td></td>
 </tr>
-</tbody></table>
-</div>
+</tbody>
+</table>
+<p>::end-spantable::</p>
 <p>The PLC signals OGS receives from the tool are as follows:</p>
-<div class="span-table-wrapper">
-<table class="span-table">
-<tbody><tr>
-<td>Outputs</td>
-<td></td>
-<td>Signal</td>
-<td>Assignment</td>
-<td>Comments</td>
-</tr>
+<p>::spantable::</p>
+<table>
+<thead>
 <tr>
-<td colspan="2">OP0.1-OP0.7</td>
+<th>Outputs</th>
+<th></th>
+<th>Signal</th>
+<th>Assignment</th>
+<th>Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OP0.1-OP0.7 @span</td>
+<td></td>
 <td>(unused)</td>
 <td></td>
 <td>Not used for KE application mode</td>
 </tr>
 <tr>
-<td colspan="2">OP1.0-2.7</td>
+<td>OP1.0-2.7 @span</td>
+<td></td>
 <td>Custom I/O</td>
 <td>See below</td>
 <td>Signals sent to OGS</td>
@@ -3247,13 +3290,15 @@ system with OGS, for general information about the OGS OpenProtocol configuratio
 <td></td>
 </tr>
 <tr>
-<td colspan="2">OP3.0-5.7</td>
+<td>OP3.0-5.7 @span</td>
+<td></td>
 <td>(unused)</td>
 <td></td>
 <td></td>
 </tr>
-</tbody></table>
-</div>
+</tbody>
+</table>
+<p>::end-spantable::</p>
 <p>The following screenshot shows a typical PLC assignment table setup for the OpenProtocol signals:</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/ke350-plc-table-op.png" data-desc-position="bottom"><img alt="PLC assignment table OpenProtocol" src="../resources/ke350-plc-table-op.png"></a></p>
 <p>Please note, that <code>Input OP1.0</code> (FO 1 Enabled) is connected to the <code>KE AppIn 0</code> signal and the <code>Output OP1.0</code> (CCWSel) to the <code>KE AppOut 1</code> signal. These are then bridged (<code>KE AppIn X</code> and <code>KE AppOut X</code> are internally bridged) to the IM24V I/O-Card in slot B1:</p>
@@ -3332,56 +3377,63 @@ fastening operation.</p>
 </div>
 <p>If e.g. 3 times the dual-spindle application from the screenshot above shall be used, then the following six tasks can be 
 configured:</p>
-<div class="span-table-wrapper">
-<table class="span-table">
-<tbody><tr>
-<td>Application start</td>
-<td>OGS Task</td>
-<td>appl_start</td>
-<td>Group</td>
-<td>Sequence</td>
-</tr>
+<p>::spantable::</p>
+<table>
+<thead>
 <tr>
-<td rowspan="2">FO start #1</td>
+<th>Application start</th>
+<th>OGS Task</th>
+<th>appl_start</th>
+<th>Group</th>
+<th>Sequence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FO start #1 @span</td>
 <td>S1</td>
 <td>GRP1_A1</td>
 <td>GRP1_A</td>
 <td>1</td>
 </tr>
 <tr>
+<td></td>
 <td>S2</td>
 <td>GRP1_A2</td>
 <td></td>
 <td>2</td>
 </tr>
 <tr>
-<td rowspan="2">FO start #2</td>
+<td>FO start #2 @span</td>
 <td>S3</td>
 <td>GRP1_B1</td>
 <td>GRP1_B</td>
 <td>1</td>
 </tr>
 <tr>
+<td></td>
 <td>S4</td>
 <td>GRP1_B2</td>
 <td></td>
 <td>2</td>
 </tr>
 <tr>
-<td rowspan="2">FO start #3</td>
+<td>FO start #3 @span</td>
 <td>S5</td>
 <td>GRP1_C1</td>
 <td>GRP1_C</td>
 <td>1</td>
 </tr>
 <tr>
+<td></td>
 <td>S6</td>
 <td>GRP1_C2</td>
 <td></td>
 <td>2</td>
 </tr>
-</tbody></table>
-</div>
+</tbody>
+</table>
+<p>::end-spantable::</p>
 <h3 id="loosen-behaviour"><a class="toclink" href="#loosen-behaviour">Loosen behaviour</a></h3>
 <p>Even though there are more option (see the general discussion in <a href="../#loosen-modes">OpenProtocol Tools - Loosen modes</a>), the following section shows the common and recommended configurations.</p>
 <h4 id="ccwsel-used"><a class="toclink" href="#ccwsel-used">CCWSel used</a></h4>

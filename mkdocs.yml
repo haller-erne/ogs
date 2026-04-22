@@ -34,6 +34,7 @@ nav:
             - Overview: tools/positioning/README.md
             - ART SmartTrack/DTrack: tools/positioning/positioning-art-dtrack.md
             - ART Verpose: tools/positioning/positioning-art-verpose.md
+            - URDF Robot FK Positioning: tools/positioning/positioning-robot-urdf.md
     - Additional configuration:
         - Socket trays: tools/misc/socket-tray.md
         - Projector: tools/misc/projector.md
@@ -128,7 +129,7 @@ markdown_extensions:
   - pymdownx.blocks.caption
   - pymdownx.smartsymbols
   # see https://www.neoteroi.dev/mkdocs-plugins/spantable/
-  - neoteroi.spantable
+  # - neoteroi.spantable  # Not available on PyPI
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg

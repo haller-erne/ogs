@@ -30,7 +30,7 @@ heLuaTool.dll=1
 
 [LuaTool_Pick2Light]
 DRIVER=heLuaTool
-TYPE=LUA_FLOWLIGHT
+TYPE=pick2light_aioi
 IPADDR=controller_IPADDR
 IPPORT=controller_IPPORT
 ```

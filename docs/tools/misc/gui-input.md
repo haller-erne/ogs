@@ -35,12 +35,8 @@ heLuaTool.dll=1
 [LuaTool_GUI_Input]
 DRIVER=heLuaTool
 TYPE=gui_input
-Param1 = { "name": "Param 1 m2:", "type": 'float', "default": '250', "min": 'heightmin', "max": 'heightmax'}
-Param2 = { "name": "Param 2 m2:", "type": 'float', "default": '0', "min": 'widthmin', "max": 'widthmax'}
-Param3 = { "name": "Param 3 m2:", "type": 'int', "default": '0', "min": 'vmin', "max": 'vmax'}
-Param4 = { "name": "Param 4 m2:", "type": 'int', "default": '0', "min": 'v1min', "max": 'v1max'}
-Param5 = { "name": "Param 5 m2:", "type": 'float', "default": '300', "min": 'v2min', "max": 'v2max'}
-Param6 = { "name": "Param 6 m2:", "type": 'float', "default": '0', "min": 'v2min', "max": 'v2max'}
+Param1 = { "name": "Height:", "type": 'float', "default": '250', "min": 'heightmin', "max": 'heightmax'}
+Param2 = { "name": "Width:", "type": 'float', "default": '0', "min": 'widthmin', "max": 'widthmax'}
 ```
 
 The typical parameters are:
@@ -54,7 +50,9 @@ The typical parameters are:
 
 ## Editor Configuration
 
-- **Creating a Tool**: In the Tools section of the Editor, create a new tool with a name of your choice and assign it to the appropriate channel (ensure the channel number matches the one specified in the `station.ini` file). Next, under the Task & Action Properties section, create new properties for the minimum and maximum limits, and link these properties to the tool.
+- **Creating a Tool**: In the Tools section of the Editor, create a new tool with a name of your choice and assign it to the appropriate channel (ensure the channel number matches the one specified in the `station.ini` file). Next, under the Task & Action Properties section, create new properties for the minimum and maximum limits, along with the measurement `unit`, and link these properties to the tool.
+
+**⚠️ Important:** The property names must exactly match those specified in the `station.ini` file; otherwise, the limit checks will not function correctly.
 
 ![gui_input_job](resources/gui_input_tool.png)
 

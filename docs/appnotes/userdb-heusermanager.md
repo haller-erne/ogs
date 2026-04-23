@@ -82,24 +82,29 @@ In `station.ini` you can now use additional settings to define the database conn
 ; to a nonzero value, users will be loggerd off automatically.
 ; Note, that the autologon user will never be logged out automatically!
 autologoff=10
-; Defines a connection string (may be encrypted, see docs) to connect to the
-; heUserManager database for centralized login information.
-; If not defined or empty, then only local logon (password/rfid) is (by default)
-; available.
-;logonserver=Provider=SQLNCLI11.1;Persist Security Info=False;User ID=sys3xx; Password=sys3xx; Initial Catalog=heUserManager;Data Source=QUALITYR;
-; NOTE: you should encrypt the connection string or use active directory authentication (Trusted_Connection=yes) to avoid storing credentials in plain text!
+
+; Defines a connection string (may be encrypted, see docs) to connect to 
+; the heUserManager database for centralized login information.
+; If not defined or empty, then only local logon (password/rfid) is 
+; (by default) available.
+; NOTE: you should encrypt the connection string or use active directory
+;       authentication (Trusted_Connection=yes) to avoid storing
+;       credentials in plain text!
 logonserver=Provider=SQLOLEDB.1;Persist Security Info=False;User ID=sys3xx;Password=sys3xx;Initial Catalog=heUserManager01;Data Source=QUALITYR
-; Defines an additional user group parameter to check when querying the database
-; (only used, if logonserver is specified and the heUsermanager database is used). 
-; This allows mapping user to stations to provide more granular access.
+
+; Defines an additional user group parameter to check when querying the
+; database. 
 ; If not defined or empty, then additional group membership is not checked.
 logongroup=
-; Defines the application ID to use when querying the heUserManager database.
-; If not defined or empty, then use the default appid for heOGS.
+
+; Defines the application ID to use when querying the heUserManager
+; database. If not defined or empty, then use the default appid for heOGS.
 logonappid=heOGS-line1
-; Defines, if the user cannot log on, if he is already logged on at another station. 
-; This requires that the heUserManager database is used (i.e. logonserver is defined) 
-; and that the database has the DB_LOCK_GET, DB_LOCK_RELEASE and DB_LOCK_REQUEST procedures
+
+; Defines, if the user cannot log on, if he is already logged on at
+; another station. This requires that the heUserManager database is used
+; (i.e. logonserver is defined) and that the database has the DB_LOCK_GET,
+; DB_LOCK_RELEASE and DB_LOCK_REQUEST procedures
 logonlock=1
 
 ```

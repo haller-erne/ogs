@@ -4,12 +4,20 @@
 ---@brief ]]
 
 ---@class UserManagerDbInterface
----@field private connectionString string Database connection string (ADO format)
----@field private logonGroup string Additional group to check user membership for (for mapping specific user access to a class/group of stations)
----@field private logonAppid string App-ID to use when querying the database
----@field private lastLoginUpdate integer Timeout for login checks
+---@field connectionString string|nil Database connection string (ADO format)
+---@field logonGroup string Additional group to check user membership for (for mapping specific user access to a class/group of stations)
+---@field logonAppid string App-ID to use when querying the database
+---@field logonLock integer Lock setting for user logon
+---@field lastLoginUpdate integer Timeout for login checks
+---@field userinfo table Cache for user info data, indexed by user name
+
 local M = {
+	connectionString = nil,
+	logonGroup = '',
+	logonAppid = '',
+	logonLock = 1,
 	lastLoginUpdate = 0,
+	userinfo = {},	-- cache for user info data, indexed by user name
 }
 -- Module level documentation, see https://luals.github.io/wiki/annotations/
 ---@module 'dpapi'
@@ -22,18 +30,19 @@ M.GetStationName = function()
     if not M.StationName then
         local ini_tbl = ReadIniSection('GENERAL')
         M.StationName = param_as_str(ini_tbl.STATION_NAME)
-    end 
+    end
     return M.StationName
-end 
+end
 ------------------------------------------------------------
 
 ---Initialize the module
 ---@param connectionString? string Use the given encrypted or plaintext connectionstring. If nil, then load from station.ini (from section [USER] and parameter logonserver= ).
 ---@param logonGroup? string Use the given logon group name. If nil, then load from station.ini (from section [USER] and parameter logongroup= ).
 ---@param logonAppid? string Use the given appid for database queries name. If nil, then try to load from station.ini (or use the default 'OGS').
+---@param logonLock? number Use the given logon lock setting. If nil, then try to load from station.ini (or use the default 1).
 ---@return boolean | nil Ok If the database string is a valid string, then return true, else nil
 ---@return string | nil Errorstring If some error occurs, then return a descriptive text
-M.Init = function(connectionString, logonGroup, logonAppid)
+M.Init = function(connectionString, logonGroup, logonAppid, logonLock)
 
     M.GetStationName()
 	M.connectionString = nil
@@ -57,6 +66,13 @@ M.Init = function(connectionString, logonGroup, logonAppid)
 	else
 		M.logonAppid = 'heOGS'
 	end
+	local al = tonumber(logonLock or ReadIniValue('USER', 'logonlock')) or 1
+	if al == 1 then
+		M.logonLock = true
+	else
+		M.logonLock = false
+	end
+
 	-- Try to decrypt the connection string (it might be encrypted)
 	local dpapi = require('luadpapi')   -- load the DPAPI
 	local mime = require('mime')        -- load luasocket/mime (base64)
@@ -68,8 +84,8 @@ M.Init = function(connectionString, logonGroup, logonAppid)
 		XTRACE(2, "[USER] Error while decrypting 'logonserver' connection sting in INI file: "..param_as_str(err))
 	end
 	M.connectionString = cs
-	
-	
+
+
 	return true
 end
 
@@ -109,8 +125,11 @@ end
 
 -----------------------------------------------------------------------------
 ---(internal) send lock release to Database for current user
----@return string: ErrorMessage 
+---@return string|nil ErrorMessage or nil if no error
 M.LoginRelease = function (user_name)
+	if not M.logonLock then
+		return nil -- no error, as logon lock is disabled
+	end
     local Params = { USER_ID = user_name,  HOST_NAME = M.GetStationName() }
 	XTRACE(16, 'logoff user from db')
 	local tbl, err = luaOpenStoredProc(M.ConnectionString(), 'DB_LOCK_RELEASE', Params)
@@ -123,8 +142,11 @@ M.LoginRelease = function (user_name)
 end
 -----------------------------------------------------------------------------
 ---(internal) Check if user is already logged in on another station
----@return string: ErrorMessage 
-M.LoginLock = function (user_name)
+---@return string|nil ErrorMessage or nil if no error
+M.LoginLock = function(user_name)
+	if not M.logonLock then
+		return nil -- no error, as logon lock is disabled
+	end
     local error_msg = nil   -- no error
     local Params = {	USER_ID = user_name,  HOST_NAME = M.GetStationName() }
 	XTRACE(16, 'refresh user login in db')
@@ -132,21 +154,21 @@ M.LoginLock = function (user_name)
 	local tbl, err = luaOpenStoredProc(M.ConnectionString(), 'DB_LOCK_REQUEST', Params)
    	if err then
        	-- something went badly wrong (exception, e.g. database not connected, wrong connection string, ...)
-       	error_msg = 'DB_LOCK_REQUEST failed(UserID='.. param_as_str(user_name) ..'). Error:' ..param_as_str(err) 
+       	error_msg = 'DB_LOCK_REQUEST failed(UserID='.. param_as_str(user_name) ..'). Error:' ..param_as_str(err)
     else
     	if tbl and tbl[1] then
     		local result    = tbl[1].RESULT
-		    local message   = tbl[1].MESSAGE; 
+		    local message   = tbl[1].MESSAGE;
 		    if result ~= 1 then
-                error_msg = 'DB_LOCK_REQUEST failed(UserID='.. param_as_str(user_name) ..').'..param_as_str(message) 
+                error_msg = 'DB_LOCK_REQUEST failed(UserID='.. param_as_str(user_name) ..').'..param_as_str(message)
 		    end
-		else 
+		else
             error_msg = 'DB_LOCK_REQUEST: invalid return value(UserID='.. param_as_str(user_name) ..')'
-	    end    
-	end    
+	    end
+	end
     if error_msg then
         XTRACE(1, error_msg)
-    end    
+    end
     return error_msg
 end
 -----------------------------------------------------------------------------
@@ -228,7 +250,7 @@ M.GetUserByUserName = function(UserName)
 	if M.ConnectionString() == '' then
 		return nil, 'Error: no database connection string defined!'
 	end
-	M.ResetAlarm()
+	--M.ResetAlarm()
 	XTRACE(16, "Get user by name '".. UserName .."'. logon through database...")
 	local Params = {}
 	Params.shortname = param_as_str(UserName)
@@ -285,13 +307,15 @@ M.ValidateUserById = function(UserID)
 							UserRights = UserRights + tonumber(v.code)
 						end
 					end
+					local AuthResult = {
+						LoginAllowed = true,
+						MissinOrOutdatedCount = MissingOrOutdatedCount,
+						UserRights = UserRights
+					}
+					return AuthResult
+				else
+					M.SetAlarm(-1, 'No user rights found!')
 				end
-				local AuthResult = {
-					LoginAllowed = true,
-					MissinOrOutdatedCount = MissingOrOutdatedCount,
-					UserRights = UserRights
-				}
-				return AuthResult
 			end
 		end
 		if MissingOrOutdatedCount > 0 then
@@ -325,7 +349,7 @@ M.NotifyUserLogonState = function(isLoggedOn, user_name)
 	end
 	if err then
         M.SetAlarm(-1, err)
-    end    
+    end
 end
 --------------------------------------------------------------------------------------------------------------
 
@@ -344,24 +368,24 @@ local db = M
 
 ----------------------------------------------------
 local function granted(UserRights, right)
-   
+
     local res = bit32.band(UserRights, right)
     return (res ~= 0)
-end 
+end
 ----------------------------------------------------
 function UserManager_HasDBRight(right)
 
     local loginResult = M.userinfo[UserManager.user]
-    if loginResult and loginResult.UserRights then 
-        if granted(loginResult.UserRights, right) then 
+    if loginResult and loginResult.UserRights then
+        if granted(loginResult.UserRights, right) then
             return 1
-        end    
+        end
         loginResult = M.userinfo[UserManager.master]
-        if loginResult and granted(loginResult.UserRights, right) then 
+        if loginResult and granted(loginResult.UserRights, right) then
             return 1
-        end   
-        return 0 
-    end    
+        end
+        return 0
+    end
 	return -1
 end
 ---------------------------------------------------------------------------------------
@@ -372,10 +396,10 @@ function UserManager_GetUserFromDByID(CardID)
     local err
     db.ResetAlarm()
     local loginResult = M.userinfo[user_name]
-    if not loginResult then 
+    if not loginResult then
     	loginResult, err = db.GetUserByCardID(CardID)
 		M.userinfo[loginResult.UserName] = loginResult
-    end    
+    end
 	if loginResult then
 		-- Found user!
 		err = db.LoginLock(loginResult.UserName)
@@ -394,7 +418,7 @@ function UserManager_GetUserDataFromDB(user_name)
     local err
     db.ResetAlarm()
     local loginResult = M.userinfo[user_name]
-    if not loginResult then 
+    if not loginResult then
         XTRACE(16, 'UserManager_GetUserDataFromDB: User: '.. user_name)
         if user_name == 'Autologon' then return nil end
 
@@ -409,7 +433,7 @@ function UserManager_GetUserDataFromDB(user_name)
 	    end
 	    loginResult, err = db.GetUserByUserName(user_name)
 		M.userinfo[user_name] = loginResult
-	end    
+	end
 	if loginResult then
 		-- Found user!
 		err = db.LoginLock(loginResult.UserName)

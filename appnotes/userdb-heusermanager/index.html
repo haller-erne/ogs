@@ -5,13 +5,9 @@
       
       
       
-        <link rel="canonical" href="https://haller-erne.github.io/ogs/appnotes/userdb/">
+        <link rel="canonical" href="https://haller-erne.github.io/ogs/appnotes/userdb-heusermanager/">
       
       
-        <link rel="prev" href="../databanking/">
-      
-      
-        <link rel="next" href="../toolgateway/">
       
       
         
@@ -22,7 +18,7 @@
     
     
       
-        <title>Central user administration - OGS Documentation</title>
+        <title>OGS using heUserManager - OGS Documentation</title>
       
     
     
@@ -81,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#enterprise-user-management" class="md-skip">
+        <a href="#ogs-using-heusermanager" class="md-skip">
           Skip to content
         </a>
       
@@ -117,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Central user administration
+              OGS using heUserManager
             
           </span>
         </div>
@@ -2209,20 +2205,18 @@
       
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked="">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7">
         
           
           <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
@@ -2243,7 +2237,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2314,37 +2308,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Central user administration
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../userdb/" class="md-nav__link">
         
   
   
@@ -2360,37 +2327,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-      
-        <li class="md-nav__item">
-  <a href="#standard-user-management" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Standard user management
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2735,10 +2671,71 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#standard-user-management" class="md-nav__link">
+  <a href="#feature-overview" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Standard user management
+        Feature overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-heusermanager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installing heUserManager
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-the-ogs-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create the OGS application
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ogs-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OGS setup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notes-and-hints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notes and hints
       
     </span>
   </a>
@@ -2762,16 +2759,103 @@
 
 
 
-<h1 id="enterprise-user-management"><a class="toclink" href="#enterprise-user-management">Enterprise user management</a></h1>
-<p>OGS provides a flexible user and rights management. By implementing the user management LUA interface functions,
-LUA can control all aspects of user and rights management. </p>
-<p>Currently the following user management modules are available:</p>
+<h1 id="ogs-using-heusermanager"><a class="toclink" href="#ogs-using-heusermanager">OGS using heUserManager</a></h1>
+<p>For centralized user, group, role and rights management for OGS, heUserManagers central SQL database can be used.</p>
+<p>This documents describes the steps needed for setting up the OGS end of things and explains the default behaviour and configuration options available.</p>
+<h2 id="feature-overview"><a class="toclink" href="#feature-overview">Feature overview</a></h2>
+<p>Using heUserManager allows centrally managing users and their rights. heUserManager uses the following entites to allow OGS to determine a users rights for the application:</p>
 <ul>
-<li><a href="#standard-user-management">Standard</a>: Uses predefined usernames and passwords (optionally RFID tag/card numbers) defined in station.ini. Each user can be assigned the <code>operator</code> or the <code>supervisor</code> role, rights are defined through the global LUA table <code>user_rights</code> (the <code>supervisor</code> rols always has all rights, the <code>operator</code> role has only the rights assigned through the <code>user_rights</code> table). Note, that this is not "enterprise", but often good enough for small setups.</li>
-<li><a href="../userdb-activedirectory/">Active Directory authentication and security group mapping</a>: Authenticates the user through active directory and reads the users group membership from active directory. Also uses the <code>operator</code> or the <code>supervisor</code> roles and defines the rights through the global <code>user_rights</code> LUA table, but maps them to two distinct active directory groups (defined using their SID in station.ini). If a user is no member of any of these groups, he cannot use OGS. Login to OGS is either through the currently logged on Windows account or by entering the active directory username and password.</li>
-<li><a href="../userdb-heusermanager/">heUserManager centralized rights and role management</a>: Authenticates the user through username/password or RFID card/tag ID define in a central SQL server database. There is a GUI utility (heUserManager.exe) available to define rights and roles as well as groups and users. This provides high flexibility, e.g. multiple user levels and mutliple user rights depending on different variables (e.g. different user rights for the same user on different stations/lines).</li>
+<li>Rights: A right is some specific feature in an application, which can be enabled or disabled according to what a user is allowed to do. OGS has a fixed set of rights, which are added to the database (see below), so heUserManager can show verbose names.</li>
+<li>Roles: A role defines a set of rights of a single application. Each role has a distinct name and can be assigned to a user. </li>
+<li>Application: An application defines roles, which consist of a set of rights. Note, that OGS allows to specify the "application name" in <code>station.ini</code>, so different stations can use different heUserManager applications for user management. </li>
+<li>User: a user and his properties (like name, RFID card/tag, password). A user can have a number of roles assigned to him. The overall set of roles defines the rights of a user to access the applications.</li>
 </ul>
-<h2 id="standard-user-management"><a class="toclink" href="#standard-user-management">Standard user management</a></h2>
+<h2 id="prerequisites"><a class="toclink" href="#prerequisites">Prerequisites</a></h2>
+<p>The main task needed before OGS can use the cnetral heUserManager database for authentication are:</p>
+<ul>
+<li>Installing heUserManager database schema</li>
+<li>Installing heUserManager</li>
+<li>Adding an OGS application, rights and define roles</li>
+</ul>
+<h3 id="installing-heusermanager"><a class="toclink" href="#installing-heusermanager">Installing heUserManager</a></h3>
+<p>Download the latest version of heUserManager from <a href="https://files.haller-erne.de/archive?p=%2FSoftware%2FheUserManager">https://files.haller-erne.de/archive</a>. This mainl includes the following:</p>
+<ul>
+<li><code>heUserManager.exe</code>: The user editor application. See the included pdf file for howto use it</li>
+<li><code>heUserManager*.pdf</code>: The editor manual</li>
+<li><code>heUserManager-Vx.y-schema.sql</code>: The database schema needed on the SQL server database</li>
+<li>
+<p><code>.\OGS</code>: Additional files for use with OGS:</p>
+<ul>
+<li><code>OGS Permissions Table.sql</code>: SQL script to add OGS permissions (see below)</li>
+<li><code>station [USER].ini</code>: sample ini file you can use for copy&amp;paste into your OGS <code>station.ini</code> configuration</li>
+<li><code>*.lua</code>: the LUA files needed by OGS for using the heUserManager database</li>
+</ul>
+</li>
+</ul>
+<h3 id="create-the-ogs-application"><a class="toclink" href="#create-the-ogs-application">Create the OGS application</a></h3>
+<p>After the database schema is installed, running heUserManager for the first time will add a superuser for the heUserManager application. For use with OGS it is recommended, that you create additional applications to define the OGS rights (add multiple applications, if you want to have different rights for the same user in different stations/lines/groups).</p>
+<p>Although you can manually (using heUserManager) create the applications and rights, the following is faster:</p>
+<ol>
+<li>Use heUserManager to create new applications (e.g. name it <code>OGS</code>, <code>OGS-Line1</code>, ...). Make a note of the application_ids generated by heUserManager. Then close heUserManager.</li>
+<li>Open the <code>OGS Permissions Table.sql</code> file downloaded above and modify the application_id column to match your new OGS application name(s). Run the insert commands to add the list of OGS rights to the OGS application definition.</li>
+<li>Open heUserManager again to create your roles (got to <code>Setup applications --&gt; Roles</code> tab). Note that you can create as many roles as you like for each application - roles only group a set of rights and can be assigned to a user later.</li>
+</ol>
+<p>Here is a sample how this should look:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/userdb-heusermanager-roles.png" data-desc-position="bottom"><img alt="alt text" src="../resources/userdb-heusermanager-roles.png"></a></p>
+<h2 id="ogs-setup"><a class="toclink" href="#ogs-setup">OGS setup</a></h2>
+<p>To setup OGS, copy the two LUA files into your projects folder:</p>
+<ul>
+<li><code>user_manager_db.lua</code>: the high level LUA interface to be added to the <code>requires</code> table in <code>config.lua</code> </li>
+<li><code>user_db_heUserManager.lua</code>: the low-level SQL database access for user management</li>
+</ul>
+<p>The <code>config.lua</code> file in you project should replace the <code>user_manager.lua</code> with the <code>user_manager_db.lua</code> as follows:</p>
+<div class="highlight"><span class="filename">config.lua</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">-- add the shared folder (..\shared)</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nv">OGS</span><span class="p">.</span><span class="py">Project</span><span class="p">.</span><span class="nf">AddPath</span><span class="p">(</span><span class="s1">'../shared'</span><span class="p">)</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nv">requires</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="s2">"barcode"</span><span class="p">,</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="hll"><span class="w">    </span><span class="s2">"user_manager_db"</span><span class="p">,</span><span class="w">           </span><span class="c1">-- (1)!</span>
+</span><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="c1">-- possibly more...</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="p">}</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="nv">current_project</span><span class="p">.</span><span class="py">logo_file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'../shared/logo-rexroth.png'</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="nv">current_project</span><span class="p">.</span><span class="py">billboard</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'billboard.html'</span>
+</code></pre></div>
+<ol>
+<li>Add this line to include the <code>user_manager_db.lua</code> heUserManager interface in the project.</li>
+</ol>
+<p>In <code>station.ini</code> you can now use additional settings to define the database connection and logon behaviour. Update your <code>[USER]</code> section is <code>station.ini</code> as follows:</p>
+<div class="highlight"><span class="filename">station.ini</span><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">[USER]</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1">; Define, if users should be logged out automatically after a configured </span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">; inactivity time (given in minutes). If autologoff is defined and set </span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1">; to a nonzero value, users will be loggerd off automatically.</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="c1">; Note, that the autologon user will never be logged out automatically!</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="na">autologoff</span><span class="o">=</span><span class="s">10</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="c1">; Defines a connection string (may be encrypted, see docs) to connect to the</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="c1">; heUserManager database for centralized login information.</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1">; If not defined or empty, then only local logon (password/rfid) is (by default)</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="c1">; available.</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="c1">;logonserver=Provider=SQLNCLI11.1;Persist Security Info=False;User ID=sys3xx; Password=sys3xx; Initial Catalog=heUserManager;Data Source=QUALITYR;</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="c1">; NOTE: you should encrypt the connection string or use active directory authentication (Trusted_Connection=yes) to avoid storing credentials in plain text!</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="na">logonserver</span><span class="o">=</span><span class="s">Provider=SQLOLEDB.1</span><span class="c1">;Persist Security Info=False;User ID=sys3xx;Password=sys3xx;Initial Catalog=heUserManager01;Data Source=QUALITYR</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="c1">; Defines an additional user group parameter to check when querying the database</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="c1">; (only used, if logonserver is specified and the heUsermanager database is used). </span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="c1">; This allows mapping user to stations to provide more granular access.</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="c1">; If not defined or empty, then additional group membership is not checked.</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="na">logongroup</span><span class="o">=</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="c1">; Defines the application ID to use when querying the heUserManager database.</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="c1">; If not defined or empty, then use the default appid for heOGS.</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="na">logonappid</span><span class="o">=</span><span class="s">heOGS-line1</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="c1">; Defines, if the user cannot log on, if he is already logged on at another station. </span>
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="c1">; This requires that the heUserManager database is used (i.e. logonserver is defined) </span>
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="c1">; and that the database has the DB_LOCK_GET, DB_LOCK_RELEASE and DB_LOCK_REQUEST procedures</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="na">logonlock</span><span class="o">=</span><span class="s">1</span>
+</code></pre></div>
+<h2 id="notes-and-hints"><a class="toclink" href="#notes-and-hints">Notes and hints</a></h2>
+<ul>
+<li>Fallback behaviour if no roles are assigned: uses the OGS level set in the users property.</li>
+<li>You can still use the <code>user=password,level,cardid</code> in the <code>[USER]</code> section for static accounts (but this is not recommended!).</li>
+</ul>
 
 
 

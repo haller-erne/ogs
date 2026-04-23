@@ -5,13 +5,9 @@
       
       
       
-        <link rel="canonical" href="https://haller-erne.github.io/ogs/appnotes/userdb/">
+        <link rel="canonical" href="https://haller-erne.github.io/ogs/appnotes/userdb-activedirectory/">
       
       
-        <link rel="prev" href="../databanking/">
-      
-      
-        <link rel="next" href="../toolgateway/">
       
       
         
@@ -22,7 +18,7 @@
     
     
       
-        <title>Central user administration - OGS Documentation</title>
+        <title>Userdb activedirectory - OGS Documentation</title>
       
     
     
@@ -80,11 +76,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#enterprise-user-management" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -117,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Central user administration
+              Userdb activedirectory
             
           </span>
         </div>
@@ -2209,20 +2200,18 @@
       
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked="">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7">
         
           
           <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
@@ -2243,7 +2232,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2314,37 +2303,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Central user administration
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../userdb/" class="md-nav__link">
         
   
   
@@ -2360,37 +2322,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-      
-        <li class="md-nav__item">
-  <a href="#standard-user-management" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Standard user management
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2725,27 +2656,6 @@
   
   
   
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-      
-        <li class="md-nav__item">
-  <a href="#standard-user-management" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Standard user management
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
   
 </nav>
                   </div>
@@ -2762,16 +2672,9 @@
 
 
 
-<h1 id="enterprise-user-management"><a class="toclink" href="#enterprise-user-management">Enterprise user management</a></h1>
-<p>OGS provides a flexible user and rights management. By implementing the user management LUA interface functions,
-LUA can control all aspects of user and rights management. </p>
-<p>Currently the following user management modules are available:</p>
-<ul>
-<li><a href="#standard-user-management">Standard</a>: Uses predefined usernames and passwords (optionally RFID tag/card numbers) defined in station.ini. Each user can be assigned the <code>operator</code> or the <code>supervisor</code> role, rights are defined through the global LUA table <code>user_rights</code> (the <code>supervisor</code> rols always has all rights, the <code>operator</code> role has only the rights assigned through the <code>user_rights</code> table). Note, that this is not "enterprise", but often good enough for small setups.</li>
-<li><a href="../userdb-activedirectory/">Active Directory authentication and security group mapping</a>: Authenticates the user through active directory and reads the users group membership from active directory. Also uses the <code>operator</code> or the <code>supervisor</code> roles and defines the rights through the global <code>user_rights</code> LUA table, but maps them to two distinct active directory groups (defined using their SID in station.ini). If a user is no member of any of these groups, he cannot use OGS. Login to OGS is either through the currently logged on Windows account or by entering the active directory username and password.</li>
-<li><a href="../userdb-heusermanager/">heUserManager centralized rights and role management</a>: Authenticates the user through username/password or RFID card/tag ID define in a central SQL server database. There is a GUI utility (heUserManager.exe) available to define rights and roles as well as groups and users. This provides high flexibility, e.g. multiple user levels and mutliple user rights depending on different variables (e.g. different user rights for the same user on different stations/lines).</li>
-</ul>
-<h2 id="standard-user-management"><a class="toclink" href="#standard-user-management">Standard user management</a></h2>
+  <h1>Userdb activedirectory</h1>
+
+
 
 
 

@@ -24,6 +24,7 @@ OGS supports the following systems for tool and position tracking:
 - [ART Verpose](https://ar-tracking.com/en/product-program/products-connection-software-verpose) tool mounted camera for object detection and identification. Primarily used for (but not limited to) locating bolts on a part.
 - [Sarissa local positioning system](https://www.sarissa.de/en/solutions/local-positioning-system) ultrasonic RTLS positioning system. Uses active tags mounted on a tool (or glove) for sending out ultrasonic waves, which are triangulated using microphones mounted in the station.
 - [Nexonar RTLS](https://www.nexonar.com/en/solutions/real-time-location-system) realtime precision infrared camera based tool tracking with active tags sending our infrared light. Provides a scalable setup starting with a single camera and can be extended to multi-camera setups to cover a larger working range. 
+- URDF-based forward kinematics positioning for mechanically constrained handling systems (crane arms, column-boom manipulators, linear units) using IO-Link sensors (rotary encoders, distance sensors) connected over Ethernet/IP. The kinematic model is defined in standard URDF format and includes an integrated browser-based 3D viewer.
 - Linear and rotational sensors connected over Fieldbus (Ethernet/IP, Modbus/TCP, IO-Link) for tool mounts, e.g. [Jäger Handling HandyFlex](https://www.jaeger-handling.de/handy-flex?lang=en) (see the availables [sensors](https://www.jaeger-handling.de/carbo-arm/equipment-options-carbo-arm/positions-transducer-swivel-and-telescopic-axis?lang=en)) or other tool arms.
 - Simple digital sensors connected over Fieldbus (Ethernet/IP, Modbus/TCP, IO-Link) for detecting, if the tool or the part is in the correct position. This can also be used to connect other positioning systems with digital I/O signals (e.g. [Jäger HandyTrack 200](https://www.jaeger-handling.de/carbo-arm/equipment-options-carbo-arm/positions-transducer-swivel-and-telescopic-axis/handy-track-200?lang=en)) or the [Sarissa PositionBox](https://www.sarissa.de/loesungen/positionbox).
 
@@ -157,6 +158,7 @@ DRIVER=ART
 Currently, the following drivers are shipped with the OGS installer:
 
 - `ART`: Driver for the [AR-Tracking SmartTrack3 realtime tracking system](https://ar-tracking.com/en/product-program/smarttrack3), see [ART SmartTrack](./positioning-art-dtrack.md) for details.
+- `ROBOT`: Driver for URDF-based forward kinematics positioning using IO-Link sensors (rotary encoders, distance sensors) connected over Ethernet/IP. Computes the tool-tip position from the kinematic chain defined in a standard URDF file. Includes an integrated 3D URDF viewer. See [URDF Robot FK Positioning](./positioning-robot-urdf.md) for details.
 - `IO`: Driver for the rotation + distance type systems (like the Jäger HandyFlex)  with optional support for tilt. Note that this driver requires providing some LUA glue code to read the sensors values from e.g. a field bus and forwarding the raw
 sensor values to the driver by calling `UpdatePos_RotIncLenInc()` or `UpdatePos_RotIncLenAbs()`. The driver then handles coordinate transforms, teaching and tolerance calculations internally. See [IO positioning](./positioning-io.md) for details.
 - `DIGITAL`: Minimal positioning driver, which only uses a single "Inpos" signal. Note that this driver requires providing some LUA glue code to generate the "Inpos" signal (typically by reading I/O values from e.g. a field bus) and thencalling the drivers `UpdatePos_InPos()` function. This can be used to connect exisiting positioning systems or implement own logic based on digital input combinations. See [digital positioning](./positioning-digital.md) for details.
@@ -165,6 +167,14 @@ Other positioning systems mentioned above (like [ART Verpose](https://ar-trackin
 
 - [ART Verpose](./positioning-art-verpose.md)
 - [Sarissa PositionBox](./positioning-sarissa-digital.md)
+
+### Part referencing
+
+When a workpiece is not always placed in the exact same position, the taught bolt coordinates will not match the actual part location. **Part referencing** compensates for this by capturing known positions on the actual part and computing a rigid-body transform to correct all subsequent bolt positions automatically.
+
+Referencing is configured per job via the `reference_type` property in the workflow editor (heOpCfg) and works with both the `ROBOT` and `ART` drivers.
+
+See [Part Referencing](./positioning-referencing.md) for the full configuration and usage guide.
 
 ### Customization
 

@@ -21,6 +21,10 @@ The ROBOT positioning driver uses **forward kinematics** (FK) computed from stan
 
 If the system is correctly set up (see [Initial system setup](#initial-system-setup) below), you can specify which tasks are position-controlled in the workflow editor and teach-in positions and tolerances on the station. For details on the general positioning workflow (basic functionality, workflow configuration, teach-in, sidepanel, tolerance bodies), see the [OGS positioning overview](README.md).
 
+!!! info
+
+    A task is marked as positioning-enabled by setting the **PS** (Position Sensor) column to a non-zero value in the workflow editor (heOpCfg). Tasks with PS=0 are not tracked. See [workflow configuration](README.md#workflow-configuration) for details.
+
 ### How the ROBOT driver works
 
 The ROBOT driver operates entirely through computation — no external camera or optical system is needed:
@@ -115,9 +119,12 @@ requires = {
 current_project.billboard = 'startpage_urdf.html'
 ```
 
-1. Core positioning — automatically loads `positioning_ROBOT` based on `DRIVER=ROBOT` in `station.ini`
-2. Optional: browser-based 3D URDF robot viewer
+1. Core positioning — automatically loads the ROBOT driver based on `DRIVER=ROBOT` in `station.ini`
+2. Optional: browser-based 3D URDF robot viewer on the start page
 3. Station I/O — reads sensor data via Ethernet/IP and maps to FK joints
+
+<!-- TODO: screenshot — OGS start page with the URDF 3D viewer loaded, showing the robot model in the billboard area -->
+![OGS start page with URDF viewer](resources/robot-startpage-urdf-viewer.png)
 
 #### station.ini — Driver parameters
 
@@ -148,6 +155,9 @@ KINEMATIC_END_EFFECTOR=my_tool_link
 ; Debug trace level (0=off, ≥1=log TCP position, ≥2=verbose FK)
 DEBUG=0
 ```
+
+<!-- TODO: screenshot — OGS XTRACE window showing ROBOT driver initialization messages at startup -->
+![XTRACE ROBOT init](resources/robot-xtrace-init.png)
 
 **Parameter reference:**
 
@@ -262,6 +272,9 @@ PORT4=Wenglor_P1PY101
 
 Supports writing a preset value for homing/referencing.
 
+<!-- TODO: screenshot — TR Electronic CMV582M rotary encoder mounted on a joint -->
+![TR Electronic rotary encoder](resources/robot-sensor-rotary.png){ width="300" }
+
 **Wenglor P1PY101 — Laser distance sensor**
 
 | Property | Value |
@@ -278,6 +291,9 @@ Special status values (returned as sensor error, no numeric value):
 | `0x7FF8` | Object too far |
 | `0x8008` (signed) | Object too near |
 | `0x7FFC` | No signal |
+
+<!-- TODO: screenshot — Wenglor P1PY101 laser distance sensor mounted on a linear joint -->
+![Wenglor distance sensor](resources/robot-sensor-distance.png){ width="300" }
 
 !!! tip "Adding new sensor types"
 
@@ -364,14 +380,37 @@ The web server maps the `/model` URL to this directory automatically, so the 3D 
 
 The webserver configuration for the side panel is identical to the general OGS positioning setup — see [OGS positioning overview](README.md) and [ART sidepanel setup](positioning-art-dtrack.md#sidepanel-teach-in-setup) for the `[WebServer]` and `[SidePanel]` configuration.
 
-The sidepanel shows `ROBOT` in the "Tracking info" section (section ❹) instead of `ART`. All other functionality (tolerance body selection, offset, teach position) works identically.
+<div class="mdx-columns" style="display:grid; grid-template-columns: auto 250px;" markdown>
+
+<div markdown>
+
+The sidepanel shows `ROBOT` in the "Tracking info" section (section ❹) instead of `ART`. All other functionality (tolerance body selection, offset, teach position) works identically:
+
+- ❶ Job, task and position information
+- ❷ Tolerance parameters and taught coordinates
+- ❸ Current position and difference values
+- ❹ Tracking info showing `ROBOT` driver status
+
+</div>
+
+<div markdown>
 
 <!-- TODO: screenshot — sidepanel with ROBOT driver showing "Driver: ROBOT" in section ❹ -->
 ![Sidepanel with ROBOT driver](resources/robot-sidepanel.png){ width="250" }
 
+</div>
+
+</div>
+
+<!-- TODO: screenshot — sidepanel teach-in view with position difference values highlighted (green = in tolerance) -->
+![Sidepanel teach-in](resources/robot-sidepanel-teachin.png){ width="400" }
+
 ## Complete configuration example
 
 A full working `station.ini` for a station with a Nexo tool and a 4-joint handling arm (2 rotary encoders + 2 linear sensors):
+
+<!-- TODO: screenshot — photo of the actual ST-C91 handling arm installation at the station -->
+![Station C91 installation](resources/robot-station-c91.png)
 
 ``` ini title="station.ini"
 [OPENPROTO]

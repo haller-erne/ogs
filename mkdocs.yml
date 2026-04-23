@@ -32,6 +32,7 @@ nav:
             - Wenglor weQube Smart camera: tools/misc/wenglor-weqube.md
         - Positioning:
             - Overview: tools/positioning/README.md
+            - Referencing: tools/positioning/positioning-referencing.md
             - ART SmartTrack/DTrack: tools/positioning/positioning-art-dtrack.md
             - ART Verpose: tools/positioning/positioning-art-verpose.md
             - URDF Robot FK Positioning: tools/positioning/positioning-robot-urdf.md

@@ -1230,6 +1230,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../positioning-referencing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Referencing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../positioning-art-dtrack/" class="md-nav__link">
         
   
@@ -3337,8 +3365,11 @@
 
 
 <h1 id="urdf-robot-fk-positioning"><a class="toclink" href="#urdf-robot-fk-positioning">URDF Robot FK Positioning</a></h1>
+<div class="admonition info">
+<p class="admonition-title">Version</p>
+<p>The ROBOT FK positioning driver is available starting with <strong>OGS V3.1.10</strong> or later.</p>
+</div>
 <p>The ROBOT positioning driver uses <strong>forward kinematics</strong> (FK) computed from standard <a href="https://wiki.ros.org/urdf">URDF</a> (Unified Robot Description Format) files to determine the real-time tool-tip position. Instead of tracking an optical marker, the system reads joint sensor values (rotary encoders and linear distance sensors) over an <strong>Ethernet/IP</strong> fieldbus, feeds them through the kinematic chain defined in the URDF model, and outputs the 3D Cartesian position and orientation of the end-effector. OGS then checks whether the tool is within the configured tolerance body and enables/disables the tightening tool accordingly.</p>
-<!-- TODO: screenshot — photo of a typical handling arm (crane/column-boom) with mounted tightening tool -->
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/robot-handling-arm-overview.png" data-desc-position="bottom"><img alt="Handling arm overview" src="../resources/robot-handling-arm-overview.png"></a></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -3346,9 +3377,13 @@
 </div>
 <h2 id="usage"><a class="toclink" href="#usage">Usage</a></h2>
 <p>If the system is correctly set up (see <a href="#initial-system-setup">Initial system setup</a> below), you can specify which tasks are position-controlled in the workflow editor and teach-in positions and tolerances on the station. For details on the general positioning workflow (basic functionality, workflow configuration, teach-in, sidepanel, tolerance bodies), see the <a href="../">OGS positioning overview</a>.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>A task is marked as positioning-enabled by setting the <strong>PS</strong> (Position Sensor) column to a non-zero value in the workflow editor (heOpCfg). Tasks with PS=0 are not tracked. See <a href="../#workflow-configuration">workflow configuration</a> for details.</p>
+</div>
 <h3 id="how-the-robot-driver-works"><a class="toclink" href="#how-the-robot-driver-works">How the ROBOT driver works</a></h3>
 <p>The ROBOT driver operates entirely through computation — no external camera or optical system is needed:</p>
-<pre class="mermaid"><code>flowchart LR
+<pre class="mermaid"><code>flowchart TD
     A["IO-Link Sensors&lt;br/&gt;(encoders, distance)"] --&gt;|Raw bytes| B["IO-Link Master&lt;br/&gt;(Ethernet/IP)"]
     B --&gt;|Cyclic I/O| C["EtherNet/IP Scanner"]
     C --&gt;|Port data| D["IO-Link Decoding&lt;br/&gt;(rad / m)"]
@@ -3381,7 +3416,6 @@
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="nv">current_project</span><span class="p">.</span><span class="py">billboard</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'startpage_urdf.html'</span>
 </code></pre></div>
 <p>The viewer reads <code>KINEMATIC_FILE</code> from the positioning section in <code>station.ini</code> and loads the corresponding URDF model and mesh files. The initial camera view can be configured in the same section (see <a href="#camera-configuration">camera configuration</a>).</p>
-<!-- TODO: screenshot — OGS start page showing the 3D URDF viewer with a loaded robot model -->
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/robot-urdf-viewer.png" data-desc-position="bottom"><img alt="URDF 3D viewer" src="../resources/robot-urdf-viewer.png"></a></p>
 <h2 id="initial-system-setup"><a class="toclink" href="#initial-system-setup">Initial system setup</a></h2>
 <h3 id="prerequisites"><a class="toclink" href="#prerequisites">Prerequisites</a></h3>
@@ -3419,10 +3453,11 @@
 <a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="nv">current_project</span><span class="p">.</span><span class="py">billboard</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'startpage_urdf.html'</span>
 </code></pre></div>
 <ol>
-<li>Core positioning — automatically loads <code>positioning_ROBOT</code> based on <code>DRIVER=ROBOT</code> in <code>station.ini</code></li>
-<li>Optional: browser-based 3D URDF robot viewer</li>
+<li>Core positioning — automatically loads the ROBOT driver based on <code>DRIVER=ROBOT</code> in <code>station.ini</code></li>
+<li>Optional: browser-based 3D URDF robot viewer on the start page</li>
 <li>Station I/O — reads sensor data via Ethernet/IP and maps to FK joints</li>
 </ol>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/robot-startpage-urdf-viewer.png" data-desc-position="bottom"><img alt="OGS start page with URDF viewer" src="../resources/robot-startpage-urdf-viewer.png"></a></p>
 <h4 id="stationini--driver-parameters"><a class="toclink" href="#stationini--driver-parameters">station.ini — Driver parameters</a></h4>
 <p>As described in <a href="../#project-configuration">OGS positioning overview</a>, link a tool channel to the positioning section. Then configure the ROBOT-specific parameters:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">[OPENPROTO]</span>
@@ -3512,7 +3547,6 @@
 <a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="na">CAMERA_ZOOM</span><span class="o">=</span><span class="s">1</span>
 </code></pre></div>
 <p>You can adjust the camera interactively in the 3D viewer and then copy the values back to <code>station.ini</code>.</p>
-<!-- TODO: screenshot — 3D viewer showing camera position controls or the camera gizmo -->
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/robot-urdf-camera-config.png" data-desc-position="bottom"><img alt="Camera configuration in 3D viewer" src="../resources/robot-urdf-camera-config.png"></a></p>
 <h4 id="joint-to-sensor-mapping"><a class="toclink" href="#joint-to-sensor-mapping">Joint-to-sensor mapping</a></h4>
 <p>Each movable URDF joint that has a physical sensor requires a mapping section. The section name follows the pattern <code>[&lt;POSITIONING_SECTION&gt;:&lt;URDF_JOINT_NAME&gt;]</code>:</p>
@@ -3569,7 +3603,6 @@
 <p>Only joints with a physical sensor need a mapping section. URDF <code>fixed</code> joints are automatically skipped. If a movable joint has no mapping, a warning is logged but the system continues — that joint will stay at its URDF default value (clamped to joint limits).</p>
 </div>
 <h3 id="ethernetip-and-io-link-setup"><a class="toclink" href="#ethernetip-and-io-link-setup">Ethernet/IP and IO-Link setup</a></h3>
-<!-- TODO: screenshot — IO-Link master device (e.g. Murr Impact67) with connected sensor cables -->
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/robot-iolink-master.png" data-desc-position="bottom"><img alt="IO-Link master" src="../resources/robot-iolink-master.png" width="400"></a></p>
 <h4 id="io-link-master"><a class="toclink" href="#io-link-master">IO-Link master</a></h4>
 <p>Define Ethernet/IP devices in the <code>[STATION_IO_ENIP]</code> section:</p>
@@ -3646,6 +3679,7 @@
 </tbody>
 </table>
 <p>Supports writing a preset value for homing/referencing.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/robot-sensor-rotary.png" data-desc-position="bottom"><img alt="TR Electronic rotary encoder" src="../resources/robot-sensor-rotary.png" width="300"></a></p>
 <p><strong>Wenglor P1PY101 — Laser distance sensor</strong></p>
 <table>
 <thead>
@@ -3760,17 +3794,28 @@
 <a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>        └── tool_link.stl
 </code></pre></div>
 <p>The web server maps the <code>/model</code> URL to this directory automatically, so the 3D viewer can load the mesh files.</p>
-<!-- TODO: screenshot — tool offset diagram showing station offset + bolt offset along the Z-axis -->
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="resources/robot-tool-offset.png" data-desc-position="bottom"><img alt="Tool offset" src="resources/robot-tool-offset.png" width="300"></a></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/robot-tool-offset.png" data-desc-position="bottom"><img alt="Tool offset" src="../resources/robot-tool-offset.png" width="300"></a></p>
 <div class="admonition tip">
 <p class="admonition-title">Generating URDF from CAD</p>
 <p>URDF files are typically exported from CAD assemblies. The STL meshes should be placed in a <code>meshes/</code> subfolder. URDF <code>&lt;mesh&gt;</code> references use paths relative to the URDF file location.</p>
 </div>
 <h3 id="sidepanel-teach-in-setup"><a class="toclink" href="#sidepanel-teach-in-setup">Sidepanel teach-in setup</a></h3>
 <p>The webserver configuration for the side panel is identical to the general OGS positioning setup — see <a href="../">OGS positioning overview</a> and <a href="../positioning-art-dtrack/#sidepanel-teach-in-setup">ART sidepanel setup</a> for the <code>[WebServer]</code> and <code>[SidePanel]</code> configuration.</p>
-<p>The sidepanel shows <code>ROBOT</code> in the "Tracking info" section (section ❹) instead of <code>ART</code>. All other functionality (tolerance body selection, offset, teach position) works identically.</p>
-<!-- TODO: screenshot — sidepanel with ROBOT driver showing "Driver: ROBOT" in section ❹ -->
+<div class="mdx-columns" style="display:grid; grid-template-columns: auto 250px;">
+<div>
+<p>The sidepanel shows <code>ROBOT</code> in the "Tracking info" section (section ❹) instead of <code>ART</code>. All other functionality (tolerance body selection, offset, teach position) works identically:</p>
+<ul>
+<li>❶ Job, task and position information</li>
+<li>❷ Tolerance parameters and taught coordinates</li>
+<li>❸ Current position and difference values</li>
+<li>❹ Tracking info showing <code>ROBOT</code> driver status</li>
+</ul>
+</div>
+<div>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/robot-sidepanel.png" data-desc-position="bottom"><img alt="Sidepanel with ROBOT driver" src="../resources/robot-sidepanel.png" width="250"></a></p>
+</div>
+</div>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/robot-sidepanel-teachin.png" data-desc-position="bottom"><img alt="Sidepanel teach-in" src="../resources/robot-sidepanel-teachin.png" width="400"></a></p>
 <h2 id="complete-configuration-example"><a class="toclink" href="#complete-configuration-example">Complete configuration example</a></h2>
 <p>A full working <code>station.ini</code> for a station with a Nexo tool and a 4-joint handling arm (2 rotary encoders + 2 linear sensors):</p>
 <div class="highlight"><span class="filename">station.ini</span><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">[OPENPROTO]</span>

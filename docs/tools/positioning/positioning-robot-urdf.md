@@ -8,9 +8,12 @@ tags:
 
 # URDF Robot FK Positioning
 
+!!! info "Version"
+
+    The ROBOT FK positioning driver is available starting with **OGS V3.1.10** or later.
+
 The ROBOT positioning driver uses **forward kinematics** (FK) computed from standard [URDF](https://wiki.ros.org/urdf) (Unified Robot Description Format) files to determine the real-time tool-tip position. Instead of tracking an optical marker, the system reads joint sensor values (rotary encoders and linear distance sensors) over an **Ethernet/IP** fieldbus, feeds them through the kinematic chain defined in the URDF model, and outputs the 3D Cartesian position and orientation of the end-effector. OGS then checks whether the tool is within the configured tolerance body and enables/disables the tightening tool accordingly.
 
-<!-- TODO: screenshot — photo of a typical handling arm (crane/column-boom) with mounted tightening tool -->
 ![Handling arm overview](resources/robot-handling-arm-overview.png)
 
 !!! note
@@ -30,7 +33,7 @@ If the system is correctly set up (see [Initial system setup](#initial-system-se
 The ROBOT driver operates entirely through computation — no external camera or optical system is needed:
 
 ``` mermaid
-flowchart LR
+flowchart TD
     A["IO-Link Sensors<br/>(encoders, distance)"] -->|Raw bytes| B["IO-Link Master<br/>(Ethernet/IP)"]
     B -->|Cyclic I/O| C["EtherNet/IP Scanner"]
     C -->|Port data| D["IO-Link Decoding<br/>(rad / m)"]
@@ -72,7 +75,6 @@ current_project.billboard = 'startpage_urdf.html'
 
 The viewer reads `KINEMATIC_FILE` from the positioning section in `station.ini` and loads the corresponding URDF model and mesh files. The initial camera view can be configured in the same section (see [camera configuration](#camera-configuration)).
 
-<!-- TODO: screenshot — OGS start page showing the 3D URDF viewer with a loaded robot model -->
 ![URDF 3D viewer](resources/robot-urdf-viewer.png)
 
 ## Initial system setup
@@ -123,7 +125,6 @@ current_project.billboard = 'startpage_urdf.html'
 2. Optional: browser-based 3D URDF robot viewer on the start page
 3. Station I/O — reads sensor data via Ethernet/IP and maps to FK joints
 
-<!-- TODO: screenshot — OGS start page with the URDF 3D viewer loaded, showing the robot model in the billboard area -->
 ![OGS start page with URDF viewer](resources/robot-startpage-urdf-viewer.png)
 
 #### station.ini — Driver parameters
@@ -156,9 +157,6 @@ KINEMATIC_END_EFFECTOR=my_tool_link
 DEBUG=0
 ```
 
-<!-- TODO: screenshot — OGS XTRACE window showing ROBOT driver initialization messages at startup -->
-![XTRACE ROBOT init](resources/robot-xtrace-init.png)
-
 **Parameter reference:**
 
 | Parameter | Required | Default | Description |
@@ -189,7 +187,6 @@ CAMERA_ZOOM=1
 
 You can adjust the camera interactively in the 3D viewer and then copy the values back to `station.ini`.
 
-<!-- TODO: screenshot — 3D viewer showing camera position controls or the camera gizmo -->
 ![Camera configuration in 3D viewer](resources/robot-urdf-camera-config.png)
 
 #### Joint-to-sensor mapping
@@ -223,7 +220,6 @@ OFFSET=0
 
 ### Ethernet/IP and IO-Link setup
 
-<!-- TODO: screenshot — IO-Link master device (e.g. Murr Impact67) with connected sensor cables -->
 ![IO-Link master](resources/robot-iolink-master.png){ width="400" }
 
 #### IO-Link master
@@ -272,7 +268,6 @@ PORT4=Wenglor_P1PY101
 
 Supports writing a preset value for homing/referencing.
 
-<!-- TODO: screenshot — TR Electronic CMV582M rotary encoder mounted on a joint -->
 ![TR Electronic rotary encoder](resources/robot-sensor-rotary.png){ width="300" }
 
 **Wenglor P1PY101 — Laser distance sensor**
@@ -291,9 +286,6 @@ Special status values (returned as sensor error, no numeric value):
 | `0x7FF8` | Object too far |
 | `0x8008` (signed) | Object too near |
 | `0x7FFC` | No signal |
-
-<!-- TODO: screenshot — Wenglor P1PY101 laser distance sensor mounted on a linear joint -->
-![Wenglor distance sensor](resources/robot-sensor-distance.png){ width="300" }
 
 !!! tip "Adding new sensor types"
 
@@ -369,7 +361,6 @@ ST-MyStation/
 
 The web server maps the `/model` URL to this directory automatically, so the 3D viewer can load the mesh files.
 
-<!-- TODO: screenshot — tool offset diagram showing station offset + bolt offset along the Z-axis -->
 ![Tool offset](resources/robot-tool-offset.png){ width="300" }
 
 !!! tip "Generating URDF from CAD"
@@ -395,22 +386,17 @@ The sidepanel shows `ROBOT` in the "Tracking info" section (section ❹) instead
 
 <div markdown>
 
-<!-- TODO: screenshot — sidepanel with ROBOT driver showing "Driver: ROBOT" in section ❹ -->
 ![Sidepanel with ROBOT driver](resources/robot-sidepanel.png){ width="250" }
 
 </div>
 
 </div>
 
-<!-- TODO: screenshot — sidepanel teach-in view with position difference values highlighted (green = in tolerance) -->
 ![Sidepanel teach-in](resources/robot-sidepanel-teachin.png){ width="400" }
 
 ## Complete configuration example
 
 A full working `station.ini` for a station with a Nexo tool and a 4-joint handling arm (2 rotary encoders + 2 linear sensors):
-
-<!-- TODO: screenshot — photo of the actual ST-C91 handling arm installation at the station -->
-![Station C91 installation](resources/robot-station-c91.png)
 
 ``` ini title="station.ini"
 [OPENPROTO]

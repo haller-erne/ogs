@@ -9,9 +9,12 @@ tags:
 
 # Part Referencing
 
+!!! info "Version"
+
+    Part referencing is available starting with **OGS V3.1.10** or later.
+
 Part referencing compensates for variation in how a workpiece is placed in the station. When a new part arrives, it may be shifted or rotated compared to the position where bolt positions were originally taught. Referencing captures known positions on the actual part and computes a rigid-body transform to map the taught (database) coordinates to the actual part position, so that all subsequent positioning checks use corrected coordinates automatically.
 
-<!-- TODO: screenshot — conceptual diagram showing a shifted part with taught positions (dotted) vs actual positions (solid) -->
 ![Referencing concept](resources/referencing-concept.png)
 
 ## When to use referencing
@@ -53,7 +56,6 @@ Before referencing can work, the following conditions must be met:
 - Reference bolt positions must be **taught** (recorded coordinates exist in the database)
 - The `reference_type` job property must be set (see [configuration](#configuration) below)
 
-<!-- TODO: screenshot — heOpCfg jobs editor showing the PS column with non-zero values on reference bolt tasks -->
 ![PS column in workflow editor](resources/referencing-ps-column.png)
 
 !!! info
@@ -116,11 +118,10 @@ During the referencing collection phase (before the transform is active), OGS en
 A supervisor (user level ≥ 2) can bypass the referencing check via the sidepanel. When bypass is active:
 
 - All position checks are skipped (tool is always enabled)
-- An alarm message "Supervisor Bypass Active" is shown
+- A status message "Supervisor bypass active — referencing check disabled for this job." is shown
 - The bypass persists across workflow pause/resume within the same part
 - The bypass is cleared when a new part is scanned
 
-<!-- TODO: screenshot — sidepanel showing the referencing bypass toggle for a supervisor -->
 ![Referencing bypass](resources/referencing-bypass-toggle.png)
 
 !!! tip "Important"
@@ -153,15 +154,15 @@ The referencing mode is configured as a **job property** in the OGS workflow con
 
 1. Open the workflow editor (heOpCfg)
 2. Select the job that requires referencing
-3. Open the **Job Properties** editor (right-click the job → Properties, or use the properties panel)
-4. Add a new property with the name `reference_type`
+3. In the **INI Parameters** tab, locate the **JOB PROPERTY NAMES** section
+4. Add a new property with the name `reference_type` and type `string`
 5. Set the value to `1`, `2`, or `3` depending on the desired referencing mode
 
-<!-- TODO: screenshot — heOpCfg showing the Job Properties editor with reference_type = 2 -->
 ![heOpCfg reference_type property](resources/referencing-heOpCfg-property.png)
 
-<!-- TODO: screenshot — heOpCfg right-click menu showing "Properties" option on a job -->
-![heOpCfg job context menu](resources/referencing-heOpCfg-context-menu.png)
+The property value can also be set in the operations properties panel at the bottom of the heOpCfg editor for a specific job.
+
+![heOpCfg INI Parameters](resources/referencing-heOpCfg-context-menu.png)
 
 | Property | Value | Effect |
 |---|---|---|
@@ -184,9 +185,6 @@ OGS automatically selects the reference bolts from the job's **action sequence**
 
 The reference bolt names are taken from the corresponding task names in the workflow.
 
-<!-- TODO: screenshot — heOpCfg action sequence showing the first 2 actions highlighted as reference bolt slots -->
-![Reference bolt selection](resources/referencing-bolt-selection.png)
-
 !!! note
 
     All reference measurements use the **same tool** — the tool from the first positioning action is locked for the entire referencing session. This means the same tightening tool must be used for all reference bolts, even if other tools are configured for subsequent production bolts.
@@ -195,27 +193,19 @@ The reference bolt names are taken from the corresponding task names in the work
 
 No additional `station.ini` parameters are required for referencing — it is driven entirely by the `reference_type` job property. The referencing engine uses the existing positioning driver configuration (`DRIVER=ROBOT` or `DRIVER=ART`).
 
-However, one optional parameter exists for special cases:
-
-``` ini title="station.ini"
-[POSITIONING]
-; Force position-only mode for 2-bolt referencing.
-; Required for ROBOT arms that have no rotation sensor — the direction vectors
-; are constant and cannot distinguish part rotation.
-ROBOT_REF_USE_POSITION_ONLY=1
-```
-
-!!! note
-
-    This parameter is read from the `[VPGSERVER]` section in `station.ini` (for backward compatibility). If your project does not have this section, simply add it.
-
 ### Plausibility thresholds
 
-When adding subsequent reference points (2nd, 3rd), OGS checks whether the measured inter-bolt distance matches the database distance. The threshold is:
+When adding subsequent reference points (2nd, 3rd), OGS checks whether the measured inter-bolt distance matches the database distance. The threshold is computed as follows:
 
-$$\text{threshold} = \max(2 \times \max(r1_i, r1_\text{new}), 50\text{mm})$$
+> **threshold** = max( 2 × max(r1_prev, r1_current) , 50 mm )
 
-Where $r1_i$ is the taught tolerance radius of the previously collected reference bolt, and $r1_\text{new}$ is the radius of the current bolt. The minimum threshold is 50 mm.
+Where:
+
+- **r1_prev** is the taught tolerance radius of the previously collected reference bolt
+- **r1_current** is the taught tolerance radius of the current bolt being added
+- The minimum threshold is always **50 mm**
+
+For example, if both reference bolts have a tolerance radius of 20 mm, the threshold is max(2 × 20, 50) = **50 mm**. If a bolt has radius 40 mm, it becomes max(2 × 40, 50) = **80 mm**.
 
 If the distance error exceeds this threshold, the reference point is **rejected** and the operator must retry.
 
@@ -290,11 +280,7 @@ Step by step:
 7. OGS guides operator through remaining production bolts → all positions use transformed coordinates
 8. Repeat for subsequent jobs (each may have its own `reference_type`)
 
-<!-- TODO: screenshot — OGS runtime process page showing the referencing progress indicator -->
 ![Referencing progress](resources/referencing-progress-status.png)
-
-<!-- TODO: screenshot — OGS runtime status bar tile showing "Ref 1/2" or similar progress indicator -->
-![Referencing status tile](resources/referencing-status-tile.png)
 
 ### Handling errors
 
@@ -316,11 +302,13 @@ Step by step:
 - An alarm is shown: "Referencing data lost during restart!"
 - Operator must restart the job from the beginning, or supervisor must bypass
 
-<!-- TODO: screenshot — alarm message "Referencing data lost during restart" -->
-![Referencing lost alarm](resources/referencing-alarm-lost.png)
+**Non-reference bolt blocked (Guard 2):**
 
-<!-- TODO: screenshot — alarm popup with restart/bypass options -->
-![Referencing alarm dialog](resources/referencing-alarm-dialog.png)
+- If the operator navigates to a production bolt before referencing is complete, OGS blocks the tool
+- A blocking alarm banner is shown, e.g.: "Referencing: blocking non-reference bolt 'S3' referencing not complete (0/2)"
+- The operator must complete the reference bolt tightening first, or use supervisor bypass
+
+![Referencing blocking alarm](resources/referencing-alarm-dialog.png)
 
 ## Side panel integration
 
@@ -330,16 +318,8 @@ The positioning sidepanel shows referencing state information when referencing i
 
 <div markdown>
 
-- ❶ **Referencing state:** Shows the current mode and progress (e.g. "2-point referencing: 1/2 collected")
+- ❶ **Referencing state:** Shows the current mode and progress (e.g. "Ref Mode: 2-Bolt, Progress: 1/2")
 - ❷ **Bypass toggle:** Supervisors (level ≥ 2) can enable/disable the referencing bypass
-- ❸ **Transform status:** Shows whether the rigid-body transform is active
-
-</div>
-
-<div markdown>
-
-<!-- TODO: screenshot — sidepanel with referencing state section visible, annotated with ❶❷❸ -->
-![Sidepanel referencing state](resources/referencing-sidepanel-state.png){ width="250" }
 
 </div>
 
@@ -374,4 +354,3 @@ The positioning sidepanel shows referencing state information when referencing i
 | CONFIG error: "collinear" | Bolt geometry unsuitable | Choose reference bolts forming a triangle |
 | CONFIG error: "degenerate" | Positions too close or identical | Use bolts at distinct, well-separated locations |
 | MEASUREMENT error: "determinant" | Measurement noise distorted the result | Retry — check tracking/sensor accuracy |
-| Solver always fails for mode 2 (ROBOT) | Arm has no rotation sensor | Set `ROBOT_REF_USE_POSITION_ONLY=1` in `station.ini` (see [station.ini parameters](#stationini-parameters)) |

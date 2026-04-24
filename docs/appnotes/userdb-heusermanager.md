@@ -98,7 +98,10 @@ logonserver=Provider=SQLOLEDB.1;Persist Security Info=False;User ID=sys3xx;Passw
 logongroup=
 
 ; Defines the application ID to use when querying the heUserManager
-; database. If not defined or empty, then use the default appid for heOGS.
+; database. If not defined or empty, then application rights/roles are not
+; used. 
+; Leave empty to use the "old" behaviour (users OGSlevel is used instead
+; application rights)
 logonappid=heOGS-line1
 
 ; Defines, if the user cannot log on, if he is already logged on at

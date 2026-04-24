@@ -314,7 +314,16 @@ M.ValidateUserById = function(UserID)
 					}
 					return AuthResult
 				else
-					M.SetAlarm(-1, 'No user rights found!')
+					if M.logonAppid ~= '' then
+						-- if an logonappid is set then JSON application rights are mandatory
+						M.SetAlarm(-1, 'No user rights found!')
+						local AuthResult = {
+							LoginAllowed = false,
+							MissinOrOutdatedCount = MissingOrOutdatedCount,
+							UserRights = 0
+						}
+						return AuthResult
+					end
 				end
 			end
 		end

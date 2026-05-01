@@ -2705,6 +2705,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#overview_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#installing-steps" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2715,8 +2726,169 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#setting-up-trusted-authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting up trusted authentication
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mapping
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Mapping">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#auto-admin-mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Auto admin mapping
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#win_sspi-mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        win_sspi mapping
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-database-and-server-rights-and-roles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting up database and server rights and roles
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hardening" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hardening
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Hardening">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#service-user-account" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Service user account
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#change-sysdba-password" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Change SYSDBA password
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restrict-server-filesystem-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Restrict server filesystem access
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#isql-in-embedded-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        isql in embedded mode
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hhh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        hhh
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reference
+      
+    </span>
+  </a>
   
 </li>
       
@@ -2756,12 +2928,140 @@
 - mapping roles to rights, mapping users and groups to roles
 - encrypted communication</p>
 <h2 id="setting-a-firebird-server-up-for-window-authentication"><a class="toclink" href="#setting-a-firebird-server-up-for-window-authentication">Setting a Firebird server up for Window authentication</a></h2>
+<h3 id="overview_1"><a class="toclink" href="#overview_1">Overview</a></h3>
 <h3 id="installing-steps"><a class="toclink" href="#installing-steps">Installing steps</a></h3>
 <p>While installing the Firebird server, the installer asks for a <code>SYSDBA</code> password. The <code>SYSDBA</code> user is a builtin "superuser", which has all rights to manage the database.</p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
 <p>Make sure to change the password! Note also, that we will disable the SYSDBA access in the next steps (users with physical access to the <code>database.conf</code> on the server can always reset/restore access).</p>
 </div>
+<h3 id="setting-up-trusted-authentication"><a class="toclink" href="#setting-up-trusted-authentication">Setting up trusted authentication</a></h3>
+<p>See <a href="https://github.com/FirebirdSQL/firebird/blob/master/doc/README.trusted_authentication">README.trusted_authentication</a>.</p>
+<h3 id="mapping"><a class="toclink" href="#mapping">Mapping</a></h3>
+<p>See <a href="https://github.com/FirebirdSQL/firebird/blob/master/doc/sql.extensions/README.mapping.html">README.mapping.html</a></p>
+<div class="highlight"><pre><span></span><code>create global mapping win_admin using plugin win_sspi from predefined_group DOMAIN_ANY_RID_ADMINS to role RDB$ADMIN;
+</code></pre></div>
+<h4 id="auto-admin-mapping"><a class="toclink" href="#auto-admin-mapping">Auto admin mapping</a></h4>
+<p>See <a href="https://www.firebirdsql.org/file/documentation/html/en/firebirddocs/gsec/firebird-gsec.html#gsec-interactive-admin-mapping">using GSEC to setup automatic admin mapping</a> and <a href="https://www.firebirdsql.org/refdocs/langrefupd25-security-auto-admin-mapping.html">LANGREF:auto admin mapping</a>.</p>
+<h4 id="win_sspi-mapping"><a class="toclink" href="#win_sspi-mapping">win_sspi mapping</a></h4>
+<p>Enable use of windows trusted authentication in all databases that use current security database:</p>
+<p>CREATE GLOBAL MAPPING TRUSTED_AUTH USING PLUGIN WIN_SSPI FROM ANY USER TO USER;</p>
+<p>Enable SYSDBA-like access for windows admins in current database:</p>
+<p>CREATE MAPPING WIN_ADMINS USING PLUGIN WIN_SSPI FROM Predefined_Group DOMAIN_ANY_RID_ADMINS TO ROLE RDB$ADMIN;</p>
+<p>(there is no group DOMAIN_ANY_RID_ADMINS in windows, but such name is added by win_sspi plugin to provide exact backwards compatibility)</p>
+<p>Enable particular user from other database access current database with other name:</p>
+<p>CREATE MAPPING FROM_RT USING PLUGIN SRP IN "rt" FROM USER U1 TO USER U2;</p>
+<p>(providing database names/aliases in double quotes is important for operating systems that have case-sensitive file names)</p>
+<p>Enable server's SYSDBA (from main security database) access current database (assuming it has non-default security database):</p>
+<p>CREATE MAPPING DEF_SYSDBA USING PLUGIN SRP IN "security.db" FROM USER SYSDBA TO USER;</p>
+<p>Force people who logged in using legacy authentication plugin have not too much rights:</p>
+<p>CREATE MAPPING LEGACY_2_GUEST USING PLUGIN legacy_auth FROM ANY USER TO USER GUEST;</p>
+<p>Map windows group to trusted firebird role:</p>
+<p>CREATE MAPPING WINGROUP1 USING PLUGIN WIN_SSPI FROM GROUP GROUP_NAME TO ROLE ROLE_NAME;</p>
+<p>Here we expect that some windows users may belong to group GROUP_NAME. If needed name of the group may be given in long form, i.e. DOMAIN\GROUP.</p>
+<h2 id="setting-up-database-and-server-rights-and-roles"><a class="toclink" href="#setting-up-database-and-server-rights-and-roles">Setting up database and server rights and roles</a></h2>
+<p>Users, Roles and Grants can be managed using SQL commands or the <a href="https://www.firebirdsql.org/file/documentation/html/en/firebirddocs/gsec/firebird-gsec.html">GSEC command line utility</a>.</p>
+<h2 id="hardening"><a class="toclink" href="#hardening">Hardening</a></h2>
+<p>See the <a href="https://www.firebirdsql.org/manual/de/qsg2-de-config.html">official documentation</a> for best practices about configuring the server and security settings.</p>
+<h3 id="service-user-account"><a class="toclink" href="#service-user-account">Service user account</a></h3>
+<p>Best practice is to change the default <code>LocalService</code> account to the windows service
+default account <code>NTService\&lt;servicename&gt;</code>. As this account does not have any local
+file system access, make sure to grant write access to the following files:</p>
+<ul>
+<li>all databases, including security2.fdb (isc4.gdb in pre-1.5 versions)</li>
+<li>the firebird.log file</li>
+</ul>
+<p>For security reasons, make sure no other user has (read) access to the database files.</p>
+<h3 id="change-sysdba-password"><a class="toclink" href="#change-sysdba-password">Change SYSDBA password</a></h3>
+<p>See the <a href="https://www.firebirdsql.org/manual/de/qsg2-de-config.html">official documentation</a>.</p>
+<h3 id="restrict-server-filesystem-access"><a class="toclink" href="#restrict-server-filesystem-access">Restrict server filesystem access</a></h3>
+<p>Best practice is to run the service using the windows service account (see <a href="#service-user-account">Service user account</a>),
+but this requires setting explicit permissions on the database files. As another option, the <code>DatabaseAccess</code> parameter
+in <code>firebird.conf</code> can be set to <code>restrict</code> (to allow external access to a given set of folders) or to <code>none</code> (to only
+allow alias access - i.e. only databases registered in <code>databases.conf</code>). </p>
+<h2 id="notes"><a class="toclink" href="#notes">Notes</a></h2>
+<h3 id="isql-in-embedded-mode"><a class="toclink" href="#isql-in-embedded-mode">isql in embedded mode</a></h3>
+<p>If the firebird server service is stopped, then <code>isql</code> can be used in embedded mode. This is especially useful to fix
+issues in the security database (e.g. bad mapping). To access the security database, run isql as follows (you <strong>must</strong> use <code>SYSDBA</code> as user name):</p>
+<div class="highlight"><pre><span></span><code>isql security.fdb user SYSDBA
+</code></pre></div>
+<p>for more details, see <a href="https://github.com/FirebirdSQL/firebird/blob/master/doc/README.security_database.txt">README.security_database.txt</a>.</p>
+<div class="highlight"><pre><span></span><code>1. Stop the Firebird server. Firebird caches connections to the security database aggressively. The presence
+of server connections may prevent isql from establishing an embedded connection.
+2. In a suitable shell, start an isql interactive session, opening the employee database via its alias:
+    &gt; isql -user sysdba employee
+3. Create the SYSDBA user:
+    WARNING! Do not just copy and paste! Generate your own strong password!
+
+    SQL&gt; create user SYSDBA password 'StrongPassword';
+    SQL&gt; exit;
+
+    WARNING! Do not just copy and paste! Generate your own strong password!
+4. To complete the initialization, start the Firebird server again. Now you will be able to perform a network
+login to databases using login SYSDBA and the password you assigned to it.
+</code></pre></div>
+<h3 id="hhh"><a class="toclink" href="#hhh">hhh</a></h3>
+<p>First enable use of Windows trusted authentication:</p>
+<p>CREATE GLOBAL MAPPING TRUSTED_AUTH
+USING PLUGIN WIN_SSPI
+FROM ANY USER
+TO USER;</p>
+<p>Then we want to define some exact Windows trusted authentication user group mapping to firebird role:</p>
+<p>CREATE MAPPING WIN_GLADMIN
+USING PLUGIN WIN_SSPI
+FROM Group NOOMGLADMIN
+TO ROLE GLADMIN;</p>
+<p>But this does not work.</p>
+<h2 id="reference"><a class="toclink" href="#reference">Reference</a></h2>
+<p>Firebird starting with version 2.1 can use Windows security for user authentication.
+Current security context is passed to the server and if it's OK for that server is used to determine
+firebird user name. To use Windows trusted authentication in FB3 you should make minimum changes in
+firebird.conf and tune mappings in your databases.</p>
+<p>Parameter Authentication in firebird.conf file is not used any more - it's replaced with more
+generic AuthServer (and AuthClient) parameters. Also to use trusted authentication one should turn
+off mandatory wire encryption because Win_Sspi plugin (which implements trusted authentication on
+Windows) does not provide an encryption key. So minimum changes in firebird.conf you need is:</p>
+<p>AuthServer = Srp, Win_Sspi
+WireCrypt = Enabled</p>
+<p>Also mapping (see sql.extensions/README.mapping.html) should be created. To tune for all databases
+do:</p>
+<p>create global mapping trusted_auth using plugin win_sspi from any user to user;</p>
+<p>Do not put user and password parameters in DPB/SPB. With provided firebird.conf in almost all cases
+trusted authentication will be used (see environment below for exceptions). Suppose you have logged
+to the Windows server SRV as user John. If you connect to server SRV with isql, not specifying
+Firebird login and password:</p>
+<p>isql srv:employee</p>
+<p>and do:</p>
+<p>SELECT CURRENT_USER FROM RDB$DATABASE;</p>
+<p>you will get something like:</p>
+<h1 id="user"><a class="toclink" href="#user">USER</a></h1>
+<p>SRV\John</p>
+<p>Windows users may be granted rights to access database objects and roles in the same way as
+traditional Firebird users. (This is not something new - in UNIX OS users might be granted rights
+virtually always).</p>
+<ul>
+<li>If domain administrator (member of well known predefined groups) connects to Firebird using trusted
+authentication, he/she may be granted 'god-like' (SYSDBA) rights depending upon settings in database,
+to which such user attachs. To keep CURRENT_USER value in a form DOMAIN\User, a new object (predefined
+system role) is added to the database. The name of that role is RDB$ADMIN, and any user, granted it,
+can attach to the database with SYSDBA rights. To configure all databases to auto-grant that role to
+administrators, use the following command:</li>
+</ul>
+<p>create global mapping win_admin using plugin win_sspi from predefined_group DOMAIN_ANY_RID_ADMINS to role RDB$ADMIN;</p>
+<p>Take into an account, that if Windows administrator attaches with role set in dpb, it will not be
+replaced with RDB$ADMIN, i.e. he/she will not get SYSDBA rights.</p>
+<ul>
+<li>To keep legacy behavior when ISC_USER/ISC_PASSWORD variables are set in environment, they
+are picked and used instead of trusted authentication. In case when trusted authentication is needed
+and ISC_USER/ISC_PASSWORD are set, add new DPB parameter isc_dpb_trusted_auth to DPB. In most
+of Firebird command line utilities switch -trusted (may be abbreviated up to utility rules) is used
+for it.</li>
+</ul>
+<p>isql srv:db                -- log using trusted authentication
+set ISC_USER=user1
+set ISC_PASSWORD=12345
+isql srv:db                -- log as 'user1' from environment
+isql -trust srv:db         -- log using trusted authentication</p>
 
 
 

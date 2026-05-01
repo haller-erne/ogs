@@ -36,9 +36,13 @@ While installing the Firebird server, the installer asks for a `SYSDBA` password
 !!! info 
 
     Make sure to change the password! Note also, that we will disable the SYSDBA access in the next steps (users with physical access to the `database.conf` on the server can always reset/restore access).
+    See [change SYSDBA password](https://www.firebirdsql.org/file/documentation/html/en/firebirddocs/qsg5/firebird-5-quickstartguide.html#qsg5-config-gsec-changepw).
+
+See [Firebird configuration reference](https://www.firebirdsql.org/docs/html/en/refdocs/fbconf/firebird-configuration-reference.html).
 
 ### Setting up trusted authentication
 
+See [Configuring trusted authentication](https://ib-aid.com/download/docs/fb4migrationguide.html#_configuring_trusted_authentication).
 See [README.trusted_authentication](https://github.com/FirebirdSQL/firebird/blob/master/doc/README.trusted_authentication).
 
 
@@ -97,7 +101,9 @@ Here we expect that some windows users may belong to group GROUP_NAME. If needed
 
 ## Setting up database and server rights and roles
 
-Users, Roles and Grants can be managed using SQL commands or the [GSEC command line utility](https://www.firebirdsql.org/file/documentation/html/en/firebirddocs/gsec/firebird-gsec.html).
+See the [Security Chapter in the Language Reference Manual](https://firebirdsql.org/file/documentation/chunk/en/refdocs/fblangref50/fblangref50-security.html).
+
+Users, Roles and Grants can be managed using SQL commands or the [GSEC command line utility](https://www.firebirdsql.org/file/documentation/html/en/firebirddocs/gsec/firebird-gsec.html). 
 
 
 ## Hardening
@@ -122,9 +128,9 @@ See the [official documentation](https://www.firebirdsql.org/manual/de/qsg2-de-c
 ### Restrict server filesystem access
 
 Best practice is to run the service using the windows service account (see [Service user account](#service-user-account)),
-but this requires setting explicit permissions on the database files. As another option, the `DatabaseAccess` parameter
-in `firebird.conf` can be set to `restrict` (to allow external access to a given set of folders) or to `none` (to only
-allow alias access - i.e. only databases registered in `databases.conf`). 
+but this requires setting explicit permissions on the database files. As another option, the [DatabaseAccess](https://www.firebirdsql.org/docs/html/en/refdocs/fbconf/firebird-configuration-reference.html#fbconf-database-access) parameter
+in [firebird.conf](https://www.firebirdsql.org/docs/html/en/refdocs/fbconf/firebird-configuration-reference.html#fbconf-firebird) can be set to `restrict` (to allow external access to a given set of folders) or to `none` (to only
+allow alias access - i.e. only databases registered in [databases.conf](https://www.firebirdsql.org/docs/html/en/refdocs/fbconf/firebird-configuration-reference.html#fbconf-databases)). 
 
 
 ## Notes

@@ -2933,10 +2933,13 @@
 <p>While installing the Firebird server, the installer asks for a <code>SYSDBA</code> password. The <code>SYSDBA</code> user is a builtin "superuser", which has all rights to manage the database.</p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
-<p>Make sure to change the password! Note also, that we will disable the SYSDBA access in the next steps (users with physical access to the <code>database.conf</code> on the server can always reset/restore access).</p>
+<p>Make sure to change the password! Note also, that we will disable the SYSDBA access in the next steps (users with physical access to the <code>database.conf</code> on the server can always reset/restore access).
+See <a href="https://www.firebirdsql.org/file/documentation/html/en/firebirddocs/qsg5/firebird-5-quickstartguide.html#qsg5-config-gsec-changepw">change SYSDBA password</a>.</p>
 </div>
+<p>See <a href="https://www.firebirdsql.org/docs/html/en/refdocs/fbconf/firebird-configuration-reference.html">Firebird configuration reference</a>.</p>
 <h3 id="setting-up-trusted-authentication"><a class="toclink" href="#setting-up-trusted-authentication">Setting up trusted authentication</a></h3>
-<p>See <a href="https://github.com/FirebirdSQL/firebird/blob/master/doc/README.trusted_authentication">README.trusted_authentication</a>.</p>
+<p>See <a href="https://ib-aid.com/download/docs/fb4migrationguide.html#_configuring_trusted_authentication">Configuring trusted authentication</a>.
+See <a href="https://github.com/FirebirdSQL/firebird/blob/master/doc/README.trusted_authentication">README.trusted_authentication</a>.</p>
 <h3 id="mapping"><a class="toclink" href="#mapping">Mapping</a></h3>
 <p>See <a href="https://github.com/FirebirdSQL/firebird/blob/master/doc/sql.extensions/README.mapping.html">README.mapping.html</a></p>
 <div class="highlight"><pre><span></span><code>create global mapping win_admin using plugin win_sspi from predefined_group DOMAIN_ANY_RID_ADMINS to role RDB$ADMIN;
@@ -2960,7 +2963,8 @@
 <p>CREATE MAPPING WINGROUP1 USING PLUGIN WIN_SSPI FROM GROUP GROUP_NAME TO ROLE ROLE_NAME;</p>
 <p>Here we expect that some windows users may belong to group GROUP_NAME. If needed name of the group may be given in long form, i.e. DOMAIN\GROUP.</p>
 <h2 id="setting-up-database-and-server-rights-and-roles"><a class="toclink" href="#setting-up-database-and-server-rights-and-roles">Setting up database and server rights and roles</a></h2>
-<p>Users, Roles and Grants can be managed using SQL commands or the <a href="https://www.firebirdsql.org/file/documentation/html/en/firebirddocs/gsec/firebird-gsec.html">GSEC command line utility</a>.</p>
+<p>See the <a href="https://firebirdsql.org/file/documentation/chunk/en/refdocs/fblangref50/fblangref50-security.html">Security Chapter in the Language Reference Manual</a>.</p>
+<p>Users, Roles and Grants can be managed using SQL commands or the <a href="https://www.firebirdsql.org/file/documentation/html/en/firebirddocs/gsec/firebird-gsec.html">GSEC command line utility</a>. </p>
 <h2 id="hardening"><a class="toclink" href="#hardening">Hardening</a></h2>
 <p>See the <a href="https://www.firebirdsql.org/manual/de/qsg2-de-config.html">official documentation</a> for best practices about configuring the server and security settings.</p>
 <h3 id="service-user-account"><a class="toclink" href="#service-user-account">Service user account</a></h3>
@@ -2976,9 +2980,9 @@ file system access, make sure to grant write access to the following files:</p>
 <p>See the <a href="https://www.firebirdsql.org/manual/de/qsg2-de-config.html">official documentation</a>.</p>
 <h3 id="restrict-server-filesystem-access"><a class="toclink" href="#restrict-server-filesystem-access">Restrict server filesystem access</a></h3>
 <p>Best practice is to run the service using the windows service account (see <a href="#service-user-account">Service user account</a>),
-but this requires setting explicit permissions on the database files. As another option, the <code>DatabaseAccess</code> parameter
-in <code>firebird.conf</code> can be set to <code>restrict</code> (to allow external access to a given set of folders) or to <code>none</code> (to only
-allow alias access - i.e. only databases registered in <code>databases.conf</code>). </p>
+but this requires setting explicit permissions on the database files. As another option, the <a href="https://www.firebirdsql.org/docs/html/en/refdocs/fbconf/firebird-configuration-reference.html#fbconf-database-access">DatabaseAccess</a> parameter
+in <a href="https://www.firebirdsql.org/docs/html/en/refdocs/fbconf/firebird-configuration-reference.html#fbconf-firebird">firebird.conf</a> can be set to <code>restrict</code> (to allow external access to a given set of folders) or to <code>none</code> (to only
+allow alias access - i.e. only databases registered in <a href="https://www.firebirdsql.org/docs/html/en/refdocs/fbconf/firebird-configuration-reference.html#fbconf-databases">databases.conf</a>). </p>
 <h2 id="notes"><a class="toclink" href="#notes">Notes</a></h2>
 <h3 id="isql-in-embedded-mode"><a class="toclink" href="#isql-in-embedded-mode">isql in embedded mode</a></h3>
 <p>If the firebird server service is stopped, then <code>isql</code> can be used in embedded mode. This is especially useful to fix

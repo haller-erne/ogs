@@ -5,7 +5,7 @@
       
       
       
-        <link rel="canonical" href="https://haller-erne.github.io/ogs/appnotes/userdb-activedirectory/">
+        <link rel="canonical" href="https://haller-erne.github.io/ogs/appnotes/firebird-security/">
       
       
       
@@ -18,7 +18,7 @@
     
     
       
-        <title>Active directory authentication - OGS Documentation</title>
+        <title>Firebird database configuration - OGS Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#active-directory-authentication" class="md-skip">
+        <a href="#firebird-database-configuration" class="md-skip">
           Skip to content
         </a>
       
@@ -113,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Active directory authentication
+              Firebird database configuration
             
           </span>
         </div>
@@ -2671,13 +2671,52 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#user-interface" class="md-nav__link">
+  <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
       
-        User interface
+        Overview
       
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-communication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Network communication
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-a-firebird-server-up-for-window-authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting a Firebird server up for Window authentication
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Setting a Firebird server up for Window authentication">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installing steps
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2698,22 +2737,31 @@
 
 
 
-<h1 id="active-directory-authentication"><a class="toclink" href="#active-directory-authentication">Active directory authentication</a></h1>
-<ul>
-<li>default implementation uses two AD-security groups to map "operator" and "supervisor" application roles. This is defined in station.ini (supervisor_sid=, operator_sid=)</li>
-<li>when starting OGS, the currently logged on user is checked having one of the two roles and gets rights assigned accordingly</li>
-<li>rights:<ul>
-<li>supervisor has all rights</li>
-<li>operator has limited rights as defined in the <code>user_rights</code> global LUA table (as with <a href="../userdb/">standard authentication</a>)</li>
-</ul>
-</li>
-<li>NOTE: Ensure setting a folder SID for the project folder to prevent changing and project file (admin only write allowed)</li>
-</ul>
-<h2 id="user-interface"><a class="toclink" href="#user-interface">User interface</a></h2>
-<ul>
-<li>uses the standard windows credentials dialog</li>
-<li>for domain users, UPN format is used (email@domain)</li>
-</ul>
+<h1 id="firebird-database-configuration"><a class="toclink" href="#firebird-database-configuration">Firebird database configuration</a></h1>
+<h2 id="overview"><a class="toclink" href="#overview">Overview</a></h2>
+<p>The Firebird database server is used by OGS to store configuration and result data. Typically, there are two databases involved:
+- Station database. This is typically used on the station as follows:
+    - Monitor.exe: The OGS runtime reads the workflow configuration and writes the result data (part results)
+    - heOpImp.exe: The OGS project import utility writes updated configuration into the station database
+- Configuration database. This is used to store the workflow configuration data. This is typically used as follows:
+    - heOpCfg.exe: The OGS workflow editor reads from and writes to the database. The database can be local or remote, for a remote database, heOpCfg uses two application roles to access the data ("editor" and "admin")
+    - heOpImp.exe: The OGS project import utility reads from this database.</p>
+<p>The station database usually is hosted on the station PC and does not need access from the outside ("local server"). The location of the configuration database might be local or remote, so the "remote" database server needs network access.</p>
+<h2 id="network-communication"><a class="toclink" href="#network-communication">Network communication</a></h2>
+<p>The Firebird database server by default listens on TCP/3050 for client requests. The server can be configured (in <code>firebird.conf</code>) for different authentication, authorization and encryption schemes using plugins.</p>
+<p>Access over the network can be configured by setting up firewall rules on the database server accordingly.</p>
+<p>Typical options are:
+- username/password authentication
+- active directory integrated authentication
+- mapping roles to rights, mapping users and groups to roles
+- encrypted communication</p>
+<h2 id="setting-a-firebird-server-up-for-window-authentication"><a class="toclink" href="#setting-a-firebird-server-up-for-window-authentication">Setting a Firebird server up for Window authentication</a></h2>
+<h3 id="installing-steps"><a class="toclink" href="#installing-steps">Installing steps</a></h3>
+<p>While installing the Firebird server, the installer asks for a <code>SYSDBA</code> password. The <code>SYSDBA</code> user is a builtin "superuser", which has all rights to manage the database.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Make sure to change the password! Note also, that we will disable the SYSDBA access in the next steps (users with physical access to the <code>database.conf</code> on the server can always reset/restore access).</p>
+</div>
 
 
 

@@ -2,7 +2,7 @@
 
 ## Overview
 
-The OGS active directory authentication actaully consists of two main areas:
+The OGS active directory authentication actually consists of two main areas:
 
 - OGS application logon and user rights. This is used by the OGS runtime application `monitor.exe` to determine the rights a user has when using the software. See [OGS application logon and user rights](#ogs-application-logon-and-user-rights) below for more information.
 - OGS database access and rights. The databases also manages security and Active Directory can be used to control who can connect to a database and which rights are available based on the user initialing the connection. See [Firebird SQL Active Directory Integration](./firebird-security.md) for more information.

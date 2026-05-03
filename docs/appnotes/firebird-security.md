@@ -2,6 +2,8 @@
 
 ## Overview
 
+### OGS Firebird database usage
+
 The Firebird database server is used by OGS to store configuration and result data. Typically, there are two databases involved:
 - Station database. This is typically used on the station as follows:
     - Monitor.exe: The OGS runtime reads the workflow configuration and writes the result data (part results)
@@ -10,105 +12,231 @@ The Firebird database server is used by OGS to store configuration and result da
     - heOpCfg.exe: The OGS workflow editor reads from and writes to the database. The database can be local or remote, for a remote database, heOpCfg uses two application roles to access the data ("editor" and "admin")
     - heOpImp.exe: The OGS project import utility reads from this database.
 
-The station database usually is hosted on the station PC and does not need access from the outside ("local server"). The location of the configuration database might be local or remote, so the "remote" database server needs network access.
+The station database usually is hosted on the station PC and does not need access from the outside ("local server"). The location of the configuration database might be local or remote, so the "remote server" needs network access.
 
-## Network communication
+### Authentication, Authorization and Communication
 
-The Firebird database server by default listens on TCP/3050 for client requests. The server can be configured (in `firebird.conf`) for different authentication, authorization and encryption schemes using plugins.
+The firebird server uses plugins for authentication, authorízation and over the wire encryption (see [Firebird Configuration Reference - Server](https://www.firebirdsql.org/docs/html/en/refdocs/fbconf/firebird-configuration-reference.html#fbconf-firebird) and [Firebird Language Reference - Security](https://firebirdsql.org/file/documentation/chunk/en/refdocs/fblangref50/fblangref50-security.html)). Note, that most of these settings can be defined globally or on the database level.
 
-Access over the network can be configured by setting up firewall rules on the database server accordingly.
+For authentication, the following options are available by default (`fbclient.conf` parameter `AuthServer`) - similar to Microsoft SQL server these can be enabled and disabled:
+- srp (secure remote password): username/password authentication over encrypted communication channel
+- win_sspi: active directory based authentication
 
-Typical options are:
-- username/password authentication
-- active directory integrated authentication
-- mapping roles to rights, mapping users and groups to roles
-- encrypted communication
+The communication between Client ans Server is also managed by plugins. By default the folloing are available (`fbclient.conf` parameter `WireCryptPlugin`): `ChaCha`, `ChaCha64`, both using SHA265 hashed session keys. Also `Arc4` is available, but considered insecure and should be disabled.
 
+Authorization defines, which rights a user gets when accessing the database server, a database and the objects inside the database. In Firebird, these rights are defined for the actual user and by the role a user has. Rights for database objects can be granted accordingly. 
 
-## Setting a Firebird server up for Window authentication
+Special cases are:
+- SYSDBA user: is a "superuser", which has all access rights in all databases
+- PUBLIC user: default user without any rights. Can be used for role mapping and active directory mapping though.
+- database owner: the user generating a database automatically gets the RDB$ADMIN role for this database (i.e. the admin rights).
+- database user: his rights are defined by roles and rights granted explicitely.
 
-### Overview
+Note, that all rights assignment operate on "database" users and roles. For active directory users connecting through `win_sspi` (trusted authentication), usually a mapping based on active directory groups is used to map Windows users/groups to database users.
 
-### Installing steps
+### Firewall
 
-While installing the Firebird server, the installer asks for a `SYSDBA` password. The `SYSDBA` user is a builtin "superuser", which has all rights to manage the database.
+The Firebird database server by default listens on TCP/3050 for client requests. The server can be configured (in `firebird.conf`) for different ports or listening only on specific interfaces.
 
-!!! info 
+The servers firewall and infrastructure firewalls should be configured accordingly.
 
-    Make sure to change the password! Note also, that we will disable the SYSDBA access in the next steps (users with physical access to the `database.conf` on the server can always reset/restore access).
-    See [change SYSDBA password](https://www.firebirdsql.org/file/documentation/html/en/firebirddocs/qsg5/firebird-5-quickstartguide.html#qsg5-config-gsec-changepw).
+## Setting the Firebird server up for Window authentication
 
-See [Firebird configuration reference](https://www.firebirdsql.org/docs/html/en/refdocs/fbconf/firebird-configuration-reference.html).
+### OGS connection roles
 
-### Setting up trusted authentication
+Generally the the different connection roles are used by the OGS applications:
 
-See [Configuring trusted authentication](https://ib-aid.com/download/docs/fb4migrationguide.html#_configuring_trusted_authentication).
-See [README.trusted_authentication](https://github.com/FirebirdSQL/firebird/blob/master/doc/README.trusted_authentication).
+| role | application | database | comment |
+| --- | --- | --- | --- |
+| heOpCfg_editor  | heOpCfg | config | Edit workflows |
+| heOpImp_reader | heOpImp | config | Read workflows |
+| heOpImp_writer | heOpImp | station | Update workflows |
+| heOpMon_user | heOpMon | station | Read workflows, write station results |
 
+### Step 1: Setup Windows Active Directory mapping for Administrators
 
-### Mapping
+During the installation, the `SYSDBA` account is created in the security database and the authentication is set to `Srp265`. So basically this must be changed to `win_sspi` to disable password based authentication.  However, as no mapping is defined by default, only switching the authentication would lockout any access, so first the Windows administrative mapping should be set. This will map any member of the local Windows Administrators group to the `RDB$Admin` group, effectively allowing full database access.
 
-See [README.mapping.html](https://github.com/FirebirdSQL/firebird/blob/master/doc/sql.extensions/README.mapping.html)
+``` cmd
+:: Run in a windows command prompt on the server to enable "auto admin mapping".
+:: Use the SYSDBA password you defined while installing the server
+:: Connect to the by default installed employee.fdb to get server access.
+> isql -u SYSDBA -p [password] 127.0.0.1:employee.fdb
+Database: employee.fdb, User: SYSDBA
+SQL> CREATE GLOBAL MAPPING WIN_ADMINS_ROLE USING PLUGIN WIN_SSPI
+  FROM Predefined_Group DOMAIN_ANY_RID_ADMINS
+  TO ROLE RDB$ADMIN;
+SQL> CREATE GLOBAL MAPPING WIN_ADMINS_TOSYSDBA USING PLUGIN WIN_SSPI
+  FROM Predefined_Group DOMAIN_ANY_RID_ADMINS
+  TO USER SYSDBA;
+SQL> exit;
+```
 
-    create global mapping win_admin using plugin win_sspi from predefined_group DOMAIN_ANY_RID_ADMINS to role RDB$ADMIN;
+Alternatively run the following:
 
-#### Auto admin mapping
-
-See [using GSEC to setup automatic admin mapping](https://www.firebirdsql.org/file/documentation/html/en/firebirddocs/gsec/firebird-gsec.html#gsec-interactive-admin-mapping) and [LANGREF:auto admin mapping](https://www.firebirdsql.org/refdocs/langrefupd25-security-auto-admin-mapping.html).
-
-#### win_sspi mapping
-
-Enable use of windows trusted authentication in all databases that use current security database:
-
-CREATE GLOBAL MAPPING TRUSTED_AUTH USING PLUGIN WIN_SSPI FROM ANY USER TO USER;
-
-
-
-Enable SYSDBA-like access for windows admins in current database:
-
-CREATE MAPPING WIN_ADMINS USING PLUGIN WIN_SSPI FROM Predefined_Group DOMAIN_ANY_RID_ADMINS TO ROLE RDB$ADMIN;
-
-(there is no group DOMAIN_ANY_RID_ADMINS in windows, but such name is added by win_sspi plugin to provide exact backwards compatibility)
-
-
-
-Enable particular user from other database access current database with other name:
-
-CREATE MAPPING FROM_RT USING PLUGIN SRP IN "rt" FROM USER U1 TO USER U2;
-
-(providing database names/aliases in double quotes is important for operating systems that have case-sensitive file names)
+``` cmd
+gsec -user sysdba -password masterkey -mapping set
+``` 
 
 
+Now exit isql and try to login using trusted authentication:
+``` cmd
+> isql -tr 127.0.0.1:employee.fdb
+Database: employee.fdb, User: <domain>\<username>
+SQL> SHOW MAPPING;
+*** Global mapping ***
+AutoAdminImplementationMapping USING PLUGIN Win_Sspi FROM Predefined_Group 'DOMAIN_ANY_RID_ADMINS' TO ROLE RDB$ADMIN
+SQL> exit;
+```
 
-Enable server's SYSDBA (from main security database) access current database (assuming it has non-default security database):
+!!! info Local attachment
 
-CREATE MAPPING DEF_SYSDBA USING PLUGIN SRP IN "security.db" FROM USER SYSDBA TO USER;
+    The security is only enforced in server mode (i.e. over TCP connections to the database). A local server admin can always
+    shutdown the Firebird windows service and access the database 
+    using direct attach mode (if the file ACL allows it):
+
+        > isql -u SYSDBA -p [password] employee.fdb
+
+    (note `employee.fdb` instead of `127.0.0.1:employee.fdb`)
+
+!!! note Object rights and user mapping
+
+    Even though Windows Administrators now have full access to the databases, this does not mean there is a mapping for the database objects. E.g. `select * from <table>` in employee.fdb will fail, as there the admin user does not exist as a user and therefore does not have select rights on the `<table>`. To modify, add the user or map to a user.
+
+### Step 2: Define users and mappings
+
+Generally, OGS only uses two different rights for its purposes: one for reading from a database, one for writing to a database. To keep things simple, two roles are created and these are mapped from the win_sspi according to the active directory group. A second mapping is done to the PUBLIC user, which is already available in each database:
+
+- db_role_reader: read access to the database.
+- db_role_writer: this user is given a default database role db_role_writer with read/write access to the database.
+- db_role_monitor: special role, with read access to the workflow configuration and write access to the result tables.
+
+``` cmd
+:: Create the two users (globally)
+> gsec -user SYSDBA -password masterkey -add db_reader -pw isnotusedanyway
+> gsec -user SYSDBA -password masterkey -add db_writer -pw isnotusedanyway
+
+:: connect to the database to create roles and grants
+> isql 127.0.0.1:<datbase> -user SYSDBA -password <password>
+SQL> create ROLE db_role_reader set SYSTEM PRIVILEGES TO SELECT_ANY_OBJECT_IN_DATABASE, ACCESS_ANY_OBJECT_IN_DATABASE;
+SQL> create ROLE db_role_writer set SYSTEM PRIVILEGES TO SELECT_ANY_OBJECT_IN_DATABASE, ACCESS_ANY_OBJECT_IN_DATABASE, MODIFY_ANY_OBJECT_IN_DATABASE;
+SQL> create ROLE db_role_monitor set SYSTEM PRIVILEGES TO SELECT_ANY_OBJECT_IN_DATABASE, ACCESS_ANY_OBJECT_IN_DATABASE;
+
+# map the windows groups - note: must be done for each database!
+# note: map all external users to public + given role
+
+# ---- for config database ----
+# heOpImp is reader here
+create mapping heOpImp_reader_user using plugin win_sspi from group "QUALITYR\heOpImp_reader" to USER public;
+create mapping heOpImp_reader_role using plugin win_sspi from group "QUALITYR\heOpImp_reader" to ROLE db_role_reader;
+# heOpCfg is writer here
+create mapping heOpCfg_writer_user using plugin win_sspi from group "QUALITYR\heOpCfg_editor" to USER public;
+create mapping heOpCfg_writer_role using plugin win_sspi from group "QUALITYR\heOpCfg_editor" to ROLE db_role_writer;
+
+# ---- for station database ----
+# heOpImp is writer here
+create mapping heOpImp_writer_user using plugin win_sspi from group "QUALITYR\heOpImp_writer" to USER public;
+create mapping heOpImp_writer_role using plugin win_sspi from group "QUALITYR\heOpImp_writer" to ROLE db_role_reader;
+# heOpMon is the special monitor role
+create mapping heOpCfg_monitor_user using plugin win_sspi from group "QUALITYR\heOpMon_user" to USER public;
+create mapping heOpCfg_monitor_role using plugin win_sspi from group "QUALITYR\heOpMon_user" to ROLE db_role_monitor;
+
+```
+
+<details>
+<summary>🎬 Test login!</summary>
+
+Try running a command shell using the Windows logon for any user which is a member of the "QUALITYR\heOpCfg_editor" group.
+
+    > runas /noprofile /user:ogs_editor cmd.exe 
+
+This will open a new command window with the given users login token and groups (you can check by running `whoami /groups`). Now execute `isql` as follows to see the effective user and role:
+
+    [ogs_editor]> isql -tr <dbhost>:<dbname>
+
+The expected output is:
+
+    C:\Program Files\Firebird\Firebird_4_0>isql -tr 127.0.0.1:test01
+    Database: 127.0.0.1:test01, User: PUBLIC, Role: DB_ROLE_WRITER
+    SQL>
+
+To test, if the user can access the schema objects, run (in isql) a query:
+
+    SQL> select part from part;
+
+The expected output is:
+
+    SQL> select part from part;
+
+                PART
+        ============
+                59
+                60
+                ...
+    SQL>
 
 
+*Demo output varies. Your user mappings might differ from what's shown here.*
+</details>
 
-Force people who logged in using legacy authentication plugin have not too much rights:
+### Step 3: Grant granular permissions to special roles
 
-CREATE MAPPING LEGACY_2_GUEST USING PLUGIN legacy_auth FROM ANY USER TO USER GUEST;
+If more granular priviledges are needed (other than the SYSTEM PRIVILEGES), then explicit grants can be used (e.g. for the `db_role_monitor` role). To do so, run the following in isql (see [Language Reference - Statements for Granting Privileges](https://firebirdsql.org/file/documentation/chunk/en/refdocs/fblangref50/fblangref50-security-granting.html)):
+
+    SQL> GRANT ALL ON TABLE xxx TO ROLE db_role_monitor;
+
+This is usually needed for the `db_role_monitor`, as the windows user running OGS might not be allowed to wirte to all database objects 8e.g. only to the result schema, not to the workflow definitions). Do this for all tables of the station database (`station.fds`) result schema:
+
+    total, archpart, transaktion, nutzer, limit, archaktion, archdesign, result, tool_position, station_runtime 
+
+<details>
+<summary>🎬 Copy & paste code</summary>
+``` sql
+GRANT ALL ON TABLE total TO ROLE db_role_monitor;
+GRANT ALL ON TABLE archpart TO ROLE db_role_monitor;
+GRANT ALL ON TABLE transaktion TO ROLE db_role_monitor;
+GRANT ALL ON TABLE nutzer TO ROLE db_role_monitor;
+GRANT ALL ON TABLE limit TO ROLE db_role_monitor;
+GRANT ALL ON TABLE archaktion TO ROLE db_role_monitor;
+GRANT ALL ON TABLE archdesign TO ROLE db_role_monitor;
+GRANT ALL ON TABLE result TO ROLE db_role_monitor;
+GRANT ALL ON TABLE tool_position TO ROLE db_role_monitor;
+GRANT ALL ON TABLE station_runtime TO ROLE db_role_monitor;
+```
+</details>
 
 
+### Step 4: Change server configuration to only allow trusted authentication
 
-Map windows group to trusted firebird role:
+Till now, it was convenient to use the SYSDBA user to easily modify gloabl and database parameters. To switch to production mode, disable srp authentication and switch to trusted authentication. So the authentication settings can be changed in `firebird.conf` (also set the recommended security options):
 
-CREATE MAPPING WINGROUP1 USING PLUGIN WIN_SSPI FROM GROUP GROUP_NAME TO ROLE ROLE_NAME;
+``` bash title="firebird.conf"
+# Change the following settings
 
-Here we expect that some windows users may belong to group GROUP_NAME. If needed name of the group may be given in long form, i.e. DOMAIN\GROUP.
+DatabaseAccess = None
+AuthServer = Win_Sspi
+WireCrypt = Required
+WireCryptPlugin = ChaCha64, ChaCha
+``` 
 
+As now also database access is limited to aliased databases, all databases which shall be accessed must be added to `database.conf` (and disable `employee.fdb`).
 
-## Setting up database and server rights and roles
+## Hardening checklist
 
-See the [Security Chapter in the Language Reference Manual](https://firebirdsql.org/file/documentation/chunk/en/refdocs/fblangref50/fblangref50-security.html).
+### Local Firebird Server configuration
+- Configure the "local server" to listen on 127.0.0.1 only or block incominc connections on TCP port 3050.
+- Set `AuthClient` to `win_sspi, srp256`
+- Set `RemoteBindAddress = 127.0.0.1` or block incoming TCP connections on TCP/3050
+- Change `SYSDBA` password.
 
-Users, Roles and Grants can be managed using SQL commands or the [GSEC command line utility](https://www.firebirdsql.org/file/documentation/html/en/firebirddocs/gsec/firebird-gsec.html). 
-
-
-## Hardening
-
-See the [official documentation](https://www.firebirdsql.org/manual/de/qsg2-de-config.html) for best practices about configuring the server and security settings.
+### Remote Firebird Server configuration
+- Disable `Arc4` in the `WireCryptPlugin`
+- Set `AuthServer` to `win_sspi`
+- Disable access to non-aliased databases: Set `DatabaseAccess = None` 
+- Remove unused aliases from `databases.conf`
+- Add needed aliases from `databases.conf`
+- Configure firewall to only allow access from trusted networks
+- Change `SYSDBA` password.
 
 ### Service user account
 
@@ -131,6 +259,25 @@ Best practice is to run the service using the windows service account (see [Serv
 but this requires setting explicit permissions on the database files. As another option, the [DatabaseAccess](https://www.firebirdsql.org/docs/html/en/refdocs/fbconf/firebird-configuration-reference.html#fbconf-database-access) parameter
 in [firebird.conf](https://www.firebirdsql.org/docs/html/en/refdocs/fbconf/firebird-configuration-reference.html#fbconf-firebird) can be set to `restrict` (to allow external access to a given set of folders) or to `none` (to only
 allow alias access - i.e. only databases registered in [databases.conf](https://www.firebirdsql.org/docs/html/en/refdocs/fbconf/firebird-configuration-reference.html#fbconf-databases)). 
+
+## References
+
+- [Firebird configuration reference](https://www.firebirdsql.org/docs/html/en/refdocs/fbconf/firebird-configuration-reference.html).
+- [Language Reference Manual - Security](https://firebirdsql.org/file/documentation/chunk/en/refdocs/fblangref50/fblangref50-security.html).
+- [GSEC command line utility](https://www.firebirdsql.org/file/documentation/html/en/firebirddocs/gsec/firebird-gsec.html)
+- [Firebird hardening tips](https://www.firebirdsql.org/manual/de/qsg2-de-config.html)
+
+<details>
+<summary>🎬 3rd party info</summary>
+
+- [README.mapping.html](https://github.com/FirebirdSQL/firebird/blob/master/doc/sql.extensions/README.mapping.html)
+- [Configuring trusted authentication](https://ib-aid.com/download/docs/fb4migrationguide.html#_configuring_trusted_authentication).
+- [README.trusted_authentication](https://github.com/FirebirdSQL/firebird/blob/master/doc/README.trusted_authentication).
+
+- [using GSEC to setup automatic admin mapping](https://www.firebirdsql.org/file/documentation/html/en/firebirddocs/gsec/firebird-gsec.html#gsec-interactive-admin-mapping)
+- [LANGREF:auto admin mapping](https://www.firebirdsql.org/refdocs/langrefupd25-security-auto-admin-mapping.html).
+
+</details>
 
 
 ## Notes
@@ -155,90 +302,8 @@ for more details, see [README.security_database.txt](https://github.com/Firebird
         SQL> exit;
 
         WARNING! Do not just copy and paste! Generate your own strong password!
+
     4. To complete the initialization, start the Firebird server again. Now you will be able to perform a network
     login to databases using login SYSDBA and the password you assigned to it.
 
 
-### hhh
-
-First enable use of Windows trusted authentication:
-
-CREATE GLOBAL MAPPING TRUSTED_AUTH
-USING PLUGIN WIN_SSPI
-FROM ANY USER
-TO USER;
-
-Then we want to define some exact Windows trusted authentication user group mapping to firebird role:
-
-CREATE MAPPING WIN_GLADMIN
-USING PLUGIN WIN_SSPI
-FROM Group NOOMGLADMIN
-TO ROLE GLADMIN;
-
-But this does not work.
-
-
-## Reference
-
-Firebird starting with version 2.1 can use Windows security for user authentication.
-Current security context is passed to the server and if it's OK for that server is used to determine
-firebird user name. To use Windows trusted authentication in FB3 you should make minimum changes in
-firebird.conf and tune mappings in your databases.
-
-Parameter Authentication in firebird.conf file is not used any more - it's replaced with more
-generic AuthServer (and AuthClient) parameters. Also to use trusted authentication one should turn
-off mandatory wire encryption because Win_Sspi plugin (which implements trusted authentication on
-Windows) does not provide an encryption key. So minimum changes in firebird.conf you need is:
-
-AuthServer = Srp, Win_Sspi
-WireCrypt = Enabled
-
-Also mapping (see sql.extensions/README.mapping.html) should be created. To tune for all databases
-do:
-
-create global mapping trusted_auth using plugin win_sspi from any user to user;
-
-Do not put user and password parameters in DPB/SPB. With provided firebird.conf in almost all cases
-trusted authentication will be used (see environment below for exceptions). Suppose you have logged
-to the Windows server SRV as user John. If you connect to server SRV with isql, not specifying
-Firebird login and password:
-
-isql srv:employee
-
-and do:
-
-SELECT CURRENT_USER FROM RDB$DATABASE;
-
-you will get something like:
-
-USER
-====================================================
-SRV\John
-
-Windows users may be granted rights to access database objects and roles in the same way as
-traditional Firebird users. (This is not something new - in UNIX OS users might be granted rights
-virtually always).
-
-- If domain administrator (member of well known predefined groups) connects to Firebird using trusted
-authentication, he/she may be granted 'god-like' (SYSDBA) rights depending upon settings in database,
-to which such user attachs. To keep CURRENT_USER value in a form DOMAIN\User, a new object (predefined
-system role) is added to the database. The name of that role is RDB$ADMIN, and any user, granted it,
-can attach to the database with SYSDBA rights. To configure all databases to auto-grant that role to
-administrators, use the following command:
-
-create global mapping win_admin using plugin win_sspi from predefined_group DOMAIN_ANY_RID_ADMINS to role RDB$ADMIN;
-
-Take into an account, that if Windows administrator attaches with role set in dpb, it will not be
-replaced with RDB$ADMIN, i.e. he/she will not get SYSDBA rights.
-
-- To keep legacy behavior when ISC_USER/ISC_PASSWORD variables are set in environment, they
-are picked and used instead of trusted authentication. In case when trusted authentication is needed
-and ISC_USER/ISC_PASSWORD are set, add new DPB parameter isc_dpb_trusted_auth to DPB. In most
-of Firebird command line utilities switch -trusted (may be abbreviated up to utility rules) is used
-for it.
-
-isql srv:db                -- log using trusted authentication
-set ISC_USER=user1
-set ISC_PASSWORD=12345
-isql srv:db                -- log as 'user1' from environment
-isql -trust srv:db         -- log using trusted authentication

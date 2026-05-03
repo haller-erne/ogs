@@ -65,7 +65,10 @@ nav:
     - Enterprise functionality:
         - Central/shared configuration database: appnotes/sharedconfig.md
         - Databanking and multi-station rework: appnotes/databanking.md
-        - Central user administration: appnotes/userdb.md
+        - Central user administration: 
+            - Overview: appnotes/userdb.md
+            - heUserManager: appnotes/userdb-heusermanager.md
+            - Active Directory: appnotes/userdb-activedirectory.md
         - Tool roaming and dynamic parameters: appnotes/toolgateway.md
         - Traceability: appnotes/traceability.md
     - Application notes:
@@ -75,6 +78,7 @@ nav:
         - Using BLE Gateways:
             - OpenMQTT-Gateway: appnotes/blegateway-openmqttgateway.md
             - Minew MG6 Gateway: appnotes/blegateway-minew-mg6.md
+        - Firebird SQL configuration: appnotes/firebird-security.md
     
 # sample
 #    – Version 1.x:

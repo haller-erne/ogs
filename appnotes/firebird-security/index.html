@@ -8,6 +8,8 @@
         <link rel="canonical" href="https://haller-erne.github.io/ogs/appnotes/firebird-security/">
       
       
+        <link rel="prev" href="../blegateway-minew-mg6/">
+      
       
       
         
@@ -18,7 +20,7 @@
     
     
       
-        <title>Firebird database configuration - OGS Documentation</title>
+        <title>Firebird SQL configuration - OGS Documentation</title>
       
     
     
@@ -113,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Firebird database configuration
+              Firebird SQL configuration
             
           </span>
         </div>
@@ -2310,9 +2312,20 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../userdb/" class="md-nav__link">
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
         
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3">
+        
+          
+          <label class="md-nav__link" for="__nav_7_3" id="__nav_7_3_label" tabindex="0">
+            
   
   
   <span class="md-ellipsis">
@@ -2326,7 +2339,107 @@
   
   
 
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Central user administration
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../userdb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../userdb-heusermanager/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    heUserManager
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../userdb-activedirectory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Active Directory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -2399,18 +2512,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked="">
         
           
           <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
@@ -2431,7 +2546,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_8">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2631,6 +2746,314 @@
             
           </ul>
         </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Firebird SQL configuration
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Firebird SQL configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ogs-firebird-database-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OGS Firebird database usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authentication-authorization-and-communication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Authentication, Authorization and Communication
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#firewall" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Firewall
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-the-firebird-server-up-for-window-authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting the Firebird server up for Window authentication
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Setting the Firebird server up for Window authentication">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ogs-connection-roles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OGS connection roles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-1-setup-windows-active-directory-mapping-for-administrators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Setup Windows Active Directory mapping for Administrators
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-define-users-and-mappings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Define users and mappings
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-grant-granular-permissions-to-special-roles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Grant granular permissions to special roles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-change-server-configuration-to-only-allow-trusted-authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Change server configuration to only allow trusted authentication
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hardening-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hardening checklist
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Hardening checklist">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#local-firebird-server-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Local Firebird Server configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remote-firebird-server-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remote Firebird Server configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#service-user-account" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Service user account
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#change-sysdba-password" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Change SYSDBA password
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restrict-server-filesystem-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Restrict server filesystem access
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#isql-in-embedded-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        isql in embedded mode
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   

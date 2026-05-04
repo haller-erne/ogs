@@ -12,7 +12,7 @@ The OGS active directory authentication actually consists of two main areas:
 ### Overview
 
 - default implementation uses two AD-security groups to map "operator" and "supervisor" application roles. This is defined in station.ini (supervisor_sid=, operator_sid=)
-- when starting OGS, the currently logged on user is checked having one of the two roles and gets rights assigned accordingly
+- when starting OGS, the currently logged-on process user is automatically logged in once if they belong to one of the configured AD groups (SSO auto-login at startup)
 - rights:
     * supervisor has all rights
     * operator has limited rights as defined in the `user_rights` global LUA table (as with [standard authentication](./userdb.md))
@@ -20,8 +20,8 @@ The OGS active directory authentication actually consists of two main areas:
 
 ### User interface
 
-- uses the standard windows credentials dialog
-- for domain users, UPN format is used (email@domain)
+- uses the standard windows credentials dialog (when `windows_default_auth=1`) or the OGS username/password field (when `windows_default_auth=0`)
+- accepted username formats: UPN (`user@domain`) or plain username; `DOMAIN\user` format is **not** supported
 
 
 ## OGS setup
@@ -39,7 +39,7 @@ OGS.Project.AddPath('../shared')
 
 requires = {
 	"barcode",
-	"user_manager_db",           -- (1)!
+	"user_manager_ad",           -- (1)!
 	"user_manager",
     -- possibly more...
 }
@@ -68,9 +68,11 @@ sid_supervisor=S-1-5-21-1351067494-3386591924-3478655970-4621
 
 ; Defines, if the native Windows authentication dialog should be used
 ; or if username/password can be entered through the OGS username/password
-; field (a little bit less secure, but works better with touch screens)
-; Default 0 (use Windows logon)
-;ogs_logon_prompt=1
+; field (a little bit less secure, but works better with touch screens).
+; When set to 0, the password typed in the OGS field is passed from C++ to
+; Lua for direct AD validation via LogonUserW (no Windows dialog shown).
+; Default 1 (use Windows logon dialog)
+windows_default_auth=1
 
 ```
 
@@ -82,6 +84,6 @@ sid_supervisor=S-1-5-21-1351067494-3386591924-3478655970-4621
 
 ## Notes and hints
 
-- Fallback behaviour if no roles are assigned: uses the OGS level set in the users property.
-- You can still use the `user=password,level,cardid` in the `[USER]` section for static accounts (but this is not recommended!).
+- No fallback: if AD authentication fails or the user is not a member of any configured group, the login attempt returns an empty result. There is no fallback to static `[USER]` entries.
+- Static `user=password,level,cardid` entries in `[USER]` are **not** evaluated by the AD variant.
 

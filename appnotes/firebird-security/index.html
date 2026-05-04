@@ -3036,6 +3036,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#map-an-ad-user-to-sysdba" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        map an AD user to SYSDBA
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#isql-in-embedded-mode" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3309,6 +3320,17 @@
   
     <nav class="md-nav" aria-label="Notes">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#map-an-ad-user-to-sysdba" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        map an AD user to SYSDBA
+      
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#isql-in-embedded-mode" class="md-nav__link">
@@ -3606,6 +3628,10 @@ allow alias access - i.e. only databases registered in <a href="https://www.fire
 </details>
 
 <h2 id="notes"><a class="toclink" href="#notes">Notes</a></h2>
+<h3 id="map-an-ad-user-to-sysdba"><a class="toclink" href="#map-an-ad-user-to-sysdba">map an AD user to SYSDBA</a></h3>
+<p>To map a AD user to SYSDBA, use the following:</p>
+<div class="highlight"><pre><span></span><code>create mapping trusted_ilie2 using plugin win_sspi from USER "&lt;domain&gt;\&lt;user&gt;" to USER "SYSDBA";
+</code></pre></div>
 <h3 id="isql-in-embedded-mode"><a class="toclink" href="#isql-in-embedded-mode">isql in embedded mode</a></h3>
 <p>If the firebird server service is stopped, then <code>isql</code> can be used in embedded mode. This is especially useful to fix
 issues in the security database (e.g. bad mapping). To access the security database, run isql as follows (you <strong>must</strong> use <code>SYSDBA</code> as user name):</p>

@@ -3506,42 +3506,34 @@ using direct attach mode (if the file ACL allows it):</p>
 <a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a>create mapping heOpCfg_monitor_user using plugin win_sspi from group "QUALITYR\heOpMon_user" to USER public;
 <a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a>create mapping heOpCfg_monitor_role using plugin win_sspi from group "QUALITYR\heOpMon_user" to ROLE db_role_monitor;
 </code></pre></div>
-<details>
+<details class="note">
 <summary>🎬 Test login!</summary>
+<p>Try running a command shell using the Windows logon for any user which is a member of the "QUALITYR\heOpCfg_editor" group.</p>
+<div class="highlight"><pre><span></span><code>&gt; runas /noprofile /user:ogs_editor cmd.exe
+</code></pre></div>
+<p>This will open a new command window with the given users login token and groups (you can check by running <code>whoami /groups</code>). Now execute <code>isql</code> as follows to see the effective user and role:</p>
+<div class="highlight"><pre><span></span><code>[ogs_editor]&gt; isql -tr &lt;dbhost&gt;:&lt;dbname&gt;
+</code></pre></div>
+<p>The expected output is:</p>
+<div class="highlight"><pre><span></span><code>C:\Program Files\Firebird\Firebird_4_0&gt;isql -tr 127.0.0.1:test01
+Database: 127.0.0.1:test01, User: PUBLIC, Role: DB_ROLE_WRITER
+SQL&gt;
+</code></pre></div>
+<p>To test, if the user can access the schema objects, run (in isql) a query:</p>
+<div class="highlight"><pre><span></span><code>SQL&gt; select part from part;
+</code></pre></div>
+<p>The expected output is:</p>
+<div class="highlight"><pre><span></span><code>SQL&gt; select part from part;
 
-Try running a command shell using the Windows logon for any user which is a member of the "QUALITYR\heOpCfg_editor" group.
-
-    &gt; runas /noprofile /user:ogs_editor cmd.exe 
-
-This will open a new command window with the given users login token and groups (you can check by running `whoami /groups`). Now execute `isql` as follows to see the effective user and role:
-
-    [ogs_editor]&gt; isql -tr <dbhost>:<dbname>
-
-The expected output is:
-
-    C:\Program Files\Firebird\Firebird_4_0&gt;isql -tr 127.0.0.1:test01
-    Database: 127.0.0.1:test01, User: PUBLIC, Role: DB_ROLE_WRITER
-    SQL&gt;
-
-To test, if the user can access the schema objects, run (in isql) a query:
-
-    SQL&gt; select part from part;
-
-The expected output is:
-
-    SQL&gt; select part from part;
-
-                PART
-        ============
-                59
-                60
-                ...
-    SQL&gt;
-
-
-*Demo output varies. Your user mappings might differ from what's shown here.*
-</dbname></dbhost></details>
-
+            PART
+    ============
+            59
+            60
+            ...
+SQL&gt;
+</code></pre></div>
+<p><em>Demo output varies. Your user mappings might differ from what's shown here.</em></p>
+</details>
 <h3 id="step-3-grant-granular-permissions-to-special-roles"><a class="toclink" href="#step-3-grant-granular-permissions-to-special-roles">Step 3: Grant granular permissions to special roles</a></h3>
 <p>If more granular priviledges are needed (other than the SYSTEM PRIVILEGES), then explicit grants can be used (e.g. for the <code>db_role_monitor</code> role). To do so, run the following in isql (see <a href="https://firebirdsql.org/file/documentation/chunk/en/refdocs/fblangref50/fblangref50-security-granting.html">Language Reference - Statements for Granting Privileges</a>):</p>
 <div class="highlight"><pre><span></span><code>SQL&gt; GRANT ALL ON TABLE xxx TO ROLE db_role_monitor;
@@ -3549,7 +3541,7 @@ The expected output is:
 <p>This is usually needed for the <code>db_role_monitor</code>, as the windows user running OGS might not be allowed to wirte to all database objects 8e.g. only to the result schema, not to the workflow definitions). Do this for all tables of the station database (<code>station.fds</code>) result schema:</p>
 <div class="highlight"><pre><span></span><code>total, archpart, transaktion, nutzer, limit, archaktion, archdesign, result, tool_position, station_runtime
 </code></pre></div>
-<details>
+<details class="note">
 <summary>🎬 Copy &amp; paste code</summary>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">db_role_monitor</span><span class="p">;</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">archpart</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">db_role_monitor</span><span class="p">;</span>
@@ -3563,7 +3555,6 @@ The expected output is:
 <a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">station_runtime</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">db_role_monitor</span><span class="p">;</span>
 </code></pre></div>
 </details>
-
 <h3 id="step-4-change-server-configuration-to-only-allow-trusted-authentication"><a class="toclink" href="#step-4-change-server-configuration-to-only-allow-trusted-authentication">Step 4: Change server configuration to only allow trusted authentication</a></h3>
 <p>Till now, it was convenient to use the SYSDBA user to easily modify gloabl and database parameters. To switch to production mode, disable srp authentication and switch to trusted authentication. So the authentication settings can be changed in <code>firebird.conf</code> (also set the recommended security options):</p>
 <div class="highlight"><span class="filename">firebird.conf</span><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Change the following settings</span>
@@ -3615,18 +3606,20 @@ allow alias access - i.e. only databases registered in <a href="https://www.fire
 <li><a href="https://www.firebirdsql.org/file/documentation/html/en/firebirddocs/gsec/firebird-gsec.html">GSEC command line utility</a></li>
 <li><a href="https://www.firebirdsql.org/manual/de/qsg2-de-config.html">Firebird hardening tips</a></li>
 </ul>
-<details>
-<summary>🎬 3rd party info</summary>
-
-- [README.mapping.html](https://github.com/FirebirdSQL/firebird/blob/master/doc/sql.extensions/README.mapping.html)
-- [Configuring trusted authentication](https://ib-aid.com/download/docs/fb4migrationguide.html#_configuring_trusted_authentication).
-- [README.trusted_authentication](https://github.com/FirebirdSQL/firebird/blob/master/doc/README.trusted_authentication).
-
-- [using GSEC to setup automatic admin mapping](https://www.firebirdsql.org/file/documentation/html/en/firebirddocs/gsec/firebird-gsec.html#gsec-interactive-admin-mapping)
-- [LANGREF:auto admin mapping](https://www.firebirdsql.org/refdocs/langrefupd25-security-auto-admin-mapping.html).
-
+<details class="note">
+<summary>🎬 3<sup>rd</sup> party info</summary>
+<ul>
+<li><a href="https://github.com/FirebirdSQL/firebird/blob/master/doc/sql.extensions/README.mapping.html">README.mapping.html</a></li>
+<li><a href="https://ib-aid.com/download/docs/fb4migrationguide.html#_configuring_trusted_authentication">Configuring trusted authentication</a>.</li>
+<li>
+<p><a href="https://github.com/FirebirdSQL/firebird/blob/master/doc/README.trusted_authentication">README.trusted_authentication</a>.</p>
+</li>
+<li>
+<p><a href="https://www.firebirdsql.org/file/documentation/html/en/firebirddocs/gsec/firebird-gsec.html#gsec-interactive-admin-mapping">using GSEC to setup automatic admin mapping</a></p>
+</li>
+<li><a href="https://www.firebirdsql.org/refdocs/langrefupd25-security-auto-admin-mapping.html">LANGREF:auto admin mapping</a>.</li>
+</ul>
 </details>
-
 <h2 id="notes"><a class="toclink" href="#notes">Notes</a></h2>
 <h3 id="map-an-ad-user-to-sysdba"><a class="toclink" href="#map-an-ad-user-to-sysdba">map an AD user to SYSDBA</a></h3>
 <p>To map a AD user to SYSDBA, use the following:</p>

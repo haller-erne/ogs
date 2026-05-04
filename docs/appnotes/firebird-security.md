@@ -143,41 +143,39 @@ create mapping heOpCfg_monitor_role using plugin win_sspi from group "QUALITYR\h
 
 ```
 
-<details>
-<summary>🎬 Test login!</summary>
+??? note "🎬 Test login!"
 
-Try running a command shell using the Windows logon for any user which is a member of the "QUALITYR\heOpCfg_editor" group.
+    Try running a command shell using the Windows logon for any user which is a member of the "QUALITYR\heOpCfg_editor" group.
 
-    > runas /noprofile /user:ogs_editor cmd.exe 
+        > runas /noprofile /user:ogs_editor cmd.exe 
 
-This will open a new command window with the given users login token and groups (you can check by running `whoami /groups`). Now execute `isql` as follows to see the effective user and role:
+    This will open a new command window with the given users login token and groups (you can check by running `whoami /groups`). Now execute `isql` as follows to see the effective user and role:
 
-    [ogs_editor]> isql -tr <dbhost>:<dbname>
+        [ogs_editor]> isql -tr <dbhost>:<dbname>
 
-The expected output is:
+    The expected output is:
 
-    C:\Program Files\Firebird\Firebird_4_0>isql -tr 127.0.0.1:test01
-    Database: 127.0.0.1:test01, User: PUBLIC, Role: DB_ROLE_WRITER
-    SQL>
+        C:\Program Files\Firebird\Firebird_4_0>isql -tr 127.0.0.1:test01
+        Database: 127.0.0.1:test01, User: PUBLIC, Role: DB_ROLE_WRITER
+        SQL>
 
-To test, if the user can access the schema objects, run (in isql) a query:
+    To test, if the user can access the schema objects, run (in isql) a query:
 
-    SQL> select part from part;
+        SQL> select part from part;
 
-The expected output is:
+    The expected output is:
 
-    SQL> select part from part;
+        SQL> select part from part;
 
-                PART
-        ============
-                59
-                60
-                ...
-    SQL>
+                    PART
+            ============
+                    59
+                    60
+                    ...
+        SQL>
 
 
-*Demo output varies. Your user mappings might differ from what's shown here.*
-</details>
+    *Demo output varies. Your user mappings might differ from what's shown here.*
 
 ### Step 3: Grant granular permissions to special roles
 
@@ -189,21 +187,20 @@ This is usually needed for the `db_role_monitor`, as the windows user running OG
 
     total, archpart, transaktion, nutzer, limit, archaktion, archdesign, result, tool_position, station_runtime 
 
-<details>
-<summary>🎬 Copy & paste code</summary>
-``` sql
-GRANT ALL ON TABLE total TO ROLE db_role_monitor;
-GRANT ALL ON TABLE archpart TO ROLE db_role_monitor;
-GRANT ALL ON TABLE transaktion TO ROLE db_role_monitor;
-GRANT ALL ON TABLE nutzer TO ROLE db_role_monitor;
-GRANT ALL ON TABLE limit TO ROLE db_role_monitor;
-GRANT ALL ON TABLE archaktion TO ROLE db_role_monitor;
-GRANT ALL ON TABLE archdesign TO ROLE db_role_monitor;
-GRANT ALL ON TABLE result TO ROLE db_role_monitor;
-GRANT ALL ON TABLE tool_position TO ROLE db_role_monitor;
-GRANT ALL ON TABLE station_runtime TO ROLE db_role_monitor;
-```
-</details>
+??? note "🎬 Copy & paste code"
+
+    ``` sql
+    GRANT ALL ON TABLE total TO ROLE db_role_monitor;
+    GRANT ALL ON TABLE archpart TO ROLE db_role_monitor;
+    GRANT ALL ON TABLE transaktion TO ROLE db_role_monitor;
+    GRANT ALL ON TABLE nutzer TO ROLE db_role_monitor;
+    GRANT ALL ON TABLE limit TO ROLE db_role_monitor;
+    GRANT ALL ON TABLE archaktion TO ROLE db_role_monitor;
+    GRANT ALL ON TABLE archdesign TO ROLE db_role_monitor;
+    GRANT ALL ON TABLE result TO ROLE db_role_monitor;
+    GRANT ALL ON TABLE tool_position TO ROLE db_role_monitor;
+    GRANT ALL ON TABLE station_runtime TO ROLE db_role_monitor;
+    ```
 
 
 ### Step 4: Change server configuration to only allow trusted authentication
@@ -267,17 +264,15 @@ allow alias access - i.e. only databases registered in [databases.conf](https://
 - [GSEC command line utility](https://www.firebirdsql.org/file/documentation/html/en/firebirddocs/gsec/firebird-gsec.html)
 - [Firebird hardening tips](https://www.firebirdsql.org/manual/de/qsg2-de-config.html)
 
-<details>
-<summary>🎬 3rd party info</summary>
+??? note "🎬 3rd party info"
 
-- [README.mapping.html](https://github.com/FirebirdSQL/firebird/blob/master/doc/sql.extensions/README.mapping.html)
-- [Configuring trusted authentication](https://ib-aid.com/download/docs/fb4migrationguide.html#_configuring_trusted_authentication).
-- [README.trusted_authentication](https://github.com/FirebirdSQL/firebird/blob/master/doc/README.trusted_authentication).
+    - [README.mapping.html](https://github.com/FirebirdSQL/firebird/blob/master/doc/sql.extensions/README.mapping.html)
+    - [Configuring trusted authentication](https://ib-aid.com/download/docs/fb4migrationguide.html#_configuring_trusted_authentication).
+    - [README.trusted_authentication](https://github.com/FirebirdSQL/firebird/blob/master/doc/README.trusted_authentication).
 
-- [using GSEC to setup automatic admin mapping](https://www.firebirdsql.org/file/documentation/html/en/firebirddocs/gsec/firebird-gsec.html#gsec-interactive-admin-mapping)
-- [LANGREF:auto admin mapping](https://www.firebirdsql.org/refdocs/langrefupd25-security-auto-admin-mapping.html).
+    - [using GSEC to setup automatic admin mapping](https://www.firebirdsql.org/file/documentation/html/en/firebirddocs/gsec/firebird-gsec.html#gsec-interactive-admin-mapping)
+    - [LANGREF:auto admin mapping](https://www.firebirdsql.org/refdocs/langrefupd25-security-auto-admin-mapping.html).
 
-</details>
 
 
 ## Notes

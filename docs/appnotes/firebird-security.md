@@ -282,6 +282,12 @@ allow alias access - i.e. only databases registered in [databases.conf](https://
 
 ## Notes
 
+### map an AD user to SYSDBA
+
+To map a AD user to SYSDBA, use the following:
+
+    create mapping trusted_ilie2 using plugin win_sspi from USER "<domain>\<user>" to USER "SYSDBA";
+
 ### isql in embedded mode
 
 If the firebird server service is stopped, then `isql` can be used in embedded mode. This is especially useful to fix

@@ -3431,6 +3431,11 @@
 </tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In certain scenarios, the <code>heOpMon_user</code> also needs (partial) <code>read</code>
+rights for config database (e.g. check, if config has (remote) changes). Adjust roles and permissions as needed by your scenario!</p>
+</div>
 <h3 id="step-1-setup-windows-active-directory-mapping-for-administrators"><a class="toclink" href="#step-1-setup-windows-active-directory-mapping-for-administrators">Step 1: Setup Windows Active Directory mapping for Administrators</a></h3>
 <p>During the installation, the <code>SYSDBA</code> account is created in the security database and the authentication is set to <code>Srp265</code>. So basically this must be changed to <code>win_sspi</code> to disable password based authentication.  However, as no mapping is defined by default, only switching the authentication would lockout any access, so first the Windows administrative mapping should be set. This will map any member of the local Windows Administrators group to the <code>RDB$Admin</code> group, effectively allowing full database access.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>:: Run in a windows command prompt on the server to enable "auto admin mapping".
@@ -3565,6 +3570,10 @@ SQL&gt;
 <a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="nv">WireCryptPlugin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>ChaCha64,<span class="w"> </span>ChaCha
 </code></pre></div>
 <p>As now also database access is limited to aliased databases, all databases which shall be accessed must be added to <code>database.conf</code> (and disable <code>employee.fdb</code>).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Follow the same guidelines for the "local" server (see <a href="#local-firebird-server-configuration">local firebird server configuration</a>). Note, that for the local server, the most important settings are service account and file system security. As the database is a simple data file, there is no need to setup complex active directory authentication for database access.</p>
+</div>
 <h2 id="hardening-checklist"><a class="toclink" href="#hardening-checklist">Hardening checklist</a></h2>
 <h3 id="local-firebird-server-configuration"><a class="toclink" href="#local-firebird-server-configuration">Local Firebird Server configuration</a></h3>
 <ul>
@@ -3582,11 +3591,11 @@ SQL&gt;
 <li>Add needed aliases from <code>databases.conf</code></li>
 <li>Configure firewall to only allow access from trusted networks</li>
 <li>Change <code>SYSDBA</code> password.</li>
+<li>Change service logon</li>
+<li>setup file system ACLs</li>
 </ul>
 <h3 id="service-user-account"><a class="toclink" href="#service-user-account">Service user account</a></h3>
-<p>Best practice is to change the default <code>LocalService</code> account to the windows service
-default account <code>NTService\&lt;servicename&gt;</code>. As this account does not have any local
-file system access, make sure to grant write access to the following files:</p>
+<p>Best practice is to change the default <code>LocalService</code> account to a windows service account (e.g. <code>NTService\&lt;servicename&gt;</code> or even better, use managed service accounts MSA/eMSA). As this account does not have any local file system access by default, make sure to grant write access to the following files:</p>
 <ul>
 <li>all databases, including security2.fdb (isc4.gdb in pre-1.5 versions)</li>
 <li>the firebird.log file</li>
@@ -3599,6 +3608,10 @@ file system access, make sure to grant write access to the following files:</p>
 but this requires setting explicit permissions on the database files. As another option, the <a href="https://www.firebirdsql.org/docs/html/en/refdocs/fbconf/firebird-configuration-reference.html#fbconf-database-access">DatabaseAccess</a> parameter
 in <a href="https://www.firebirdsql.org/docs/html/en/refdocs/fbconf/firebird-configuration-reference.html#fbconf-firebird">firebird.conf</a> can be set to <code>restrict</code> (to allow external access to a given set of folders) or to <code>none</code> (to only
 allow alias access - i.e. only databases registered in <a href="https://www.firebirdsql.org/docs/html/en/refdocs/fbconf/firebird-configuration-reference.html#fbconf-databases">databases.conf</a>). </p>
+<div class="admonition warn">
+<p class="admonition-title">Warn</p>
+<p>Make sure to <a href="#service-user-account">change the service logon and setup file system ACLs accordingly</a>!</p>
+</div>
 <h2 id="references"><a class="toclink" href="#references">References</a></h2>
 <ul>
 <li><a href="https://www.firebirdsql.org/docs/html/en/refdocs/fbconf/firebird-configuration-reference.html">Firebird configuration reference</a>.</li>

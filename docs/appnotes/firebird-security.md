@@ -5,10 +5,14 @@
 ### OGS Firebird database usage
 
 The Firebird database server is used by OGS to store configuration and result data. Typically, there are two databases involved:
+
 - Station database. This is typically used on the station as follows:
+
     - Monitor.exe: The OGS runtime reads the workflow configuration and writes the result data (part results)
     - heOpImp.exe: The OGS project import utility writes updated configuration into the station database
+
 - Configuration database. This is used to store the workflow configuration data. This is typically used as follows:
+
     - heOpCfg.exe: The OGS workflow editor reads from and writes to the database. The database can be local or remote, for a remote database, heOpCfg uses two application roles to access the data ("editor" and "admin")
     - heOpImp.exe: The OGS project import utility reads from this database.
 
@@ -19,6 +23,7 @@ The station database usually is hosted on the station PC and does not need acces
 The firebird server uses plugins for authentication, authorízation and over the wire encryption (see [Firebird Configuration Reference - Server](https://www.firebirdsql.org/docs/html/en/refdocs/fbconf/firebird-configuration-reference.html#fbconf-firebird) and [Firebird Language Reference - Security](https://firebirdsql.org/file/documentation/chunk/en/refdocs/fblangref50/fblangref50-security.html)). Note, that most of these settings can be defined globally or on the database level.
 
 For authentication, the following options are available by default (`fbclient.conf` parameter `AuthServer`) - similar to Microsoft SQL server these can be enabled and disabled:
+
 - srp (secure remote password): username/password authentication over encrypted communication channel
 - win_sspi: active directory based authentication
 
@@ -27,6 +32,7 @@ The communication between Client ans Server is also managed by plugins. By defau
 Authorization defines, which rights a user gets when accessing the database server, a database and the objects inside the database. In Firebird, these rights are defined for the actual user and by the role a user has. Rights for database objects can be granted accordingly. 
 
 Special cases are:
+
 - SYSDBA user: is a "superuser", which has all access rights in all databases
 - PUBLIC user: default user without any rights. Can be used for role mapping and active directory mapping though.
 - database owner: the user generating a database automatically gets the RDB$ADMIN role for this database (i.e. the admin rights).
@@ -227,6 +233,71 @@ As now also database access is limited to aliased databases, all databases which
 !!! note
 
     Follow the same guidelines for the "local" server (see [local firebird server configuration](#local-firebird-server-configuration)). Note, that for the local server, the most important settings are service account and file system security. As the database is a simple data file, there is no need to setup complex active directory authentication for database access.
+
+## OGS settings
+
+To make the OGS applications work with trusted authentication, they must be configured accordingly. See the following sections on how to do so.
+
+!!! note 
+    Please note, that OGS application user authentication is not covered here, please see [OGS active directory user authentication](./userdb-activedirectory.md) for more details.
+
+### heOpMon (OGS station runtime)
+
+By default, heOpMon loads the `station.fds` database from its project folder. To enforce aliased database access and trusted authentication, change the following in your projects `station.ini`:
+
+``` ini title="station.ini"
+[GENERAL]
+
+; Set the DBHost parameter to the database alias connection string
+; in the format <hostname>:<aliasname>, typically you will want to
+; use 127.0.0.1 for the <hostname> (and likely station for the alias)
+DBHost=127.0.0.1:station
+
+; Define database connection parameters (semikolon seperated list of
+; <key>=<value> pairs). If a non-empty string is set, this overrides
+; all default parameters.
+; To use trusted authentication, set the user_name parameter to
+; an empty string.
+DBParam=user_name=
+```
+
+The relevant parameters in the `[GENERAL]` section are:
+
+- DBHost (string): Database connection path (<hostname>:<alias> or <hostname>:<filepath>). If not defined, uses `station.fds` from the current project folder.
+- DBParam (string): Semikolon seperated list of `<key>=<value>` pairs. If a non-empty string is set, this overrides all default parameters. To use trusted authentication, set the `user_name=` parameter to an empty string.
+
+### heOpCfg (OGS workflow editor)
+
+Use the trusted authentication version of the heOpCfg editor to work with (remote) configuration databases set up for trusted authentication.
+
+### heOpImp (OGS station workflow import)
+
+Use the trusted authentication version of the heOpCfg editor to work with (remote) configuration databases set up for trusted authentication.
+
+To also work with trusted station databases, change the `heOpImp.ini` configuration file as follows:
+
+``` ini title="station.ini"
+[FDS]
+
+; Set trusted = 1 to force trusted authentication for all *.fds
+; databases
+trusted=1
+
+; If dbname is not empty, then this overrides any interactive or
+; commandline given *.fds (station database) names. The format is
+; <hostname>:<aliasname>, typically you will want to use 127.0.0.1
+; for the <hostname> (and likely station for the alias, depending 
+; on your local database server settings)
+dbname=127.0.0.1:station
+
+```
+
+!!! note
+
+    Setting up a fixed dbname ensures the user can only access a specific database. The disadvantage is, that switching to 
+    a different project needs reconfiguring the `heOpImp.ini`.
+    To workaround additional instances of the OGS station software
+    can be installed on the machine (with different settings).
 
 ## Hardening checklist
 

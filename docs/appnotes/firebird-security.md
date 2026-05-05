@@ -53,6 +53,12 @@ Generally the the different connection roles are used by the OGS applications:
 | heOpImp_writer | heOpImp | station | Update workflows |
 | heOpMon_user | heOpMon | station | Read workflows, write station results |
 
+!!! note
+
+    In certain scenarios, the `heOpMon_user` also needs (partial) `read`
+    rights for config database (e.g. check, if config has (remote) changes). Adjust roles and permissions as needed by your scenario!
+
+
 ### Step 1: Setup Windows Active Directory mapping for Administrators
 
 During the installation, the `SYSDBA` account is created in the security database and the authentication is set to `Srp265`. So basically this must be changed to `win_sspi` to disable password based authentication.  However, as no mapping is defined by default, only switching the authentication would lockout any access, so first the Windows administrative mapping should be set. This will map any member of the local Windows Administrators group to the `RDB$Admin` group, effectively allowing full database access.
@@ -218,6 +224,10 @@ WireCryptPlugin = ChaCha64, ChaCha
 
 As now also database access is limited to aliased databases, all databases which shall be accessed must be added to `database.conf` (and disable `employee.fdb`).
 
+!!! note
+
+    Follow the same guidelines for the "local" server (see [local firebird server configuration](#local-firebird-server-configuration)). Note, that for the local server, the most important settings are service account and file system security. As the database is a simple data file, there is no need to setup complex active directory authentication for database access.
+
 ## Hardening checklist
 
 ### Local Firebird Server configuration
@@ -234,12 +244,12 @@ As now also database access is limited to aliased databases, all databases which
 - Add needed aliases from `databases.conf`
 - Configure firewall to only allow access from trusted networks
 - Change `SYSDBA` password.
+- Change service logon
+- setup file system ACLs
 
 ### Service user account
 
-Best practice is to change the default `LocalService` account to the windows service
-default account `NTService\<servicename>`. As this account does not have any local
-file system access, make sure to grant write access to the following files:
+Best practice is to change the default `LocalService` account to a windows service account (e.g. `NTService\<servicename>` or even better, use managed service accounts MSA/eMSA). As this account does not have any local file system access by default, make sure to grant write access to the following files:
 
 - all databases, including security2.fdb (isc4.gdb in pre-1.5 versions)
 - the firebird.log file
@@ -256,6 +266,10 @@ Best practice is to run the service using the windows service account (see [Serv
 but this requires setting explicit permissions on the database files. As another option, the [DatabaseAccess](https://www.firebirdsql.org/docs/html/en/refdocs/fbconf/firebird-configuration-reference.html#fbconf-database-access) parameter
 in [firebird.conf](https://www.firebirdsql.org/docs/html/en/refdocs/fbconf/firebird-configuration-reference.html#fbconf-firebird) can be set to `restrict` (to allow external access to a given set of folders) or to `none` (to only
 allow alias access - i.e. only databases registered in [databases.conf](https://www.firebirdsql.org/docs/html/en/refdocs/fbconf/firebird-configuration-reference.html#fbconf-databases)). 
+
+!!! warn
+
+    Make sure to [change the service logon and setup file system ACLs accordingly](#service-user-account)!
 
 ## References
 

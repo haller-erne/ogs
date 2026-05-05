@@ -2941,6 +2941,56 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#ogs-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OGS settings
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OGS settings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#heopmon-ogs-station-runtime" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        heOpMon (OGS station runtime)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#heopcfg-ogs-workflow-editor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        heOpCfg (OGS workflow editor)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#heopimp-ogs-station-workflow-import" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        heOpImp (OGS station workflow import)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#hardening-checklist" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3227,6 +3277,56 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#ogs-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OGS settings
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OGS settings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#heopmon-ogs-station-runtime" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        heOpMon (OGS station runtime)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#heopcfg-ogs-workflow-editor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        heOpCfg (OGS workflow editor)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#heopimp-ogs-station-workflow-import" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        heOpImp (OGS station workflow import)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#hardening-checklist" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3368,26 +3468,40 @@
 <h1 id="firebird-database-configuration"><a class="toclink" href="#firebird-database-configuration">Firebird database configuration</a></h1>
 <h2 id="overview"><a class="toclink" href="#overview">Overview</a></h2>
 <h3 id="ogs-firebird-database-usage"><a class="toclink" href="#ogs-firebird-database-usage">OGS Firebird database usage</a></h3>
-<p>The Firebird database server is used by OGS to store configuration and result data. Typically, there are two databases involved:
-- Station database. This is typically used on the station as follows:
-    - Monitor.exe: The OGS runtime reads the workflow configuration and writes the result data (part results)
-    - heOpImp.exe: The OGS project import utility writes updated configuration into the station database
-- Configuration database. This is used to store the workflow configuration data. This is typically used as follows:
-    - heOpCfg.exe: The OGS workflow editor reads from and writes to the database. The database can be local or remote, for a remote database, heOpCfg uses two application roles to access the data ("editor" and "admin")
-    - heOpImp.exe: The OGS project import utility reads from this database.</p>
+<p>The Firebird database server is used by OGS to store configuration and result data. Typically, there are two databases involved:</p>
+<ul>
+<li>
+<p>Station database. This is typically used on the station as follows:</p>
+<ul>
+<li>Monitor.exe: The OGS runtime reads the workflow configuration and writes the result data (part results)</li>
+<li>heOpImp.exe: The OGS project import utility writes updated configuration into the station database</li>
+</ul>
+</li>
+<li>
+<p>Configuration database. This is used to store the workflow configuration data. This is typically used as follows:</p>
+<ul>
+<li>heOpCfg.exe: The OGS workflow editor reads from and writes to the database. The database can be local or remote, for a remote database, heOpCfg uses two application roles to access the data ("editor" and "admin")</li>
+<li>heOpImp.exe: The OGS project import utility reads from this database.</li>
+</ul>
+</li>
+</ul>
 <p>The station database usually is hosted on the station PC and does not need access from the outside ("local server"). The location of the configuration database might be local or remote, so the "remote server" needs network access.</p>
 <h3 id="authentication-authorization-and-communication"><a class="toclink" href="#authentication-authorization-and-communication">Authentication, Authorization and Communication</a></h3>
 <p>The firebird server uses plugins for authentication, authorízation and over the wire encryption (see <a href="https://www.firebirdsql.org/docs/html/en/refdocs/fbconf/firebird-configuration-reference.html#fbconf-firebird">Firebird Configuration Reference - Server</a> and <a href="https://firebirdsql.org/file/documentation/chunk/en/refdocs/fblangref50/fblangref50-security.html">Firebird Language Reference - Security</a>). Note, that most of these settings can be defined globally or on the database level.</p>
-<p>For authentication, the following options are available by default (<code>fbclient.conf</code> parameter <code>AuthServer</code>) - similar to Microsoft SQL server these can be enabled and disabled:
-- srp (secure remote password): username/password authentication over encrypted communication channel
-- win_sspi: active directory based authentication</p>
+<p>For authentication, the following options are available by default (<code>fbclient.conf</code> parameter <code>AuthServer</code>) - similar to Microsoft SQL server these can be enabled and disabled:</p>
+<ul>
+<li>srp (secure remote password): username/password authentication over encrypted communication channel</li>
+<li>win_sspi: active directory based authentication</li>
+</ul>
 <p>The communication between Client ans Server is also managed by plugins. By default the folloing are available (<code>fbclient.conf</code> parameter <code>WireCryptPlugin</code>): <code>ChaCha</code>, <code>ChaCha64</code>, both using SHA265 hashed session keys. Also <code>Arc4</code> is available, but considered insecure and should be disabled.</p>
 <p>Authorization defines, which rights a user gets when accessing the database server, a database and the objects inside the database. In Firebird, these rights are defined for the actual user and by the role a user has. Rights for database objects can be granted accordingly. </p>
-<p>Special cases are:
-- SYSDBA user: is a "superuser", which has all access rights in all databases
-- PUBLIC user: default user without any rights. Can be used for role mapping and active directory mapping though.
-- database owner: the user generating a database automatically gets the RDB$ADMIN role for this database (i.e. the admin rights).
-- database user: his rights are defined by roles and rights granted explicitely.</p>
+<p>Special cases are:</p>
+<ul>
+<li>SYSDBA user: is a "superuser", which has all access rights in all databases</li>
+<li>PUBLIC user: default user without any rights. Can be used for role mapping and active directory mapping though.</li>
+<li>database owner: the user generating a database automatically gets the RDB$ADMIN role for this database (i.e. the admin rights).</li>
+<li>database user: his rights are defined by roles and rights granted explicitely.</li>
+</ul>
 <p>Note, that all rights assignment operate on "database" users and roles. For active directory users connecting through <code>win_sspi</code> (trusted authentication), usually a mapping based on active directory groups is used to map Windows users/groups to database users.</p>
 <h3 id="firewall"><a class="toclink" href="#firewall">Firewall</a></h3>
 <p>The Firebird database server by default listens on TCP/3050 for client requests. The server can be configured (in <code>firebird.conf</code>) for different ports or listening only on specific interfaces.</p>
@@ -3573,6 +3687,58 @@ SQL&gt;
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Follow the same guidelines for the "local" server (see <a href="#local-firebird-server-configuration">local firebird server configuration</a>). Note, that for the local server, the most important settings are service account and file system security. As the database is a simple data file, there is no need to setup complex active directory authentication for database access.</p>
+</div>
+<h2 id="ogs-settings"><a class="toclink" href="#ogs-settings">OGS settings</a></h2>
+<p>To make the OGS applications work with trusted authentication, they must be configured accordingly. See the following sections on how to do so.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Please note, that OGS application user authentication is not covered here, please see <a href="../userdb-activedirectory/">OGS active directory user authentication</a> for more details.</p>
+</div>
+<h3 id="heopmon-ogs-station-runtime"><a class="toclink" href="#heopmon-ogs-station-runtime">heOpMon (OGS station runtime)</a></h3>
+<p>By default, heOpMon loads the <code>station.fds</code> database from its project folder. To enforce aliased database access and trusted authentication, change the following in your projects <code>station.ini</code>:</p>
+<div class="highlight"><span class="filename">station.ini</span><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">[GENERAL]</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="c1">; Set the DBHost parameter to the database alias connection string</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1">; in the format &lt;hostname&gt;:&lt;aliasname&gt;, typically you will want to</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="c1">; use 127.0.0.1 for the &lt;hostname&gt; (and likely station for the alias)</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="na">DBHost</span><span class="o">=</span><span class="s">127.0.0.1:station</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="c1">; Define database connection parameters (semikolon seperated list of</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="c1">; &lt;key&gt;=&lt;value&gt; pairs). If a non-empty string is set, this overrides</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="c1">; all default parameters.</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="c1">; To use trusted authentication, set the user_name parameter to</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="c1">; an empty string.</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="na">DBParam</span><span class="o">=</span><span class="s">user_name=</span>
+</code></pre></div>
+<p>The relevant parameters in the <code>[GENERAL]</code> section are:</p>
+<ul>
+<li>DBHost (string): Database connection path (<hostname>:<alias> or <hostname>:<filepath>). If not defined, uses <code>station.fds</code> from the current project folder.</filepath></hostname></alias></hostname></li>
+<li>DBParam (string): Semikolon seperated list of <code>&lt;key&gt;=&lt;value&gt;</code> pairs. If a non-empty string is set, this overrides all default parameters. To use trusted authentication, set the <code>user_name=</code> parameter to an empty string.</li>
+</ul>
+<h3 id="heopcfg-ogs-workflow-editor"><a class="toclink" href="#heopcfg-ogs-workflow-editor">heOpCfg (OGS workflow editor)</a></h3>
+<p>Use the trusted authentication version of the heOpCfg editor to work with (remote) configuration databases set up for trusted authentication.</p>
+<h3 id="heopimp-ogs-station-workflow-import"><a class="toclink" href="#heopimp-ogs-station-workflow-import">heOpImp (OGS station workflow import)</a></h3>
+<p>Use the trusted authentication version of the heOpCfg editor to work with (remote) configuration databases set up for trusted authentication.</p>
+<p>To also work with trusted station databases, change the <code>heOpImp.ini</code> configuration file as follows:</p>
+<div class="highlight"><span class="filename">station.ini</span><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">[FDS]</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c1">; Set trusted = 1 to force trusted authentication for all *.fds</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1">; databases</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="na">trusted</span><span class="o">=</span><span class="s">1</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="c1">; If dbname is not empty, then this overrides any interactive or</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="c1">; commandline given *.fds (station database) names. The format is</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="c1">; &lt;hostname&gt;:&lt;aliasname&gt;, typically you will want to use 127.0.0.1</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="c1">; for the &lt;hostname&gt; (and likely station for the alias, depending </span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="c1">; on your local database server settings)</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="na">dbname</span><span class="o">=</span><span class="s">127.0.0.1:station</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Setting up a fixed dbname ensures the user can only access a specific database. The disadvantage is, that switching to 
+a different project needs reconfiguring the <code>heOpImp.ini</code>.
+To workaround additional instances of the OGS station software
+can be installed on the machine (with different settings).</p>
 </div>
 <h2 id="hardening-checklist"><a class="toclink" href="#hardening-checklist">Hardening checklist</a></h2>
 <h3 id="local-firebird-server-configuration"><a class="toclink" href="#local-firebird-server-configuration">Local Firebird Server configuration</a></h3>

@@ -101,6 +101,18 @@ AutoAdminImplementationMapping USING PLUGIN Win_Sspi FROM Predefined_Group 'DOMA
 SQL> exit;
 ```
 
+> **Tip:** If trusted authentication does not work, make sure the `Win_Sspi` authentication plugin is enabled in `firebird.conf`.
+
+Check the following settings:
+
+```conf id="cfg01"
+AuthServer = Srp256, Win_Sspi
+```
+
+If `Win_Sspi` is not listed, add it and restart the Firebird service for the changes to take effect.
+
+
+
 !!! info Local attachment
 
     The security is only enforced in server mode (i.e. over TCP connections to the database). A local server admin can always
@@ -148,12 +160,33 @@ create mapping heOpCfg_writer_role using plugin win_sspi from group "QUALITYR\he
 # ---- for station database ----
 # heOpImp is writer here
 create mapping heOpImp_writer_user using plugin win_sspi from group "QUALITYR\heOpImp_writer" to USER public;
-create mapping heOpImp_writer_role using plugin win_sspi from group "QUALITYR\heOpImp_writer" to ROLE db_role_reader;
+create mapping heOpImp_writer_role using plugin win_sspi from group "QUALITYR\heOpImp_writer" to ROLE db_role_writer;
 # heOpMon is the special monitor role
 create mapping heOpCfg_monitor_user using plugin win_sspi from group "QUALITYR\heOpMon_user" to USER public;
 create mapping heOpCfg_monitor_role using plugin win_sspi from group "QUALITYR\heOpMon_user" to ROLE db_role_monitor;
 
 ```
+Use the following queries to verify that role mappings have been configured correctly.
+
+Check existing roles and their system privileges:
+
+```sql id="a1b2c3"
+SELECT
+  TRIM(RDB$ROLE_NAME) AS ROLE_NAME,
+  RDB$SYSTEM_PRIVILEGES
+FROM RDB$ROLES;
+```
+
+Check authentication mappings (e.g., Windows group → database role):
+
+```sql id="d4e5f6"
+SELECT
+  TRIM(RDB$MAP_NAME) AS MAPPING_NAME,
+  TRIM(RDB$MAP_FROM) AS WINDOWS_GROUP,
+  TRIM(RDB$MAP_TO) AS TARGET_ROLE
+FROM RDB$AUTH_MAPPING;
+```
+
 
 ??? note "🎬 Test login!"
 

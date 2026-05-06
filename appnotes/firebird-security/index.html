@@ -2903,6 +2903,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#step-2-define-users-and-mappings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Define users and mappings
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#step-3-grant-granular-permissions-to-special-roles" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3221,6 +3232,17 @@
     <span class="md-ellipsis">
       
         Step 1: Setup Windows Active Directory mapping for Administrators
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-define-users-and-mappings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Define users and mappings
       
     </span>
   </a>
@@ -3558,80 +3580,72 @@ rights for config database (e.g. check, if config has (remote) changes). Adjust 
 <p><strong>Tip:</strong> If trusted authentication does not work, make sure the <code>Win_Sspi</code> authentication plugin is enabled in <code>firebird.conf</code>.</p>
 </blockquote>
 <p>Check the following settings:</p>
-<p>```conf id="cfg01"
-AuthServer = Srp256, Win_Sspi
-</p><div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>If `Win_Sspi` is not listed, add it and restart the Firebird service for the changes to take effect.
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>!!! info Local attachment
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    The security is only enforced in server mode (i.e. over TCP connections to the database). A local server admin can always
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    shutdown the Firebird windows service and access the database 
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>    using direct attach mode (if the file ACL allows it):
-<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
-<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>        &gt; isql -u SYSDBA -p [password] employee.fdb
-<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>
-<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>    (note `employee.fdb` instead of `127.0.0.1:employee.fdb`)
-<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>
-<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>!!! note Object rights and user mapping
-<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>
-<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>    Even though Windows Administrators now have full access to the databases, this does not mean there is a mapping for the database objects. E.g. `select * from &lt;table&gt;` in employee.fdb will fail, as there the admin user does not exist as a user and therefore does not have select rights on the `&lt;table&gt;`. To modify, add the user or map to a user.
-<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>
-<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>### Step 2: Define users and mappings
-<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>
-<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>Generally, OGS only uses two different rights for its purposes: one for reading from a database, one for writing to a database. To keep things simple, two roles are created and these are mapped from the win_sspi according to the active directory group. A second mapping is done to the PUBLIC user, which is already available in each database:
-<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>
-<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>- db_role_reader: read access to the database.
-<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>- db_role_writer: this user is given a default database role db_role_writer with read/write access to the database.
-<a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>- db_role_monitor: special role, with read access to the workflow configuration and write access to the result tables.
-<a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>
-<a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a>``` cmd
-<a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a>:: Create the two users (globally)
-<a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a>&gt; gsec -user SYSDBA -password masterkey -add db_reader -pw isnotusedanyway
-<a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a>&gt; gsec -user SYSDBA -password masterkey -add db_writer -pw isnotusedanyway
-<a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a>
-<a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a>:: connect to the database to create roles and grants
-<a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a>&gt; isql 127.0.0.1:&lt;datbase&gt; -user SYSDBA -password &lt;password&gt;
-<a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a>SQL&gt; create ROLE db_role_reader set SYSTEM PRIVILEGES TO SELECT_ANY_OBJECT_IN_DATABASE, ACCESS_ANY_OBJECT_IN_DATABASE;
-<a id="__codelineno-3-35" name="__codelineno-3-35" href="#__codelineno-3-35"></a>SQL&gt; create ROLE db_role_writer set SYSTEM PRIVILEGES TO SELECT_ANY_OBJECT_IN_DATABASE, ACCESS_ANY_OBJECT_IN_DATABASE, MODIFY_ANY_OBJECT_IN_DATABASE;
-<a id="__codelineno-3-36" name="__codelineno-3-36" href="#__codelineno-3-36"></a>SQL&gt; create ROLE db_role_monitor set SYSTEM PRIVILEGES TO SELECT_ANY_OBJECT_IN_DATABASE, ACCESS_ANY_OBJECT_IN_DATABASE;
-<a id="__codelineno-3-37" name="__codelineno-3-37" href="#__codelineno-3-37"></a>
-<a id="__codelineno-3-38" name="__codelineno-3-38" href="#__codelineno-3-38"></a># map the windows groups - note: must be done for each database!
-<a id="__codelineno-3-39" name="__codelineno-3-39" href="#__codelineno-3-39"></a># note: map all external users to public + given role
-<a id="__codelineno-3-40" name="__codelineno-3-40" href="#__codelineno-3-40"></a>
-<a id="__codelineno-3-41" name="__codelineno-3-41" href="#__codelineno-3-41"></a># ---- for config database ----
-<a id="__codelineno-3-42" name="__codelineno-3-42" href="#__codelineno-3-42"></a># heOpImp is reader here
-<a id="__codelineno-3-43" name="__codelineno-3-43" href="#__codelineno-3-43"></a>create mapping heOpImp_reader_user using plugin win_sspi from group "QUALITYR\heOpImp_reader" to USER public;
-<a id="__codelineno-3-44" name="__codelineno-3-44" href="#__codelineno-3-44"></a>create mapping heOpImp_reader_role using plugin win_sspi from group "QUALITYR\heOpImp_reader" to ROLE db_role_reader;
-<a id="__codelineno-3-45" name="__codelineno-3-45" href="#__codelineno-3-45"></a># heOpCfg is writer here
-<a id="__codelineno-3-46" name="__codelineno-3-46" href="#__codelineno-3-46"></a>create mapping heOpCfg_writer_user using plugin win_sspi from group "QUALITYR\heOpCfg_editor" to USER public;
-<a id="__codelineno-3-47" name="__codelineno-3-47" href="#__codelineno-3-47"></a>create mapping heOpCfg_writer_role using plugin win_sspi from group "QUALITYR\heOpCfg_editor" to ROLE db_role_writer;
-<a id="__codelineno-3-48" name="__codelineno-3-48" href="#__codelineno-3-48"></a>
-<a id="__codelineno-3-49" name="__codelineno-3-49" href="#__codelineno-3-49"></a># ---- for station database ----
-<a id="__codelineno-3-50" name="__codelineno-3-50" href="#__codelineno-3-50"></a># heOpImp is writer here
-<a id="__codelineno-3-51" name="__codelineno-3-51" href="#__codelineno-3-51"></a>create mapping heOpImp_writer_user using plugin win_sspi from group "QUALITYR\heOpImp_writer" to USER public;
-<a id="__codelineno-3-52" name="__codelineno-3-52" href="#__codelineno-3-52"></a>create mapping heOpImp_writer_role using plugin win_sspi from group "QUALITYR\heOpImp_writer" to ROLE db_role_writer;
-<a id="__codelineno-3-53" name="__codelineno-3-53" href="#__codelineno-3-53"></a># heOpMon is the special monitor role
-<a id="__codelineno-3-54" name="__codelineno-3-54" href="#__codelineno-3-54"></a>create mapping heOpCfg_monitor_user using plugin win_sspi from group "QUALITYR\heOpMon_user" to USER public;
-<a id="__codelineno-3-55" name="__codelineno-3-55" href="#__codelineno-3-55"></a>create mapping heOpCfg_monitor_role using plugin win_sspi from group "QUALITYR\heOpMon_user" to ROLE db_role_monitor;
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>AuthServer = Srp256, Win_Sspi
+</code></pre></div>
+<p>If <code>Win_Sspi</code> is not listed, add it and restart the Firebird service for the changes to take effect.</p>
+<div class="admonition info local attachment">
+<p class="admonition-title">Info</p>
+<p>The security is only enforced in server mode (i.e. over TCP connections to the database). A local server admin can always
+shutdown the Firebird windows service and access the database 
+using direct attach mode (if the file ACL allows it):</p>
+<div class="highlight"><pre><span></span><code>&gt; isql -u SYSDBA -p [password] employee.fdb
+</code></pre></div>
+<p>(note <code>employee.fdb</code> instead of <code>127.0.0.1:employee.fdb</code>)</p>
+</div>
+<div class="admonition note object rights and user mapping">
+<p class="admonition-title">Note</p>
+<p>Even though Windows Administrators now have full access to the databases, this does not mean there is a mapping for the database objects. E.g. <code>select * from &lt;table&gt;</code> in employee.fdb will fail, as there the admin user does not exist as a user and therefore does not have select rights on the <code>&lt;table&gt;</code>. To modify, add the user or map to a user.</p>
+</div>
+<h3 id="step-2-define-users-and-mappings"><a class="toclink" href="#step-2-define-users-and-mappings">Step 2: Define users and mappings</a></h3>
+<p>Generally, OGS only uses two different rights for its purposes: one for reading from a database, one for writing to a database. To keep things simple, two roles are created and these are mapped from the win_sspi according to the active directory group. A second mapping is done to the PUBLIC user, which is already available in each database:</p>
+<ul>
+<li>db_role_reader: read access to the database.</li>
+<li>db_role_writer: this user is given a default database role db_role_writer with read/write access to the database.</li>
+<li>db_role_monitor: special role, with read access to the workflow configuration and write access to the result tables.</li>
+</ul>
+<p></p><div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>:: Create the two users (globally)
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>&gt; gsec -user SYSDBA -password masterkey -add db_reader -pw isnotusedanyway
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>&gt; gsec -user SYSDBA -password masterkey -add db_writer -pw isnotusedanyway
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>:: connect to the database to create roles and grants
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>&gt; isql 127.0.0.1:&lt;datbase&gt; -user SYSDBA -password &lt;password&gt;
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>SQL&gt; create ROLE db_role_reader set SYSTEM PRIVILEGES TO SELECT_ANY_OBJECT_IN_DATABASE, ACCESS_ANY_OBJECT_IN_DATABASE;
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>SQL&gt; create ROLE db_role_writer set SYSTEM PRIVILEGES TO SELECT_ANY_OBJECT_IN_DATABASE, ACCESS_ANY_OBJECT_IN_DATABASE, MODIFY_ANY_OBJECT_IN_DATABASE;
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>SQL&gt; create ROLE db_role_monitor set SYSTEM PRIVILEGES TO SELECT_ANY_OBJECT_IN_DATABASE, ACCESS_ANY_OBJECT_IN_DATABASE;
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a># map the windows groups - note: must be done for each database!
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a># note: map all external users to public + given role
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a># ---- for config database ----
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a># heOpImp is reader here
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>create mapping heOpImp_reader_user using plugin win_sspi from group "QUALITYR\heOpImp_reader" to USER public;
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>create mapping heOpImp_reader_role using plugin win_sspi from group "QUALITYR\heOpImp_reader" to ROLE db_role_reader;
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a># heOpCfg is writer here
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>create mapping heOpCfg_writer_user using plugin win_sspi from group "QUALITYR\heOpCfg_editor" to USER public;
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>create mapping heOpCfg_writer_role using plugin win_sspi from group "QUALITYR\heOpCfg_editor" to ROLE db_role_writer;
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a># ---- for station database ----
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a># heOpImp is writer here
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>create mapping heOpImp_writer_user using plugin win_sspi from group "QUALITYR\heOpImp_writer" to USER public;
+<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>create mapping heOpImp_writer_role using plugin win_sspi from group "QUALITYR\heOpImp_writer" to ROLE db_role_writer;
+<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a># heOpMon is the special monitor role
+<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a>create mapping heOpCfg_monitor_user using plugin win_sspi from group "QUALITYR\heOpMon_user" to USER public;
+<a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a>create mapping heOpCfg_monitor_role using plugin win_sspi from group "QUALITYR\heOpMon_user" to ROLE db_role_monitor;
 </code></pre></div>
 Use the following queries to verify that role mappings have been configured correctly.<p></p>
 <p>Check existing roles and their system privileges:</p>
-<p>```sql id="a1b2c3"
-SELECT
-  TRIM(RDB$ROLE_NAME) AS ROLE_NAME,
-  RDB$SYSTEM_PRIVILEGES
-FROM RDB$ROLES;
-</p><div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Check authentication mappings (e.g., Windows group → database role):
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>```sql id="d4e5f6"
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>SELECT
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>  TRIM(RDB$MAP_NAME) AS MAPPING_NAME,
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>  TRIM(RDB$MAP_FROM) AS WINDOWS_GROUP,
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>  TRIM(RDB$MAP_TO) AS TARGET_ROLE
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>FROM RDB$AUTH_MAPPING;
-</code></pre></div><p></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>SELECT
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>  TRIM(RDB$ROLE_NAME) AS ROLE_NAME,
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>  RDB$SYSTEM_PRIVILEGES
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>FROM RDB$ROLES;
+</code></pre></div>
+<p>Check authentication mappings (e.g., Windows group → database role):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>SELECT
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>  TRIM(RDB$MAP_NAME) AS MAPPING_NAME,
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>  TRIM(RDB$MAP_FROM) AS WINDOWS_GROUP,
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>  TRIM(RDB$MAP_TO) AS TARGET_ROLE
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>FROM RDB$AUTH_MAPPING;
+</code></pre></div>
 <details class="note">
 <summary>🎬 Test login!</summary>
 <p>Try running a command shell using the Windows logon for any user which is a member of the "QUALITYR\heOpCfg_editor" group.</p>
@@ -3669,26 +3683,26 @@ SQL&gt;
 </code></pre></div>
 <details class="note">
 <summary>🎬 Copy &amp; paste code</summary>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">db_role_monitor</span><span class="p">;</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">archpart</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">db_role_monitor</span><span class="p">;</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">transaktion</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">db_role_monitor</span><span class="p">;</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">nutzer</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">db_role_monitor</span><span class="p">;</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">db_role_monitor</span><span class="p">;</span>
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">archaktion</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">db_role_monitor</span><span class="p">;</span>
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">archdesign</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">db_role_monitor</span><span class="p">;</span>
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">result</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">db_role_monitor</span><span class="p">;</span>
-<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">tool_position</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">db_role_monitor</span><span class="p">;</span>
-<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">station_runtime</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">db_role_monitor</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">db_role_monitor</span><span class="p">;</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">archpart</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">db_role_monitor</span><span class="p">;</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">transaktion</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">db_role_monitor</span><span class="p">;</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">nutzer</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">db_role_monitor</span><span class="p">;</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">db_role_monitor</span><span class="p">;</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">archaktion</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">db_role_monitor</span><span class="p">;</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">archdesign</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">db_role_monitor</span><span class="p">;</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">result</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">db_role_monitor</span><span class="p">;</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">tool_position</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">db_role_monitor</span><span class="p">;</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">station_runtime</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">db_role_monitor</span><span class="p">;</span>
 </code></pre></div>
 </details>
 <h3 id="step-4-change-server-configuration-to-only-allow-trusted-authentication"><a class="toclink" href="#step-4-change-server-configuration-to-only-allow-trusted-authentication">Step 4: Change server configuration to only allow trusted authentication</a></h3>
 <p>Till now, it was convenient to use the SYSDBA user to easily modify gloabl and database parameters. To switch to production mode, disable srp authentication and switch to trusted authentication. So the authentication settings can be changed in <code>firebird.conf</code> (also set the recommended security options):</p>
-<div class="highlight"><span class="filename">firebird.conf</span><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Change the following settings</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="nv">DatabaseAccess</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>None
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="nv">AuthServer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>Win_Sspi
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="nv">WireCrypt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>Required
-<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="nv">WireCryptPlugin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>ChaCha64,<span class="w"> </span>ChaCha
+<div class="highlight"><span class="filename">firebird.conf</span><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># Change the following settings</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="nv">DatabaseAccess</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>None
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="nv">AuthServer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>Win_Sspi
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="nv">WireCrypt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>Required
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="nv">WireCryptPlugin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>ChaCha64,<span class="w"> </span>ChaCha
 </code></pre></div>
 <p>As now also database access is limited to aliased databases, all databases which shall be accessed must be added to <code>database.conf</code> (and disable <code>employee.fdb</code>).</p>
 <div class="admonition note">
@@ -3703,19 +3717,19 @@ SQL&gt;
 </div>
 <h3 id="heopmon-ogs-station-runtime"><a class="toclink" href="#heopmon-ogs-station-runtime">heOpMon (OGS station runtime)</a></h3>
 <p>By default, heOpMon loads the <code>station.fds</code> database from its project folder. To enforce aliased database access and trusted authentication, change the following in your projects <code>station.ini</code>:</p>
-<div class="highlight"><span class="filename">station.ini</span><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">[GENERAL]</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c1">; Set the DBHost parameter to the database alias connection string</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1">; in the format &lt;hostname&gt;:&lt;aliasname&gt;, typically you will want to</span>
-<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1">; use 127.0.0.1 for the &lt;hostname&gt; (and likely station for the alias)</span>
-<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="na">DBHost</span><span class="o">=</span><span class="s">127.0.0.1:station</span>
-<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
-<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="c1">; Define database connection parameters (semikolon seperated list of</span>
-<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="c1">; &lt;key&gt;=&lt;value&gt; pairs). If a non-empty string is set, this overrides</span>
-<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="c1">; all default parameters.</span>
-<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="c1">; To use trusted authentication, set the user_name parameter to</span>
-<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="c1">; an empty string.</span>
-<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="na">DBParam</span><span class="o">=</span><span class="s">user_name=</span>
+<div class="highlight"><span class="filename">station.ini</span><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">[GENERAL]</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="c1">; Set the DBHost parameter to the database alias connection string</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1">; in the format &lt;hostname&gt;:&lt;aliasname&gt;, typically you will want to</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="c1">; use 127.0.0.1 for the &lt;hostname&gt; (and likely station for the alias)</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="na">DBHost</span><span class="o">=</span><span class="s">127.0.0.1:station</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="c1">; Define database connection parameters (semikolon seperated list of</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="c1">; &lt;key&gt;=&lt;value&gt; pairs). If a non-empty string is set, this overrides</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="c1">; all default parameters.</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="c1">; To use trusted authentication, set the user_name parameter to</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="c1">; an empty string.</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="na">DBParam</span><span class="o">=</span><span class="s">user_name=</span>
 </code></pre></div>
 <p>The relevant parameters in the <code>[GENERAL]</code> section are:</p>
 <ul>
@@ -3727,18 +3741,18 @@ SQL&gt;
 <h3 id="heopimp-ogs-station-workflow-import"><a class="toclink" href="#heopimp-ogs-station-workflow-import">heOpImp (OGS station workflow import)</a></h3>
 <p>Use the trusted authentication version of the heOpCfg editor to work with (remote) configuration databases set up for trusted authentication.</p>
 <p>To also work with trusted station databases, change the <code>heOpImp.ini</code> configuration file as follows:</p>
-<div class="highlight"><span class="filename">station.ini</span><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">[FDS]</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="c1">; Set trusted = 1 to force trusted authentication for all *.fds</span>
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1">; databases</span>
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="na">trusted</span><span class="o">=</span><span class="s">1</span>
-<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
-<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="c1">; If dbname is not empty, then this overrides any interactive or</span>
-<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="c1">; commandline given *.fds (station database) names. The format is</span>
-<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="c1">; &lt;hostname&gt;:&lt;aliasname&gt;, typically you will want to use 127.0.0.1</span>
-<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="c1">; for the &lt;hostname&gt; (and likely station for the alias, depending </span>
-<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="c1">; on your local database server settings)</span>
-<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="na">dbname</span><span class="o">=</span><span class="s">127.0.0.1:station</span>
+<div class="highlight"><span class="filename">station.ini</span><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">[FDS]</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="c1">; Set trusted = 1 to force trusted authentication for all *.fds</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1">; databases</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="na">trusted</span><span class="o">=</span><span class="s">1</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="c1">; If dbname is not empty, then this overrides any interactive or</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="c1">; commandline given *.fds (station database) names. The format is</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="c1">; &lt;hostname&gt;:&lt;aliasname&gt;, typically you will want to use 127.0.0.1</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="c1">; for the &lt;hostname&gt; (and likely station for the alias, depending </span>
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="c1">; on your local database server settings)</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="na">dbname</span><span class="o">=</span><span class="s">127.0.0.1:station</span>
 </code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>

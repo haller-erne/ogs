@@ -105,7 +105,7 @@ SQL> exit;
 
 Check the following settings:
 
-```conf id="cfg01"
+``` cmd
 AuthServer = Srp256, Win_Sspi
 ```
 
@@ -170,7 +170,7 @@ Use the following queries to verify that role mappings have been configured corr
 
 Check existing roles and their system privileges:
 
-```sql id="a1b2c3"
+``` cmd
 SELECT
   TRIM(RDB$ROLE_NAME) AS ROLE_NAME,
   RDB$SYSTEM_PRIVILEGES
@@ -179,7 +179,7 @@ FROM RDB$ROLES;
 
 Check authentication mappings (e.g., Windows group → database role):
 
-```sql id="d4e5f6"
+``` cmd
 SELECT
   TRIM(RDB$MAP_NAME) AS MAPPING_NAME,
   TRIM(RDB$MAP_FROM) AS WINDOWS_GROUP,

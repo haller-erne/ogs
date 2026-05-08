@@ -61,6 +61,10 @@ Generally the the different connection roles are used by the OGS applications:
 
 !!! note
 
+    Please note, that you might need additional roles and rights for your scenario, e. g. to upgrade the database schema - so usually you will also have an "admin" role with full rights (or give the heOpImp_writer and the heOpCfg_editor the DDL permission, see below for the DDL permission information in [step 2](#step-2-define-users-and-mappings))! 
+
+!!! note
+
     In certain scenarios, the `heOpMon_user` also needs (partial) `read`
     rights for config database (e.g. check, if config has (remote) changes). Adjust roles and permissions as needed by your scenario!
 
@@ -157,6 +161,7 @@ create mapping heOpImp_reader_role using plugin win_sspi from group "QUALITYR\he
 create mapping heOpCfg_writer_user using plugin win_sspi from group "QUALITYR\heOpCfg_editor" to USER public;
 create mapping heOpCfg_writer_role using plugin win_sspi from group "QUALITYR\heOpCfg_editor" to ROLE db_role_writer;
 
+
 # ---- for station database ----
 # heOpImp is writer here
 create mapping heOpImp_writer_user using plugin win_sspi from group "QUALITYR\heOpImp_writer" to USER public;
@@ -166,6 +171,24 @@ create mapping heOpCfg_monitor_user using plugin win_sspi from group "QUALITYR\h
 create mapping heOpCfg_monitor_role using plugin win_sspi from group "QUALITYR\heOpMon_user" to ROLE db_role_monitor;
 
 ```
+
+!!! warn "Role permissions for schema updates"
+
+    Please note, that by default, only administrators can update the database metadata. As the heOpImp and heOpCfg applications can also update the database schema (e.g. if an update was rolled out). In this case, either an administrative user must run the applications or the heOpImp_writer and heOpCfg_editor needs explicitely granted permissions as follows:
+
+    ```sql
+    -- Allow DDL metadata changes for the role "db_role_writer":
+    GRANT ALL PROCEDURE TO ROLE db_role_writer;
+    GRANT ALL FUNCTION TO ROLE db_role_writer;
+    GRANT ALL GENERATOR TO ROLE db_role_writer;
+    GRANT ALL SEQUENCE TO ROLE db_role_writer;
+    GRANT ALL TABLE TO ROLE db_role_writer;
+
+    ```
+
+    For more details, see [Firebird3DDLPrivileges](https://www.ibexpert.net/ibe/pmwiki.php?n=Doc.GrantManager#Firebird3DDLPrivileges). 
+
+
 Use the following queries to verify that role mappings have been configured correctly.
 
 Check existing roles and their system privileges:
@@ -399,13 +422,15 @@ allow alias access - i.e. only databases registered in [databases.conf](https://
 
 ??? note "🎬 3rd party info"
 
+    - [Consic Firebird Admin Handbuch](https://www.consic.de/download/firebird/firebird-admin-handbuch.pdf)
     - [README.mapping.html](https://github.com/FirebirdSQL/firebird/blob/master/doc/sql.extensions/README.mapping.html)
     - [Configuring trusted authentication](https://ib-aid.com/download/docs/fb4migrationguide.html#_configuring_trusted_authentication).
     - [README.trusted_authentication](https://github.com/FirebirdSQL/firebird/blob/master/doc/README.trusted_authentication).
 
     - [using GSEC to setup automatic admin mapping](https://www.firebirdsql.org/file/documentation/html/en/firebirddocs/gsec/firebird-gsec.html#gsec-interactive-admin-mapping)
     - [LANGREF:auto admin mapping](https://www.firebirdsql.org/refdocs/langrefupd25-security-auto-admin-mapping.html).
-
+    - [Firebird Conf: Security Best Practices](https://www.ibphoenix.com/files/conf2019/BestPracticesSecurity.pdf)
+    - [Firebird and Security](https://www.ibphoenix.com/files/conf2007/Firebird-and-Security-Cisar-2007.pdf)
 
 
 ## Notes

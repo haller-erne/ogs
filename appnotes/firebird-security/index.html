@@ -3738,28 +3738,40 @@ SQL&gt;
 </ul>
 <h3 id="heopcfg-ogs-workflow-editor"><a class="toclink" href="#heopcfg-ogs-workflow-editor">heOpCfg (OGS workflow editor)</a></h3>
 <p>Use the trusted authentication version of the heOpCfg editor to work with (remote) configuration databases set up for trusted authentication.</p>
+<p>Note, that you <strong>must</strong> define connection aliases in <code>heOpCfg.ini</code> for the databases you want to access:</p>
+<div class="highlight"><span class="filename">heOpCfg.ini</span><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">[GLOBAL]</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="c1">; Define the remote configuration databases used:</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="na">CFG_DATABASE_01</span><span class="o">=</span><span class="s">&lt;hostname&gt;:&lt;db-alias1&gt;</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="na">CFG_DATABASE_02</span><span class="o">=</span><span class="s">&lt;hostname&gt;:&lt;db-alias2&gt;</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="c1">; ...</span>
+</code></pre></div>
 <h3 id="heopimp-ogs-station-workflow-import"><a class="toclink" href="#heopimp-ogs-station-workflow-import">heOpImp (OGS station workflow import)</a></h3>
 <p>Use the trusted authentication version of the heOpCfg editor to work with (remote) configuration databases set up for trusted authentication.</p>
-<p>To also work with trusted station databases, change the <code>heOpImp.ini</code> configuration file as follows:</p>
-<div class="highlight"><span class="filename">station.ini</span><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">[FDS]</span>
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="c1">; Set trusted = 1 to force trusted authentication for all *.fds</span>
-<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1">; databases</span>
-<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="na">trusted</span><span class="o">=</span><span class="s">1</span>
-<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
-<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="c1">; If dbname is not empty, then this overrides any interactive or</span>
-<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="c1">; commandline given *.fds (station database) names. The format is</span>
-<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="c1">; &lt;hostname&gt;:&lt;aliasname&gt;, typically you will want to use 127.0.0.1</span>
-<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="c1">; for the &lt;hostname&gt; (and likely station for the alias, depending </span>
-<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="c1">; on your local database server settings)</span>
-<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="na">dbname</span><span class="o">=</span><span class="s">127.0.0.1:station</span>
+<p>To also work with trusted station databases, change the <code>heOpImp.ini</code> configuration file as shown in the following code block. Note, that you also <strong>must</strong> define connection aliases for the configuration databases in <code>heOpCfg.ini</code> for the configuration databases you want to access:</p>
+<div class="highlight"><span class="filename">heOpImp.ini</span><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">[FDS]</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="c1">; Set trusted = 1 to force trusted authentication for all *.fds</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="c1">; databases</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="na">trusted</span><span class="o">=</span><span class="s">1</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="c1">; If dbname is not empty, then this overrides any interactive or</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="c1">; commandline given *.fds (station database) names. The format is</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="c1">; &lt;hostname&gt;:&lt;aliasname&gt;, typically you will want to use 127.0.0.1</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="c1">; for the &lt;hostname&gt; (and likely station for the alias, depending </span>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="c1">; on your local database server settings)</span>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="na">dbname</span><span class="o">=</span><span class="s">127.0.0.1:station</span>
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="k">[GLOBAL]</span>
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="c1">; Define the remote configuration databases used:</span>
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="na">CFG_DATABASE_01</span><span class="o">=</span><span class="s">&lt;hostname&gt;:&lt;db-alias1&gt;</span>
+<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="na">CFG_DATABASE_02</span><span class="o">=</span><span class="s">&lt;hostname&gt;:&lt;db-alias2&gt;</span>
+<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="c1">; ...</span>
 </code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Setting up a fixed dbname ensures the user can only access a specific database. The disadvantage is, that switching to 
+<p>Setting up a fixed dbname ensures the user can only access a specific station database. The disadvantage is, that switching to 
 a different project needs reconfiguring the <code>heOpImp.ini</code>.
-To workaround additional instances of the OGS station software
-can be installed on the machine (with different settings).</p>
+To workaround additional instances of the OGS station software can be installed on the machine (with different settings).</p>
 </div>
 <h2 id="hardening-checklist"><a class="toclink" href="#hardening-checklist">Hardening checklist</a></h2>
 <h3 id="local-firebird-server-configuration"><a class="toclink" href="#local-firebird-server-configuration">Local Firebird Server configuration</a></h3>

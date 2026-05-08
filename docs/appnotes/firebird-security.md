@@ -303,13 +303,24 @@ The relevant parameters in the `[GENERAL]` section are:
 
 Use the trusted authentication version of the heOpCfg editor to work with (remote) configuration databases set up for trusted authentication.
 
+Note, that you **must** define connection aliases in `heOpCfg.ini` for the databases you want to access:
+
+``` ini title="heOpCfg.ini"
+[GLOBAL]
+; Define the remote configuration databases used:
+CFG_DATABASE_01=<hostname>:<db-alias1>
+CFG_DATABASE_02=<hostname>:<db-alias2>
+; ...
+
+```
+
 ### heOpImp (OGS station workflow import)
 
 Use the trusted authentication version of the heOpCfg editor to work with (remote) configuration databases set up for trusted authentication.
 
-To also work with trusted station databases, change the `heOpImp.ini` configuration file as follows:
+To also work with trusted station databases, change the `heOpImp.ini` configuration file as shown in the following code block. Note, that you also **must** define connection aliases for the configuration databases in `heOpCfg.ini` for the configuration databases you want to access:
 
-``` ini title="station.ini"
+``` ini title="heOpImp.ini"
 [FDS]
 
 ; Set trusted = 1 to force trusted authentication for all *.fds
@@ -323,14 +334,18 @@ trusted=1
 ; on your local database server settings)
 dbname=127.0.0.1:station
 
+[GLOBAL]
+; Define the remote configuration databases used:
+CFG_DATABASE_01=<hostname>:<db-alias1>
+CFG_DATABASE_02=<hostname>:<db-alias2>
+; ...
 ```
 
 !!! note
 
-    Setting up a fixed dbname ensures the user can only access a specific database. The disadvantage is, that switching to 
+    Setting up a fixed dbname ensures the user can only access a specific station database. The disadvantage is, that switching to 
     a different project needs reconfiguring the `heOpImp.ini`.
-    To workaround additional instances of the OGS station software
-    can be installed on the machine (with different settings).
+    To workaround additional instances of the OGS station software can be installed on the machine (with different settings).
 
 ## Hardening checklist
 

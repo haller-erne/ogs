@@ -314,7 +314,7 @@ DBHost=127.0.0.1:station
 ; all default parameters.
 ; To use trusted authentication, set the user_name parameter to
 ; an empty string.
-DBParam=user_name=
+DBParams=user_name=
 ```
 
 The relevant parameters in the `[GENERAL]` section are:

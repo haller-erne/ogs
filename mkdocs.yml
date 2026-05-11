@@ -26,9 +26,11 @@ nav:
             - OGS GUI input: tools/misc/gui-input.md
             - AIOI Pick2Light: tools/misc/aioi-pick2light.md
             - Gesipa riveting tool: tools/misc/gesipa-mqtt.md
-            - Keyence IV4 AI Vision sensor: tools/misc/keyence-iv4.md
             - Sylvac Meters: tools/misc/sylvac.md
             - Oetiker EPC01 pincer: tools/misc/oetiker.md
+        - Camera systems:
+            - Keyence IV4 AI Vision sensor: tools/misc/keyence-iv4.md
+            - HikRobot VisionMaster: tools/misc/hikrobot-vm.md
             - Wenglor weQube Smart camera: tools/misc/wenglor-weqube.md
         - Positioning:
             - Overview: tools/positioning/README.md

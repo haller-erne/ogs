@@ -3839,12 +3839,19 @@ SQL&gt;
 <h3 id="heopcfg-ogs-workflow-editor"><a class="toclink" href="#heopcfg-ogs-workflow-editor">heOpCfg (OGS workflow editor)</a></h3>
 <p>Use the trusted authentication version of the heOpCfg editor to work with (remote) configuration databases set up for trusted authentication.</p>
 <p>Note, that you <strong>must</strong> define connection aliases in <code>heOpCfg.ini</code> for the databases you want to access:</p>
-<div class="highlight"><span class="filename">heOpCfg.ini</span><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">[GLOBAL]</span>
+<p></p><div class="highlight"><span class="filename">heOpCfg.ini</span><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">[GLOBAL]</span>
 <a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="c1">; Define the remote configuration databases used:</span>
 <a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="na">CFG_DATABASE_01</span><span class="o">=</span><span class="s">&lt;hostname&gt;:&lt;db-alias1&gt;</span>
 <a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="na">CFG_DATABASE_02</span><span class="o">=</span><span class="s">&lt;hostname&gt;:&lt;db-alias2&gt;</span>
 <a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="c1">; ...</span>
 </code></pre></div>
+In server mode, Active Directory security groups can be used to automatically assign the “Coordinator” and “Job Editor” roles to users. To enable this functionality, configure the following global parameters under Tools → INI Parameters in HeOpCfg software.<p></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/SID_heopcfg.png" data-desc-position="bottom"><img alt="sid_cfg" src="../resources/SID_heopcfg.png"></a></p>
+<div class="highlight"><pre><span></span><code>- SID_COORDINATOR_GROUP: Specifies the group SID used to determine whether an Active Directory user is authorized for the “Coordinator” role in DBEdit.
+- SID_JOB_DESIGNER_GROUP: Specifies the group SID used to determine whether an Active Directory user is authorized for the “Job Designer” role in DBEdit.
+- SID_CFG_EXPORT_GROUP: Specifies the group SID used to determine whether an Active Directory user is allowed to export a database.
+</code></pre></div>
+<p>When the heOpCfg editor starts, it checks the current Windows logon for membership in the configured groups. Access to Coordinator and Job Editor modes is then granted based on the corresponding group memberships.</p>
 <h3 id="heopimp-ogs-station-workflow-import"><a class="toclink" href="#heopimp-ogs-station-workflow-import">heOpImp (OGS station workflow import)</a></h3>
 <p>Use the trusted authentication version of the heOpCfg editor to work with (remote) configuration databases set up for trusted authentication.</p>
 <p>To also work with trusted station databases, change the <code>heOpImp.ini</code> configuration file as shown in the following code block. Note, that you also <strong>must</strong> define connection aliases for the configuration databases in <code>heOpCfg.ini</code> for the configuration databases you want to access:</p>

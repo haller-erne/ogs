@@ -336,6 +336,16 @@ CFG_DATABASE_02=<hostname>:<db-alias2>
 ; ...
 
 ```
+In server mode, Active Directory security groups can be used to automatically assign the “Coordinator” and “Job Editor” roles to users. To enable this functionality, configure the following global parameters under Tools → INI Parameters in HeOpCfg software.
+
+![sid_cfg](resources/SID_heopcfg.png)
+
+	- SID_COORDINATOR_GROUP: Specifies the group SID used to determine whether an Active Directory user is authorized for the “Coordinator” role in DBEdit.
+    - SID_JOB_DESIGNER_GROUP: Specifies the group SID used to determine whether an Active Directory user is authorized for the “Job Designer” role in DBEdit.
+    - SID_CFG_EXPORT_GROUP: Specifies the group SID used to determine whether an Active Directory user is allowed to export a database.
+
+When the heOpCfg editor starts, it checks the current Windows logon for membership in the configured groups. Access to Coordinator and Job Editor modes is then granted based on the corresponding group memberships.
+
 
 ### heOpImp (OGS station workflow import)
 

@@ -39,8 +39,7 @@ OGS.Project.AddPath('../shared')
 
 requires = {
 	"barcode",
-	"user_manager_ad",           -- (1)!
-	"user_manager",
+	"user_manager_ad",           -
     -- possibly more...
 }
 current_project.logo_file = '../shared/logo-rexroth.png'
@@ -72,7 +71,7 @@ sid_supervisor=S-1-5-21-1351067494-3386591924-3478655970-4621
 ; When set to 0, the password typed in the OGS field is passed from C++ to
 ; Lua for direct AD validation via LogonUserW (no Windows dialog shown).
 ; Default 1 (use Windows logon dialog)
-windows_default_auth=1
+windows_default_auth=0
 
 ```
 

@@ -13,6 +13,8 @@ nav:
             - KE350: tools/openprotocol/sys350-ke350.md
             - OPEXplus:  tools/openprotocol/opexplus.md
             - GWK OP22/OP+: tools/openprotocol/gwk.md
+            - Atlas Copco PowerFocus 4000/6000/8: tools/openprotocol/pf6-pf8.md
+            - Atlas Copco MicroTorque: tools/openprotocol/mtc.md
             - Sturtevant 400mp/TCVe2: tools/openprotocol/sturtevant.md
             - AMT/EST SX Wifi tools: tools/openprotocol/amt.md
             - Cleco Wifi tools: tools/openprotocol/cleco.md

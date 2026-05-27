@@ -25,6 +25,13 @@ The camera system is configured using the [HikRobot VisionMaster](https://www.hi
 As the Hikrobot VisionMaster driver is implemented as LUA custom tool, the instuction provided in the [Lua custom tools documentation](../../v3/lua/customtools.md) applies. A sample configuration for the lua driver `camera_hikrobot_vm` in `station.ini` looks as follows:
 
 ``` ini
+[GLOBAL]
+DstPartImage=%OGS_PROJECT_PATH%\..\shared\webroot\currentjob.png
+
+[WebServer]
+URL=http://127.0.0.1:60000/
+RootFolder=../shared/webroot
+
 [TOOL_DLL]
 heLuaTool.dll=1 
 
@@ -43,7 +50,7 @@ PORT=10001
 ;
 ; Define the path where to read the (Nok) camera image from
 ; If not given, then don't save
-IMAGE_PATH=c:\monitor\camera\image.jpg
+NOK_URL=nok_image.jpg
 ;
 ; debug level:
 DEBUG=0
@@ -56,7 +63,7 @@ The parameters are:
 - `HOST`: Specify the IP address of the VisionMaster camera TCP server
 - `PORT`: Specify the IP listening port of the VisionMaster camera TCP server
 - `DEBUG`: Set the debug level for the EtherNet/IP communication.
-- `IMAGE_PATH` (optional): If given, then the image will be used to show the NOK result. 
+- `NOK_URL` (optional): If given, then the image will be used to show the NOK result. 
 
 To load the driver, see below (OGS >= V3.1.10 ship the driver, so there is no need to load it manually anymore).
 
@@ -116,7 +123,7 @@ There are two operations shown:
 
 !!! hint 
 
-    You can setup a task URL to show a webpage with the NOK result image. 
+    You can setup a task URL to show a webpage with the NOK result image. In this case, best is to set the task url to `currentimage.html` and write the current jobs image to disk using the parameter `DstPartImage` in the `[GENERAL]` section. Best is to also enable the webserver (as shown above).
 
 !!! hint 
 

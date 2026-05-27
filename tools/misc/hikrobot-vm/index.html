@@ -615,6 +615,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../openprotocol/pf6-pf8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Atlas Copco PowerFocus 4000/6000/8
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../openprotocol/mtc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Atlas Copco MicroTorque
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../openprotocol/sturtevant/" class="md-nav__link">
         
   
@@ -3129,28 +3185,35 @@ HikRobots VisionMaster is a machine vision software that is committed to providi
 <h2 id="installation-and-configuration-with-ogs"><a class="toclink" href="#installation-and-configuration-with-ogs">Installation and Configuration with OGS</a></h2>
 <h3 id="tool-registration-and-configuration"><a class="toclink" href="#tool-registration-and-configuration">Tool registration and configuration</a></h3>
 <p>As the Hikrobot VisionMaster driver is implemented as LUA custom tool, the instuction provided in the <a href="../../../v3/lua/customtools/">Lua custom tools documentation</a> applies. A sample configuration for the lua driver <code>camera_hikrobot_vm</code> in <code>station.ini</code> looks as follows:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">[TOOL_DLL]</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="na">heLuaTool.dll</span><span class="o">=</span><span class="s">1</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">[GLOBAL]</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="na">DstPartImage</span><span class="o">=</span><span class="s">%OGS_PROJECT_PATH%\..\shared\webroot\currentjob.png</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">[CHANNELS]</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="na">28</span><span class="o">=</span><span class="s">LuaTool_HikRobot_VM</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="k">[LuaTool_LuaTool_HikRobot_VM]</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="na">DRIVER</span><span class="o">=</span><span class="s">heLuaTool</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="na">TYPE</span><span class="o">=</span><span class="s">camera_hikrobot_vm</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1">; IP address and port of the VisionMaster TCP server interface</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="na">HOST</span><span class="o">=</span><span class="s">127.0.0.1</span>
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="na">PORT</span><span class="o">=</span><span class="s">10001</span>
-<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="c1">; Response timeout in seconds (default = 1 s)</span>
-<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="c1">;TO_RESPONSE=5</span>
-<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
-<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="c1">;</span>
-<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="c1">; Define the path where to read the (Nok) camera image from</span>
-<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="c1">; If not given, then don't save</span>
-<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="na">IMAGE_PATH</span><span class="o">=</span><span class="s">c:\monitor\camera\image.jpg</span>
-<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="c1">;</span>
-<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="c1">; debug level:</span>
-<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="na">DEBUG</span><span class="o">=</span><span class="s">0</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">[WebServer]</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="na">URL</span><span class="o">=</span><span class="s">http://127.0.0.1:60000/</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="na">RootFolder</span><span class="o">=</span><span class="s">../shared/webroot</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="k">[TOOL_DLL]</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="na">heLuaTool.dll</span><span class="o">=</span><span class="s">1</span><span class="w"> </span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="k">[CHANNELS]</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="na">28</span><span class="o">=</span><span class="s">LuaTool_HikRobot_VM</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="k">[LuaTool_LuaTool_HikRobot_VM]</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="na">DRIVER</span><span class="o">=</span><span class="s">heLuaTool</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="na">TYPE</span><span class="o">=</span><span class="s">camera_hikrobot_vm</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="c1">; IP address and port of the VisionMaster TCP server interface</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="na">HOST</span><span class="o">=</span><span class="s">127.0.0.1</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="na">PORT</span><span class="o">=</span><span class="s">10001</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="c1">; Response timeout in seconds (default = 1 s)</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="c1">;TO_RESPONSE=5</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="c1">;</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="c1">; Define the path where to read the (Nok) camera image from</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="c1">; If not given, then don't save</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="na">NOK_URL</span><span class="o">=</span><span class="s">nok_image.jpg</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="c1">;</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="c1">; debug level:</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="na">DEBUG</span><span class="o">=</span><span class="s">0</span>
 </code></pre></div>
 <p>The parameters are:</p>
 <ul>
@@ -3159,7 +3222,7 @@ HikRobots VisionMaster is a machine vision software that is committed to providi
 <li><code>HOST</code>: Specify the IP address of the VisionMaster camera TCP server</li>
 <li><code>PORT</code>: Specify the IP listening port of the VisionMaster camera TCP server</li>
 <li><code>DEBUG</code>: Set the debug level for the EtherNet/IP communication.</li>
-<li><code>IMAGE_PATH</code> (optional): If given, then the image will be used to show the NOK result. </li>
+<li><code>NOK_URL</code> (optional): If given, then the image will be used to show the NOK result. </li>
 </ul>
 <p>To load the driver, see below (OGS &gt;= V3.1.10 ship the driver, so there is no need to load it manually anymore).</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">&gt;= V3.1.10</label><label for="__tabbed_1_2">&lt; V3.1.10</label></div>
@@ -3205,7 +3268,7 @@ HikRobots VisionMaster is a machine vision software that is committed to providi
 </div>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
-<p>You can setup a task URL to show a webpage with the NOK result image. </p>
+<p>You can setup a task URL to show a webpage with the NOK result image. In this case, best is to set the task url to <code>currentimage.html</code> and write the current jobs image to disk using the parameter <code>DstPartImage</code> in the <code>[GENERAL]</code> section. Best is to also enable the webserver (as shown above).</p>
 </div>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>

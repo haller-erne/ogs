@@ -26,6 +26,12 @@ For generic information about how to configure OGS with OpenProtocol tools, see 
 
 ### Tool registration and configuration
 
+Before using the MicroTorque tools, ensure that the `heMTF6000.dll` module is enabled in the `[TOOL_DLL]` section of the `station.ini` configuration file.
+``` ini
+[TOOL_DLL]
+heMTF6000.dll=1
+```
+
 The MicroTorque controllers are identified by specifying the tool type `MTC` in the `[OPENPROTO]` section of `station.ini`. 
 
 A typical configuration of the `[OPENPROTO]` section looks like the following :
@@ -35,7 +41,7 @@ A typical configuration of the `[OPENPROTO]` section looks like the following :
 ; Channel/Tool 1 parameters
 CHANNEL_01=10.10.2.184
 CHANNEL_01_PORT=4545
-CHANNEL_01_TYPE=MTC
+CHANNEL_01_TYPE=MTF
 ; Enable time synchronization 
 CHANNEL_01_CHECK_TIME_ENABLED=1
 ; Force CCW switch selection for rework/loosen

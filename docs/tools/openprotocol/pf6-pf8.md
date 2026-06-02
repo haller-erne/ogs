@@ -23,6 +23,14 @@ For generic information about how to configure OGS with OpenProtocol tools, see 
 
 ### Tool registration and configuration
 
+To use any OpenProtocol tools, the `OPConn.dll` module must be enabled in the `station.ini` configuration file under the `[TOOL_DLL]` section.
+
+``` ini
+[TOOL_DLL]
+OPConn.dll=1
+
+```
+
 The PowerFocus controllers (and also the ITB tools with integrated controller) are identified by specifying the tool type `PF6000` in the `[OPENPROTO]` section of `station.ini`. 
 
 A typical configuration of the `[OPENPROTO]` section looks like the following :

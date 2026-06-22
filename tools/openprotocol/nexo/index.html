@@ -3419,6 +3419,7 @@
 <a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="na">CHANNEL_01_CCW_ACK</span><span class="o">=</span><span class="s">1</span>
 <a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1">; to enable curve transmission, set to 1:</span>
 <a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="na">CHANNEL_01_CURVE_REQUEST</span><span class="o">=</span><span class="s">1</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="na">CHANNEL_01_BARCODE_MID0051_REV</span><span class="o">=</span><span class="s">1</span>
 </code></pre></div>
 <p>The typical parameters are (for more details about the possible parameters, see <a href="../../">OpenProtocol documentation</a>):</p>
 <ul>
@@ -3429,6 +3430,7 @@
 <li><code>CHANNEL_&lt;channel&gt;_CCW_ACK</code>: (optional) If set to a nonzero value, then the CCWSel switch is monitored for
 the correct position - i.e. if OGS expects loosen, the switch must be set to the CCW position.</li>
 <li><code>CHANNEL_&lt;channel&gt;_CURVE_REQUEST</code>: Set to 1 to enable curve transmission over OpenProtocol, set to 0 to disable. Set to 1, if you need the curve data in OGS (e.g. for display or dynamic curve analysis with LUA scripting). Disable (set to zero), if you don't need it (for performance reasons). As Nexo and Nexo 2 have built-in data output protocols, it is only needed in special setups, where OGS needs the curve data.</li>
+<li><code>CHANNEL_&lt;channel&gt;_BARCODE_MID0051_REV</code>: If set to a nonzero value, the MID0051 (ID-Code change) subscription is enabled. This can be used to read ID-Codes through a barcode scanner built into the tool (instead of using a seperate scanner).</li>
 </ul>
 <h3 id="tool-data-output"><a class="toclink" href="#tool-data-output">Tool data output</a></h3>
 <p>As Nexo and Nexo 2 have built-in features to send out data and curves (<code>Traceability</code> data) to backend data management systems, there is typically no support from OGS needed. </p>

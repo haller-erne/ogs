@@ -3214,6 +3214,7 @@
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="na">CHANNEL_01_TYPE</span><span class="o">=</span><span class="s">OPEX</span>
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1">; to enable curve transmission, set to 1:</span>
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="na">CHANNEL_01_CURVE_REQUEST</span><span class="o">=</span><span class="s">1</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="na">CHANNEL_01_BARCODE_MID0051_REV</span><span class="o">=</span><span class="s">1</span>
 </code></pre></div>
 <p>The typical parameters are (for more details about the possible parameters, see <a href="../../">OpenProtocol documentation</a>):</p>
 <ul>
@@ -3221,6 +3222,7 @@
 <li><code>CHANNEL_&lt;channel&gt;_PORT</code>: Define the TCP port number used for OpenProtocol(typically 4002).</li>
 <li><code>CHANNEL_&lt;channel&gt;_TYPE</code>: Defines the OpenProtocol communication variant, <strong>must</strong> be set to <code>OPEX</code>.</li>
 <li><code>CHANNEL_&lt;channel&gt;_CURVE_REQUEST</code>: Set to 1 to enable curve transmission, set to 0 to disable curve transmission. Set to 1, if you have <a href="#tool-data-output">tracebility output</a> enabled and want to get the tightening graph included in the data output. Disable (set to zero), if you don't need it (for performance reasons).</li>
+<li><code>CHANNEL_&lt;channel&gt;_BARCODE_MID0051_REV</code>: If set to a nonzero value, the MID0051 (ID-Code change) subscription is enabled. This can be used to read ID-Codes through a barcode scanner built into the tool (instead of using a seperate scanner).</li>
 </ul>
 <h3 id="tool-data-output"><a class="toclink" href="#tool-data-output">Tool data output</a></h3>
 <p>Like other tools, the <code>OPEXplus</code> tools can use the OGS buit-in connectivity options to send out data and curves (<code>Traceability</code> data) to backend data management systems (like <a href="https://www.atlascopco.com/en-us/itba/products/assembly-solutions/software-solutions/toolsnet-8-sku4531">ToolsNet</a>, <a href="https://www.csp-sw.com/quality-management-software-solutions/error-prevention-with-ipm/">CSP I-P.M.</a>, <a href="https://www.sciemetric.com/data-intelligence/qualityworx-data-collection">Sciemetric QualityWorX</a>, <a href="https://www.haller-erne.de/qualityr-web/">QualityR</a>, etc.). </p>

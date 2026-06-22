@@ -40,6 +40,7 @@ CHANNEL_01_CHECK_TIME_ENABLED=1
 CHANNEL_01_CCW_ACK=1
 ; to enable curve transmission, set to 1:
 CHANNEL_01_CURVE_REQUEST=1
+CHANNEL_01_BARCODE_MID0051_REV=1
 ```
 
 The typical parameters are (for more details about the possible parameters, see [OpenProtocol documentation](../README.md)):
@@ -51,6 +52,7 @@ The typical parameters are (for more details about the possible parameters, see 
 - `CHANNEL_<channel>_CCW_ACK`: (optional) If set to a nonzero value, then the CCWSel switch is monitored for
 the correct position - i.e. if OGS expects loosen, the switch must be set to the CCW position.
 - `CHANNEL_<channel>_CURVE_REQUEST`: Set to 1 to enable curve transmission over OpenProtocol, set to 0 to disable. Set to 1, if you need the curve data in OGS (e.g. for display or dynamic curve analysis with LUA scripting). Disable (set to zero), if you don't need it (for performance reasons). As Nexo and Nexo 2 have built-in data output protocols, it is only needed in special setups, where OGS needs the curve data.
+- `CHANNEL_<channel>_BARCODE_MID0051_REV`: If set to a nonzero value, the MID0051 (ID-Code change) subscription is enabled. This can be used to read ID-Codes through a barcode scanner built into the tool (instead of using a seperate scanner).
 
 ### Tool data output
 

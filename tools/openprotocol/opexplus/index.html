@@ -3262,6 +3262,90 @@
 <h3 id="tightening-programs"><a class="toclink" href="#tightening-programs">Tightening programs</a></h3>
 <p>To upload and manage tightening programs, use the <code>EasyWin</code> software. The PSET number to select a tightening program is generated in EasyWin automatically besed on the inserting sequence (first column (labeled "No.") in the tool configuration list). To change the order, use the buttons with the green arrow on the bottom of the pane.</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/opex-easywin.png" data-desc-position="bottom"><img alt="EasyWin" src="../resources/opex-easywin.png"></a></p>
+<h1 id="switching-the-operating-mode"><a class="toclink" href="#switching-the-operating-mode">Switching the Operating Mode</a></h1>
+<h2 id="prerequisites"><a class="toclink" href="#prerequisites">Prerequisites</a></h2>
+<ol>
+<li>Turn off the tool.</li>
+<li>Connect the tool to a PC using a USB cable.</li>
+<li>Open a terminal application such as <strong>TeraTerm</strong> or <strong>PuTTY Portable</strong>.</li>
+<li>Select the correct COM port for serial communication (see <strong>Device Manager</strong>).</li>
+<li>Set the baud rate to <strong>115200</strong>.</li>
+<li>Open the connection.</li>
+</ol>
+<p>Example: PuTTY Portable</p>
+<ul>
+<li>Enter the COM port number.</li>
+<li>Set <strong>Speed (baud rate)</strong> to <strong>115200</strong>.</li>
+<li>Click <strong>Open</strong>.</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/opex-ssh-putty.png" data-desc-position="bottom"><img alt="PuTTY Configuration" src="../resources/opex-ssh-putty.png"></a></p>
+<hr>
+<h2 id="access-the-service-console"><a class="toclink" href="#access-the-service-console">Access the Service Console</a></h2>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/opex-tool-butons.png" data-desc-position="bottom"><img alt="Tool Buttons" src="../resources/opex-tool-butons.png"></a></p>
+<ol>
+<li>Press and hold the <strong>Left Arrow</strong> button on the tool until the following screen appears:</li>
+</ol>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/opex-tool-ssh.png" data-desc-position="bottom"><img alt="Console Menu" src="../resources/opex-tool-ssh.png"></a></p>
+<ol>
+<li>
+<p>Use the arrow keys to select <strong>Console</strong>.</p>
+</li>
+<li>
+<p>Press <strong>OK</strong> to confirm.</p>
+</li>
+</ol>
+<hr>
+<h2 id="log-in-to-the-console"><a class="toclink" href="#log-in-to-the-console">Log In to the Console</a></h2>
+<ol>
+<li>When prompted for a password, enter:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>12345
+</code></pre></div>
+<ol>
+<li>Press <strong>Enter</strong>.</li>
+</ol>
+<p>The terminal should display the following screen:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/opex-console-1.png" data-desc-position="bottom"><img alt="Console Login" src="../resources/opex-console-1.png"></a></p>
+<hr>
+<h2 id="display-available-service-routines"><a class="toclink" href="#display-available-service-routines">Display Available Service Routines</a></h2>
+<p>Enter the following command:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>lsr
+</code></pre></div>
+<p>This displays the available service routines.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/opex-console-2.png" data-desc-position="bottom"><img alt="Service Routines" src="../resources/opex-console-2.png"></a></p>
+<hr>
+<h2 id="change-the-operating-mode"><a class="toclink" href="#change-the-operating-mode">Change the Operating Mode</a></h2>
+<ol>
+<li>Start service routine <strong>125</strong>:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sr 125
+</code></pre></div>
+<ol>
+<li>Select the required operating mode by providing the number (1, 2, 3 or 4)</li>
+</ol>
+<p>Available modes:</p>
+<ul>
+<li>3</li>
+<li>6</li>
+<li>59</li>
+<li>62</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../resources/opex-console-3.png" data-desc-position="bottom"><img alt="Operating Mode Selection" src="../resources/opex-console-3.png"></a></p>
+<hr>
+<h2 id="save-and-exit"><a class="toclink" href="#save-and-exit">Save and Exit</a></h2>
+<ol>
+<li>Turn off the tool using service routine <strong>140</strong>:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sr 140
+</code></pre></div>
+<ol>
+<li>
+<p>The operating mode change is now complete, and the tool will shut down.</p>
+</li>
+<li>
+<p>Power on the tool. It will start using the newly selected operating mode.</p>
+</li>
+</ol>
 
 
 

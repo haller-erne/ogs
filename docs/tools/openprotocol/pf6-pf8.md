@@ -10,6 +10,7 @@ tags:
 
 # Atlas Copco Powerfocus 6/8 controllers and tools
 
+![PF8 tightening controller](resources/ac-pf8.png){ width="300", align=right }
 The [Atlas Copco Powerfocus 4000/6000/8 controllers and tools](https://www.atlascopco.com/de-de/itba/products/assembly-solutions/electric-assembly-systems/power-focus-8) are a controller platform for all your assembly needs. Using Virtual Stations, multiple tools can be operated from one single controller with different tightening settings. The perfect solution for your smart integrated assembly operation.
 They use the [OpenProtocol](../README.md) communication protocol to communicate with the heOGS software. They also support traceability data and curve output through OpenProtocol (if a license is installed).
 

@@ -2,87 +2,87 @@ site_name: OGS Documentation
 site_url: https://haller-erne.github.io/ogs/
 nav:
     - Home: index.md
-    - Tool configuration:
-        - Overview: tools/README.md
-        - Remote Tool Gateway: 
-            - Overview: tools/remote-tool.md
-        - OpenProtocol tools: 
-            - Overview: tools/openprotocol/README.md
-            - Nexo/Nexo2: tools/openprotocol/nexo.md
-            - CS351: tools/openprotocol/sys350-cs351.md
-            - KE350: tools/openprotocol/sys350-ke350.md
-            - OPEXplus:  tools/openprotocol/opexplus.md
-            - GWK OP22/OP+: tools/openprotocol/gwk.md
-            - Atlas Copco PowerFocus 4000/6000/8: tools/openprotocol/pf6-pf8.md
-            - Atlas Copco MicroTorque: tools/openprotocol/mtc.md
-            - Sturtevant 400mp/TCVe2: tools/openprotocol/sturtevant.md
-            - AMT/EST SX Wifi tools: tools/openprotocol/amt.md
-            - Cleco Wifi tools: tools/openprotocol/cleco.md
-            - Makita Wifi tools: tools/openprotocol/makita.md
-            - HS-Technik NutBee riveting tool: tools/openprotocol/hstechnik.md
-        - Non-OpenProtocol tightening tools:
-            - n-gineric: tools/non-openprotocol/ngineric.md
-            - Doga BM-series: tools/non-openprotocol/doga-wifi.md
-            - Stahlwille Manoskop 766 WiFi: tools/non-openprotocol/stahlwille.md
-        - Misc tools:
-            - OGS GUI input: tools/misc/gui-input.md
-            - AIOI Pick2Light: tools/misc/aioi-pick2light.md
-            - Gesipa riveting tool: tools/misc/gesipa-mqtt.md
-            - Sylvac Meters: tools/misc/sylvac.md
-            - Oetiker EPC01 pincer: tools/misc/oetiker.md
-        - Camera systems:
-            - Keyence IV4 AI Vision sensor: tools/misc/keyence-iv4.md
-            - HikRobot VisionMaster: tools/misc/hikrobot-vm.md
-            - Wenglor weQube Smart camera: tools/misc/wenglor-weqube.md
-        - Positioning:
-            - Overview: tools/positioning/README.md
-            - Referencing: tools/positioning/positioning-referencing.md
-            - ART SmartTrack/DTrack: tools/positioning/positioning-art-dtrack.md
-            - ART Verpose: tools/positioning/positioning-art-verpose.md
-            - URDF Robot FK Positioning: tools/positioning/positioning-robot-urdf.md
-    - Additional configuration:
-        - Socket trays: tools/misc/socket-tray.md
-        - Projector: tools/misc/projector.md
-    - Data output:
-        - End-of-process (XML) file: dataoutput/xmlfile.md
-        - Printout and label printing: dataoutput/printout.md
-        - Traceability: dataoutput/traceability.md
-        - Event logging: dataoutput/eventlog.md
-    - Scripting:
-        - Getting Started: v3/getting-started.md
-        - LUA interfaces:
-            - Eventlog: v3/lua/eventlog.md
-            - Web browsers: v3/lua/webbrowser.md
-            - Webserver (and REST API): v3/lua/webserver.md
-            - Bluetooth LE: v3/lua/bluetooth-le.md
-            - Sidepanel: v3/lua/sidepanel.md
-            - Lean button: v3/lua/lean-button.md
-        - LUA custom tools: v3/lua/customtools.md
-    - LUA helper libraries:
-        - ADS communication (TwinCat, Nexeed, Beckhoff): libs/lua-ads.md
-        - OpcUA communication: libs/lua-opcua.md
-        - Modbus/TCP/UDP communication: libs/lua-modbus.md
-        - USB HID Devices (Buttons, Arduino, etc.): libs/lua-hid.md
-        - Data Protection API (safe secrets storage): libs/lua-dpapi.md
-        - LUA Windows OS tools: libs/lua-ostools.md
-        - LUA network helpers (REST/OpenAPI): libs/lua-net.md
-    - Enterprise functionality:
-        - Central/shared configuration database: appnotes/sharedconfig.md
-        - Databanking and multi-station rework: appnotes/databanking.md
-        - Central user administration: 
-            - Overview: appnotes/userdb.md
-            - heUserManager: appnotes/userdb-heusermanager.md
-            - Active Directory: appnotes/userdb-activedirectory.md
-        - Tool roaming and dynamic parameters: appnotes/toolgateway.md
-        - Traceability: appnotes/traceability.md
-    - Application notes:
-        - OGS runtime screen layout: appnotes/gui-layout-runtime.md
-        - Debugging LUA Scripts: appnotes/debugging.md
-        - Station IO: appnotes/station_io.md
-        - Using BLE Gateways:
-            - OpenMQTT-Gateway: appnotes/blegateway-openmqttgateway.md
-            - Minew MG6 Gateway: appnotes/blegateway-minew-mg6.md
-        - Firebird SQL configuration: appnotes/firebird-security.md
+#    - Tool configuration:
+#        - Overview: tools/README.md
+#        - Remote Tool Gateway: 
+#            - Overview: tools/remote-tool.md
+#        - OpenProtocol tools: 
+#            - Overview: tools/openprotocol/README.md
+#            - Nexo/Nexo2: tools/openprotocol/nexo.md
+#            - CS351: tools/openprotocol/sys350-cs351.md
+#            - KE350: tools/openprotocol/sys350-ke350.md
+#            - OPEXplus:  tools/openprotocol/opexplus.md
+#            - GWK OP22/OP+: tools/openprotocol/gwk.md
+#            - Atlas Copco PowerFocus 4000/6000/8: tools/openprotocol/pf6-pf8.md
+#            - Atlas Copco MicroTorque: tools/openprotocol/mtc.md
+#            - Sturtevant 400mp/TCVe2: tools/openprotocol/sturtevant.md
+#            - AMT/EST SX Wifi tools: tools/openprotocol/amt.md
+#            - Cleco Wifi tools: tools/openprotocol/cleco.md
+#            - Makita Wifi tools: tools/openprotocol/makita.md
+#            - HS-Technik NutBee riveting tool: tools/openprotocol/hstechnik.md
+#        - Non-OpenProtocol tightening tools:
+#            - n-gineric: tools/non-openprotocol/ngineric.md
+#            - Doga BM-series: tools/non-openprotocol/doga-wifi.md
+#            - Stahlwille Manoskop 766 WiFi: tools/non-openprotocol/stahlwille.md
+#        - Misc tools:
+#            - OGS GUI input: tools/misc/gui-input.md
+#            - AIOI Pick2Light: tools/misc/aioi-pick2light.md
+#            - Gesipa riveting tool: tools/misc/gesipa-mqtt.md
+#            - Sylvac Meters: tools/misc/sylvac.md
+#            - Oetiker EPC01 pincer: tools/misc/oetiker.md
+#        - Camera systems:
+#            - Keyence IV4 AI Vision sensor: tools/misc/keyence-iv4.md
+#            - HikRobot VisionMaster: tools/misc/hikrobot-vm.md
+#            - Wenglor weQube Smart camera: tools/misc/wenglor-weqube.md
+#        - Positioning:
+#            - Overview: tools/positioning/README.md
+#            - Referencing: tools/positioning/positioning-referencing.md
+#            - ART SmartTrack/DTrack: tools/positioning/positioning-art-dtrack.md
+#            - ART Verpose: tools/positioning/positioning-art-verpose.md
+#            - URDF Robot FK Positioning: tools/positioning/positioning-robot-urdf.md
+#    - Additional configuration:
+#        - Socket trays: tools/misc/socket-tray.md
+#        - Projector: tools/misc/projector.md
+#    - Data output:
+#        - End-of-process (XML) file: dataoutput/xmlfile.md
+#        - Printout and label printing: dataoutput/printout.md
+#        - Traceability: dataoutput/traceability.md
+#        - Event logging: dataoutput/eventlog.md
+#    - Scripting:
+#        - Getting Started: v3/getting-started.md
+#        - LUA interfaces:
+#            - Eventlog: v3/lua/eventlog.md
+#            - Web browsers: v3/lua/webbrowser.md
+#            - Webserver (and REST API): v3/lua/webserver.md
+#            - Bluetooth LE: v3/lua/bluetooth-le.md
+#            - Sidepanel: v3/lua/sidepanel.md
+#            - Lean button: v3/lua/lean-button.md
+#        - LUA custom tools: v3/lua/customtools.md
+#    - LUA helper libraries:
+#        - ADS communication (TwinCat, Nexeed, Beckhoff): libs/lua-ads.md
+#        - OpcUA communication: libs/lua-opcua.md
+#        - Modbus/TCP/UDP communication: libs/lua-modbus.md
+#        - USB HID Devices (Buttons, Arduino, etc.): libs/lua-hid.md
+#        - Data Protection API (safe secrets storage): libs/lua-dpapi.md
+#        - LUA Windows OS tools: libs/lua-ostools.md
+#        - LUA network helpers (REST/OpenAPI): libs/lua-net.md
+#    - Enterprise functionality:
+#        - Central/shared configuration database: appnotes/sharedconfig.md
+#        - Databanking and multi-station rework: appnotes/databanking.md
+#        - Central user administration: 
+#            - Overview: appnotes/userdb.md
+#            - heUserManager: appnotes/userdb-heusermanager.md
+#            - Active Directory: appnotes/userdb-activedirectory.md
+#        - Tool roaming and dynamic parameters: appnotes/toolgateway.md
+#        - Traceability: appnotes/traceability.md
+#    - Application notes:
+#        - OGS runtime screen layout: appnotes/gui-layout-runtime.md
+#        - Debugging LUA Scripts: appnotes/debugging.md
+#        - Station IO: appnotes/station_io.md
+#        - Using BLE Gateways:
+#            - OpenMQTT-Gateway: appnotes/blegateway-openmqttgateway.md
+#            - Minew MG6 Gateway: appnotes/blegateway-minew-mg6.md
+#        - Firebird SQL configuration: appnotes/firebird-security.md
     
 # sample
 #    – Version 1.x:

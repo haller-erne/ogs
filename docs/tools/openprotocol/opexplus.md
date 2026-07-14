@@ -34,6 +34,7 @@ CHANNEL_01_PORT=4002
 CHANNEL_01_TYPE=OPEX
 ; to enable curve transmission, set to 1:
 CHANNEL_01_CURVE_REQUEST=1
+CHANNEL_01_BARCODE_MID0051_REV=1
 ```
 
 The typical parameters are (for more details about the possible parameters, see [OpenProtocol documentation](../README.md)):
@@ -42,6 +43,7 @@ The typical parameters are (for more details about the possible parameters, see 
 - `CHANNEL_<channel>_PORT`: Define the TCP port number used for OpenProtocol(typically 4002).
 - `CHANNEL_<channel>_TYPE`: Defines the OpenProtocol communication variant, **must** be set to `OPEX`.
 - `CHANNEL_<channel>_CURVE_REQUEST`: Set to 1 to enable curve transmission, set to 0 to disable curve transmission. Set to 1, if you have [tracebility output](#tool-data-output) enabled and want to get the tightening graph included in the data output. Disable (set to zero), if you don't need it (for performance reasons).
+- `CHANNEL_<channel>_BARCODE_MID0051_REV`: If set to a nonzero value, the MID0051 (ID-Code change) subscription is enabled. This can be used to read ID-Codes through a barcode scanner built into the tool (instead of using a seperate scanner).
 
 ### Tool data output
 
@@ -98,7 +100,103 @@ To upload and manage tightening programs, use the `EasyWin` software. The PSET n
 ![EasyWin](./resources/opex-easywin.png)
 
 
+# Switching the Operating Mode
+
+## Prerequisites
+
+1. Turn off the tool.
+2. Connect the tool to a PC using a USB cable.
+3. Open a terminal application such as **TeraTerm** or **PuTTY Portable**.
+4. Select the correct COM port for serial communication (see **Device Manager**).
+5. Set the baud rate to **115200**.
+6. Open the connection.
 
 
+ Example: PuTTY Portable
+
+* Enter the COM port number.
+* Set **Speed (baud rate)** to **115200**.
+* Click **Open**.
+
+![PuTTY Configuration](./resources/opex-ssh-putty.png)
+
+---
+
+## Access the Service Console
+
+![Tool Buttons](./resources/opex-tool-butons.png)
+
+1. Press and hold the **Left Arrow** button on the tool until the following screen appears:
+
+   ![Console Menu](./resources/opex-tool-ssh.png)
+
+2. Use the arrow keys to select **Console**.
+
+3. Press **OK** to confirm.
+
+---
+
+## Log In to the Console
+
+1. When prompted for a password, enter:
+
+   ```text
+   12345
+   ```
+
+2. Press **Enter**.
+
+The terminal should display the following screen:
+
+![Console Login](./resources/opex-console-1.png)
+
+---
+
+## Display Available Service Routines
+
+Enter the following command:
+
+```text
+lsr
+```
+
+This displays the available service routines.
+
+![Service Routines](./resources/opex-console-2.png)
+
+---
+
+## Change the Operating Mode
+
+1. Start service routine **125**:
+
+   ```text
+   sr 125
+   ```
+
+2. Select the required operating mode by providing the number (1, 2, 3 or 4)
+
+   Available modes:
+
+   * 3
+   * 6
+   * 59
+   * 62
+
+![Operating Mode Selection](./resources/opex-console-3.png)
+
+---
+
+## Save and Exit
+
+1. Turn off the tool using service routine **140**:
+
+   ```text
+   sr 140
+   ```
+
+2. The operating mode change is now complete, and the tool will shut down.
+
+3. Power on the tool. It will start using the newly selected operating mode.
 
 

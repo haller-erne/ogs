@@ -1,20 +1,23 @@
 ---
-id: nexo
-name: Bosch Rexroth Nexo and Nexo 2 wireless battery tools
-title: Bosch Rexroth Nexo and Nexo 2 wireless battery tools
+id: mtc
+name: Atlas Copco MicroTorque tools
+title: Atlas Copco MicroTorque tools
 tags:
     - tool
     - tightening
     - openprotocol
 ---
 
-# Bosch Rexroth Nexo and Nexo 2 wireless battery tools
+# Atlas Copco MicroTorque tools
 
-The [Nexo cordless nutrunners](https://store.boschrexroth.com/Schraubtechnik/Funkakkuschrauber-Nexo) are advanced battery powered tightening tools with high accuracy and reliability. They are certified for safety-critical tightening connections according to VDI/VDE 2862. The tools feature built-in controllers with WiFi communications. They use the [OpenProtocol](../README.md) communication protocol to communicate with the heOGS software. They also support traceability data and curve output, see [tool data http output](#tool-data-http-output).
+![AC Microtorque](resources/ac-mtc.png){ width="300", align=right }
+The [Atlas Copco MicroTorque tools](https://www.atlascopco.com/en-us/itba/expert-hub/product-training/microtorque) deliver advanced tightening solutions for any low-torque application. Designed to meet the high standards of the modern electronics industry, these tools ensure precision and accuracy for every fastener—boosting both production efficiency and quality.
 
-![Nexo2 cordless nutrunner](resources/nexo2.jpg)
+What sets MicroTorque apart is its innovative tightening strategy, which focuses on actual clamp torque rather than the traditional torque and angle method. This approach excels in environments with inconsistent production materials, ensuring consistent clamp force. The result? Enhanced product quality, increased productivity, and reduced production costs.
 
-Note, that the Rexroth product site and catalog do not list the Nexo 2 tools at the time of writing this article, but there is a [marketing site with information about Nexo 2](https://www.boschrexroth.com/en/us/products/product-groups/tightening-technology/topics/cordless-nutrunner-nexo/).
+They use the [OpenProtocol](../README.md) communication protocol to communicate with the heOGS software. They also support traceability data and curve output through OpenProtocol.
+
+<!-- ![Nexo2 cordless nutrunner](resources/nexo2.jpg) -->
 
 ## Installation and configuration
 
@@ -24,7 +27,13 @@ For generic information about how to configure OGS with OpenProtocol tools, see 
 
 ### Tool registration and configuration
 
-The Nexo and Nexo 2 tools are identified by specifying the tool type `NEXO` in the `[OPENPROTO]` section of `station.ini`. 
+Before using the MicroTorque tools, ensure that the `heMTF6000.dll` module is enabled in the `[TOOL_DLL]` section of the `station.ini` configuration file.
+``` ini
+[TOOL_DLL]
+heMTF6000.dll=1
+```
+
+The MicroTorque controllers are identified by specifying the tool type `MTC` in the `[OPENPROTO]` section of `station.ini`. 
 
 A typical configuration of the `[OPENPROTO]` section looks like the following :
 
@@ -33,30 +42,29 @@ A typical configuration of the `[OPENPROTO]` section looks like the following :
 ; Channel/Tool 1 parameters
 CHANNEL_01=10.10.2.184
 CHANNEL_01_PORT=4545
-CHANNEL_01_TYPE=NEXO
+CHANNEL_01_TYPE=MTF
 ; Enable time synchronization 
 CHANNEL_01_CHECK_TIME_ENABLED=1
 ; Force CCW switch selection for rework/loosen
 CHANNEL_01_CCW_ACK=1
-; to enable curve transmission, set to 1:
-CHANNEL_01_CURVE_REQUEST=1
-CHANNEL_01_BARCODE_MID0051_REV=1
+; Enable cyclic enable check
+CHANNEL_01_CHECK_EXT_COND=1
+; To enable curve transmission, set to 1:
+; NOTE: requires a license!
+CHANNEL_01_CURVE_REQUEST=0
 ```
 
 The typical parameters are (for more details about the possible parameters, see [OpenProtocol documentation](../README.md)):
 
 - `CHANNEL_<channel>`: Define the IP address used to communicate with the tool.
-- `CHANNEL_<channel>_TYPE`: Defines the OpenProtocol communication variant, **must** be set to `NEXO`.
+- `CHANNEL_<channel>_TYPE`: Defines the OpenProtocol communication variant, **must** be set to `MTC`.
 - `CHANNEL_<channel>_PORT`: (optional) Define the TCP port number used for OpenProtocol(typically 4545).
-- `CHANNEL_<channel>_CHECK_TIME_ENABLED`: (recommended) If set to a nonzero value, then the tools internal time is synchronized with the OGS date and time. For Nexo 1 this is highly recommended due to issues with the firmware NTP time sync.
+- `CHANNEL_<channel>_CHECK_TIME_ENABLED`: (recommended) If set to a nonzero value, then the tools internal time is synchronized with the OGS date and time.
 - `CHANNEL_<channel>_CCW_ACK`: (optional) If set to a nonzero value, then the CCWSel switch is monitored for
 the correct position - i.e. if OGS expects loosen, the switch must be set to the CCW position.
-- `CHANNEL_<channel>_CURVE_REQUEST`: Set to 1 to enable curve transmission over OpenProtocol, set to 0 to disable. Set to 1, if you need the curve data in OGS (e.g. for display or dynamic curve analysis with LUA scripting). Disable (set to zero), if you don't need it (for performance reasons). As Nexo and Nexo 2 have built-in data output protocols, it is only needed in special setups, where OGS needs the curve data.
-- `CHANNEL_<channel>_BARCODE_MID0051_REV`: If set to a nonzero value, the MID0051 (ID-Code change) subscription is enabled. This can be used to read ID-Codes through a barcode scanner built into the tool (instead of using a seperate scanner).
+- `CHANNEL_<channel>_CURVE_REQUEST`: Set to 1 to enable curve transmission over OpenProtocol, set to 0 to disable. Set to 1, if you need the curve data in OGS (e.g. for display or dynamic curve analysis with LUA scripting). Disable (set to zero), if you don't need it (for performance reasons or if you don't have a license).
 
 ### Tool data output
-
-As Nexo and Nexo 2 have built-in features to send out data and curves (`Traceability` data) to backend data management systems, there is typically no support from OGS needed. 
 
 See [Tool data http output](#tool-data-http-output) for more information about how to configure the tools built-in data output drivers.
 
@@ -64,8 +72,13 @@ See [Tool data http output](#tool-data-http-output) for more information about h
 
 ### Firmware version
 
-Please contact [Bosch Rexroth](https://www.boschrexroth.com) for information about current firmware versions - it is recommended to use up-to-date firmware for compatibility, performance and security!
+Please contact [Atlas Copco](https://www.atlascopco.com) for information about current firmware versions - it is recommended to use up-to-date firmware for compatibility, performance and security!
 
+### Configuration
+
+See [MTC manual](https://www.atlascopco.com/content/dam/atlas-copco/local-countries/germany/documents/Taschenbuch%20Power%20Focus%206000.pdf) for details about how to configure the tightening controller and enable OpenProtocol.
+
+<!--
 ### Tool mode
 
 The Nexo tools can operate in manual or automatic mode. For OGS to be able to control the tool, automatic mode is required. Depending on your requirements, you can configure the tool to enable switching modes through the tool display (not recommended).
@@ -98,7 +111,7 @@ The mode must be setup as follows:
 
 #### Enable and configure OpenProtocol
 
-As OGS needs OpenProtocol to control the tool, the OpenProtocol (Data --> OpenProtocol) must be configured as follows:
+As OGS needs OpenProtocol to control the tool, the OpenProtocol (Data -> OpenProtocol) must be configured as follows:
 
 === "Nexo 2"
 
@@ -143,19 +156,22 @@ user to trigger the Nexo builtin scanner by pressing a button below the Nexo dis
 
 #### Configure OpenProtocol
 
-To enable ID-code forwarding, the option **Also forward ID-codes from non-selected sources** must be enabled in the OpenProtocol configuration (Home --> Data --> OpenProtocol):
+To enable ID-code forwarding, the option **Also forward ID-codes from non-selected sources** must be enabled in the OpenProtocol configuration (Home => Data => OpenProtocol):
 
 ![alt text](resources/nexo2-openprotocol.png)
 
 #### Configure Mode setting
 
-To enable the scanner, add an `ID Input` step to the Mode (Home --> Mode) settings as shown in the following screenshot:
+To enable the scanner, add an `ID Input` step to the Mode (Home => Mode) settings as shown in the following screenshot:
 
 ![alt text](resources/nexo2-mode-scanner.png)
 
+-->
+
+<!--
 ## Data output configuration
 
-To make Nexo and Nexo 2 to send out data and curves (`Traceability` data) to backend data management systems (like [ToolsNet](https://www.atlascopco.com/en-us/itba/products/assembly-solutions/software-solutions/toolsnet-8-sku4531), [CSP I-P.M.](https://www.csp-sw.com/quality-management-software-solutions/error-prevention-with-ipm/), [Sciemetric QualityWorX](https://www.sciemetric.com/data-intelligence/qualityworx-data-collection), [QualityR](https://www.haller-erne.de/qualityr-web/), etc.), the builtin data output interfaces can be used. 
+To make the tools send out data and curves (`Traceability` data) to backend data management systems (like [CSP I-P.M.](https://www.csp-sw.com/quality-management-software-solutions/error-prevention-with-ipm/), [Sciemetric QualityWorX](https://www.sciemetric.com/data-intelligence/qualityworx-data-collection), [QualityR](https://www.haller-erne.de/qualityr-web/), etc.), the builtin data output interfaces can be used. 
 
 To send data out to a central Sys3xxGateway/QualityR server, typically the following options are possible:
 
@@ -170,12 +186,12 @@ use “Standard Nexo” with FTP.
 
 Data reported to Sys3xxGateway will use the following mapping by default:
 
-- Nexo IP address-->Default Sys3xxGateway station name
-- Nexo channel name --> if non-empty is used as Sys3xxGateway station name
-- Nexo channel number --> Sys3xxGateway channel number
-- Tightening program name --> Used as operation name (QWX)
+- Nexo IP address => Default Sys3xxGateway station name
+- Nexo channel name => if non-empty is used as Sys3xxGateway station name
+- Nexo channel number => Sys3xxGateway channel number
+- Tightening program name => Used as operation name (QWX)
 
-To enable http data output, use Home --> Data --> Standard Nexo and configure as follows:
+To enable http data output, use Home => Data => Standard Nexo and configure as follows:
 
 ![alt text](resources/nexo2-http-output.png)
 
@@ -192,3 +208,4 @@ To minimize transmitted file sizes, go to the `Storage`settings (click the butto
 
 - Nexo 1 has issues, if roaming is enabled. Make sure to disable the "roaming" setting in the wifi configuration.
 - Nexo 1 by default uses the insecure TKIP encryption for WPA2-PSK, make sure to switch to AES mode instead.
+-->
